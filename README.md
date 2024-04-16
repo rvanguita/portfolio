@@ -13,6 +13,10 @@
 - Mathematics for Machine Learning Specialization
   - [Linear Algebra](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning%20Specialization/Linear%20Algebra/Coursera%20SRTBX3X4EWBT.pdf)
   - [Multivariate Calculus](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning%20Specialization/Multivariate%20Calculus/Coursera%20LGDZ8QKKTQHR.pdf)
+- [Expressway to Data Science: Essential Math Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Coursera%209LS7323MCHAF.pdf)
+  - [Algebra and Differential Calculus for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Algebra%20and%20Differential%20Calculus%20for%20Data%20Science/Coursera%20CBXVZ8C9EZQ2.pdf)
+  - [Essential Linear Algebra for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Essential%20Linear%20Algebra%20for%20Data%20Science/Coursera%20QPLE6TXDE9GM.pdf)
+  - [Integral Calculus and Numerical Analysis for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Integral%20Calculus%20and%20Numerical%20Analysis%20for%20Data%20Science/Coursera%20PYQBRSQCBQRU.pdf)  
 - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
 
 
