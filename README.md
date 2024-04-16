@@ -3,7 +3,7 @@
 
 ## Certificates
 - [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
-- [Stochastic processes](https://github.com/rvanguita/portfolio/blob/main/certificates/Stochastic%20processes/Certificate.pdf)
+
 - [Python for Everybody](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Coursera%20QJN7QJTLGFLT.pdf)
   - [Capstone: Retrieving, Processing, and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Capstone%3A%20Retrieving%2C%20Processing%2C%20and%20Visualizing%20Data%20with%20Python/Coursera%20QJN7QJTLGFLT.pdf)
   - [Programming for Everybody (Getting Started with Python)](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Programming%20for%20Everybody%20(Getting%20Started%20with%20Python)/Coursera%20L93RZWK9WZB8.pdf)
@@ -18,7 +18,6 @@
   - [Essential Linear Algebra for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Essential%20Linear%20Algebra%20for%20Data%20Science/Coursera%20QPLE6TXDE9GM.pdf)
   - [Integral Calculus and Numerical Analysis for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Integral%20Calculus%20and%20Numerical%20Analysis%20for%20Data%20Science/Coursera%20PYQBRSQCBQRU.pdf)  
 - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
-
-
+- [Stochastic processes](https://github.com/rvanguita/portfolio/blob/main/certificates/Stochastic%20processes/Certificate.pdf)
 
 
