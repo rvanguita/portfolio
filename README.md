@@ -1,4 +1,4 @@
-# Data Science Portfolio - Rene Anguita
+# Data Science Portfolio
 
 
 ## Certificates
