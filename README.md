@@ -1,9 +1,18 @@
 # Data Science Portfolio
 
+#### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL
+
+## Education
+- Ph.D., Electrical Engineering | Universidade Estadual de Campinasc (_May 2022_)								       		
+- M.S., Urban Infrastructure systems	| Pontifícia Universidade Catolica de Campinas (_December 2019_)	 			        		
+- B.S., Electrical Engineering | Pontifícia Universidade Catolica de Campinas (_May 2017_)
+
+## Projects
+
 
 ## Certificates
-- [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
 
+- [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
 - [Python for Everybody](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Coursera%20QJN7QJTLGFLT.pdf)
   - [Capstone: Retrieving, Processing, and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Capstone%3A%20Retrieving%2C%20Processing%2C%20and%20Visualizing%20Data%20with%20Python/Coursera%20QJN7QJTLGFLT.pdf)
   - [Programming for Everybody (Getting Started with Python)](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Programming%20for%20Everybody%20(Getting%20Started%20with%20Python)/Coursera%20L93RZWK9WZB8.pdf)
