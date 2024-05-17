@@ -3,9 +3,9 @@
 #### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL
 
 ## Education
-- Ph.D., Electrical Engineering | Universidade Estadual de Campinasc (_May 2022_)								       		
-- M.S., Urban Infrastructure systems	| Pontifícia Universidade Catolica de Campinas (_December 2019_)	 			        		
-- B.S., Electrical Engineering | Pontifícia Universidade Catolica de Campinas (_May 2017_)
+- Ph.D., Electrical Engineering | Universidade Estadual de Campinasc (_2025_)								       		
+- M.S., Urban Infrastructure systems	| Pontifícia Universidade Catolica de Campinas (_2019_)	 			        		
+- B.S., Electrical Engineering | Pontifícia Universidade Catolica de Campinas (_2016_)
 
 ## Projects
 
