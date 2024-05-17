@@ -9,9 +9,8 @@
 
 ## Projects
 
-<!-- <img align="left" width="250" height="150" src="https://github.com/rvanguita/portfolio/blob/main/assets/img/wind_farm.png"> **[Regression Problem for Wind Farm Power Generation](https://github.com/rvanguita/wind_farm)** -->
+<img align="left" width="250" height="150" src="https://github.com/rvanguita/portfolio/blob/main/assets/img/wind_farm.png"> **[Regression Problem for Wind Farm Power Generation](https://github.com/rvanguita/wind_farm)**
 
-<img align="left" src="https://github.com/rvanguita/portfolio/blob/main/assets/img/wind_farm.png"> **[Regression Problem for Wind Farm Power Generation](https://github.com/rvanguita/wind_farm)**
 The objective of this project is to estimate the generation curve of an offshore wind farm. Due to the non-linear nature of this curve, tree-based methods are more efficient for this analysis.
 
 
