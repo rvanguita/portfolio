@@ -10,6 +10,8 @@
 ## Projects
 
 
+
+
 ## Certificates
 
 - [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
