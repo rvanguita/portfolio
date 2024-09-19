@@ -5,3 +5,7 @@ include_css:
 logo: assets/img/face.png
 show_downloads: true
 theme: jekyll-theme-minimal
+
+social_links:
+  github: "https://github.com/seu_usuario"
+  linkedin: "https://linkedin.com/in/seu_usuario"
