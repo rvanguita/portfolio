@@ -1,6 +1,28 @@
 title: Rene Verinaud Anguita Junior
-favicon: "/assets/img/cv.png"
-logo: assets/img/face.png
-#description: text below image
-show_downloads: false
-theme: jekyll-theme-minimal
+favicon: "/assets/img/cv.png"       # Caminho absoluto para o favicon
+include_css:                        # Inclui o CSS customizado em formato de lista
+  - /assets/css/custom.css
+logo: "/assets/img/face.png"        # Caminho absoluto para o logo
+show_downloads: true                # Mostra o botão de download do currículo
+theme: jekyll-theme-cayman         # Tema definido como 'minimal'
+
+# Descrição do currículo para SEO e compartilhamento
+description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+
+# Configuração de redes sociais
+social_links:
+  github: "https://github.com/seu_usuario"
+  linkedin: "https://linkedin.com/in/seu_usuario"
+
+# SEO e dados de rede social para melhorar a visibilidade
+seo:
+  title: "Currículo de Rene Verinaud Anguita Junior"
+  description: "Experiência, habilidades e educação de Rene Verinaud Anguita Junior."
+  twitter_username: "seu_usuario"
+  github_username: "seu_usuario_github"
+
+# Google Analytics para monitorar visitas (opcional)
+google_analytics: "UA-XXXXXX-X"     # Substitua pelo seu ID do Google Analytics, se desejar
+
+# Definição do idioma do site
+lang: "pt-BR"
