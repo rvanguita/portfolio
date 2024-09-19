@@ -1,17 +1,17 @@
 # Data Science Portfolio
 
-#### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL
-
 ## Education
-Ph.D., Electrical Engineering | Universidade Estadual de Campinas (_2025_)								       		
-M.S., Urban Infrastructure systems	| Pontifícia Universidade Catolica de Campinas (_2019_)	 			        		
-B.S., Electrical Engineering | Pontifícia Universidade Catolica de Campinas (_2016_)
+- Ph.D., Electrical Engineering | Universidade Estadual de Campinas (_2025_)								       		
+- M.S., Urban Infrastructure systems	| Pontifícia Universidade Catolica de Campinas (_2019_)	 			        		
+- B.S., Electrical Engineering | Pontifícia Universidade Catolica de Campinas (_2016_)
 
 | Degree                                 | Institution                                             | Year  |
-|----------------------------------------|--------------------------------------------------------|-------|
+|----------------------------------------|---------------------------------------------------------|-------|
 | Ph.D., Electrical Engineering          | Universidade Estadual de Campinas                       | 2025  |
 | M.S., Urban Infrastructure Systems     | Pontifícia Universidade Católica de Campinas            | 2019  |
 | B.S., Electrical Engineering           | Pontifícia Universidade Católica de Campinas            | 2016  |
+
+<!-- #### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL -->
 
 ## Projects
 
