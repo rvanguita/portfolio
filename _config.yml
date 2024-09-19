@@ -3,6 +3,5 @@ favicon: /assets/img/cv.png
 include_css:
   - /assets/css/custom.css
 logo: assets/img/face.png
-#description: text below image
 show_downloads: true
 theme: jekyll-theme-minimal
