@@ -1,7 +1,12 @@
+include_css:
+  - /assets/css/custom.css
+
+
 title: Rene Verinaud Anguita Junior
-favicon: /assets/img/cv.png
-include_css: /assets/css/custom.css
-logo: assets/img/face.png
+
+favicon: "/assets/img/cv.png"
+logo: "/assets/img/face.png"
+
 show_downloads: true
 theme: jekyll-theme-minimal
 
