@@ -86,8 +86,8 @@ defaults:
 
 # Variáveis personalizadas (para facilitar uso em layouts e includes)
 custom:
-  logo: "/assets/images/logo.png" # Caminho para o logo personalizado
-  favicon: "/assets/images/favicon.ico" # Caminho para o favicon do site
+  logo: "/assets/img/logo.png" # Caminho para o logo personalizado
+  favicon: "/assets/img/favicon.ico" # Caminho para o favicon do site
   primary_color: "#3498db" # Cor primária usada em botões, links, etc.
   secondary_color: "#2ecc71" # Cor secundária para elementos de destaque
 
