@@ -1,12 +1,102 @@
-title: Rene Verinaud Anguita Junior
-favicon: /assets/img/cv.png      # Caminho absoluto para o favicon
-include_css:                        # Inclui o CSS customizado em formato de lista
-  - /assets/css/custom.css
-logo: /assets/img/face.png       # Caminho absoluto para o logo
-show_downloads: false                # Mostra o botão de download do currículo
-# theme: jekyll-theme-cayman         # Tema definido como 'minimal'
+# Informações do site
+title: "Rene Verinaud Anguita Junior" # Título do site
+description: "Site pessoal e portfólio de Rene Verinaud Anguita Junior" # Meta descrição para SEO
+url: "https://seu-usuario.github.io" # URL base do site
+baseurl: "" # Deixe vazio para o GitHub Pages no repositório principal
+locale: "pt_BR" # Idioma principal
+lang: "pt-BR" # Definir o idioma do site
 
-# Descrição do currículo para SEO e compartilhamento
-description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+# Skins - Defina o esquema de cores do site
+skin: "steel" # Escolha entre opções como default, steel, mint, etc.
 
-remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+# Autor e informações de contato
+author:
+  name: "Rene Verinaud Anguita Junior"
+  email: "seu-email@example.com"
+  url: "https://seu-website.com" # URL para o seu site ou rede social
+  avatar: "/assets/images/avatar.jpg" # Caminho para sua foto de perfil ou avatar
+
+# Redes sociais e links externos
+social:
+  twitter: "seu-usuario-twitter"
+  github: "seu-usuario-github"
+  linkedin: "seu-perfil-linkedin"
+  facebook: "seu-usuario-facebook"
+  instagram: "seu-usuario-instagram"
+  youtube: "seu-canal-youtube"
+  # Adicione outras plataformas sociais que deseja
+
+# Google Analytics e Disqus (para análise e comentários)
+google_analytics: "UA-XXXXXXXX-X" # Substitua com seu ID do Google Analytics
+disqus:
+  shortname: "seu-disqus-shortname" # Substitua com o seu shortname do Disqus para habilitar comentários
+
+# SEO e Opções de Metadados
+seo:
+  title_separator: " | " # Define o separador de títulos
+  google_site_verification: "seu-token-de-verificacao" # Verificação para o Google Search Console
+  default_image: "/assets/images/default-image.jpg" # Imagem padrão para redes sociais
+  twitter:
+    username: "seu-usuario-twitter"
+    card: "summary_large_image"
+  facebook:
+    app_id: "seu-facebook-app-id"
+    publisher: "https://www.facebook.com/seu-perfil"
+  og:
+    site_name: "Nome do seu site" # Nome do site para Open Graph
+
+# Configurações de Paginação
+paginate: 5 # Número de posts por página
+paginate_path: "/page:num/" # Caminho para paginação
+
+# Configurações de Navegação (menu)
+menu:
+  - text: "Início"
+    url: "/"
+  - text: "Sobre"
+    url: "/sobre/"
+  - text: "Portfólio"
+    url: "/portfolio/"
+  - text: "Contato"
+    url: "/contato/"
+
+# Plugins (GitHub Pages suporta muitos plugins)
+plugins:
+  - jekyll-feed # RSS feed para o site
+  - jekyll-seo-tag # Melhoria de SEO
+  - jekyll-sitemap # Gera um sitemap.xml
+  - jekyll-paginate # Suporte à paginação
+  - jekyll-archives # Arquivos de posts por categorias ou tags
+
+# Tema remoto do GitHub
+remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5" # URL do tema remoto
+
+# Configurações de Layout
+defaults:
+  - scope:
+      path: "" # Aplica a todas as páginas
+    values:
+      layout: "post" # Layout padrão para posts
+  - scope:
+      path: "_pages" # Específico para páginas
+    values:
+      layout: "page" # Layout padrão para páginas
+
+# Variáveis personalizadas (para facilitar uso em layouts e includes)
+custom:
+  logo: "/assets/images/logo.png" # Caminho para o logo personalizado
+  favicon: "/assets/images/favicon.ico" # Caminho para o favicon do site
+  primary_color: "#3498db" # Cor primária usada em botões, links, etc.
+  secondary_color: "#2ecc71" # Cor secundária para elementos de destaque
+
+# Configurações de Build (opções avançadas)
+markdown: kramdown # Definir o interpretador de Markdown
+highlighter: rouge # Definir o realçador de sintaxe de código
+exclude: ["node_modules", "Gemfile.lock", "vendor"] # Arquivos ou diretórios que serão ignorados no build
+
+# Dados de rodapé
+footer_text: "© 2024 Rene Verinaud Anguita Junior. Todos os direitos reservados."
+
+# Configurações para GitHub Pages
+github:
+  is_project_page: false # Defina como 'true' se estiver usando um repositório de projeto
