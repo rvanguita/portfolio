@@ -14,7 +14,9 @@ author:
   name: "Rene Verinaud Anguita Junior"
   email: "seu-email@example.com"
   url: "https://seu-website.com" # URL para o seu site ou rede social
-  avatar: "/assets/images/avatar.jpg" # Caminho para sua foto de perfil ou avatar
+  avatar: "/assets/img/face.jpg" # Caminho para sua foto de perfil ou avatar
+
+header_image: "/assets/img/capa-site.jpg"
 
 # Redes sociais e links externos
 social:
