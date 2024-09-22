@@ -1,7 +1,7 @@
 # Data Science Portfolio
 
 ## Resume
-
+Busco oportunidades desafiadoras na área de Ciência de Dados, onde eu possa aplicar minha expertise em análise estatística e modelagem de dados para resolver problemas complexos e contribuir significativamente para o crescimento e sucesso da organização. Estou empenhado em utilizar minhas habilidades em Python, aprendizado estatístico e otimização para desenvolver soluções inovadoras que agreguem valor aos projetos e metas da empresa. Almejo integrar uma equipe dinâmica onde possa continuar a expandir meus conhecimentos e habilidades, enquanto colaboro para impulsionar o progresso e a excelência nos projetos em que estiver envolvido.
 
 ## Education
 
