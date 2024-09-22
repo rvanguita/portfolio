@@ -10,13 +10,3 @@ show_downloads: false                # Mostra o botão de download do currículo
 description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
 
 remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
-
-
-permalink: pretty
-
-# Adicionar uma navegação personalizada
-header_pages:
-  - index.md       # Página principal
-  - about.md       # Página 'About'
-  - portfolio.md   # Página 'Portfolio'
-  - certificates.md  # Página 'Certificates'
