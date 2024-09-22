@@ -1,3 +1,9 @@
+---
+layout: page
+title: About
+permalink: /about/
+---
+
 # Data Science Portfolio
 
 ## Resume
@@ -14,6 +20,12 @@
 
 <!-- #### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL -->
 
+---
+layout: page
+title: Portfolio
+permalink: /portfolio/
+---
+
 ## Projects
 
 ### Regression
@@ -22,6 +34,12 @@ The objective of this project is to estimate the generation curve of an offshore
 
 ### Classification
 #### [Bank Customer Churn](https://github.com/rvanguita/bank_customer_churn)
+
+---
+layout: page
+title: Certificates
+permalink: /portfolio/
+---
 
 
 ## Certificates
