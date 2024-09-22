@@ -1,12 +1,97 @@
-title: Rene Verinaud Anguita Junior
-favicon: /assets/img/cv.png      # Caminho absoluto para o favicon
-# include_css:                        # Inclui o CSS customizado em formato de lista
-#   - /assets/css/custom.css
-logo: /assets/img/face.png       # Caminho absoluto para o logo
-show_downloads: false                # Mostra o botão de download do currículo
-# theme: jekyll-theme-cayman         # Tema definido como 'minimal'
+# title: Rene Verinaud Anguita Junior
+# favicon: /assets/img/cv.png      # Caminho absoluto para o favicon
+# # include_css:                        # Inclui o CSS customizado em formato de lista
+# #   - /assets/css/custom.css
+# logo: /assets/img/face.png       # Caminho absoluto para o logo
+# show_downloads: false                # Mostra o botão de download do currículo
+# # theme: jekyll-theme-cayman         # Tema definido como 'minimal'
 
-# Descrição do currículo para SEO e compartilhamento
+# # Descrição do currículo para SEO e compartilhamento
+# description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+
+# remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+
+
+
+
+
+
+
+
+
+
+lang: en-US
+title: Portfolio
+email: rvanguita@gmail.com
 description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+baseurl: "/example"  # the subpath of your site, e.g. /blog
+url: ""  # the base hostname & protocol for your site, e.g. http://example.com
+author:
+  name: Rene Verinaud Anguita Junior
+  twitter: @rvanguita
+  picture: /assets/img/face.png
+twitter_username: @rvanguita
+github_username: @rvanguita
+# logo: /assets/icons/basically-basic-logo-light.svg
+search: true
+search_full_content: true
+# search_provider: algolia
+# algolia:
+#   application_id: QB6HVGBSBA
+#   index_name: basically-basic
+#   search_only_api_key: 9d5014e5bbc77372547bce778dfa5663
+#   powered_by: # true (default), false
 
-remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+# Liquid
+liquid:
+  error_mode: strict
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-basically-basic
+plugins: # previously gems
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+feed:
+  path: atom.xml
+
+# Pagination - https://jekyllrb.com/docs/pagination/
+paginate: 10
+paginate_path: /page:num/
+
+# Exclude from processing.
+# The following items will not be processed, by default. Create a custom list
+# to override the default setting.
+# exclude:
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# Collections
+collections:
+  recipes:
+    output: true
+    permalink: /:collection/:path/
+
+# Front Matter Defaults
+defaults:
+  # _posts
+  - scope:
+      path: "_posts"
+      type: posts
+    values:
+      layout: post
+      read_time: true
+  # _recipes
+  - scope:
+      path: "_recipes"
+      type: recipes
+    values:
+      layout: post
+      read_time: true
