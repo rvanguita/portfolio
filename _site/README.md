@@ -23,9 +23,9 @@ The objective of this project is to estimate the generation curve of an offshore
 ### __2024__
 
 - Applied Data Science with Python Specialization
-  - Introduction to Data Science in Python
+  - [Introduction to Data Science in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Data%20Science%20with%20Python%20Specialization/Introduction%20to%20Data%20Science%20in%20Python/Coursera%206X7MSJM9ZW7S.pdf)
   - Applied Plotting, Charting & Data Representation in Python
-  - Applied Machine Learning in Python
+  - [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Data%20Science%20with%20Python%20Specialization/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
   - Applied Text Mining in Python
   - Applied Social Network Analysis in Python
 
@@ -52,7 +52,7 @@ The objective of this project is to estimate the generation curve of an offshore
 
 - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
 
-- [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
+
 
 - [Mathematics for Machine Learning Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning/Coursera%20AVCUZHDPGLI5.pdf)
   - [Linear Algebra](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning/Linear%20Algebra/Coursera%20SRTBX3X4EWBT.pdf)
