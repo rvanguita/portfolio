@@ -30,6 +30,8 @@ The objective of this project is to estimate the generation curve of an offshore
 
 ### __2024__
 
+- [Understanding and Visualizing Data with Python]()
+
 - [Applied Machine Learning in Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Applied%20Machine%20Learning%20in%20Python/Coursera%209LT6NMT6QFUF.pdf)
 
 - [Mathematics for Machine Learning Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning/Coursera%20AVCUZHDPGLI5.pdf)
@@ -54,7 +56,7 @@ The objective of this project is to estimate the generation curve of an offshore
   - [Python Data Structures](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Python%20Data%20Structures/Coursera%20CABEC4D9W5QF.pdf)
   - [Using Databases with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Using%20Databases%20with%20Python/Coursera%20FN7JP8SM77S9.pdf)
   - [Using Python to Access Web Data](https://github.com/rvanguita/portfolio/blob/main/certificates/Python%20for%20Everybody/Using%20Python%20to%20Access%20Web%20Data/Coursera%20LV7GTE5D9VTJ.pdf)
-  
+
 
 - [Stochastic processes](https://github.com/rvanguita/portfolio/blob/main/certificates/Stochastic%20processes/Certificate.pdf)
 
