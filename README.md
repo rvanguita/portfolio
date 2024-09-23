@@ -50,7 +50,7 @@ The objective of this project is to estimate the generation curve of an offshore
 
 
 - Statistics with Python Specialization
-  - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
+  - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
   - Inferential Statistical Analysis with Python
   - Fitting Statistical Models to Data with Python
 
