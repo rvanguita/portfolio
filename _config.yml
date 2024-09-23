@@ -14,9 +14,9 @@ remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
 
 
 
-author:
-  name: Rene Verinaud Anguita Junior
-  email: renevajr@gmail.com
-  picture: /assets/img/face.png 
+# author:
+#   name: Rene Verinaud Anguita Junior
+#   email: renevajr@gmail.com
+#   picture: /assets/img/face.png 
 
 
