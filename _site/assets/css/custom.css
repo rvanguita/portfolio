@@ -1,0 +1,75 @@
+/* Definindo a fonte e o espaçamento do corpo */
+body {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.6;
+  background-color: #f4f4f4; /* Cor de fundo clara */
+  padding: 20px; /* Espaçamento interno para o corpo */
+}
+
+/* Estilo para cabeçalhos */
+h1, h2, h3 {
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007BFF; /* Linha abaixo dos títulos */
+  padding-bottom: 5px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Sombra do texto */
+}
+
+/* Estilo para parágrafos e listas */
+p, ul {
+  margin-bottom: 20px;
+  color: #444; /* Cor de texto mais escura para melhor legibilidade */
+  letter-spacing: 0.5px;
+  max-width: 700px; /* Limita a largura dos parágrafos */
+}
+
+/* Estilo para links */
+a {
+  color: #007BFF;
+  text-decoration: underline;
+  transition: color 0.3s; /* Transição suave para a cor */
+}
+
+a:hover {
+  color: #0056b3;
+}
+
+a:active {
+  color: #003f7f;
+}
+
+/* Estilo para o botão de download */
+.download-button {
+  background-color: #007BFF;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
+  text-decoration: none;
+  box-shadow: 0 4px 6px rgba(0, 123, 255, 0.2); /* Sombra do botão */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transições suaves */
+}
+
+.download-button:hover {
+  background-color: #0056b3;
+  box-shadow: 0 6px 8px rgba(0, 86, 179, 0.3); /* Sombra do botão ao passar o mouse */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+  body {
+      font-size: 14px;
+      line-height: 1.4;
+  }
+  
+  h1, h2, h3 {
+      font-size: 1.2em;
+  }
+
+  .download-button {
+      padding: 8px 15px;
+      font-size: 14px;
+  }
+}
