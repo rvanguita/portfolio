@@ -8,7 +8,7 @@ show_downloads: false                # Mostra o botão de download do currículo
 theme: jekyll-theme-cayman         # Tema definido como 'minimal'
 
 # Descrição do currículo para SEO e compartilhamento
-description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+# description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
 
 # remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
 
