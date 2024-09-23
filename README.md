@@ -5,17 +5,6 @@
 Busco oportunidades desafiadoras na área de Ciência de Dados, onde eu possa aplicar minha expertise em análise estatística e modelagem de dados para resolver problemas complexos e contribuir significativamente para o crescimento e sucesso da organização. Estou empenhado em utilizar minhas habilidades em Python, aprendizado estatístico e otimização para desenvolver soluções inovadoras que agreguem valor aos projetos e metas da empresa. Almejo integrar uma equipe dinâmica onde possa continuar a expandir meus conhecimentos e habilidades, enquanto colaboro para impulsionar o progresso e a excelência nos projetos em que estiver envolvido.
 
 
-## Education
-
-| Degree                                 | Institution                                             | Year  |
-|----------------------------------------|---------------------------------------------------------|-------|
-| Ph.D., Electrical Engineering          | Universidade Estadual de Campinas                       | 2025  |
-| M.S., Urban Infrastructure Systems     | Pontifícia Universidade Católica de Campinas            | 2019  |
-| B.S., Electrical Engineering           | Pontifícia Universidade Católica de Campinas            | 2016  |
-
-
-<!-- #### Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL -->
-
 ## Projects
 
 ### Regression
@@ -26,9 +15,40 @@ The objective of this project is to estimate the generation curve of an offshore
 #### [Bank Customer Churn](https://github.com/rvanguita/bank_customer_churn)
 
 
+
+## Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL
+
 ## Certificates
 
 ### __2024__
+
+- Applied Data Science with Python Specialization
+  - Introduction to Data Science in Python
+  - Applied Plotting, Charting & Data Representation in Python
+  - Applied Machine Learning in Python
+  - Applied Text Mining in Python
+  - Applied Social Network Analysis in Python
+
+
+
+- Data Analysis with R Specialization
+  - Introduction to Probability and Data with R
+  - Inferential Statistics
+  - Linear Regression and Modeling
+
+
+- Business Statistics and Analysis Specialization
+  - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
+
+  - Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions
+
+  - Business Applications of Hypothesis Testing and Confidence Interval Estimation
+
+  - Linear Regression for Business Statistics
+
+  - Business Statistics and Analysis Capstone
+
+
 
 - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
 
@@ -46,7 +66,6 @@ The objective of this project is to estimate the generation curve of an offshore
   - [Essential Linear Algebra for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Essential%20Linear%20Algebra%20for%20Data%20Science/Coursera%20QPLE6TXDE9GM.pdf)
   - [Integral Calculus and Numerical Analysis for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Integral%20Calculus%20and%20Numerical%20Analysis%20for%20Data%20Science/Coursera%20PYQBRSQCBQRU.pdf)  
 
-- [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
 
 ### __2020__
 
@@ -61,3 +80,10 @@ The objective of this project is to estimate the generation curve of an offshore
 - [Stochastic processes](https://github.com/rvanguita/portfolio/blob/main/certificates/Stochastic%20processes/Certificate.pdf)
 
 
+## Education
+
+| Degree                                 | Institution                                             | Year  |
+|----------------------------------------|---------------------------------------------------------|-------|
+| Ph.D., Electrical Engineering          | Universidade Estadual de Campinas                       | 2025  |
+| M.S., Urban Infrastructure Systems     | Pontifícia Universidade Católica de Campinas            | 2019  |
+| B.S., Electrical Engineering           | Pontifícia Universidade Católica de Campinas            | 2016  |
