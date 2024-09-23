@@ -79,6 +79,9 @@ The objective of this project is to estimate the generation curve of an offshore
 
 - [Stochastic processes](https://github.com/rvanguita/portfolio/blob/main/certificates/Stochastic%20processes/Certificate.pdf)
 
+### __2019__
+
+- [General Business Program]()
 
 ## Education
 
