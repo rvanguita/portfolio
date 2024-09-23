@@ -38,7 +38,7 @@ The objective of this project is to estimate the generation curve of an offshore
 
 
 - Business Statistics and Analysis Specialization
-  - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
+  - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
 
   - Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions
 
