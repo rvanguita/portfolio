@@ -81,7 +81,7 @@ The objective of this project is to estimate the generation curve of an offshore
 
 ### __2019__
 
-- [General Business Program]()
+- [General Business Program](https://github.com/rvanguita/portfolio/blob/main/certificates/General%20Business%20Program/btc.pdf)
 
 ## Education
 
