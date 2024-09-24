@@ -29,32 +29,22 @@ The objective of this project is to estimate the generation curve of an offshore
   - Applied Text Mining in Python
   - Applied Social Network Analysis in Python
 
-
-
 - Data Analysis with R Specialization
   - Introduction to Probability and Data with R
   - Inferential Statistics
   - Linear Regression and Modeling
 
-
 - Business Statistics and Analysis Specialization
   - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
-
   - Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions
-
   - Business Applications of Hypothesis Testing and Confidence Interval Estimation
-
   - Linear Regression for Business Statistics
-
   - Business Statistics and Analysis Capstone
-
 
 - [Statistics with Python Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Coursera%208THKRDG2LVQ1.pdf)
   - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
   - [Inferential Statistical Analysis with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Inferential%20Statistical%20Analysis%20with%20Python/Coursera%20J5O0MHPLQWOA.pdf)
   - [Fitting Statistical Models to Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Fitting%20Statistical%20Models%20to%20Data%20with%20Python/Coursera%208THKRDG2LVQ1.pdf)
-
-
 
 - [Mathematics for Machine Learning Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning/Coursera%20AVCUZHDPGLI5.pdf)
   - [Linear Algebra](https://github.com/rvanguita/portfolio/blob/main/certificates/Mathematics%20for%20Machine%20Learning/Linear%20Algebra/Coursera%20SRTBX3X4EWBT.pdf)
@@ -67,7 +57,6 @@ The objective of this project is to estimate the generation curve of an offshore
   - [Algebra and Differential Calculus for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Algebra%20and%20Differential%20Calculus%20for%20Data%20Science/Coursera%20CBXVZ8C9EZQ2.pdf)
   - [Essential Linear Algebra for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Essential%20Linear%20Algebra%20for%20Data%20Science/Coursera%20QPLE6TXDE9GM.pdf)
   - [Integral Calculus and Numerical Analysis for Data Science](https://github.com/rvanguita/portfolio/blob/main/certificates/Expressway%20to%20Data%20Science%3A%20Essential%20Math%20Specialization/Integral%20Calculus%20and%20Numerical%20Analysis%20for%20Data%20Science/Coursera%20PYQBRSQCBQRU.pdf)  
-
 
 ### __2020__
 
