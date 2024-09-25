@@ -4,6 +4,13 @@
 
 Busco oportunidades desafiadoras na área de Ciência de Dados, onde eu possa aplicar minha expertise em análise estatística e modelagem de dados para resolver problemas complexos e contribuir significativamente para o crescimento e sucesso da organização. Estou empenhado em utilizar minhas habilidades em Python, aprendizado estatístico e otimização para desenvolver soluções inovadoras que agreguem valor aos projetos e metas da empresa. Almejo integrar uma equipe dinâmica onde possa continuar a expandir meus conhecimentos e habilidades, enquanto colaboro para impulsionar o progresso e a excelência nos projetos em que estiver envolvido.
 
+## Education
+
+| Degree                                 | Institution                                             | Year  |
+|----------------------------------------|---------------------------------------------------------|-------|
+| Ph.D., Electrical Engineering          | Universidade Estadual de Campinas                       | 2025  |
+| M.S., Urban Infrastructure Systems     | Pontifícia Universidade Católica de Campinas            | 2019  |
+| B.S., Electrical Engineering           | Pontifícia Universidade Católica de Campinas            | 2016  |
 
 ## Projects
 
@@ -13,7 +20,7 @@ The objective of this project is to estimate the generation curve of an offshore
 
 ### Classification
 #### [Bank Customer Churn](https://github.com/rvanguita/bank_customer_churn)
-
+Conduct a machine learning analysis to identify potential customers at risk of churning, exploring data from a European bank with clients from three different countries.
 
 
 ## Technical Skills: Python, SQL, CPLEX, AMPL, EXCEL
@@ -74,10 +81,3 @@ The objective of this project is to estimate the generation curve of an offshore
 
 - [General Business Program](https://github.com/rvanguita/portfolio/blob/main/certificates/General%20Business%20Program/btc.pdf)
 
-## Education
-
-| Degree                                 | Institution                                             | Year  |
-|----------------------------------------|---------------------------------------------------------|-------|
-| Ph.D., Electrical Engineering          | Universidade Estadual de Campinas                       | 2025  |
-| M.S., Urban Infrastructure Systems     | Pontifícia Universidade Católica de Campinas            | 2019  |
-| B.S., Electrical Engineering           | Pontifícia Universidade Católica de Campinas            | 2016  |
