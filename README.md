@@ -2,7 +2,7 @@
 
 ## Resume
 
-Busco oportunidades desafiadoras na área de Ciência de Dados, onde eu possa aplicar minha expertise em análise estatística e modelagem de dados para resolver problemas complexos e contribuir significativamente para o crescimento e sucesso da organização. Estou empenhado em utilizar minhas habilidades em Python, aprendizado estatístico e otimização para desenvolver soluções inovadoras que agreguem valor aos projetos e metas da empresa. Almejo integrar uma equipe dinâmica onde possa continuar a expandir meus conhecimentos e habilidades, enquanto colaboro para impulsionar o progresso e a excelência nos projetos em que estiver envolvido.
+I am seeking challenging opportunities in the field of Data Science, where I can apply my expertise in statistical analysis and data modeling to solve complex problems and contribute significantly to the growth and success of the organization. I am committed to leveraging my skills in Python, statistical learning, and optimization to develop innovative solutions that add value to the company's projects and goals. I aspire to join a dynamic team where I can continue expanding my knowledge and skills while contributing to driving progress and excellence in the projects I am involved in.
 
 ## Education
 
@@ -15,11 +15,11 @@ Busco oportunidades desafiadoras na área de Ciência de Dados, onde eu possa ap
 ## Projects
 
 ### Regression
-#### [Wind Farm](https://github.com/rvanguita/wind_farm)
+- [Wind Farm](https://github.com/rvanguita/wind_farm): 
 The objective of this project is to estimate the generation curve of an offshore wind farm. Due to the non-linear nature of this curve, tree-based methods are more efficient for this analysis.
 
 ### Classification
-#### [Bank Customer Churn](https://github.com/rvanguita/bank_customer_churn)
+- [Bank Customer Churn](https://github.com/rvanguita/bank_customer_churn):
 Conduct a machine learning analysis to identify potential customers at risk of churning, exploring data from a European bank with clients from three different countries.
 
 
