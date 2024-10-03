@@ -36,10 +36,10 @@ Conduct a machine learning analysis to identify potential customers at risk of c
   - Applied Text Mining in Python
   - Applied Social Network Analysis in Python
 
-- Data Analysis with R Specialization
+<!-- - [Data Analysis with R Specialization](https://www.coursera.org/learn/probability-intro/home/module/1)
   - Introduction to Probability and Data with R
   - Inferential Statistics
-  - Linear Regression and Modeling
+  - Linear Regression and Modeling -->
 
 - Business Statistics and Analysis Specialization
   - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
