@@ -2,7 +2,7 @@
 
 ## Resume
 
-I am seeking challenging opportunities in the field of Data Science, where I can apply my expertise in statistical analysis and data modeling to solve complex problems and contribute significantly to the growth and success of the organization. I am committed to leveraging my skills in Python, statistical learning, and optimization to develop innovative solutions that add value to the company's projects and goals. I aspire to join a dynamic team where I can continue expanding my knowledge and skills while contributing to driving progress and excellence in the projects I am involved in.
+Professional with a Ph.D. in Electrical Engineering and extensive experience in optimizing electrical distribution systems. Data Science specialist with skills in Python, predictive modeling, and data analysis, utilizing Pandas, Numpy, Scikit-learn, Excel, Power BI, Tableau, and SQL. Experienced in high-impact academic and practical projects, such as developing heuristics that reduced computational time by up to 10 times. Seeking a Data Scientist role to apply advanced analytics and machine learning methods, generating insights for decision-making and optimizing business processes
 
 ## Education
 
