@@ -27,6 +27,16 @@ Conduct a machine learning analysis to identify potential customers at risk of c
 
 ## Certificates
 
+### __2025__
+
+- Business Statistics and Analysis Specialization
+  - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
+  - [Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Basic%20Data%20Descriptors%2C%20Statistical%20Distributions%2C%20and%20Application%20to%20Business%20Decisions/Coursera%20ZZCVHIGNDVDE.pdf)
+  - Business Applications of Hypothesis Testing and Confidence Interval Estimation
+  - Linear Regression for Business Statistics
+  - Business Statistics and Analysis Capstone
+
+
 ### __2024__
 
 - Applied Data Science with Python Specialization
@@ -41,12 +51,7 @@ Conduct a machine learning analysis to identify potential customers at risk of c
   - Inferential Statistics
   - Linear Regression and Modeling -->
 
-- Business Statistics and Analysis Specialization
-  - [Introduction to Data Analysis Using Excel](https://github.com/rvanguita/portfolio/blob/main/certificates/Business%20Statistics%20and%20Analysis%20Specialization/Introduction%20to%20Data%20Analysis%20Using%20Excel/Coursera%205BVSFVK7NALP.pdf)
-  - Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions
-  - Business Applications of Hypothesis Testing and Confidence Interval Estimation
-  - Linear Regression for Business Statistics
-  - Business Statistics and Analysis Capstone
+
 
 - [Statistics with Python Specialization](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Coursera%208THKRDG2LVQ1.pdf)
   - [Understanding and Visualizing Data with Python](https://github.com/rvanguita/portfolio/blob/main/certificates/Statistics%20with%20Python%20Specialization/Understanding%20and%20Visualizing%20Data%20with%20Python/Coursera%20HUY6PDI3FNM8.pdf)
