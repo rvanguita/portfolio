@@ -1,0 +1,85 @@
+# ==============================================================================
+# GitHub Actions: Publicação do Site Estático (GitHub Pages)
+# ==============================================================================
+# Este fluxo de trabalho (workflow) automatiza a compilação (build) e a publicação
+# (deploy) do seu site Jekyll/estático sempre que houver uma alteração na branch principal (main).
+#
+# Você também pode acioná-lo manualmente na aba "Actions" do GitHub clicando em "Run workflow".
+# ==============================================================================
+
+name: 🚀 Deploy Site Estático (GitHub Pages)
+
+on:
+  # Executa automaticamente quando houver envio (push) para a branch main
+  push:
+    branches:
+      - main
+
+  # Permite executar este workflow manualmente a partir da aba Actions
+  workflow_dispatch:
+
+# Define as permissões mínimas necessárias para o GITHUB_TOKEN publicar no Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Permite apenas uma implantação concorrente para evitar conflitos
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # ----------------------------------------------------------------------------
+  # Job 1: Build (Compilação do site estático com Jekyll)
+  # ----------------------------------------------------------------------------
+  build:
+    name: 📦 Compilar Site Estático
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Baixar código do repositório (Checkout)
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: 🔨 Compilar páginas com Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: 📤 Enviar artefatos para o Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
+
+  # ----------------------------------------------------------------------------
+  # Job 2: Deploy (Publicação do site no GitHub Pages)
+  # ----------------------------------------------------------------------------
+  deploy:
+    name: 🌐 Publicar no GitHub Pages
+    needs: build
+    runs-on: ubuntu-latest
+
+    # Configuração do ambiente oficial de GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: 🚀 Realizar Implantação (Deploy)
+        id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: 📊 Resumo da Publicação
+        run: |
+          echo "### 🌟 Portfólio Publicado com Sucesso!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Status:** ✅ Ativo e atualizado" >> $GITHUB_STEP_SUMMARY
+          echo "- **URL do Site:** [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }})" >> $GITHUB_STEP_SUMMARY
+          echo "- **Data/Hora:** $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit:** \`${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Autor:** ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+
