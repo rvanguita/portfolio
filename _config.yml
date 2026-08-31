@@ -1,26 +1,48 @@
-title: Portfolio 
+# ==============================================================================
+# Configurações do Site Estático (Jekyll / GitHub Pages)
+# ==============================================================================
 
-favicon: /assets/img/cv.png      # Caminho absoluto para o favicon
-# include_css:                        # Inclui o CSS customizado em formato de lista
-#   - /assets/css/custom.css
-logo: /assets/img/face.png       # Caminho absoluto para o logo
-show_downloads: false                # Mostra o botão de download do currículo
-theme: jekyll-theme-cayman         # Tema definido como 'minimal'
+# Informações Principais do Portfólio
+title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization"
+description: "Portfólio profissional de Rene Verinaud Anguita Junior, Ph.D. em Engenharia Elétrica, especialista em Ciência de Dados, Machine Learning e Otimização de Sistemas."
+url: "https://rvanguita.github.io"
+baseurl: "/portfolio"
 
-# Descrição do currículo para SEO e compartilhamento
-description: "Currículo de Rene Verinaud Anguita Junior – Cientista de Dados"
+# Identidade Visual e Imagens
+logo: "/assets/img/face.png"
+favicon: "/assets/img/cv.png"
+show_downloads: false
 
-# remote_theme: "mmistakes/jekyll-theme-basically-basic@1.4.5"
+# Tema Jekyll
+theme: jekyll-theme-cayman
 
+# Informações do Autor (usadas em SEO e metadados)
+author:
+  name: "Rene Verinaud Anguita Junior"
+  title: "Data Scientist | Ph.D. Electrical Engineering"
+  email: "renevajr@gmail.com"
+  location: "Campinas, SP, Brasil"
+  github: "rvanguita"
+  linkedin: "rene-verinaud-anguita-junior"
 
+# Plugins suportados nativamente pelo GitHub Pages
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
 
-# author:
-#   name: Rene Verinaud Anguita Junior
-#   email: renevajr@gmail.com
-#   picture: /assets/img/face.png 
-
+# Estilos e Customização
+include_css:
+  - /assets/css/custom.css
 
 text_styles:
   justify_text: "text-align: justify;"
   center_text: "margin-left: auto; margin-right: auto;"
-  max_width: "max-width: 800px;"
+  max_width: "max-width: 900px;"
+
+# Exclusão de arquivos auxiliares na geração do site estático
+exclude:
+  - .github/
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+  - README.md.bak

@@ -1,0 +1,47 @@
+# ==============================================================================
+# GitHub Actions: Validação e Teste Contínuo (CI)
+# ==============================================================================
+# Este fluxo de trabalho (workflow) valida a integridade do seu site estático
+# em Pull Requests ou commits, garantindo que o Jekyll compila sem erros antes do deploy.
+# ==============================================================================
+
+name: 🧪 Validação do Portfólio (CI)
+
+on:
+  # Executa em Pull Requests direcionados à branch main
+  pull_request:
+    branches:
+      - main
+
+  # Permite execução manual para verificação rápida
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: 🔍 Testar Compilação e Estrutura
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Baixar código do repositório (Checkout)
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Configurar GitHub Pages para teste
+        uses: actions/configure-pages@v5
+
+      - name: 🧪 Testar compilação Jekyll
+        uses: actions/jekyll-build-pages@v1
+        with:
+          source: ./
+          destination: ./_site
+
+      - name: 📋 Relatório de Validação
+        run: |
+          echo "### 🔍 Relatório de Validação (CI)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "- **Resultado:** ✅ Todos os testes de compilação passaram sem erros!" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch:** \`${{ github.head_ref || github.ref_name }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Arquivos gerados em:** \`./_site\`" >> $GITHUB_STEP_SUMMARY
+
