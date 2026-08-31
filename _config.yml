@@ -13,9 +13,6 @@ logo: "/assets/img/face.png"
 favicon: "/assets/img/cv.png"
 show_downloads: false
 
-# Tema Jekyll
-theme: jekyll-theme-cayman
-
 # Informações do Autor (usadas em SEO e metadados)
 author:
   name: "Rene Verinaud Anguita Junior"
