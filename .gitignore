@@ -13,3 +13,6 @@ example/_site
 Gemfile.lock
 node_modules
 npm-debug.log*
+
+# Dados pessoais locais (ex.: export de currículo/LinkedIn) — nunca versionar
+Profile.pdf
