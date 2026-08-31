@@ -28,6 +28,14 @@ jobs:
       - name: 📥 Baixar código do repositório (Checkout)
         uses: actions/checkout@v4
 
+      - name: 🐍 Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 🧪 Rodar suíte de testes do portfólio (scripts/test_site.py)
+        run: python3 scripts/test_site.py
+
       - name: ⚙️ Configurar ambiente Jekyll
         uses: actions/configure-pages@v5
 
