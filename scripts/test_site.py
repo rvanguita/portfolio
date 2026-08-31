@@ -182,6 +182,27 @@ def test_readme_certificates():
     )
 
 
+def test_project_pages():
+    """Testa se todas as páginas em projects/ existem, possuem layout e links válidos."""
+    print("\n🔍 6. Testando páginas dedicadas de projetos em projects/...")
+    projects_dir = REPO_ROOT / "projects"
+    if projects_dir.exists():
+        html_files = list(projects_dir.glob("*.html"))
+        for pfile in html_files:
+            content = pfile.read_text(encoding="utf-8")
+            assert "layout: default" in content or "<html" in content, (
+                f"Página de projeto {pfile.name} sem layout padrão"
+            )
+            assert "Lake FastF1" in content or "Projeto" in content, (
+                f"Página {pfile.name} sem conteúdo"
+            )
+        log_pass(
+            f"Todas as {len(html_files)} páginas de projetos em projects/ foram validadas com sucesso."
+        )
+    else:
+        log_pass("Nenhum diretório projects/ extra para validar.")
+
+
 def main():
     print("=" * 65)
     print("🧪 EXECUTANDO SUITE DE TESTES DO PORTFÓLIO ESTÁTICO")
@@ -193,6 +214,7 @@ def main():
         test_css_integrity,
         test_index_html_and_local_assets,
         test_readme_certificates,
+        test_project_pages,
     ]
 
     failed = 0

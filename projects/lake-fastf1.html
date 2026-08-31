@@ -1,0 +1,239 @@
+---
+layout: default
+title: "Lake FastF1 — Formula 1 Data Lakehouse & MLOps Platform | Rene Verinaud"
+description: "Estudo de caso detalhado do Lake FastF1: arquitetura de dados em camadas (Raw, Bronze, Silver) com Delta Lake, orquestração no Airflow, tracking no MLflow e APIs em FastAPI."
+---
+
+<div style="margin-bottom: 2rem;">
+  <a href="{{ '/' | relative_url }}#projetos" class="btn-custom btn-outline-custom" style="display: inline-flex; align-items: center; gap: 0.5rem; font-size: 0.9rem; margin-bottom: 1.5rem;">
+    <i class="fa-solid fa-arrow-left"></i> Voltar aos Projetos
+  </a>
+</div>
+
+<!-- ========================================== -->
+<!-- HERO DO CASE STUDY                         -->
+<!-- ========================================== -->
+<div class="about-card" style="border-left: 5px solid var(--accent); margin-bottom: 2.5rem;">
+  <div style="display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 1rem;">
+    <div>
+      <span class="project-category-badge cat-de" style="font-size: 0.82rem; margin-bottom: 0.6rem;">
+        <i class="fa-solid fa-flag-checkered"></i> Engenharia de Dados, Lakehouse & MLOps
+      </span>
+      <h1 style="font-size: 2.2rem; font-weight: 800; color: var(--primary); margin: 0.3rem 0 0.8rem; line-height: 1.2;">
+        Lake FastF1: Plataforma de Dados e Predição da Fórmula 1
+      </h1>
+      <p style="font-size: 1.1rem; color: var(--text-muted); max-width: 820px; line-height: 1.7;">
+        Uma arquitetura moderna de <strong>Data Lakehouse</strong> e <strong>MLOps</strong> ponta a ponta projetada para ingestão massiva de telemetrias e resultados de corridas da Fórmula 1, transformações em camadas (Raw, Bronze, Silver) com <strong>Delta Lake</strong>, orquestração no <strong>Apache Airflow</strong> e inferência em tempo real via <strong>FastAPI</strong> e <strong>Streamlit</strong>.
+      </p>
+    </div>
+  </div>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1rem; padding-top: 1.2rem; border-top: 1px solid var(--border-subtle);">
+    <a href="https://github.com/rvanguita/lake-fastf1" target="_blank" rel="noopener noreferrer" class="btn-nav-contact" style="font-size: 0.9rem; padding: 0.55rem 1.3rem;">
+      <i class="fa-brands fa-github"></i> Acessar Repositório no GitHub
+    </a>
+    <span class="social-chip" style="background: var(--bg-subtle);">
+      <i class="fa-solid fa-code-branch" style="color: var(--accent);"></i> Status: Ativo / Produção
+    </span>
+    <span class="social-chip" style="background: var(--bg-subtle);">
+      <i class="fa-brands fa-docker" style="color: #0ea5e9;"></i> Docker & Docker Compose
+    </span>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- MÉTRICAS DE IMPACTO DO PROJETO             -->
+<!-- ========================================== -->
+<div class="about-metrics" style="margin-bottom: 3rem;">
+  <div class="metric-box">
+    <div class="metric-number">3 Camadas</div>
+    <div class="metric-label">Arquitetura Lakehouse (Raw Parquet, Bronze Delta, Silver Curada)</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-number">Semanal</div>
+    <div class="metric-label">Orquestração automatizada via DAG no Apache Airflow</div>
+  </div>
+  <div class="metric-box">
+    <div class="metric-number">2 Serviços</div>
+    <div class="metric-label">FastAPI (:5002) + Dashboard Streamlit (:8501) conteinerizados</div>
+  </div>
+</div>
+
+<!-- ========================================== -->
+<!-- ARQUITETURA DO PIPELINE                    -->
+<!-- ========================================== -->
+<section style="margin-bottom: 3rem;">
+  <div class="section-header" style="margin-top: 0;">
+    <span class="section-tag">Design de Engenharia</span>
+    <h2 class="section-title"><i class="fa-solid fa-network-wired"></i> Arquitetura da Plataforma</h2>
+    <p class="section-desc">Fluxo de dados completo desde a coleta bruta via API FastF1 até as interfaces de predição e visualização.</p>
+  </div>
+
+  <div class="about-card" style="background: var(--bg-subtle); padding: 1.8rem; overflow-x: auto;">
+    <pre style="font-family: var(--font-code); font-size: 0.85rem; line-height: 1.5; color: var(--text-main); margin: 0;">
+┌────────────────────────── Apache Airflow DAG: data-pipeline (Semanal) ──────────────────────────┐
+│                                                                                                  │
+│   FastF1 API ──► Raw (Parquet) ──► Bronze (Delta Lake) ──► Silver (Delta Lake) ──► MySQL Mirror │
+│                       │                                                                          │
+└───────────────────────┼──────────────────────────────────────────────────────────────────────────┘
+                        │ CLI de Arquivamento
+                  ┌─────▼─────┐
+                  │  AWS S3   │
+                  └───────────┘
+
+    MLflow (Tracking) ──Modelo Preditivo──► FastAPI (:5002 /predict) ◄──── Streamlit Dashboard (:8501)
+                                                                                  │
+                                      Bronze + Silver (Delta Lake) ──Leitura──────┘</pre>
+  </div>
+</section>
+
+<!-- ========================================== -->
+<!-- DETALHAMENTO TÉCNICO DAS ETAPAS            -->
+<!-- ========================================== -->
+<section style="margin-bottom: 3rem;">
+  <div class="section-header">
+    <span class="section-tag">Engenharia de Dados</span>
+    <h2 class="section-title"><i class="fa-solid fa-cubes-stacked"></i> Estrutura das Camadas e Componentes</h2>
+  </div>
+
+  <div class="skills-grid">
+    <!-- Card 1 -->
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <div class="skill-icon icon-blue"><i class="fa-solid fa-cloud-arrow-down"></i></div>
+        <h3>1. Ingestão & Raw Layer</h3>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+        Extração automatizada de dados de corridas, treinos livres, classificações e telemetria da Fórmula 1 utilizando a biblioteca <code>FastF1</code>, salvando os resultados brutos particionados em formato <strong>Parquet</strong>.
+      </p>
+      <div class="skill-tags-group">
+        <span class="skill-pill">FastF1</span>
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">Parquet</span>
+        <span class="skill-pill">AWS S3 Boto3</span>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <div class="skill-icon icon-teal"><i class="fa-solid fa-layer-group"></i></div>
+        <h3>2. Bronze & Silver (Delta Lake)</h3>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+        Consolidação dos dados em tabelas <strong>Delta Lake</strong> na camada Bronze com versionamento ACID e criação da camada Silver curada com estatísticas agregadas de pilotos, construtores e histórico de voltas.
+      </p>
+      <div class="skill-tags-group">
+        <span class="skill-pill">Delta Lake</span>
+        <span class="skill-pill">PySpark</span>
+        <span class="skill-pill">Pandas / NumPy</span>
+        <span class="skill-pill">ACID Transactions</span>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <div class="skill-icon icon-purple"><i class="fa-solid fa-clock-rotate-left"></i></div>
+        <h3>3. Orquestração no Airflow</h3>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+        DAG programada para execução semanal com monitoramento de linhagem de dados (<code>Asset</code>), controle de concorrência e tarefas sequenciais com tolerância a falhas e espelhamento final para <strong>MySQL</strong>.
+      </p>
+      <div class="skill-tags-group">
+        <span class="skill-pill">Apache Airflow</span>
+        <span class="skill-pill">DAGs</span>
+        <span class="skill-pill">MySQL / SQLAlchemy</span>
+        <span class="skill-pill">Data Lineage</span>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="skill-card">
+      <div class="skill-card-header">
+        <div class="skill-icon icon-amber"><i class="fa-solid fa-chart-line"></i></div>
+        <h3>4. MLOps, API & Dashboard</h3>
+      </div>
+      <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.8rem;">
+        Modelo de Machine Learning para predição de campeonatos treinado com <code>Scikit-Learn</code> e rastreado no <code>MLflow</code>, exposto via API de baixa latência no <strong>FastAPI</strong> e painel analítico no <strong>Streamlit</strong>.
+      </p>
+      <div class="skill-tags-group">
+        <span class="skill-pill">MLflow</span>
+        <span class="skill-pill">Scikit-Learn</span>
+        <span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">Streamlit / Plotly</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================== -->
+<!-- TABELA DE STACK TECNOLÓGICA                -->
+<!-- ========================================== -->
+<section style="margin-bottom: 3rem;">
+  <div class="section-header">
+    <span class="section-tag">Tecnologias</span>
+    <h2 class="section-title"><i class="fa-solid fa-microchip"></i> Stack Tecnológica Completa</h2>
+  </div>
+
+  <div class="about-card" style="padding: 1.5rem; overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; font-size: 0.92rem;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--border-subtle); text-align: left;">
+          <th style="padding: 0.8rem; color: var(--accent);">Camada / Domínio</th>
+          <th style="padding: 0.8rem; color: var(--accent);">Tecnologias Utilizadas</th>
+          <th style="padding: 0.8rem; color: var(--accent);">Responsabilidade</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">Coleta & Acesso a Dados</td>
+          <td style="padding: 0.8rem;"><code>FastF1</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Extração de telemetrias, tempos de volta e dados climáticos.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">Processamento & Lakehouse</td>
+          <td style="padding: 0.8rem;"><code>Delta Lake</code>, <code>PySpark</code>, <code>Pandas</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Transformações em camadas Raw, Bronze e Silver com particionamento.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">Orquestração de Pipelines</td>
+          <td style="padding: 0.8rem;"><code>Apache Airflow</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Agendamento semanal automatizado e governança de dados.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">Machine Learning & Tracking</td>
+          <td style="padding: 0.8rem;"><code>Scikit-Learn</code>, <code>MLflow</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Treinamento, versionamento de modelos e rastreamento de métricas.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">API de Inferência</td>
+          <td style="padding: 0.8rem;"><code>FastAPI</code>, <code>Uvicorn</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Endpoint REST (<code>/predict</code>) para inferências de predição em tempo real.</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--border-subtle);">
+          <td style="padding: 0.8rem; font-weight: 700;">Visualização & BI</td>
+          <td style="padding: 0.8rem;"><code>Streamlit</code>, <code>Plotly</code>, <code>MySQL</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Dashboard interativo para exploração visual e espelhamento relacional.</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.8rem; font-weight: 700;">DevOps & Infraestrutura</td>
+          <td style="padding: 0.8rem;"><code>Docker</code>, <code>Docker Compose</code>, <code>uv</code>, <code>AWS S3</code></td>
+          <td style="padding: 0.8rem; color: var(--text-muted);">Ambiente isolado em contêineres, gerenciamento moderno de pacotes e backup cloud.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ========================================== -->
+<!-- BOTÕES FINAIS DE AÇÃO                      -->
+<!-- ========================================== -->
+<div style="text-align: center; margin: 3.5rem 0 1rem; display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+  <a href="https://github.com/rvanguita/lake-fastf1" target="_blank" rel="noopener noreferrer" class="btn-nav-contact" style="font-size: 1rem; padding: 0.65rem 1.6rem;">
+    <i class="fa-brands fa-github"></i> Explorar Código no GitHub
+  </a>
+  <a href="{{ '/' | relative_url }}#projetos" class="btn-custom btn-outline-custom" style="font-size: 1rem; padding: 0.65rem 1.4rem;">
+    <i class="fa-solid fa-list-check"></i> Ver Outros Projetos
+  </a>
+</div>
