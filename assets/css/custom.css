@@ -1,50 +1,104 @@
 /* ==============================================================================
    Portfolio Master Stylesheet - Rene Verinaud Anguita Junior, Ph.D.
-   Design: Modern Tech, Glassmorphism Accents & Categorized Components
+   Design: Modern Tech, Glassmorphism, Theme Switcher & Categorized Cards
    ============================================================================== */
 
-/* --- CSS Variables & Paleta de Cores --- */
+/* --- 1. Paleta de Cores: Modo Claro (:root) --- */
 :root {
   --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-code: 'JetBrains Mono', monospace;
 
-  /* Cores Principais */
-  --primary: #0f172a;       /* Deep Slate */
-  --primary-light: #1e293b;
-  --accent: #2563eb;        /* Vibrant Royal Blue */
-  --accent-light: #3b82f6;
-  --accent-teal: #0d9488;   /* Emerald / Teal */
-  --accent-purple: #7c3aed; /* Deep Purple */
-  --accent-amber: #d97706;
-
-  /* Superfícies e Fundos */
+  /* Superfícies */
   --bg-page: #f8fafc;
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
   --bg-subtle: #f1f5f9;
+  --bg-highlight: #eff6ff;
+  --navbar-bg: rgba(255, 255, 255, 0.88);
+  --footer-bg: #0f172a;
+
+  /* Bordas */
   --border-subtle: #e2e8f0;
   --border-hover: #cbd5e1;
+  --border-card: #e2e8f0;
 
-  /* Texto */
+  /* Tipografia */
   --text-main: #0f172a;
-  --text-muted: #64748b;
-  --text-light: #94a3b8;
+  --text-muted: #475569;
+  --text-light: #64748b;
   --text-inverse: #ffffff;
+
+  /* Cores de Destaque */
+  --primary: #0f172a;
+  --accent: #2563eb;        /* Royal Blue */
+  --accent-light: #3b82f6;
+  --accent-teal: #0d9488;   /* Emerald / Teal */
+  --accent-purple: #7c3aed; /* Purple */
+  --accent-amber: #d97706;
+
+  /* Tags & Badges */
+  --tag-bg: #eff6ff;
+  --tag-color: #1d4ed8;
+  --tag-code-bg: #f1f5f9;
+  --tag-code-color: #0f172a;
 
   /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 
-  --radius-sm: 6px;
+  --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 18px;
   --radius-full: 9999px;
   --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* --- Reset e Base --- */
+/* --- 2. Paleta de Cores: Modo Escuro ([data-theme="dark"]) --- */
+[data-theme="dark"] {
+  /* Superfícies Escuras */
+  --bg-page: #090d16;       /* Deep Obsidian */
+  --bg-card: #111827;       /* Dark Slate Surface */
+  --bg-card-hover: #162032;
+  --bg-subtle: #1a233a;
+  --bg-highlight: #172554;
+  --navbar-bg: rgba(9, 13, 22, 0.88);
+  --footer-bg: #050811;
+
+  /* Bordas Escuras */
+  --border-subtle: #1e293b;
+  --border-hover: #334155;
+  --border-card: #1e293b;
+
+  /* Tipografia Modo Escuro */
+  --text-main: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --text-inverse: #ffffff;
+
+  /* Cores de Destaque Vivas para Contraste */
+  --primary: #f8fafc;
+  --accent: #38bdf8;        /* Electric Sky Blue */
+  --accent-light: #60a5fa;
+  --accent-teal: #2dd4bf;   /* Mint / Teal */
+  --accent-purple: #c084fc;
+  --accent-amber: #fbbf24;
+
+  /* Tags & Badges */
+  --tag-bg: rgba(56, 189, 248, 0.12);
+  --tag-color: #38bdf8;
+  --tag-code-bg: #1e293b;
+  --tag-code-color: #e2e8f0;
+
+  /* Sombras Modo Escuro */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.08);
+}
+
+/* --- 3. Reset e Base --- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -61,6 +115,7 @@ body {
   background-color: var(--bg-page);
   color: var(--text-main);
   line-height: 1.65;
+  transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -74,17 +129,17 @@ a:hover {
   color: var(--accent-light);
 }
 
-/* --- Barra de Navegação (Navbar) --- */
+/* --- 4. Barra de Navegação (Navbar) --- */
 .navbar {
   position: sticky;
   top: 0;
   z-index: 100;
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: var(--navbar-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border-subtle);
   padding: 0.85rem 1.5rem;
-  transition: var(--transition);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .nav-container {
@@ -128,32 +183,81 @@ a:hover {
   background-color: var(--bg-subtle);
 }
 
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+/* Botão de Alternância de Tema */
+.btn-theme-toggle {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-main);
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition);
+}
+
+.btn-theme-toggle:hover {
+  background-color: var(--bg-card-hover);
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* Alternância dos ícones Sol / Lua */
+.theme-icon-sun {
+  display: none;
+  color: #fbbf24;
+}
+
+.theme-icon-moon {
+  display: block;
+  color: var(--text-muted);
+}
+
+[data-theme="dark"] .theme-icon-sun {
+  display: block;
+}
+
+[data-theme="dark"] .theme-icon-moon {
+  display: none;
+}
+
 .btn-nav-contact {
   background: linear-gradient(135deg, var(--accent), var(--accent-teal));
   color: #fff !important;
   font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.45rem 1rem;
+  padding: 0.45rem 1.1rem;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  transition: var(--transition);
 }
 
 .btn-nav-contact:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
 }
 
-/* --- Container Principal --- */
+/* --- 5. Container Principal --- */
 .main-wrapper {
   max-width: 1140px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
 }
 
-/* --- Hero Section --- */
+/* --- 6. Hero Section --- */
 .hero-section {
   display: grid;
   grid-template-columns: 1fr;
@@ -183,8 +287,8 @@ a:hover {
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 4px solid #ffffff;
-  box-shadow: 0 10px 25px -5px rgba(37, 99, 235, 0.25), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  border: 4px solid var(--bg-card);
+  box-shadow: var(--shadow-lg), 0 0 0 3px var(--accent);
 }
 
 .hero-avatar-badge {
@@ -200,7 +304,7 @@ a:hover {
   align-items: center;
   justify-content: center;
   font-size: 1rem;
-  border: 3px solid #fff;
+  border: 3px solid var(--bg-card);
   box-shadow: var(--shadow-md);
 }
 
@@ -218,16 +322,16 @@ a:hover {
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.8px;
   color: var(--accent);
-  background-color: #eff6ff;
+  background-color: var(--tag-bg);
   padding: 0.3rem 0.85rem;
   border-radius: var(--radius-full);
   margin-bottom: 0.8rem;
-  border: 1px solid #dbeafe;
+  border: 1px solid var(--border-subtle);
 }
 
 .hero-title {
@@ -265,7 +369,7 @@ a:hover {
   gap: 0.45rem;
   background-color: var(--bg-card);
   color: var(--text-main);
-  padding: 0.45rem 0.85rem;
+  padding: 0.45rem 0.95rem;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 600;
@@ -275,14 +379,14 @@ a:hover {
 }
 
 .social-chip:hover {
-  background-color: var(--primary);
+  background-color: var(--accent);
   color: #fff;
-  border-color: var(--primary);
+  border-color: var(--accent);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
 }
 
-/* --- Títulos de Seção com Categorias --- */
+/* --- 7. Títulos de Seções & Cabeçalhos --- */
 .section-header {
   margin: 3rem 0 1.5rem;
   display: flex;
@@ -314,7 +418,7 @@ a:hover {
   max-width: 680px;
 }
 
-/* --- Cartão de Destaque 'Sobre Mim' --- */
+/* --- 8. Cartão 'Sobre Mim' & Métricas --- */
 .about-card {
   background: var(--bg-card);
   border: 1px solid var(--border-subtle);
@@ -324,6 +428,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  transition: var(--transition);
 }
 
 .about-metrics {
@@ -334,15 +439,16 @@ a:hover {
 }
 
 .metric-box {
-  background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+  background: var(--bg-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
   padding: 1.2rem;
   text-align: center;
+  transition: var(--transition);
 }
 
 .metric-number {
-  font-size: 1.8rem;
+  font-size: 1.85rem;
   font-weight: 800;
   color: var(--accent);
   margin-bottom: 0.2rem;
@@ -354,7 +460,7 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* --- Matriz de Habilidades por Categoria --- */
+/* --- 9. Matriz de Habilidades Técnicas --- */
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -374,9 +480,9 @@ a:hover {
 }
 
 .skill-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--accent-light);
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
 }
 
 .skill-card-header {
@@ -420,14 +526,14 @@ a:hover {
   font-family: var(--font-code);
   font-size: 0.78rem;
   font-weight: 500;
-  background-color: var(--bg-subtle);
-  color: var(--text-main);
+  background-color: var(--tag-code-bg);
+  color: var(--tag-code-color);
   padding: 0.3rem 0.65rem;
   border-radius: var(--radius-sm);
   border: 1px solid var(--border-subtle);
 }
 
-/* --- Filtros de Categoria (Tabs) --- */
+/* --- 10. Filtros de Categoria (Tabs) --- */
 .category-filter-nav {
   display: flex;
   flex-wrap: wrap;
@@ -457,13 +563,13 @@ a:hover {
 }
 
 .filter-btn.active, .cert-filter-btn.active {
-  background: var(--primary);
-  color: #fff;
-  border-color: var(--primary);
-  box-shadow: var(--shadow-sm);
+  background: var(--accent);
+  color: #ffffff;
+  border-color: var(--accent);
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
 }
 
-/* --- Grade de Projetos --- */
+/* --- 11. Grade de Projetos --- */
 .projects-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -491,7 +597,7 @@ a:hover {
 .project-card-item:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--accent-light);
+  border-color: var(--accent);
 }
 
 .project-category-badge {
@@ -508,9 +614,9 @@ a:hover {
   width: fit-content;
 }
 
-.cat-ml { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
-.cat-opt { background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
-.cat-analytics { background-color: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+.cat-ml { background-color: var(--tag-bg); color: var(--accent); border: 1px solid var(--border-subtle); }
+.cat-opt { background-color: rgba(13, 148, 136, 0.12); color: var(--accent-teal); border: 1px solid var(--border-subtle); }
+.cat-analytics { background-color: rgba(124, 58, 237, 0.12); color: var(--accent-purple); border: 1px solid var(--border-subtle); }
 
 .project-card-item h3 {
   font-size: 1.25rem;
@@ -566,7 +672,7 @@ a:hover {
   font-family: var(--font-code);
   font-size: 0.74rem;
   font-weight: 500;
-  background-color: var(--bg-subtle);
+  background-color: var(--tag-code-bg);
   color: var(--text-muted);
   padding: 0.2rem 0.5rem;
   border-radius: var(--radius-sm);
@@ -578,7 +684,7 @@ a:hover {
   justify-content: center;
   gap: 0.5rem;
   background-color: var(--bg-subtle);
-  color: var(--primary) !important;
+  color: var(--text-main) !important;
   font-size: 0.85rem;
   font-weight: 600;
   padding: 0.55rem 1rem;
@@ -588,12 +694,12 @@ a:hover {
 }
 
 .btn-project:hover {
-  background-color: var(--primary);
-  color: #fff !important;
-  border-color: var(--primary);
+  background-color: var(--accent);
+  color: #ffffff !important;
+  border-color: var(--accent);
 }
 
-/* --- Formação Acadêmica (Timeline Cards) --- */
+/* --- 12. Formação Acadêmica --- */
 .education-timeline {
   display: flex;
   flex-direction: column;
@@ -636,7 +742,7 @@ a:hover {
 .edu-year {
   font-size: 0.82rem;
   font-weight: 700;
-  background-color: #eff6ff;
+  background-color: var(--tag-bg);
   color: var(--accent);
   padding: 0.2rem 0.6rem;
   border-radius: var(--radius-full);
@@ -648,7 +754,7 @@ a:hover {
   color: var(--text-muted);
 }
 
-/* --- Seção de Certificados Categorizados --- */
+/* --- 13. Certificações Categorizadas --- */
 .cert-categories-container {
   display: flex;
   flex-direction: column;
@@ -662,6 +768,7 @@ a:hover {
   border-radius: var(--radius-lg);
   padding: 1.6rem;
   box-shadow: var(--shadow-sm);
+  transition: var(--transition);
 }
 
 .cert-category-header {
@@ -718,7 +825,7 @@ a:hover {
 }
 
 .cert-badge-link:hover {
-  background-color: #ffffff;
+  background-color: var(--bg-card-hover);
   border-color: var(--accent);
   box-shadow: var(--shadow-md);
   transform: translateY(-2px);
@@ -732,27 +839,28 @@ a:hover {
 }
 
 .cert-badge-info i {
-  color: #ef4444; /* PDF Red icon */
+  color: #ef4444;
   font-size: 1.1rem;
 }
 
 .cert-badge-tag {
   font-size: 0.7rem;
   font-weight: 700;
-  background-color: #dcfce7;
-  color: #15803d;
+  background-color: rgba(13, 148, 136, 0.15);
+  color: var(--accent-teal);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
   white-space: nowrap;
 }
 
-/* --- Rodapé --- */
+/* --- 14. Rodapé Moderno --- */
 .footer {
-  background-color: var(--primary);
+  background-color: var(--footer-bg);
   color: var(--text-light);
   padding: 3rem 1.5rem 2rem;
   margin-top: 4rem;
-  border-top: 1px solid var(--primary-light);
+  border-top: 1px solid var(--border-subtle);
+  transition: background-color 0.3s ease;
 }
 
 .footer-container {
@@ -774,6 +882,7 @@ a:hover {
 .footer-info p {
   font-size: 0.9rem;
   margin-top: 0.2rem;
+  color: var(--text-muted);
 }
 
 .footer-socials {
@@ -785,8 +894,8 @@ a:hover {
   width: 38px;
   height: 38px;
   border-radius: 50%;
-  background-color: var(--primary-light);
-  color: var(--text-inverse);
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -796,21 +905,22 @@ a:hover {
 
 .footer-socials a:hover {
   background-color: var(--accent);
+  color: #fff;
   transform: translateY(-2px);
 }
 
 .footer-bottom {
   font-size: 0.8rem;
-  color: var(--text-light);
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-subtle);
   padding-top: 1.5rem;
   width: 100%;
 }
 
-/* --- Responsividade Extra --- */
+/* --- 15. Responsividade --- */
 @media (max-width: 768px) {
   .nav-menu {
-    display: none; /* Em telas muito pequenas simplifica */
+    display: none;
   }
   .hero-title {
     font-size: 1.85rem;
