@@ -159,27 +159,33 @@ def test_index_html_and_local_assets():
     )
 
 
-def test_readme_certificates():
-    """Testa se todos os links de certificados em README.md apontam para PDFs existentes."""
-    print("\n🔍 5. Testando integridade dos certificados no README.md...")
+def test_readme_project_documentation():
+    """Testa se o README documenta a plataforma e mantém seus links principais."""
+    print("\n🔍 5. Testando documentação do projeto no README.md...")
     readme_file = REPO_ROOT / "README.md"
     assert readme_file.exists(), "README.md não encontrado!"
 
     content = readme_file.read_text(encoding="utf-8")
-    cert_links = re.findall(r"\((certificates/[^\)]+\.pdf)\)", content)
+    required_sections = [
+        "# FastF1 Data Platform",
+        "## O que este projeto faz",
+        "## Arquitetura",
+        "## Principais funcionalidades",
+        "## Tecnologias",
+    ]
+    for section in required_sections:
+        assert section in content, f"Seção obrigatória ausente no README.md: {section}"
 
-    import urllib.parse
-
-    for link in cert_links:
-        decoded_link = urllib.parse.unquote(link)
-        target = REPO_ROOT / decoded_link
-        assert target.exists(), (
-            f"Certificado listado no README.md não existe: {decoded_link}"
-        )
-
-    log_pass(
-        f"Todos os {len(cert_links)} links de certificados no README.md foram verificados e existem no disco."
+    assert "https://github.com/rvanguita/lake-fastf1" in content, (
+        "Link do repositório FastF1 não encontrado no README.md"
     )
+    assert "https://rvanguita.github.io/portfolio/projects/lake-fastf1.html" in content, (
+        "Link do case study não encontrado no README.md"
+    )
+    assert "FastF1 API" in content and "MLflow" in content, (
+        "README.md não descreve o fluxo principal da plataforma"
+    )
+    log_pass("README.md documenta a plataforma e seus links principais.")
 
 
 def test_project_pages():
@@ -213,7 +219,7 @@ def main():
         test_layout,
         test_css_integrity,
         test_index_html_and_local_assets,
-        test_readme_certificates,
+        test_readme_project_documentation,
         test_project_pages,
     ]
 
