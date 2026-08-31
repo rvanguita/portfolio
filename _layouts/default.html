@@ -1,37 +1,25 @@
 <!DOCTYPE html>
-<html lang="pt-BR" data-theme="dark">
+<html lang="pt-BR" data-theme="light">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- Controle de Cache para Garantir Atualização Imediata em Todos os Navegadores -->
-  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-  <meta http-equiv="Pragma" content="no-cache">
-  <meta http-equiv="Expires" content="0">
-  
   <title>{{ page.title | default: site.title }}</title>
   <meta name="description" content="{{ page.description | default: site.description }}">
   
-  <!-- Script Imediato para Detecção e Aplicação do Tema (Evita FOUC em qualquer navegador) -->
+  <!-- Script Imediato para Detecção e Aplicação do Tema (Evita FOUC) -->
   <script>
     (function() {
-      try {
-        const savedTheme = localStorage.getItem('portfolio_theme');
-        if (savedTheme) {
-          document.documentElement.setAttribute('data-theme', savedTheme);
-        } else {
-          // Padrão moderno: dark mode ativo para todos os navegadores
-          document.documentElement.setAttribute('data-theme', 'dark');
-        }
-      } catch (e) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-      }
+      const savedTheme = localStorage.getItem('portfolio_theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const targetTheme = savedTheme || (prefersDark ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', targetTheme);
     })();
   </script>
 
-  <!-- Favicon com Cache-Busting -->
-  <link rel="icon" href="{{ site.favicon | relative_url }}?v={{ site.time | date: '%s' }}" type="image/png">
+  <!-- Favicon -->
+  <link rel="icon" href="{{ site.favicon | relative_url }}" type="image/png">
   
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -41,8 +29,8 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   
-  <!-- Estilos Customizados com Versionamento Dinâmico (Força atualização sem cache residual) -->
-  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}?v={{ site.time | date: '%s%N' }}">
+  <!-- Estilos Customizados -->
+  <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   
   {% seo %}
 </head>
@@ -111,12 +99,10 @@
       const themeToggleBtn = document.getElementById('themeToggle');
       if (themeToggleBtn) {
         themeToggleBtn.addEventListener('click', () => {
-          const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+          const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
           const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
           document.documentElement.setAttribute('data-theme', newTheme);
-          try {
-            localStorage.setItem('portfolio_theme', newTheme);
-          } catch (e) {}
+          localStorage.setItem('portfolio_theme', newTheme);
         });
       }
 

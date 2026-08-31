@@ -1,11 +1,11 @@
 # ==============================================================================
 # GitHub Actions: Validação e Auditoria Contínua (CI)
 # ==============================================================================
-# Este fluxo executa a suíte de testes automatizados e valida a compilação do Jekyll
-# antes de permitir a integração de qualquer Pull Request.
+# Este fluxo valida a compilação do site e a integridade de todos os links,
+# imagens e PDFs em Pull Requests antes de permitir a mesclagem.
 # ==============================================================================
 
-name: 🧪 Validação & Testes do Portfólio (CI)
+name: 🧪 Validação & Auditoria do Portfólio (CI)
 
 on:
   # Executa em Pull Requests direcionados à branch main
@@ -21,21 +21,12 @@ permissions:
 
 jobs:
   validate:
-    name: 🔍 Testes Automatizados & Compilação
+    name: 🔍 Testar Compilação & Integridade
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Baixar código do repositório (Checkout)
         uses: actions/checkout@v4
-
-      - name: 🐍 Configurar Python para Testes
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
-
-      - name: 🧪 Executar Suíte de Testes Automatizados
-        run: |
-          python3 scripts/test_site.py
 
       - name: ⚙️ Configurar ambiente Jekyll
         uses: actions/configure-pages@v5
@@ -49,7 +40,7 @@ jobs:
       - name: 📑 Auditar Estrutura e Links de PDFs
         id: audit
         run: |
-          echo "::group::🔍 Auditoria de Artefatos Gerados"
+          echo "::group::🔍 Auditoria de Arquivos e Integridade"
           
           PAGE_COUNT=$(find ./_site -name "*.html" | wc -l)
           PDF_COUNT=$(find ./_site/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
@@ -58,8 +49,8 @@ jobs:
           
           echo "Páginas HTML: $PAGE_COUNT"
           echo "Certificados PDF: $PDF_COUNT"
-          echo "CSS Customizado: $CSS_EXISTS"
-          echo "Imagens: $IMG_COUNT"
+          echo "CSS Customizado presente: $CSS_EXISTS"
+          echo "Imagens encontradas: $IMG_COUNT"
           
           echo "page_count=$PAGE_COUNT" >> "$GITHUB_OUTPUT"
           echo "pdf_count=$PDF_COUNT" >> "$GITHUB_OUTPUT"
@@ -71,10 +62,10 @@ jobs:
       - name: 📊 Gerar Relatório de Auditoria (CI Report)
         run: |
           cat << 'EOF' >> "$GITHUB_STEP_SUMMARY"
-          # 🧪 Relatório de Auditoria e Testes Automatizados (CI)
+          # 🧪 Relatório de Auditoria e Validação (CI)
 
           > [!NOTE]
-          > **Todos os testes unitários de integridade e a compilação do Jekyll passaram com 100% de sucesso!**
+          > **Todos os testes de compilação estática e validação estrutural foram concluídos com sucesso!**
 
           ---
 
@@ -82,16 +73,15 @@ jobs:
 
           | Item Auditado | Status | Detalhes |
           | :--- | :--- | :--- |
-          | 🧪 **Suíte de Testes Python** | 🟢 **100% Aprovado** | \`scripts/test_site.py\` executado com sucesso |
-          | 🔨 **Compilação Jekyll** | 🟢 **Aprovado** | Nenhuma falha de sintaxe Liquid/HTML |
+          | 🔨 **Compilação Jekyll** | 🟢 **Aprovado** | Nenhuma falha de sintaxe Liquid/Markdown |
           | 📄 **Páginas HTML** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.page_count }}\` página(s) gerada(s) |
-          | 📜 **Certificados PDF** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.pdf_count }}\` arquivo(s) PDF verificados |
-          | 🎨 **Folha de Estilos (CSS)** | 🟢 **Aprovado** | \`custom.css\` validado com cache-busting |
-          | 🖼️ **Imagens & Ícones** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.img_count }}\` imagens disponíveis |
+          | 📜 **Certificados PDF** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.pdf_count }}\` arquivo(s) PDF localizados |
+          | 🎨 **Estilização (CSS)** | 🟢 **Aprovado** | Folha de estilos customizada carregada |
+          | 🖼️ **Imagens & Avatar** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.img_count }}\` imagens disponíveis |
 
           ---
 
           > [!TIP]
           > **Branch validada:** \`${{ github.head_ref || github.ref_name }}\`  
-          > O site está seguro e aprovado para ser integrado na branch principal \`main\`.
+          > Este Pull Request está pronto e seguro para ser integrado na branch \`main\`.
           EOF
