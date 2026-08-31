@@ -1,6 +1,6 @@
 /* ==============================================================================
    Portfolio Master Stylesheet - Rene Verinaud Anguita Junior, Ph.D.
-   Design: Modern Tech, Glassmorphism, Theme Switcher & Categorized Cards
+   Design: Modern Tech, Ambient Mesh Glow, Dark/Light Themes & Categorized Cards
    ============================================================================== */
 
 /* --- 1. Paleta de Cores: Modo Claro (:root) --- */
@@ -10,17 +10,19 @@
 
   /* Superfícies */
   --bg-page: #f8fafc;
+  --bg-page-gradient: radial-gradient(ellipse at 50% -10%, rgba(37, 99, 235, 0.07) 0%, transparent 65%);
   --bg-card: #ffffff;
   --bg-card-hover: #ffffff;
   --bg-subtle: #f1f5f9;
   --bg-highlight: #eff6ff;
-  --navbar-bg: rgba(255, 255, 255, 0.88);
-  --footer-bg: #0f172a;
+  --navbar-bg: rgba(255, 255, 255, 0.85);
+  --footer-bg: #0b1329;
 
   /* Bordas */
   --border-subtle: #e2e8f0;
   --border-hover: #cbd5e1;
   --border-card: #e2e8f0;
+  --card-inner-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.8);
 
   /* Tipografia */
   --text-main: #0f172a;
@@ -28,13 +30,27 @@
   --text-light: #64748b;
   --text-inverse: #ffffff;
 
-  /* Cores de Destaque */
+  /* Cores de Destaque Semânticas */
   --primary: #0f172a;
-  --accent: #2563eb;        /* Royal Blue */
+  --accent: #2563eb;         /* Royal Blue */
   --accent-light: #3b82f6;
-  --accent-teal: #0d9488;   /* Emerald / Teal */
-  --accent-purple: #7c3aed; /* Purple */
+  --accent-gradient: linear-gradient(135deg, #2563eb, #06b6d4);
+  --accent-teal: #0d9488;    /* Emerald / Teal */
+  --accent-purple: #7c3aed;  /* Indigo / Purple */
   --accent-amber: #d97706;
+
+  /* Categorias */
+  --cat-ml-bg: #eef2ff;
+  --cat-ml-text: #4338ca;
+  --cat-ml-border: #c7d2fe;
+
+  --cat-opt-bg: #ecfdf5;
+  --cat-opt-text: #047857;
+  --cat-opt-border: #a7f3d0;
+
+  --cat-biz-bg: #fffbeb;
+  --cat-biz-text: #b45309;
+  --cat-biz-border: #fde68a;
 
   /* Tags & Badges */
   --tag-bg: #eff6ff;
@@ -44,9 +60,9 @@
 
   /* Sombras */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04);
-  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 12px 20px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
+  --shadow-hover: 0 20px 30px -5px rgba(37, 99, 235, 0.12), 0 8px 12px -6px rgba(0, 0, 0, 0.04);
 
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -58,44 +74,60 @@
 /* --- 2. Paleta de Cores: Modo Escuro ([data-theme="dark"]) --- */
 [data-theme="dark"] {
   /* Superfícies Escuras */
-  --bg-page: #090d16;       /* Deep Obsidian */
-  --bg-card: #111827;       /* Dark Slate Surface */
-  --bg-card-hover: #162032;
-  --bg-subtle: #1a233a;
-  --bg-highlight: #172554;
-  --navbar-bg: rgba(9, 13, 22, 0.88);
-  --footer-bg: #050811;
+  --bg-page: #080c16;
+  --bg-page-gradient: radial-gradient(ellipse at 50% -10%, rgba(56, 189, 248, 0.12) 0%, transparent 60%), radial-gradient(ellipse at 80% 50%, rgba(124, 58, 237, 0.06) 0%, transparent 45%);
+  --bg-card: #0f172a;
+  --bg-card-hover: #162238;
+  --bg-subtle: #17233a;
+  --bg-highlight: #1e293b;
+  --navbar-bg: rgba(8, 12, 22, 0.85);
+  --footer-bg: #04070e;
 
-  /* Bordas Escuras */
+  /* Bordas Escuras & Efeito de Brilho Interno */
   --border-subtle: #1e293b;
   --border-hover: #334155;
-  --border-card: #1e293b;
+  --border-card: rgba(255, 255, 255, 0.07);
+  --card-inner-glow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
 
-  /* Tipografia Modo Escuro */
-  --text-main: #f1f5f9;
+  /* Tipografia */
+  --text-main: #f8fafc;
   --text-muted: #94a3b8;
   --text-light: #64748b;
   --text-inverse: #ffffff;
 
-  /* Cores de Destaque Vivas para Contraste */
+  /* Destaques Vivos & Neon Soft */
   --primary: #f8fafc;
-  --accent: #38bdf8;        /* Electric Sky Blue */
+  --accent: #38bdf8;         /* Cyan Elétrico */
   --accent-light: #60a5fa;
-  --accent-teal: #2dd4bf;   /* Mint / Teal */
+  --accent-gradient: linear-gradient(135deg, #38bdf8, #818cf8);
+  --accent-teal: #2dd4bf;    /* Mint Neon */
   --accent-purple: #c084fc;
   --accent-amber: #fbbf24;
+
+  /* Categorias Modo Escuro */
+  --cat-ml-bg: rgba(99, 102, 241, 0.15);
+  --cat-ml-text: #a5b4fc;
+  --cat-ml-border: rgba(99, 102, 241, 0.3);
+
+  --cat-opt-bg: rgba(16, 185, 129, 0.15);
+  --cat-opt-text: #6ee7b7;
+  --cat-opt-border: rgba(16, 185, 129, 0.3);
+
+  --cat-biz-bg: rgba(245, 158, 11, 0.15);
+  --cat-biz-text: #fcd34d;
+  --cat-biz-border: rgba(245, 158, 11, 0.3);
 
   /* Tags & Badges */
   --tag-bg: rgba(56, 189, 248, 0.12);
   --tag-color: #38bdf8;
-  --tag-code-bg: #1e293b;
+  --tag-code-bg: #19253c;
   --tag-code-color: #e2e8f0;
 
   /* Sombras Modo Escuro */
   --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6);
-  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.7), 0 0 15px rgba(56, 189, 248, 0.08);
+  --shadow-md: 0 4px 8px -1px rgba(0, 0, 0, 0.5);
+  --shadow-lg: 0 12px 20px -3px rgba(0, 0, 0, 0.6);
+  --shadow-hover: 0 20px 30px -5px rgba(0, 0, 0, 0.7), 0 0 20px rgba(56, 189, 248, 0.12);
 }
 
 /* --- 3. Reset e Base --- */
@@ -103,6 +135,28 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+::selection {
+  background-color: var(--accent);
+  color: #ffffff;
+}
+
+::-webkit-scrollbar {
+  width: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
 }
 
 html {
@@ -113,6 +167,8 @@ html {
 body {
   font-family: var(--font-main);
   background-color: var(--bg-page);
+  background-image: var(--bg-page-gradient);
+  background-attachment: fixed;
   color: var(--text-main);
   line-height: 1.65;
   transition: background-color 0.3s ease, color 0.3s ease;
@@ -232,22 +288,22 @@ a:hover {
 }
 
 .btn-nav-contact {
-  background: linear-gradient(135deg, var(--accent), var(--accent-teal));
-  color: #fff !important;
+  background: var(--accent-gradient);
+  color: #ffffff !important;
   font-size: 0.85rem;
   font-weight: 600;
-  padding: 0.45rem 1.1rem;
+  padding: 0.45rem 1.15rem;
   border-radius: var(--radius-full);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.25);
   transition: var(--transition);
 }
 
 .btn-nav-contact:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.35);
+  box-shadow: 0 4px 16px rgba(37, 99, 235, 0.35);
 }
 
 /* --- 5. Container Principal --- */
@@ -295,7 +351,7 @@ a:hover {
   position: absolute;
   bottom: 8px;
   right: 8px;
-  background: var(--accent-teal);
+  background: var(--accent-gradient);
   color: #fff;
   border-radius: 50%;
   width: 38px;
@@ -328,7 +384,7 @@ a:hover {
   letter-spacing: 0.8px;
   color: var(--accent);
   background-color: var(--tag-bg);
-  padding: 0.3rem 0.85rem;
+  padding: 0.35rem 0.9rem;
   border-radius: var(--radius-full);
   margin-bottom: 0.8rem;
   border: 1px solid var(--border-subtle);
@@ -368,13 +424,13 @@ a:hover {
   align-items: center;
   gap: 0.45rem;
   background-color: var(--bg-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   color: var(--text-main);
   padding: 0.45rem 0.95rem;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 600;
-  border: 1px solid var(--border-subtle);
-  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-card);
   transition: var(--transition);
 }
 
@@ -421,10 +477,10 @@ a:hover {
 /* --- 8. Cartão 'Sobre Mim' & Métricas --- */
 .about-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-radius: var(--radius-lg);
   padding: 1.8rem;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
@@ -442,16 +498,23 @@ a:hover {
   background: var(--bg-subtle);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  padding: 1.2rem;
+  padding: 1.3rem 1.2rem;
   text-align: center;
   transition: var(--transition);
 }
 
+.metric-box:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
 .metric-number {
-  font-size: 1.85rem;
+  font-size: 1.9rem;
   font-weight: 800;
-  color: var(--accent);
-  margin-bottom: 0.2rem;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.25rem;
 }
 
 .metric-label {
@@ -470,10 +533,10 @@ a:hover {
 
 .skill-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-radius: var(--radius-md);
   padding: 1.4rem;
-  box-shadow: var(--shadow-sm);
   transition: var(--transition);
   display: flex;
   flex-direction: column;
@@ -544,7 +607,8 @@ a:hover {
 .filter-btn, .cert-filter-btn {
   background: var(--bg-card);
   color: var(--text-muted);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
@@ -563,10 +627,10 @@ a:hover {
 }
 
 .filter-btn.active, .cert-filter-btn.active {
-  background: var(--accent);
+  background: var(--accent-gradient);
   color: #ffffff;
-  border-color: var(--accent);
-  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  border-color: transparent;
+  box-shadow: 0 2px 10px rgba(37, 99, 235, 0.35);
 }
 
 /* --- 11. Grade de Projetos --- */
@@ -584,10 +648,10 @@ a:hover {
 
 .project-card-item {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-radius: var(--radius-lg);
   padding: 1.6rem;
-  box-shadow: var(--shadow-sm);
   transition: var(--transition);
   display: flex;
   flex-direction: column;
@@ -614,9 +678,9 @@ a:hover {
   width: fit-content;
 }
 
-.cat-ml { background-color: var(--tag-bg); color: var(--accent); border: 1px solid var(--border-subtle); }
-.cat-opt { background-color: rgba(13, 148, 136, 0.12); color: var(--accent-teal); border: 1px solid var(--border-subtle); }
-.cat-analytics { background-color: rgba(124, 58, 237, 0.12); color: var(--accent-purple); border: 1px solid var(--border-subtle); }
+.cat-ml { background-color: var(--cat-ml-bg); color: var(--cat-ml-text); border: 1px solid var(--cat-ml-border); }
+.cat-opt { background-color: var(--cat-opt-bg); color: var(--cat-opt-text); border: 1px solid var(--cat-opt-border); }
+.cat-analytics { background-color: var(--cat-biz-bg); color: var(--cat-biz-text); border: 1px solid var(--cat-biz-border); }
 
 .project-card-item h3 {
   font-size: 1.25rem;
@@ -694,9 +758,10 @@ a:hover {
 }
 
 .btn-project:hover {
-  background-color: var(--accent);
+  background: var(--accent-gradient);
   color: #ffffff !important;
-  border-color: var(--accent);
+  border-color: transparent;
+  transform: translateY(-1px);
 }
 
 /* --- 12. Formação Acadêmica --- */
@@ -709,11 +774,11 @@ a:hover {
 
 .edu-card {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-left: 4px solid var(--accent);
   border-radius: var(--radius-md);
   padding: 1.3rem 1.6rem;
-  box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
   gap: 0.3rem;
@@ -744,8 +809,9 @@ a:hover {
   font-weight: 700;
   background-color: var(--tag-bg);
   color: var(--accent);
-  padding: 0.2rem 0.6rem;
+  padding: 0.2rem 0.65rem;
   border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
 }
 
 .edu-institution {
@@ -764,10 +830,10 @@ a:hover {
 
 .cert-category-group {
   background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-radius: var(--radius-lg);
   padding: 1.6rem;
-  box-shadow: var(--shadow-sm);
   transition: var(--transition);
 }
 
@@ -846,8 +912,9 @@ a:hover {
 .cert-badge-tag {
   font-size: 0.7rem;
   font-weight: 700;
-  background-color: rgba(13, 148, 136, 0.15);
-  color: var(--accent-teal);
+  background-color: var(--cat-opt-bg);
+  color: var(--cat-opt-text);
+  border: 1px solid var(--cat-opt-border);
   padding: 0.15rem 0.5rem;
   border-radius: var(--radius-full);
   white-space: nowrap;
@@ -904,7 +971,7 @@ a:hover {
 }
 
 .footer-socials a:hover {
-  background-color: var(--accent);
+  background: var(--accent-gradient);
   color: #fff;
   transform: translateY(-2px);
 }

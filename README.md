@@ -11,7 +11,7 @@
   <a href="https://github.com/rvanguita">
     <img src="https://img.shields.io/badge/GitHub-rvanguita-181717?style=flat&logo=github" alt="GitHub" />
   </a>
-  <a href="https://linkedin.com/in/rene-verinaud-anguita-junior">
+  <a href="https://linkedin.com/in/rvanguita">
     <img src="https://img.shields.io/badge/LinkedIn-Rene%20Verinaud-0A66C2?style=flat&logo=linkedin" alt="LinkedIn" />
   </a>
   <img src="https://img.shields.io/badge/Location-Campinas%2C%20SP%20--%20Brazil-informational?style=flat&logo=google-maps" alt="Localização" />
