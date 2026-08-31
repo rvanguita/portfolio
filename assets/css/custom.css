@@ -310,7 +310,7 @@ a:hover {
 .main-wrapper {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
+  padding: 2rem 1.5rem 5rem;
 }
 
 /* --- 6. Hero Section --- */
@@ -319,15 +319,40 @@ a:hover {
   grid-template-columns: 1fr;
   gap: 2.5rem;
   align-items: center;
-  padding: 3rem 0 2.5rem;
+  padding: 3.5rem 2.25rem 3rem;
   margin-bottom: 2.5rem;
-  border-bottom: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-card);
+  border-radius: 28px;
+  background: var(--bg-card);
+  box-shadow: var(--card-inner-glow), var(--shadow-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  width: 420px;
+  height: 420px;
+  right: -170px;
+  top: -230px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  opacity: 0.1;
+  filter: blur(10px);
+  pointer-events: none;
 }
 
 @media (min-width: 860px) {
   .hero-section {
     grid-template-columns: 240px 1fr;
     padding: 3.5rem 0 3rem;
+  }
+}
+
+@media (min-width: 860px) {
+  .hero-section {
+    padding: 3.5rem 3rem;
   }
 }
 
@@ -366,6 +391,8 @@ a:hover {
 
 .hero-content {
   text-align: center;
+  position: relative;
+  z-index: 1;
 }
 
 @media (min-width: 860px) {
@@ -400,10 +427,65 @@ a:hover {
 }
 
 .hero-subtitle {
-  font-size: 1.2rem;
-  font-weight: 500;
+  max-width: 720px;
+  font-size: clamp(1.2rem, 2.4vw, 1.55rem);
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.35;
+  margin-bottom: 0.7rem;
+}
+
+.hero-description {
+  max-width: 650px;
   color: var(--text-muted);
-  margin-bottom: 1.2rem;
+  font-size: 0.98rem;
+  margin-bottom: 1.35rem;
+}
+
+.availability-dot {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.13);
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.btn-primary, .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.05rem;
+  border-radius: var(--radius-md);
+  font-size: 0.86rem;
+  font-weight: 700;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  color: #fff !important;
+  background: var(--accent-gradient);
+  box-shadow: 0 8px 18px rgba(37, 99, 235, 0.22);
+}
+
+.btn-secondary {
+  color: var(--text-main) !important;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+}
+
+.btn-primary:hover, .btn-secondary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
 }
 
 .hero-socials {
@@ -480,11 +562,29 @@ a:hover {
   border: 1px solid var(--border-card);
   box-shadow: var(--card-inner-glow), var(--shadow-sm);
   border-radius: var(--radius-lg);
-  padding: 1.8rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
   transition: var(--transition);
+}
+
+.about-intro {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.about-intro h2 {
+  color: var(--primary);
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  line-height: 1.25;
+}
+
+.about-copy {
+  color: var(--text-main);
+  font-size: 1.02rem;
+  line-height: 1.8;
 }
 
 .about-metrics {
@@ -656,6 +756,7 @@ a:hover {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 100%;
 }
 
 .project-card-item:hover {
@@ -991,5 +1092,42 @@ a:hover {
   }
   .hero-title {
     font-size: 1.85rem;
+  }
+
+  .hero-section {
+    padding: 2.5rem 1.1rem 2.2rem;
+    gap: 1.8rem;
+    border-radius: 22px;
+  }
+
+  .hero-actions > a {
+    flex: 1 1 170px;
+  }
+
+  .about-card {
+    padding: 1.35rem;
+  }
+
+  .section-title {
+    font-size: 1.45rem;
+  }
+
+  .category-filter-nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 0.45rem;
+    scrollbar-width: thin;
+  }
+
+  .filter-btn, .cert-filter-btn {
+    flex: 0 0 auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
   }
 }
