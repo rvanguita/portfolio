@@ -44,6 +44,10 @@
   --cat-ml-text: #4338ca;
   --cat-ml-border: #c7d2fe;
 
+  --cat-de-bg: #e0f2fe;
+  --cat-de-text: #0369a1;
+  --cat-de-border: #bae6fd;
+
   --cat-opt-bg: #ecfdf5;
   --cat-opt-text: #047857;
   --cat-opt-border: #a7f3d0;
@@ -108,6 +112,10 @@
   --cat-ml-bg: rgba(99, 102, 241, 0.15);
   --cat-ml-text: #a5b4fc;
   --cat-ml-border: rgba(99, 102, 241, 0.3);
+
+  --cat-de-bg: rgba(14, 165, 233, 0.15);
+  --cat-de-text: #38bdf8;
+  --cat-de-border: rgba(56, 189, 248, 0.3);
 
   --cat-opt-bg: rgba(16, 185, 129, 0.15);
   --cat-opt-text: #6ee7b7;
@@ -679,6 +687,7 @@ a:hover {
 }
 
 .cat-ml { background-color: var(--cat-ml-bg); color: var(--cat-ml-text); border: 1px solid var(--cat-ml-border); }
+.cat-de { background-color: var(--cat-de-bg); color: var(--cat-de-text); border: 1px solid var(--cat-de-border); }
 .cat-opt { background-color: var(--cat-opt-bg); color: var(--cat-opt-text); border: 1px solid var(--cat-opt-border); }
 .cat-analytics { background-color: var(--cat-biz-bg); color: var(--cat-biz-text); border: 1px solid var(--cat-biz-border); }
 

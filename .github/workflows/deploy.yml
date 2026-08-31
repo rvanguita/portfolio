@@ -1,8 +1,8 @@
 # ==============================================================================
 # GitHub Actions: Publicação do Site Estático (GitHub Pages)
 # ==============================================================================
-# Este fluxo automatiza a compilação (build) e a publicação (deploy) do seu
-# portfólio estático no GitHub Pages, gerando um dashboard visual rico de status.
+# Este fluxo automatiza os testes, a compilação (build) e a publicação (deploy)
+# do seu portfólio estático no GitHub Pages.
 # ==============================================================================
 
 name: 🚀 Deploy Site Estático (GitHub Pages)
@@ -29,15 +29,24 @@ concurrency:
 
 jobs:
   # ----------------------------------------------------------------------------
-  # Job 1: Build & Auditoria de Arquivos
+  # Job 1: Testes, Build & Auditoria de Arquivos
   # ----------------------------------------------------------------------------
   build:
-    name: 📦 Compilar & Auditar Site Estático
+    name: 📦 Testar, Compilar & Auditar Site
     runs-on: ubuntu-latest
 
     steps:
       - name: 📥 Baixar código do repositório (Checkout)
         uses: actions/checkout@v4
+
+      - name: 🐍 Configurar Python para Testes
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 🧪 Executar Testes de Integridade
+        run: |
+          python3 scripts/test_site.py
 
       - name: ⚙️ Configurar ambiente GitHub Pages
         uses: actions/configure-pages@v5
@@ -114,6 +123,7 @@ jobs:
           | Campo | Detalhe |
           | :--- | :--- |
           | 🟢 **Status da Aplicação** | **Online e Ativo** |
+          | 🧪 **Testes Automatizados** | **100% Aprovados** (\`scripts/test_site.py\`) |
           | 🔗 **URL de Produção** | [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }}) |
           | 🌿 **Branch de Origem** | \`${{ github.ref_name }}\` |
           | 📌 **Commit SHA** | [\`${{ github.sha }}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) |

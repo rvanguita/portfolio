@@ -132,12 +132,13 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       </div>
       <div class="skill-tags-group">
         <span class="skill-pill">SQL</span>
-        <span class="skill-pill">R</span>
-        <span class="skill-pill">C++</span>
-        <span class="skill-pill">Git / GitHub</span>
-        <span class="skill-pill">GitHub Actions (CI/CD)</span>
+        <span class="skill-pill">Apache Airflow</span>
+        <span class="skill-pill">Delta Lake / PySpark</span>
+        <span class="skill-pill">FastAPI</span>
+        <span class="skill-pill">Streamlit</span>
+        <span class="skill-pill">Docker</span>
+        <span class="skill-pill">Git / GitHub Actions</span>
         <span class="skill-pill">Linux / Shell</span>
-        <span class="skill-pill">LaTeX</span>
       </div>
     </div>
   </div>
@@ -158,6 +159,9 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     <button class="filter-btn active" data-category="all">
       <i class="fa-solid fa-border-all"></i> Todos os Projetos
     </button>
+    <button class="filter-btn" data-category="de">
+      <i class="fa-solid fa-server"></i> Engenharia de Dados & MLOps
+    </button>
     <button class="filter-btn" data-category="ml">
       <i class="fa-solid fa-robot"></i> Machine Learning
     </button>
@@ -170,6 +174,37 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
   </div>
 
   <div class="projects-grid">
+    <!-- Projeto: Lake FastF1 -->
+    <div class="project-card-item" data-category="de">
+      <div>
+        <span class="project-category-badge cat-de">
+          <i class="fa-solid fa-flag-checkered"></i> Lakehouse & MLOps
+        </span>
+        <h3>Lake FastF1 — Formula 1 Data Platform</h3>
+        <p>Plataforma completa de Engenharia de Dados e MLOps para ingestão, processamento em camadas (Raw, Bronze e Silver com Delta Lake), previsão de campeonatos de F1 e disponibilização analítica.</p>
+        <ul class="project-highlights">
+          <li><i class="fa-solid fa-check-circle"></i> Pipeline orquestrado semanalmente no <strong>Apache Airflow</strong> com linhagem de dados estruturada.</li>
+          <li><i class="fa-solid fa-check-circle"></i> Arquitetura Lakehouse com <strong>Delta Lake</strong>, espelhamento para MySQL e arquivamento em AWS S3.</li>
+          <li><i class="fa-solid fa-check-circle"></i> Modelo preditivo rastreado no <strong>MLflow</strong>, servido via API de inferência (<strong>FastAPI</strong>) e dashboard (<strong>Streamlit + Plotly</strong>).</li>
+        </ul>
+      </div>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-tag">FastF1</span>
+          <span class="tech-tag">Airflow</span>
+          <span class="tech-tag">Delta Lake</span>
+          <span class="tech-tag">PySpark</span>
+          <span class="tech-tag">FastAPI</span>
+          <span class="tech-tag">Streamlit</span>
+          <span class="tech-tag">MLflow</span>
+          <span class="tech-tag">Docker</span>
+        </div>
+        <a href="https://github.com/rvanguita/lake-fastf1" target="_blank" rel="noopener noreferrer" class="btn-project">
+          <i class="fa-brands fa-github"></i> Ver Código no GitHub
+        </a>
+      </div>
+    </div>
+
     <!-- Projeto 1 -->
     <div class="project-card-item" data-category="ml">
       <div>

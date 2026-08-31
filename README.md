@@ -33,14 +33,24 @@ Profissional com **Doutorado em Engenharia Elétrica pela UNICAMP**, especialist
 
 | Categoria | Competências & Ferramentas |
 | :--- | :--- |
-| 🤖 **Ciência de Dados & Machine Learning** | `Python`, `Pandas`, `NumPy`, `Scikit-Learn`, `Statsmodels`, `XGBoost`, `LightGBM`, Modelos de Regressão e Classificação, Engenharia de Recursos (*Feature Engineering*), Validação Cruzada |
+| 🤖 **Ciência de Dados & Machine Learning** | `Python`, `Pandas`, `NumPy`, `Scikit-Learn`, `Statsmodels`, `XGBoost`, `LightGBM`, `MLflow`, Modelos de Regressão e Classificação, Feature Engineering, Validação Cruzada |
+| 🏎️ **Engenharia de Dados & MLOps** | `Apache Airflow`, `Delta Lake`, `PySpark`, `FastAPI`, `Streamlit`, `Docker / Docker Compose`, `AWS S3`, `MySQL / SQLAlchemy`, `FastF1` |
 | ⚡ **Pesquisa Operacional & Otimização** | `CPLEX`, `AMPL`, Programação Linear Inteira Mista (MILP), Modelagem Não-Linear, Metaheurísticas, Otimização de Redes e Infraestrutura |
-| 📊 **Visualização & Business Intelligence** | `Power BI`, `Tableau`, `Matplotlib`, `Seaborn`, `Excel Avançado`, Estatística Descritiva e Inferencial |
-| 🛠️ **Linguagens, DevOps & Cloud** | `SQL`, `R`, `C++`, `Git / GitHub`, `GitHub Actions (CI/CD)`, `Jekyll`, `Linux / Bash`, `LaTeX` |
+| 📊 **Visualização & Business Intelligence** | `Power BI`, `Tableau`, `Plotly`, `Matplotlib`, `Seaborn`, `Excel Avançado`, Estatística Descritiva e Inferencial |
+| 🛠️ **Linguagens, DevOps & Cloud** | `SQL`, `R`, `C++`, `Git / GitHub`, `GitHub Actions (CI/CD)`, `Linux / Bash`, `LaTeX` |
 
 ---
 
 ## 🚀 Projetos em Destaque por Categoria
+
+### 🏎️ Categoria: Engenharia de Dados, Lakehouse & MLOps
+#### [Lake FastF1 — Formula 1 Data Platform](https://github.com/rvanguita/lake-fastf1)
+- **Área:** Arquitetura Lakehouse, Ingestão Automatizada & Predição em F1
+- **Stack:** `FastF1`, `Apache Airflow`, `Delta Lake`, `PySpark`, `Scikit-Learn`, `MLflow`, `FastAPI`, `Streamlit`, `Docker`, `AWS S3`
+- **Desafio & Abordagem:** Plataforma completa de dados para coleta, processamento em camadas (*Raw -> Bronze -> Silver* com Delta Lake), espelhamento relacional em MySQL e arquivo em S3. Integração com modelo preditivo de campeonatos no MLflow, servido em tempo real via **FastAPI** e visualizado em dashboard interativo **Streamlit + Plotly**, orquestrado semanalmente por DAG no **Apache Airflow**.
+- 🔗 **Código:** [github.com/rvanguita/lake-fastf1](https://github.com/rvanguita/lake-fastf1)
+
+---
 
 ### 📈 Categoria: Machine Learning & Regressão
 #### [Wind Farm Power Generation Modeling](https://github.com/rvanguita/wind_farm)
