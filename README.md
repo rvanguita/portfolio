@@ -44,10 +44,10 @@ Profissional com **Doutorado em Engenharia Elétrica pela UNICAMP**, especialist
 ## 🚀 Projetos em Destaque por Categoria
 
 ### 🏎️ Categoria: Engenharia de Dados, Lakehouse & MLOps
-#### [Lake FastF1 — Formula 1 Data Platform](https://github.com/rvanguita/lake-fastf1)
-- **Área:** Arquitetura Lakehouse, Ingestão Automatizada & Predição em F1
+#### [FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1](https://github.com/rvanguita/lake-fastf1)
+- **Área:** Plataforma de Dados, Arquitetura Lakehouse, MLOps & Predição em F1
 - **Stack:** `FastF1`, `Apache Airflow`, `Delta Lake`, `PySpark`, `Scikit-Learn`, `MLflow`, `FastAPI`, `Streamlit`, `Docker`, `AWS S3`
-- **Desafio & Abordagem:** Plataforma completa de dados para coleta, processamento em camadas (*Raw -> Bronze -> Silver* com Delta Lake), espelhamento relacional em MySQL e arquivo em S3. Integração com modelo preditivo de campeonatos no MLflow, servido em tempo real via **FastAPI** e visualizado em dashboard interativo **Streamlit + Plotly**, orquestrado semanalmente por DAG no **Apache Airflow**.
+- **Desafio & Abordagem:** Plataforma completa para coleta, processamento em camadas (*Raw -> Bronze -> Silver* com Delta Lake), espelhamento relacional em MySQL e arquivamento em S3. Integração com modelo preditivo de campeonatos no MLflow, servido em tempo real via **FastAPI** e visualizado em dashboard interativo **Streamlit + Plotly**, orquestrado semanalmente por DAG no **Apache Airflow**.
 - 🔗 **Código no GitHub:** [github.com/rvanguita/lake-fastf1](https://github.com/rvanguita/lake-fastf1)
 - 📖 **Case Study Interativo:** [rvanguita.github.io/portfolio/projects/lake-fastf1.html](https://rvanguita.github.io/portfolio/projects/lake-fastf1.html)
 

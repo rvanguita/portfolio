@@ -193,7 +193,7 @@ def test_project_pages():
             assert "layout: default" in content or "<html" in content, (
                 f"Página de projeto {pfile.name} sem layout padrão"
             )
-            assert "Lake FastF1" in content or "Projeto" in content, (
+            assert "FastF1 Data Platform" in content or "Projeto" in content, (
                 f"Página {pfile.name} sem conteúdo"
             )
         log_pass(
