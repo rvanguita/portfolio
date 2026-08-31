@@ -43,6 +43,9 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       <span class="social-chip">
         <i class="fa-solid fa-location-dot" style="color: #0d9488;"></i> Campinas, SP - Brasil
       </span>
+      <span class="social-chip">
+        <i class="fa-solid fa-language" style="color: #7c3aed;"></i> Português (nativo) · Inglês (avançado)
+      </span>
     </div>
   </div>
 </section>
@@ -57,13 +60,13 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       <h2>Ciência aplicada para problemas que importam.</h2>
     </div>
     <p class="about-copy">
-      Profissional com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong>, com sólida atuação na intersecção entre <strong>Ciência de Dados</strong>, <strong>Modelagem Preditiva</strong> e <strong>Pesquisa Operacional / Otimização</strong>. Especialista no desenvolvimento de algoritmos de alta performance, modelos preditivos e análises estatísticas para resolução de problemas complexos de infraestrutura e tomada de decisão estratégica.
+      Profissional com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e sólida experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão. No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; seu background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.
     </p>
 
     <div class="about-metrics">
       <div class="metric-box">
         <div class="metric-number">10x</div>
-        <div class="metric-label">Redução no tempo de cálculo computacional com heurísticas avançadas</div>
+        <div class="metric-label">Redução no tempo computacional com heurística validada no mestrado (mesma qualidade do método Cônico clássico)</div>
       </div>
       <div class="metric-box">
         <div class="metric-number">Ph.D.</div>
@@ -230,20 +233,21 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <i class="fa-solid fa-chart-area"></i> Regressão & Energia Renovável
         </span>
         <h3>Wind Farm Generation Modeling</h3>
-        <p class="project-summary"><strong>Desafio:</strong> estimar a geração de um parque eólico a partir de sinais meteorológicos não lineares.</p>
+        <p class="project-summary"><strong>Desafio:</strong> prever a geração de energia de quatro turbinas eólicas ao longo de um ano, com curvas de geração não lineares.</p>
         <ul class="project-highlights">
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> tratamento de telemetria e modelagem com Random Forest.</span></li>
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Foco:</strong> validação de dados e captura de relações complexas entre clima e potência.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> modelagem com XGBoost (XGBRegressor) e validação temporal por expanding window, com interpretabilidade via SHAP.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Resultado:</strong> RMSE de 12,41% e R² de 81,93%, com velocidade do vento como variável mais relevante.</span></li>
         </ul>
       </div>
       <div class="project-footer">
         <div class="project-techs">
           <span class="tech-tag">Python</span>
-          <span class="tech-tag">Scikit-Learn</span>
+          <span class="tech-tag">XGBoost</span>
+          <span class="tech-tag">SHAP</span>
           <span class="tech-tag">Pandas</span>
           <span class="tech-tag">Matplotlib</span>
         </div>
-        <a href="https://github.com/rvanguita/wind_farm" target="_blank" rel="noopener noreferrer" class="btn-project">
+        <a href="https://github.com/rvanguita/wind-farm" target="_blank" rel="noopener noreferrer" class="btn-project">
           <i class="fa-brands fa-github"></i> Ver Código no GitHub
         </a>
       </div>
@@ -256,20 +260,21 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <i class="fa-solid fa-users"></i> Classificação & Negócios
         </span>
         <h3>Bank Customer Churn Prediction</h3>
-        <p class="project-summary"><strong>Desafio:</strong> identificar clientes com maior risco de evasão antes do cancelamento.</p>
+        <p class="project-summary"><strong>Desafio:</strong> identificar clientes com maior risco de evasão antes do cancelamento em uma instituição bancária europeia.</p>
         <ul class="project-highlights">
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> análise exploratória e engenharia de atributos orientada ao comportamento.</span></li>
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Foco:</strong> métricas ROC-AUC e Precision-Recall alinhadas à retenção.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> comparação de CatBoost, LightGBM e XGBoost com engenharia de atributos (variáveis polinomiais) e interpretabilidade via SHAP.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Resultado:</strong> ROC-AUC de 93,63% e acurácia de 90,43% com o modelo XGBoost em produção.</span></li>
         </ul>
       </div>
       <div class="project-footer">
         <div class="project-techs">
           <span class="tech-tag">Python</span>
-          <span class="tech-tag">Machine Learning</span>
-          <span class="tech-tag">Scikit-Learn</span>
-          <span class="tech-tag">Seaborn</span>
+          <span class="tech-tag">XGBoost</span>
+          <span class="tech-tag">SHAP</span>
+          <span class="tech-tag">MLflow</span>
+          <span class="tech-tag">Docker</span>
         </div>
-        <a href="https://github.com/rvanguita/bank_customer_churn" target="_blank" rel="noopener noreferrer" class="btn-project">
+        <a href="https://github.com/rvanguita/bank-customer-churn" target="_blank" rel="noopener noreferrer" class="btn-project">
           <i class="fa-brands fa-github"></i> Ver Código no GitHub
         </a>
       </div>
@@ -279,13 +284,13 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     <div class="project-card-item" data-category="opt">
       <div>
         <span class="project-category-badge cat-opt">
-          <i class="fa-solid fa-bolt"></i> Pesquisa Operacional (Doutorado UNICAMP)
+          <i class="fa-solid fa-bolt"></i> Pesquisa Operacional (Mestrado & Doutorado)
         </span>
         <h3>Otimização de Sistemas de Distribuição Elétrica</h3>
-        <p class="project-summary"><strong>Desafio:</strong> reduzir o custo computacional de decisões em redes elétricas de grande porte.</p>
+        <p class="project-summary"><strong>Desafio:</strong> acelerar decisões de planejamento e expansão em redes elétricas de distribuição de grande porte.</p>
         <ul class="project-highlights">
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> formulações MILP combinadas a metaheurísticas especializadas.</span></li>
-          <li><i class="fa-solid fa-check-circle"></i><span><strong>Resultado:</strong> redução de até <strong>10x no tempo computacional</strong>.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> metodologia heurística (mestrado, PUC-Campinas) e metaheurística de Busca Tabu com métodos de apoio à decisão para planejamento de expansão (doutorado, UNICAMP).</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Resultado:</strong> mesma qualidade de solução do método Cônico clássico, com redução de até <strong>10x no tempo computacional</strong>.</span></li>
         </ul>
       </div>
       <div class="project-footer">
@@ -293,12 +298,138 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="tech-tag">AMPL</span>
           <span class="tech-tag">CPLEX</span>
           <span class="tech-tag">Python</span>
+          <span class="tech-tag">Busca Tabu</span>
           <span class="tech-tag">Metaheurísticas</span>
         </div>
-        <a href="https://github.com/rvanguita/portfolio" target="_blank" rel="noopener noreferrer" class="btn-project">
-          <i class="fa-solid fa-graduation-cap"></i> Tese & Publicações
+        <div class="project-actions">
+          <a href="https://github.com/rvanguita/induscon_2025" target="_blank" rel="noopener noreferrer" class="btn-project btn-project-primary">
+            <i class="fa-solid fa-graduation-cap"></i> INDUSCON 2025
+          </a>
+          <a href="https://github.com/rvanguita/reliability-systems" target="_blank" rel="noopener noreferrer" class="btn-project">
+            <i class="fa-solid fa-database"></i> Reliability Systems
+          </a>
+          <a href="https://github.com/rvanguita/DEP-TS-MDM" target="_blank" rel="noopener noreferrer" class="btn-project">
+            <i class="fa-solid fa-database"></i> DEP-TS-MDM
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Projeto 4 -->
+    <div class="project-card-item" data-category="analytics">
+      <div>
+        <span class="project-category-badge cat-analytics">
+          <i class="fa-solid fa-shield-halved"></i> Detecção de Fraude & Risco
+        </span>
+        <h3>Credit Card Fraud Detection</h3>
+        <p class="project-summary"><strong>Desafio:</strong> identificar transações fraudulentas em um dataset real de cartão de crédito extremamente desbalanceado (fraude é menos de 1% dos casos).</p>
+        <ul class="project-highlights">
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> engenharia de atributos e redução de dimensionalidade com PCA, removendo dados sensíveis e preservando a privacidade bancária.</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Foco:</strong> interpretação cuidadosa das métricas de desempenho, já que o forte desbalanceamento de classes infla artificialmente indicadores como a acurácia.</span></li>
+        </ul>
+      </div>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">PCA</span>
+          <span class="tech-tag">Machine Learning</span>
+        </div>
+        <a href="https://github.com/rvanguita/fraud-detection" target="_blank" rel="noopener noreferrer" class="btn-project">
+          <i class="fa-brands fa-github"></i> Ver Código no GitHub
         </a>
       </div>
+    </div>
+
+    <!-- Projeto 5 -->
+    <div class="project-card-item" data-category="ml">
+      <div>
+        <span class="project-category-badge cat-ml">
+          <i class="fa-solid fa-comments"></i> NLP & Processamento de Linguagem Natural
+        </span>
+        <h3>Sentiment Identification NLP</h3>
+        <p class="project-summary"><strong>Desafio:</strong> classificar o sentimento de ~100 mil avaliações de clientes de um e-commerce brasileiro (dataset Olist).</p>
+        <ul class="project-highlights">
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Solução:</strong> pipeline de pré-processamento textual (stopwords em português, stemming RSLP, TF-IDF) e XGBClassifier com tuning via Optuna (100 trials, validação cruzada estratificada).</span></li>
+          <li><i class="fa-solid fa-check-circle"></i><span><strong>Resultado:</strong> acurácia de 89,17% e ROC-AUC de 94,77% na classificação binária, com experimento A/B estendendo o modelo para a classe neutra.</span></li>
+        </ul>
+      </div>
+      <div class="project-footer">
+        <div class="project-techs">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">XGBoost</span>
+          <span class="tech-tag">TF-IDF</span>
+          <span class="tech-tag">Optuna</span>
+        </div>
+        <a href="https://github.com/rvanguita/sentiment-identification-nlp" target="_blank" rel="noopener noreferrer" class="btn-project">
+          <i class="fa-brands fa-github"></i> Ver Código no GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================================== -->
+<!-- EXPERIÊNCIA PROFISSIONAL                   -->
+<!-- ========================================== -->
+<section id="experiencia">
+  <div class="section-header">
+    <span class="section-tag">Trajetória Profissional</span>
+    <h2 class="section-title"><i class="fa-solid fa-briefcase"></i> Experiência Profissional</h2>
+  </div>
+
+  <div class="education-timeline">
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Aluno Pesquisador de Doutorado</span>
+        <span class="edu-year">out/2019 – out/2023</span>
+      </div>
+      <span class="edu-institution">CAPES — Coordenação de Aperfeiçoamento de Pessoal de Nível Superior</span>
+      <p class="edu-description">Planejamento de expansão de sistemas de distribuição de energia elétrica com metaheurística de Busca Tabu e métodos de apoio à decisão, desenvolvidos em Python.</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Aluno Pesquisador de Pós-Graduação (Mestrado)</span>
+        <span class="edu-year">mar/2017 – dez/2018</span>
+      </div>
+      <span class="edu-institution">CAPES — Coordenação de Aperfeiçoamento de Pessoal de Nível Superior</span>
+      <p class="edu-description">Metodologia heurística para sistemas de distribuição de energia elétrica, com resultados equivalentes ao método Cônico clássico e tempo computacional 10x menor; apoio à docência em Instalações Elétricas e Sistemas de Proteção.</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Autônomo</span>
+        <span class="edu-year">jan/2017 – mar/2017</span>
+      </div>
+      <span class="edu-institution">ICANP</span>
+      <p class="edu-description">Projeto eletrônico para modernização do mercado municipal de Mococa-SP (600 m², 38 lojas), com foco em eficiência energética e redução de custos.</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Estagiário</span>
+        <span class="edu-year">jun/2016 – dez/2016</span>
+      </div>
+      <span class="edu-institution">Prefeitura da Cidade Universitária "Zeferino Vaz" (UNICAMP)</span>
+      <p class="edu-description">Manutenção do sistema de distribuição de energia elétrica do campus universitário, classe de tensão 13,9 kV.</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Internship</span>
+        <span class="edu-year">jan/2016 – mai/2016</span>
+      </div>
+      <span class="edu-institution">Café Arquitetura+Design</span>
+      <p class="edu-description">Projeto eletrônico para construção de uma escola e uma creche, em interação com as áreas de Arquitetura e Engenharia Civil.</p>
+    </div>
+
+    <div class="edu-card">
+      <div class="edu-card-top">
+        <span class="edu-degree">Iniciação Científica</span>
+        <span class="edu-year">ago/2013 – jul/2015</span>
+      </div>
+      <span class="edu-institution">CNPq</span>
+      <p class="edu-description">Pesquisa aplicada a sistemas elétricos, reconhecida como Melhor Iniciação Científica do ano de 2014.</p>
     </div>
   </div>
 </section>
@@ -316,7 +447,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     <div class="edu-card">
       <div class="edu-card-top">
         <span class="edu-degree">Doutorado em Engenharia Elétrica (Ph.D.)</span>
-        <span class="edu-year">Conclusão: 2025</span>
+        <span class="edu-year">2019 – 2025</span>
       </div>
       <span class="edu-institution">Universidade Estadual de Campinas (UNICAMP)</span>
       <p class="edu-description">Foco em Otimização de Sistemas Elétricos, Pesquisa Operacional e Heurísticas de Alta Eficiência.</p>
@@ -325,7 +456,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     <div class="edu-card">
       <div class="edu-card-top">
         <span class="edu-degree">Mestrado em Sistemas de Infraestrutura Urbana (M.S.)</span>
-        <span class="edu-year">2017 – 2019</span>
+        <span class="edu-year">2017 – 2018</span>
       </div>
       <span class="edu-institution">Pontifícia Universidade Católica de Campinas (PUC-Campinas)</span>
       <p class="edu-description">Modelagem de redes de infraestrutura e análise de dados espaciais e operacionais.</p>
@@ -334,7 +465,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     <div class="edu-card">
       <div class="edu-card-top">
         <span class="edu-degree">Bacharelado em Engenharia Elétrica (B.S.)</span>
-        <span class="edu-year">2011 – 2016</span>
+        <span class="edu-year">2012 – 2016</span>
       </div>
       <span class="edu-institution">Pontifícia Universidade Católica de Campinas (PUC-Campinas)</span>
     </div>
@@ -376,7 +507,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       </div>
       
       <div class="cert-items-grid">
-        <a href="{{ '/certificates/Applied Data Science with Python Specialization/Introduction to Data Science in Python/Coursera 6X7MSJM9ZW7S.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Applied Data Science with Python Specialization/Introduction to Data Science in Python/Coursera 6X7MSJM9ZW7S.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Introduction to Data Science in Python</span>
@@ -384,7 +515,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Applied Data Science with Python Specialization/Applied Machine Learning in Python/Coursera 9LT6NMT6QFUF.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Applied Data Science with Python Specialization/Applied Machine Learning in Python/Coursera 9LT6NMT6QFUF.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Applied Machine Learning in Python</span>
@@ -392,7 +523,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Statistics with Python Specialization/Coursera 8THKRDG2LVQ1.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Statistics with Python Specialization/Coursera 8THKRDG2LVQ1.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Statistics with Python Specialization (Completo)</span>
@@ -400,7 +531,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Especialização</span>
         </a>
 
-        <a href="{{ '/certificates/Statistics with Python Specialization/Understanding and Visualizing Data with Python/Coursera HUY6PDI3FNM8.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Statistics with Python Specialization/Understanding and Visualizing Data with Python/Coursera HUY6PDI3FNM8.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Understanding & Visualizing Data with Python</span>
@@ -408,7 +539,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Statistics with Python Specialization/Inferential Statistical Analysis with Python/Coursera J5O0MHPLQWOA.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Statistics with Python Specialization/Inferential Statistical Analysis with Python/Coursera J5O0MHPLQWOA.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Inferential Statistical Analysis with Python</span>
@@ -416,7 +547,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Statistics with Python Specialization/Fitting Statistical Models to Data with Python/Coursera 8THKRDG2LVQ1.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Statistics with Python Specialization/Fitting Statistical Models to Data with Python/Coursera 8THKRDG2LVQ1.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Fitting Statistical Models to Data with Python</span>
@@ -424,7 +555,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Python for Everybody/Coursera QJN7QJTLGFLT.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Python for Everybody/Coursera QJN7QJTLGFLT.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Python for Everybody Specialization (Completo)</span>
@@ -432,7 +563,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Especialização</span>
         </a>
 
-        <a href="{{ '/certificates/Python for Everybody/Python Data Structures/Coursera CABEC4D9W5QF.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Python for Everybody/Python Data Structures/Coursera CABEC4D9W5QF.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Python Data Structures</span>
@@ -440,7 +571,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Python for Everybody/Using Databases with Python/Coursera FN7JP8SM77S9.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Python for Everybody/Using Databases with Python/Coursera FN7JP8SM77S9.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Using Databases with Python (SQL)</span>
@@ -448,7 +579,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Coursera / UMich</span>
         </a>
 
-        <a href="{{ '/certificates/Python for Everybody/Using Python to Access Web Data/Coursera LV7GTE5D9VTJ.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Python for Everybody/Using Python to Access Web Data/Coursera LV7GTE5D9VTJ.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Using Python to Access Web Data</span>
@@ -466,7 +597,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       </div>
       
       <div class="cert-items-grid">
-        <a href="{{ '/certificates/Mathematics for Machine Learning/Coursera AVCUZHDPGLI5.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Mathematics for Machine Learning/Coursera AVCUZHDPGLI5.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Mathematics for Machine Learning (Completo)</span>
@@ -474,7 +605,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Imperial College</span>
         </a>
 
-        <a href="{{ '/certificates/Mathematics for Machine Learning/Linear Algebra/Coursera SRTBX3X4EWBT.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Mathematics for Machine Learning/Linear Algebra/Coursera SRTBX3X4EWBT.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Linear Algebra for Machine Learning</span>
@@ -482,7 +613,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Imperial College</span>
         </a>
 
-        <a href="{{ '/certificates/Mathematics for Machine Learning/Multivariate Calculus/Coursera LGDZ8QKKTQHR.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Mathematics for Machine Learning/Multivariate Calculus/Coursera LGDZ8QKKTQHR.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Multivariate Calculus</span>
@@ -490,7 +621,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Imperial College</span>
         </a>
 
-        <a href="{{ '/certificates/Mathematics for Machine Learning/PCA/Coursera IZ46EUD7BH7B.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Mathematics for Machine Learning/PCA/Coursera IZ46EUD7BH7B.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>PCA (Principal Component Analysis)</span>
@@ -498,7 +629,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Imperial College</span>
         </a>
 
-        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Coursera 9LS7323MCHAF.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Coursera 9LS7323MCHAF.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Essential Math Specialization (Completo)</span>
@@ -506,7 +637,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">CU Boulder</span>
         </a>
 
-        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Algebra and Differential Calculus for Data Science/Coursera CBXVZ8C9EZQ2.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Algebra and Differential Calculus for Data Science/Coursera CBXVZ8C9EZQ2.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Algebra & Differential Calculus for Data Science</span>
@@ -514,7 +645,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">CU Boulder</span>
         </a>
 
-        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Essential Linear Algebra for Data Science/Coursera QPLE6TXDE9GM.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Essential Linear Algebra for Data Science/Coursera QPLE6TXDE9GM.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Essential Linear Algebra for Data Science</span>
@@ -522,7 +653,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">CU Boulder</span>
         </a>
 
-        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Integral Calculus and Numerical Analysis for Data Science/Coursera PYQBRSQCBQRU.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Expressway to Data Science: Essential Math Specialization/Integral Calculus and Numerical Analysis for Data Science/Coursera PYQBRSQCBQRU.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Integral Calculus & Numerical Analysis</span>
@@ -530,7 +661,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">CU Boulder</span>
         </a>
 
-        <a href="{{ '/certificates/Stochastic processes/Certificate.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Stochastic processes/Certificate.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Stochastic Processes</span>
@@ -548,7 +679,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
       </div>
       
       <div class="cert-items-grid">
-        <a href="{{ '/certificates/Business Statistics and Analysis Specialization/Introduction to Data Analysis Using Excel/Coursera 5BVSFVK7NALP.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Business Statistics and Analysis Specialization/Introduction to Data Analysis Using Excel/Coursera 5BVSFVK7NALP.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Introduction to Data Analysis Using Excel</span>
@@ -556,7 +687,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Rice University</span>
         </a>
 
-        <a href="{{ '/certificates/Business Statistics and Analysis Specialization/Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions/Coursera ZZCVHIGNDVDE.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/Business Statistics and Analysis Specialization/Basic Data Descriptors, Statistical Distributions, and Application to Business Decisions/Coursera ZZCVHIGNDVDE.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>Basic Data Descriptors & Distributions</span>
@@ -564,7 +695,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
           <span class="cert-badge-tag">Rice University</span>
         </a>
 
-        <a href="{{ '/certificates/General Business Program/btc.pdf' | relative_url }}" target="_blank" class="cert-badge-link">
+        <a href="{{ '/certificates/General Business Program/btc.pdf' | relative_url }}" target="_blank" rel="noopener noreferrer" class="cert-badge-link">
           <div class="cert-badge-info">
             <i class="fa-solid fa-file-pdf"></i>
             <span>General Business Program</span>
