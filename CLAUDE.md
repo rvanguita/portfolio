@@ -2,66 +2,136 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Project Structure & Module Organization
+## Overview
 
-This repository is a static Jekyll portfolio published through GitHub Pages at `https://rvanguita.github.io/portfolio`.
+Personal portfolio of Rene Verinaud Anguita Junior, built as a **Next.js 15 App Router** app and
+**statically exported** (`output: 'export'`) to **GitHub Pages** at `https://rvanguita.github.io/portfolio`
+(base path `/portfolio`). No server runtime — the deploy is a folder of static HTML/JS/CSS.
 
-- `index.html` is the main portfolio page (hero, skills matrix, filterable projects grid, education timeline, certificates); `projects/` contains dedicated case-study pages (currently `lake-fastf1.html`) linked from the projects grid.
-- `_layouts/default.html` provides the shared HTML/Liquid layout — navbar, theme-toggle script, `{{ content }}` slot, and footer. All pages (`index.html`, `projects/*.html`) declare `layout: default` in front matter.
-- `_config.yml` configures Jekyll, site metadata (title, description, author), and the `/portfolio` `baseurl`.
-- `assets/css/custom.css` contains all site styling — a single stylesheet using CSS custom properties for a light/dark theme system (see Theming below).
-- `assets/img/` contains image assets (avatar, favicon).
-- `certificates/` stores linked PDF credentials, organized in nested folders by specialization/course name. Folder and file names contain spaces and must stay URL-safe in Markdown/HTML links (spaces are referenced literally and decoded via `urllib.parse.unquote` in tests, not pre-encoded).
-- `scripts/test_site.py` is the repository's structural and link-integrity test suite (stdlib only, no dependencies) — 12 checks, enforced locally via a git hook and in both GitHub Actions workflows (see below).
-- `.github/workflows/ci.yml` runs `scripts/test_site.py`, then validates the Jekyll build and audits structure/links, on pull requests to `main`. `.github/workflows/deploy.yml` runs `scripts/test_site.py`, then builds and deploys to GitHub Pages, on push to `main` — a failing test blocks the deploy job since it `needs: build`.
+> Migrated from a Jekyll site. The old `_layouts/`, `_includes/`, `_data/`, `_config.yml`, `index.html`,
+> `projects/*.html`, `Gemfile`, and `scripts/test_site.py` are gone; their content lives in `app/`,
+> `components/`, and `lib/data/`.
 
-## Build, Test, and Development Commands
+## Project structure
 
-Run the repository test suite from its root (no dependencies to install):
+- `app/` — App Router.
+  - `layout.tsx` — root layout: `<html lang="pt-BR">`, the anti-FOUC theme `<script>` (runs before paint),
+    `next/font` Inter, then `ThemeProvider` → `ErrorBoundary` → `Navbar` → `<main id="main-content">` →
+    `Footer`. Exports `metadata` from `lib/metadata.ts`.
+  - `page.tsx` — home; composes the seven section components (all Server Components except `Projects` and
+    `Certificates`).
+  - `projects/lake-fastf1/page.tsx` — the one case-study page (its own `metadata`).
+  - `globals.css` — the entire stylesheet (moved verbatim from the old `assets/css/custom.css`); still a
+    single sheet of CSS custom properties with a light `:root` palette and `[data-theme="dark"]` overrides.
+  - `sitemap.ts`, `robots.ts`, `icon.png` — file-based metadata (Next handles the base path).
+- `components/`
+  - `ui/` — primitives: `Icon` (typed name→SVG-path map, ported from the old `icon.html` sprite),
+    `Card` (compound: `Card` / `Card.Header` / `Card.Body`), `Tag`, `Rich` (renders trusted inline HTML
+    from the data modules), `SectionHeader`.
+  - `sections/` — `Hero`, `About`, `Skills`, `Projects`, `Experience`, `Education`, `Certificates`.
+  - `cards/` — `SkillCard`, `ProjectCard` (memoized, `forwardRef` so `motion.create` can animate it),
+    `ProjectActionLink`, `EduCard`, `CertBadge`.
+  - `Navbar.tsx` (client), `ThemeToggle.tsx` (client), `Footer.tsx`, `ErrorBoundary.tsx` (class component).
+- `context/ThemeContext.tsx` — `ThemeProvider` using **Context + `useReducer`**; hydrates from the
+  `data-theme` attribute the inline script set, then persists changes to `localStorage.portfolio_theme`
+  (all `localStorage` access wrapped in try/catch).
+- `hooks/` — `useTheme`, `useToggle`, `useMediaQuery` / `usePrefersReducedMotion`, `useScrollSpy`
+  (`IntersectionObserver`, `rootMargin: '-45% 0px -50% 0px'`), `useCategoryFilter` (`useMemo`ed filtered list).
+- `lib/`
+  - `data/` — `skills.ts`, `projects.ts`, `timeline.ts` (`experience` + `education`), `certificates.ts`.
+    **This is where site content lives now.** Typed by `lib/types.ts`.
+  - `base-path.ts` — `BASE_PATH`, `SITE_URL`, and `asset(path)` (prepends base path + `encodeURI`) for
+    `/public` files that `next/link`/`next/image` don't rewrite (certificate PDFs, OG image).
+  - `nav.ts` — `NAV_ITEMS` (id/label/icon); every `id` must be a real `<section id>` on the home page.
+  - `metadata.ts` — base `Metadata` (title template, description, canonical, OG/Twitter `summary_large_image`).
+  - `scroll.ts`, `cx.ts`.
+- `public/` — `assets/img/*`, `certificates/**` (PDFs, names keep spaces — referenced via `asset()`),
+  `.nojekyll` (stops Pages from Jekyll-processing `_next/`).
+- `tests/` — Vitest + React Testing Library (jsdom). Ports of the old `test_site.py` checks.
+- `.github/workflows/ci.yml` — PRs to `main`: `npm ci` → lint → typecheck → `npm test` → `next build`.
+- `.github/workflows/deploy.yml` — push to `main`: same checks, then `next build` → `upload-pages-artifact`
+  (`./out`) → `deploy-pages`. The `deploy` job `needs: build`, so a failing check blocks the release.
+
+## Build, test, and development commands
+
+Requires Node ≥ 20.9 (`.tool-versions` pins `node 25.2.1` for local `mise`; CI uses Node 20).
 
 ```bash
-python3 scripts/test_site.py
+npm install          # first time
+npm run dev          # dev server — http://localhost:3000/portfolio
+npm run lint         # next lint (ESLint) — includes react/jsx-no-target-blank
+npm run typecheck    # tsc --noEmit
+npm test             # Vitest (run once);  npm run test:watch to watch
+npm run build        # next build → static export in ./out
 ```
 
-Run it after every content, path, layout, or styling change — it is the primary correctness check for this repo (there is no build step required to validate most changes).
+Run `npm run lint && npm run typecheck && npm test && npm run build` before every commit — it is the full
+correctness gate (also what CI runs). A **pre-commit hook** at `.githooks/pre-commit` runs lint + typecheck
++ tests; enable it once per clone with `git config core.hooksPath .githooks`.
 
-**Pre-commit hook**: a hook that runs this suite before every commit lives at `.githooks/pre-commit` (versioned) but is *not* auto-enabled on a fresh clone — Git's `core.hooksPath` is a local config, not something a repo can force. Enable it once per clone with:
+Preview the exact deployed artifact:
 
 ```bash
-git config core.hooksPath .githooks
+npm run build && mkdir -p .preview/portfolio && cp -r out/. .preview/portfolio/ && npx serve .preview
+# then open http://localhost:3000/portfolio/
 ```
 
-If Jekyll is installed locally, build the site with:
+## Architecture notes
 
-```bash
-jekyll build --source . --destination _site
-```
+- **Static export + base path.** `next.config.mjs` sets `output: 'export'`, `basePath: '/portfolio'`,
+  `trailingSlash: true`, `images.unoptimized: true`, and exposes `NEXT_PUBLIC_BASE_PATH`. Every route
+  becomes `<route>/index.html`. Do not add server-only features (Route Handlers, `dynamic = 'force-dynamic'`,
+  `next/image` optimization, middleware) — they don't survive export.
+- **Server vs Client.** Sections are Server Components except `Projects` and `Certificates`, which are
+  `"use client"` for the category filter. `Navbar`, `ThemeToggle`, `ErrorBoundary`, and every hook are
+  client. Keep client boundaries small; pass data down from Server Components.
+- **Theme (no FOUC).** The inline `<script>` in `app/layout.tsx` sets `data-theme` on `<html>` from
+  `localStorage` (try/catch) → `prefers-color-scheme` before first paint. `ThemeProvider` reads that
+  attribute for its initial `useReducer` state and thereafter owns the attribute + persistence.
+  `<html>` has `suppressHydrationWarning` because the script mutates it pre-hydration.
+- **Category filtering.** `useCategoryFilter(items, getCategory)` holds the active category and returns a
+  memoized filtered list; cards are re-rendered, not shown/hidden with inline styles. When
+  `prefers-reduced-motion` is set, the grid renders a plain map; otherwise Framer Motion `AnimatePresence`
+  animates enter/exit. Every filter button's `data-category` / `data-cert-category` must correspond to a
+  category present in `lib/data/*` (enforced by `tests/filters.test.tsx`).
+- **Programmatic scroll** (nav links, logo) goes through `lib/scroll.ts` and is gated by
+  `usePrefersReducedMotion` — a JS `behavior: 'smooth'` overrides the CSS `@media (prefers-reduced-motion)`
+  rule, so the check must be in JS.
+- **Icons.** `components/ui/Icon.tsx` is a `Record<IconName, string>` of raw `<path>` markup injected with
+  `dangerouslySetInnerHTML` on a static `<svg>`. To add an icon, add a `name: '<path .../>'` entry (Heroicons
+  v2 solid, `viewBox="0 0 24 24"`). `tests/icon.test.tsx` fails if any referenced name falls through to the
+  fallback path.
+- **`Rich`** is the only sanctioned use of `dangerouslySetInnerHTML` for content — and only for the small
+  inline HTML (`<strong>`, `<code>`) already present in `lib/data/*`, which is repo-authored, not user input.
 
-To preview changes locally:
+## Adding content
 
-```bash
-jekyll serve --baseurl /portfolio
-```
+- **New project:** add a `Project` object to `lib/data/projects.ts` (`category` must be one of the
+  `ProjectCategory` union and have a matching entry in `FILTERS` in `components/sections/Projects.tsx`).
+  Optionally add a case study at `app/projects/<slug>/page.tsx` (copy `lake-fastf1/page.tsx`; give it its
+  own `metadata`) and add the route to `app/sitemap.ts`.
+- **New skill / timeline entry / certificate:** append to the relevant `lib/data/*.ts` file.
+- **New nav section:** add a `<section id="…">` component, register it in `lib/nav.ts` (`NAV_ITEMS`), and
+  add its icon to `Icon.tsx` if new. `tests/nav.test.tsx` checks every `NAV_ITEMS.id` resolves.
 
-GitHub Actions performs the authoritative Jekyll build on pull requests (`ci.yml`) and deploys pushes to `main` (`deploy.yml`); there is no local Jekyll dependency required for most edits since `test_site.py` covers structural correctness without a full build.
+## Coding style
 
-## Architecture Notes
+Two-space indent. TypeScript strict. Prefer Server Components; add `"use client"` only for interactivity.
+Reuse the `ui/` primitives and the existing hooks. Keep the CSS custom-property / light-dark pattern in
+`globals.css`; keep existing class names when porting markup so the stylesheet keeps applying. Path alias
+`@/*` maps to the repo root.
 
-- **Content model**: this is hand-authored HTML with Liquid tags, not componentized. New projects are added as a new `<div class="project-card-item" data-category="...">` block inside the `#projetos` grid in `index.html`, optionally paired with a new case-study page under `projects/` (copy the structure/classes of `projects/lake-fastf1.html`, set `layout: default` front matter with `title`/`description`).
-- **Theming**: light/dark mode is driven entirely by CSS custom properties. `:root` in `custom.css` defines the light palette; `[data-theme="dark"]` overrides the same variable names for dark mode. `_layouts/default.html` includes an inline script (before any stylesheet) that reads `localStorage.portfolio_theme` (falling back to `prefers-color-scheme`) and sets `data-theme` on `<html>` immediately to avoid a flash of unstyled content; the navbar theme-toggle button flips and persists this value.
-- **Category filtering**: both the projects grid and the certificates section use client-side filtering (no framework) — buttons with `data-category`/`data-cert-category` toggle `.active` and show/hide sibling cards via inline `style.display`, wired up in the `DOMContentLoaded` script at the bottom of `_layouts/default.html`.
-- **Asset links use Liquid's `relative_url`** (e.g. `{{ '/assets/img/face.png' | relative_url }}`) so links resolve correctly under the `/portfolio` baseurl in both local Jekyll builds and production. Follow this convention for any new internal link, image, or certificate reference rather than hardcoding `/portfolio/...` paths.
-- **`README.md` is not repository documentation** — it currently documents the *FastF1 Data Platform* project (an external project at `github.com/rvanguita/lake-fastf1`) that this portfolio showcases, and `scripts/test_site.py::test_readme_project_documentation` asserts specific required sections/links in it. Do not repurpose `README.md` for repo-level instructions; this file (`CLAUDE.md`) and `AGENTS.md`-style guidance belong elsewhere.
-- **`scripts/test_site.py` is the change-detection net**: it validates `_config.yml` keys, layout markers (`{{ content }}`, `portfolio_theme`, `custom.css`), CSS brace-balance and required theme variables (`--bg-page`, `--accent`, `[data-theme="dark"]`), that every local asset/certificate link referenced in `index.html` exists on disk, required navigation anchors (`#sobre`, `#habilidades`, `#projetos`, `#experiencia`, `#formacao`, `#certificados`), the README's required sections, that every page in `projects/` has a layout and non-empty content, HTML tag balance across `index.html`/`_layouts/default.html`/`projects/*.html`, that every `data-category`/`data-cert-category` used on a card has a matching filter button (and vice versa), uniqueness of `id` attributes in `index.html`, that every nav-menu link resolves to a real section id, and that every `target="_blank"` link carries `rel="noopener"`. When adding a new required page structure, section, or asset type, extend this file rather than relying only on CI's Jekyll build.
+## Commit & PR guidelines
 
-## Coding Style & Naming Conventions
+Conventional Commit subjects (`feat:`, `fix:`, `style:`, `refactor:`, `docs:`, `test:`, `chore:`). PRs
+should describe the visible/structural change, state that `npm run lint && npm run typecheck && npm test &&
+npm run build` passed, and include screenshots for visual changes. CI must be green; deploys run only from
+`main`.
 
-Two-space indentation in HTML, Liquid, YAML, and CSS. Keep semantic HTML accessible, use lowercase kebab-case for new asset filenames (e.g. `project-cover.png`), and preserve existing Liquid conventions such as `relative_url`. Follow the existing CSS custom-property and light/dark theme patterns. Python in `scripts/` follows PEP 8 with four-space indentation; keep tests small and descriptive.
+## Security & configuration
 
-## Commit & Pull Request Guidelines
-
-Use concise Conventional Commit-style subjects, consistent with history: `feat:`, `fix:`, `style:`, or `docs:` followed by an imperative description. Pull requests should explain the visible or structural change, mention validation commands and results, link relevant issues, and include screenshots for visual updates. Ensure CI passes before requesting review; deployment occurs only from `main`.
-
-## Security & Configuration Tips
-
-Do not commit secrets, credentials, or private documents. Keep public contact links and site metadata in the existing files, and review generated or renamed certificate paths for accidental exposure or broken links.
+Do not commit secrets. External links must use `target="_blank" rel="noopener noreferrer"` (lint enforces
+`noopener`; `tests/external-links.test.tsx` re-checks). Review renamed/added certificate paths in
+`public/certificates/**` and their `lib/data/certificates.ts` entries for broken links or accidental
+exposure. `README.md` still documents the external *FastF1 Data Platform* project the portfolio showcases —
+it is not repo documentation; this file is.

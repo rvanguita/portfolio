@@ -1,9 +1,0 @@
-{% if include.action.url contains "://" %}
-<a href="{{ include.action.url }}" target="_blank" rel="noopener noreferrer" class="btn-project{% if include.primary %} btn-project-primary{% endif %}">
-  {{ include.action.label }}
-</a>
-{% else %}
-<a href="{{ include.action.url | relative_url }}" class="btn-project{% if include.primary %} btn-project-primary{% endif %}">
-  {{ include.action.label }}
-</a>
-{% endif %}

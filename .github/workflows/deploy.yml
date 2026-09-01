@@ -1,153 +1,109 @@
 # ==============================================================================
-# GitHub Actions: Publicação do Site Estático (GitHub Pages)
+# GitHub Actions: Publicação no GitHub Pages — Next.js (static export)
 # ==============================================================================
-# Este fluxo automatiza a compilação (build) e a publicação (deploy) do seu
-# portfólio estático no GitHub Pages, gerando um dashboard visual rico de status.
+# `next build` com `output: 'export'` gera ./out, publicado no Pages. Os testes
+# rodam antes do build; o job `deploy` depende do `build` (needs: build), então
+# um teste ou build que falha bloqueia a publicação.
 # ==============================================================================
 
-name: 🚀 Deploy Site Estático (GitHub Pages)
+name: 🚀 Deploy (GitHub Pages)
 
 on:
-  # Executa automaticamente no push para a branch main
   push:
     branches:
       - main
-
-  # Permite acionamento manual na aba Actions
   workflow_dispatch:
 
-# Permissões mínimas de segurança necessárias para o Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Evita conflitos de deploys simultâneos
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
 jobs:
-  # ----------------------------------------------------------------------------
-  # Job 1: Build & Auditoria de Arquivos
-  # ----------------------------------------------------------------------------
   build:
-    name: 📦 Compilar & Auditar Site Estático
+    name: 📦 Testar & Compilar (next build)
     runs-on: ubuntu-latest
-
     steps:
-      - name: 📥 Baixar código do repositório (Checkout)
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🐍 Configurar Python
-        uses: actions/setup-python@v5
+      - name: 🟢 Configurar Node
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.x'
+          node-version: '20'
+          cache: npm
 
-      - name: 🧪 Rodar suíte de testes do portfólio (scripts/test_site.py)
-        run: python3 scripts/test_site.py
+      - name: 📦 Instalar dependências
+        run: npm ci
 
-      - name: ⚙️ Configurar ambiente GitHub Pages
+      - name: 🎨 ESLint
+        run: npm run lint
+
+      - name: 🔎 Typecheck
+        run: npm run typecheck
+
+      - name: 🧪 Testes (Vitest)
+        run: npm test
+
+      - name: ⚙️ Configurar GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: 🔨 Compilar páginas com Jekyll
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+      - name: 🔨 Build estático (next build → out/)
+        run: npm run build
 
-      - name: 📊 Auditar Métricas da Compilação
+      - name: 📊 Métricas do build
         id: metrics
         run: |
-          echo "::group::🔍 Coletando Estatísticas dos Artefatos"
-          
-          PAGE_COUNT=$(find ./_site -name "*.html" | wc -l)
-          PDF_COUNT=$(find ./_site/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
-          SITE_SIZE=$(du -sh ./_site | cut -f1)
-          
-          echo "Páginas HTML encontradas: $PAGE_COUNT"
-          echo "Certificados PDF encontrados: $PDF_COUNT"
-          echo "Tamanho total do site: $SITE_SIZE"
-          
+          PAGE_COUNT=$(find ./out -name "*.html" | wc -l)
+          PDF_COUNT=$(find ./out/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
+          SITE_SIZE=$(du -sh ./out | cut -f1)
           echo "page_count=$PAGE_COUNT" >> "$GITHUB_OUTPUT"
           echo "pdf_count=$PDF_COUNT" >> "$GITHUB_OUTPUT"
           echo "site_size=$SITE_SIZE" >> "$GITHUB_OUTPUT"
-          
-          echo "::endgroup::"
 
-      - name: 📤 Enviar artefatos para o Pages
+      - name: 📤 Upload do artefato do Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./_site
+          path: ./out
 
     outputs:
       page_count: ${{ steps.metrics.outputs.page_count }}
       pdf_count: ${{ steps.metrics.outputs.pdf_count }}
       site_size: ${{ steps.metrics.outputs.site_size }}
 
-  # ----------------------------------------------------------------------------
-  # Job 2: Deploy & Painel Visual de Publicação
-  # ----------------------------------------------------------------------------
   deploy:
-    name: 🌐 Publicar & Gerar Dashboard
+    name: 🌐 Publicar
     needs: build
     runs-on: ubuntu-latest
-
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: 🚀 Realizar Implantação (Deploy)
+      - name: 🚀 Deploy
         id: deployment
         uses: actions/deploy-pages@v4
 
-      - name: 📢 Emitir Notificação Oficial
+      - name: 📢 Notificação
         run: |
-          echo "::notice title=🚀 Portfólio Publicado::O site de Rene Verinaud está ativo e acessível em: ${{ steps.deployment.outputs.page_url }}"
+          echo "::notice title=🚀 Portfólio publicado::${{ steps.deployment.outputs.page_url }}"
 
-      - name: 📊 Gerar Dashboard Visual da Publicação
+      - name: 📊 Dashboard de publicação
         run: |
-          cat << 'EOF' >> "$GITHUB_STEP_SUMMARY"
-          # 🚀 Dashboard de Publicação: Portfólio Profissional
-
-          > [!TIP]
-          > **O seu site estático está no ar e atualizado!**  
-          > 🌐 **Acesse agora:** [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }})
-
-          ---
-
-          ### 📋 Informações do Deploy
+          cat << EOF >> "$GITHUB_STEP_SUMMARY"
+          # 🚀 Publicação do Portfólio
 
           | Campo | Detalhe |
           | :--- | :--- |
-          | 🟢 **Status da Aplicação** | **Online e Ativo** |
-          | 🔗 **URL de Produção** | [${{ steps.deployment.outputs.page_url }}](${{ steps.deployment.outputs.page_url }}) |
-          | 🌿 **Branch de Origem** | \`${{ github.ref_name }}\` |
-          | 📌 **Commit SHA** | [\`${{ github.sha }}\`](https://github.com/${{ github.repository }}/commit/${{ github.sha }}) |
-          | 👤 **Autor da Alteração** | @${{ github.actor }} |
-          | ⏰ **Data e Hora** | $(date -u '+%d/%m/%Y às %H:%M:%S UTC') |
-
-          ---
-
-          ### 📦 Métricas e Integridade dos Artefatos
-
-          | Recurso | Quantidade / Tamanho | Validação |
-          | :--- | :--- | :--- |
-          | 📄 **Páginas HTML Geradas** | \`${{ needs.build.outputs.page_count }}\` página(s) | ✅ Sucesso |
-          | 📜 **Certificados PDF Integrados** | \`${{ needs.build.outputs.pdf_count }}\` arquivo(s) | ✅ Disponíveis |
-          | 💾 **Tamanho Total do Build** | \`${{ needs.build.outputs.site_size }}\` | ✅ Otimizado |
-          | ⚡ **Motor Estático** | Jekyll / GitHub Pages Engine | ✅ Concluído |
-
-          ---
-
-          <details>
-          <summary>🔍 <strong>Clique para ver detalhes de infraestrutura e execução</strong></summary>
-
-          - **Ambiente:** \`github-pages\`
-          - **ID da Execução (Run ID):** [${{ github.run_id }}](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
-          - **Evento Disparador:** \`${{ github.event_name }}\`
-          - **Repositório:** [${{ github.repository }}](https://github.com/${{ github.repository }})
-
-          </details>
+          | 🟢 Status | Online |
+          | 🔗 URL | ${{ steps.deployment.outputs.page_url }} |
+          | 🌿 Branch | \`${{ github.ref_name }}\` |
+          | 📌 Commit | \`${{ github.sha }}\` |
+          | 📄 Páginas HTML | \`${{ needs.build.outputs.page_count }}\` |
+          | 📜 Certificados PDF | \`${{ needs.build.outputs.pdf_count }}\` |
+          | 💾 Tamanho do build | \`${{ needs.build.outputs.site_size }}\` |
+          | ⚡ Motor | Next.js (static export) |
           EOF
