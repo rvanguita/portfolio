@@ -107,7 +107,11 @@ class IdCollector(HTMLParser):
 
 
 class HashLinkExtractor(HTMLParser):
-    """Extrai todos os href='#...' (links de âncora interna) de um documento."""
+    """Extrai o fragmento (#...) de qualquer href que aponte para uma âncora interna.
+
+    Cobre tanto `#sobre` quanto formas com prefixo de página, como
+    `{{ '/' | relative_url }}#sobre` ou `/portfolio/#sobre`.
+    """
 
     def __init__(self):
         super().__init__()
@@ -116,8 +120,9 @@ class HashLinkExtractor(HTMLParser):
     def handle_starttag(self, tag, attrs):
         attr_dict = dict(attrs)
         href = attr_dict.get("href", "")
-        if href.startswith("#") and len(href) > 1:
-            self.anchors.append(href[1:])
+        before, sep, fragment = href.partition("#")
+        if sep and fragment:
+            self.anchors.append(fragment)
 
 
 class ExternalLinkChecker(HTMLParser):

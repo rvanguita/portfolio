@@ -39,16 +39,16 @@
   <!-- Barra de Navegação Flutuante -->
   <nav class="navbar">
     <div class="nav-container">
-      <a href="#" class="nav-logo">
+      <a href="{{ '/' | relative_url }}" class="nav-logo">
         <span class="logo-accent">&lt;</span>Rene Verinaud<span class="logo-accent">/&gt;</span>
       </a>
       <ul class="nav-menu" id="navMenu">
-        <li><a href="#sobre" class="nav-link"><i class="fa-regular fa-user"></i> Sobre</a></li>
-        <li><a href="#habilidades" class="nav-link"><i class="fa-solid fa-code"></i> Habilidades</a></li>
-        <li><a href="#projetos" class="nav-link"><i class="fa-solid fa-laptop-code"></i> Projetos</a></li>
-        <li><a href="#experiencia" class="nav-link"><i class="fa-solid fa-briefcase"></i> Experiência</a></li>
-        <li><a href="#formacao" class="nav-link"><i class="fa-solid fa-graduation-cap"></i> Formação</a></li>
-        <li><a href="#certificados" class="nav-link"><i class="fa-solid fa-award"></i> Certificados</a></li>
+        <li><a href="{{ '/' | relative_url }}#sobre" class="nav-link"><i class="fa-regular fa-user"></i> Sobre</a></li>
+        <li><a href="{{ '/' | relative_url }}#habilidades" class="nav-link"><i class="fa-solid fa-code"></i> Habilidades</a></li>
+        <li><a href="{{ '/' | relative_url }}#projetos" class="nav-link"><i class="fa-solid fa-laptop-code"></i> Projetos</a></li>
+        <li><a href="{{ '/' | relative_url }}#experiencia" class="nav-link"><i class="fa-solid fa-briefcase"></i> Experiência</a></li>
+        <li><a href="{{ '/' | relative_url }}#formacao" class="nav-link"><i class="fa-solid fa-graduation-cap"></i> Formação</a></li>
+        <li><a href="{{ '/' | relative_url }}#certificados" class="nav-link"><i class="fa-solid fa-award"></i> Certificados</a></li>
       </ul>
       <div class="nav-actions">
         <!-- Botão de Alternância de Tema (Modo Escuro / Claro) -->
@@ -60,6 +60,11 @@
         <a href="mailto:renevajr@gmail.com" class="btn-nav-contact">
           <i class="fa-regular fa-envelope"></i> Contato
         </a>
+
+        <!-- Botão Hambúrguer (menu em telas estreitas) -->
+        <button id="navToggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navMenu">
+          <i class="fa-solid fa-bars"></i>
+        </button>
       </div>
     </div>
   </nav>
@@ -105,6 +110,78 @@
           document.documentElement.setAttribute('data-theme', newTheme);
           localStorage.setItem('portfolio_theme', newTheme);
         });
+      }
+
+      // 1.1. Menu de Navegação: hambúrguer, rolagem suave e seção ativa
+      const navMenu = document.getElementById('navMenu');
+      const navToggle = document.getElementById('navToggle');
+      const navLinks = document.querySelectorAll('.nav-link');
+
+      const closeNavMenu = () => {
+        if (!navMenu) return;
+        navMenu.classList.remove('open');
+        if (navToggle) navToggle.setAttribute('aria-expanded', 'false');
+      };
+
+      if (navToggle && navMenu) {
+        navToggle.addEventListener('click', () => {
+          const isOpen = navMenu.classList.toggle('open');
+          navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        document.addEventListener('click', (event) => {
+          if (!navMenu.classList.contains('open')) return;
+          if (navMenu.contains(event.target) || navToggle.contains(event.target)) return;
+          closeNavMenu();
+        });
+
+        document.addEventListener('keydown', (event) => {
+          if (event.key === 'Escape') closeNavMenu();
+        });
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', (event) => {
+          const hash = link.hash;
+          const target = hash ? document.querySelector(hash) : null;
+          if (target) {
+            event.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.pushState(null, '', hash);
+          }
+          closeNavMenu();
+        });
+      });
+
+      const navLogo = document.querySelector('.nav-logo');
+      if (navLogo) {
+        navLogo.addEventListener('click', (event) => {
+          const dest = new URL(navLogo.href, window.location.href);
+          if (dest.pathname === window.location.pathname) {
+            event.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            history.pushState(null, '', dest.pathname);
+          }
+          closeNavMenu();
+        });
+      }
+
+      // 1.2. Destaque da seção visível no menu (scroll-spy)
+      const spySections = Array.from(navLinks)
+        .map(link => (link.hash ? document.querySelector(link.hash) : null))
+        .filter(Boolean);
+
+      if (spySections.length && 'IntersectionObserver' in window) {
+        const spyObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            navLinks.forEach(link => {
+              link.classList.toggle('active', link.hash === '#' + entry.target.id);
+            });
+          });
+        }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+        spySections.forEach(section => spyObserver.observe(section));
       }
 
       // 2. Filtro de Projetos por Categoria
