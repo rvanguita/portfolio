@@ -1,19 +1,16 @@
 # ==============================================================================
-# GitHub Actions: Validação e Auditoria Contínua (CI)
+# GitHub Actions: Validação Contínua (CI) — Next.js
 # ==============================================================================
-# Este fluxo valida a compilação do site e a integridade de todos os links,
-# imagens e PDFs em Pull Requests antes de permitir a mesclagem.
+# Lint + typecheck + testes (Vitest) + build estático (next build) em Pull
+# Requests para main. Um build que falha bloqueia a mesclagem.
 # ==============================================================================
 
-name: 🧪 Validação & Auditoria do Portfólio (CI)
+name: 🧪 Validação do Portfólio (CI)
 
 on:
-  # Executa em Pull Requests direcionados à branch main
   pull_request:
     branches:
       - main
-
-  # Permite execução manual a qualquer momento
   workflow_dispatch:
 
 permissions:
@@ -21,75 +18,57 @@ permissions:
 
 jobs:
   validate:
-    name: 🔍 Testar Compilação & Integridade
+    name: 🔍 Lint, Types, Testes & Build
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Baixar código do repositório (Checkout)
+      - name: 📥 Checkout
         uses: actions/checkout@v4
 
-      - name: 🐍 Configurar Python
-        uses: actions/setup-python@v5
+      - name: 🟢 Configurar Node
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.x'
+          node-version: '20'
+          cache: npm
 
-      - name: 🧪 Rodar suíte de testes do portfólio (scripts/test_site.py)
-        run: python3 scripts/test_site.py
+      - name: 📦 Instalar dependências
+        run: npm ci
 
-      - name: ⚙️ Configurar ambiente Jekyll
-        uses: actions/configure-pages@v5
+      - name: 🎨 ESLint
+        run: npm run lint
 
-      - name: 🔨 Compilar páginas com Jekyll (Dry Run)
-        uses: actions/jekyll-build-pages@v1
-        with:
-          source: ./
-          destination: ./_site
+      - name: 🔎 Typecheck (tsc --noEmit)
+        run: npm run typecheck
 
-      - name: 📑 Auditar Estrutura e Links de PDFs
+      - name: 🧪 Testes (Vitest)
+        run: npm test
+
+      - name: 🔨 Build estático (next build → out/)
+        run: npm run build
+
+      - name: 📑 Auditar artefatos do export
         id: audit
         run: |
-          echo "::group::🔍 Auditoria de Arquivos e Integridade"
-          
-          PAGE_COUNT=$(find ./_site -name "*.html" | wc -l)
-          PDF_COUNT=$(find ./_site/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
-          CSS_EXISTS=$([ -f "./_site/assets/css/custom.css" ] && echo "Sim" || echo "Não")
-          IMG_COUNT=$(find ./_site/assets/img -type f 2>/dev/null | wc -l || echo "0")
-          
-          echo "Páginas HTML: $PAGE_COUNT"
-          echo "Certificados PDF: $PDF_COUNT"
-          echo "CSS Customizado presente: $CSS_EXISTS"
-          echo "Imagens encontradas: $IMG_COUNT"
-          
+          PAGE_COUNT=$(find ./out -name "*.html" | wc -l)
+          PDF_COUNT=$(find ./out/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
+          NOJEKYLL=$([ -f ./out/.nojekyll ] && echo "Sim" || echo "Não")
           echo "page_count=$PAGE_COUNT" >> "$GITHUB_OUTPUT"
           echo "pdf_count=$PDF_COUNT" >> "$GITHUB_OUTPUT"
-          echo "css_exists=$CSS_EXISTS" >> "$GITHUB_OUTPUT"
-          echo "img_count=$IMG_COUNT" >> "$GITHUB_OUTPUT"
-          
-          echo "::endgroup::"
+          echo "nojekyll=$NOJEKYLL" >> "$GITHUB_OUTPUT"
 
-      - name: 📊 Gerar Relatório de Auditoria (CI Report)
+      - name: 📊 Relatório
         run: |
-          cat << 'EOF' >> "$GITHUB_STEP_SUMMARY"
-          # 🧪 Relatório de Auditoria e Validação (CI)
+          cat << EOF >> "$GITHUB_STEP_SUMMARY"
+          # 🧪 Relatório de Validação (CI)
 
-          > [!NOTE]
-          > **Todos os testes de compilação estática e validação estrutural foram concluídos com sucesso!**
-
-          ---
-
-          ### 📋 Checklist de Integridade do Portfólio
-
-          | Item Auditado | Status | Detalhes |
+          | Item | Status | Detalhe |
           | :--- | :--- | :--- |
-          | 🔨 **Compilação Jekyll** | 🟢 **Aprovado** | Nenhuma falha de sintaxe Liquid/Markdown |
-          | 📄 **Páginas HTML** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.page_count }}\` página(s) gerada(s) |
-          | 📜 **Certificados PDF** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.pdf_count }}\` arquivo(s) PDF localizados |
-          | 🎨 **Estilização (CSS)** | 🟢 **Aprovado** | Folha de estilos customizada carregada |
-          | 🖼️ **Imagens & Avatar** | 🟢 **Aprovado** | \`${{ steps.audit.outputs.img_count }}\` imagens disponíveis |
+          | 🎨 ESLint | 🟢 Aprovado | \`next lint\` |
+          | 🔎 Typecheck | 🟢 Aprovado | \`tsc --noEmit\` |
+          | 🧪 Testes | 🟢 Aprovado | Vitest + Testing Library |
+          | 🔨 Build | 🟢 Aprovado | \`${{ steps.audit.outputs.page_count }}\` HTML em \`out/\` |
+          | 📜 Certificados | 🟢 Aprovado | \`${{ steps.audit.outputs.pdf_count }}\` PDF(s) |
+          | 🚫 \`.nojekyll\` | 🟢 Presente | ${{ steps.audit.outputs.nojekyll }} |
 
-          ---
-
-          > [!TIP]
-          > **Branch validada:** \`${{ github.head_ref || github.ref_name }}\`  
-          > Este Pull Request está pronto e seguro para ser integrado na branch \`main\`.
+          Branch: \`${{ github.head_ref || github.ref_name }}\`
           EOF

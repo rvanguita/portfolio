@@ -1,18 +1,32 @@
-*.gem
+# --- Node / Next.js ---
+node_modules
+npm-debug.log*
+.next
+out
+next-env.d.ts
+*.tsbuildinfo
+.eslintcache
+.vitest
+
+# --- Editores / SO ---
+# .claude/ apareceu sem procedência conhecida (skill React não relacionada) —
+# ignorado para não versionar por acidente; investigar/remover à parte.
+.claude/
+.DS_Store
 *.sublime-project
 *.sublime-workspace
+codekit-config.json
+
+# --- Legado Jekyll (ainda ignorado até a limpeza final) ---
+*.gem
 .bundle
-.DS_Store
 .jekyll-cache
 .jekyll-metadata
 .sass-cache
 _asset_bundler_cache
 _site
-codekit-config.json
 example/_site
 Gemfile.lock
-node_modules
-npm-debug.log*
 vendor/
 
 # Dados pessoais locais (ex.: export de currículo/LinkedIn) — nunca versionar
