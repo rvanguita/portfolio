@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { asset } from "@/lib/base-path";
 
 /** Porte do HERO SECTION do index.html original. */
 export function Hero() {
@@ -6,12 +7,15 @@ export function Hero() {
     <section className="hero-section">
       <div className="hero-avatar-wrapper">
         <Image
-          src="/assets/img/face.png"
+          // `next/image` NÃO prefixa o basePath para um asset de /public com
+          // output:'export' + unoptimized — por isso o asset() aqui.
+          src={asset("/assets/img/face.png")}
           alt="Rene Verinaud Anguita Junior"
           className="hero-avatar"
           width={200}
           height={200}
           priority
+          unoptimized
         />
       </div>
       <div className="hero-content">

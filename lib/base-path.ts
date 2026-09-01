@@ -1,9 +1,10 @@
 /**
  * Prefixo de deploy (GitHub Pages: /portfolio). Equivalente ao `baseurl` do Jekyll.
  *
- * `next/link` e `next/image` já prefixam o basePath automaticamente. Este helper
- * é para os casos que o Next NÃO prefixa: `href` de arquivos servidos de /public
- * (PDFs de certificado, favicon, imagem de card social) e URLs em metadata.
+ * `next/link` já prefixa o basePath automaticamente. `next/image` NÃO prefixa
+ * com output:'export' + images.unoptimized. Use este helper para tudo servido
+ * de /public: `src`/`href` de imagens, PDFs de certificado, favicon, card
+ * social — e para URLs em metadata.
  */
 export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
 
