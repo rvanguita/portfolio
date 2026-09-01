@@ -258,56 +258,60 @@ a:hover {
 /* Botão Hambúrguer — oculto no desktop, exibido em telas estreitas */
 .nav-toggle {
   display: none;
-  background: var(--bg-subtle);
+  background: transparent;
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 0;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 1.05rem;
+  line-height: 1;
   transition: var(--transition);
 }
 
 .nav-toggle:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--text-main);
+  background-color: var(--bg-subtle);
 }
 
 /* Botão de Alternância de Tema */
 .btn-theme-toggle {
-  background: var(--bg-subtle);
+  background: transparent;
   border: 1px solid var(--border-subtle);
   color: var(--text-main);
   width: 38px;
   height: 38px;
-  border-radius: 50%;
+  border-radius: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
   font-size: 1rem;
+  line-height: 1;
   transition: var(--transition);
 }
 
 .btn-theme-toggle:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: scale(1.03);
+  background-color: var(--bg-subtle);
+  border-color: var(--text-main);
 }
 
-/* Alternância dos ícones Sol / Lua */
+/* Alternância dos indicadores Sol / Lua */
+.theme-icon-sun,
+.theme-icon-moon {
+  font-style: normal;
+  color: var(--text-main);
+}
+
 .theme-icon-sun {
   display: none;
-  color: #fbbf24;
 }
 
 .theme-icon-moon {
   display: block;
-  color: var(--text-muted);
 }
 
 [data-theme="dark"] .theme-icon-sun {
@@ -319,22 +323,23 @@ a:hover {
 }
 
 .btn-nav-contact {
-  background: var(--accent-gradient);
-  color: #ffffff !important;
-  font-size: 0.85rem;
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg) !important;
+  font-size: 0.75rem;
   font-weight: 600;
-  padding: 0.45rem 1.15rem;
-  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.5rem 1.15rem;
+  border: 1px solid var(--btn-primary-bg);
+  border-radius: 0;
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
-  box-shadow: 0 2px 10px rgba(29, 78, 216, 0.25);
   transition: var(--transition);
 }
 
 .btn-nav-contact:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 16px rgba(29, 78, 216, 0.35);
+  opacity: 0.9;
 }
 
 /* --- 5. Container Principal --- */
@@ -455,28 +460,35 @@ a:hover {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.7rem 1.05rem;
-  border-radius: var(--radius-md);
-  font-size: 0.86rem;
-  font-weight: 700;
+  padding: 0.72rem 1.15rem;
+  border-radius: 0;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  border: 1px solid transparent;
   transition: var(--transition);
 }
 
 .btn-primary {
-  color: #fff !important;
-  background: var(--accent-gradient);
-  box-shadow: 0 8px 18px rgba(29, 78, 216, 0.22);
+  color: var(--btn-primary-fg) !important;
+  background: var(--btn-primary-bg);
+  border-color: var(--btn-primary-bg);
 }
 
 .btn-secondary {
   color: var(--text-main) !important;
-  background: var(--bg-subtle);
-  border: 1px solid var(--border-subtle);
+  background: transparent;
+  border-color: var(--text-light);
 }
 
-.btn-primary:hover, .btn-secondary:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-hover);
+.btn-primary:hover {
+  opacity: 0.9;
+}
+
+.btn-secondary:hover {
+  border-color: var(--text-main);
+  background: var(--bg-subtle);
 }
 
 .hero-socials {
@@ -497,22 +509,18 @@ a:hover {
   align-items: center;
   gap: 0.45rem;
   background-color: var(--bg-card);
-  box-shadow: var(--card-inner-glow), var(--shadow-sm);
   color: var(--text-main);
   padding: 0.45rem 0.95rem;
-  border-radius: var(--radius-sm);
+  border-radius: 0;
   font-size: 0.85rem;
-  font-weight: 600;
+  font-weight: 500;
   border: 1px solid var(--border-card);
   transition: var(--transition);
 }
 
 .social-chip:hover {
-  background-color: var(--accent);
-  color: #fff;
-  border-color: var(--accent);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
+  border-color: var(--border-hover);
+  background-color: var(--bg-card-hover);
 }
 
 /* --- 7. Títulos de Seções & Cabeçalhos --- */
@@ -816,14 +824,15 @@ section {
 }
 
 .filter-btn, .cert-filter-btn {
-  background: var(--bg-card);
-  color: var(--text-muted);
-  border: 1px solid var(--border-card);
-  box-shadow: var(--card-inner-glow), var(--shadow-sm);
+  background: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--text-light);
   padding: 0.5rem 1rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.85rem;
+  border-radius: 0;
+  font-size: 0.72rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   cursor: pointer;
   transition: var(--transition);
   display: inline-flex;
@@ -834,7 +843,7 @@ section {
 .filter-btn:hover, .cert-filter-btn:hover {
   background-color: var(--bg-subtle);
   color: var(--primary);
-  border-color: var(--border-hover);
+  border-color: var(--text-main);
 }
 
 .filter-btn.active, .cert-filter-btn.active {
@@ -980,27 +989,32 @@ section {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  background-color: var(--bg-subtle);
+  background-color: transparent;
   color: var(--text-main) !important;
-  font-size: 0.85rem;
+  font-size: 0.72rem;
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   padding: 0.55rem 1rem;
-  border-radius: var(--radius-md);
-  border: 1px solid var(--border-subtle);
+  border-radius: 0;
+  border: 1px solid var(--text-light);
   transition: var(--transition);
 }
 
 .btn-project-primary {
-  background: var(--accent);
-  color: #fff !important;
-  border-color: var(--accent);
+  background: var(--btn-primary-bg);
+  color: var(--btn-primary-fg) !important;
+  border-color: var(--btn-primary-bg);
 }
 
 .btn-project:hover {
-  background: var(--accent-gradient);
-  color: #ffffff !important;
-  border-color: transparent;
-  transform: translateY(-1px);
+  border-color: var(--text-main);
+  background: var(--bg-subtle);
+}
+
+.btn-project-primary:hover {
+  opacity: 0.9;
+  background: var(--btn-primary-bg);
 }
 
 /* --- 12. Formação Acadêmica --- */
@@ -1115,23 +1129,20 @@ section {
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1rem;
-  background-color: var(--bg-subtle);
+  background-color: transparent;
   border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-md);
+  border-radius: 0;
   color: var(--text-main) !important;
   font-size: 0.88rem;
-  font-weight: 600;
+  font-weight: 500;
   transition: var(--transition);
   gap: 0.8rem;
   min-width: 0;
 }
 
 .cert-badge-link:hover {
-  background-color: var(--bg-card-hover);
-  border-color: var(--accent);
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
-  color: var(--accent) !important;
+  background-color: var(--bg-subtle);
+  border-color: var(--text-main);
 }
 
 .cert-badge-info {
@@ -1145,11 +1156,6 @@ section {
   overflow-wrap: anywhere;
 }
 
-.cert-badge-info i {
-  color: #ef4444;
-  font-size: 1.1rem;
-}
-
 .cert-badge-tag {
   font-size: 0.7rem;
   font-weight: 700;
@@ -1161,13 +1167,13 @@ section {
   white-space: nowrap;
 }
 
-/* --- 14. Rodapé Moderno --- */
+/* --- 14. Rodapé --- */
 .footer {
   background-color: var(--footer-bg);
-  color: var(--text-light);
+  color: #94a3b8;
   padding: 3rem 1.5rem 2rem;
   margin-top: 4rem;
-  border-top: 1px solid var(--border-subtle);
+  border-top: 1px solid #1e2637;
   transition: background-color 0.3s ease;
 }
 
@@ -1190,37 +1196,33 @@ section {
 .footer-info p {
   font-size: 0.9rem;
   margin-top: 0.2rem;
-  color: var(--text-muted);
+  color: #94a3b8;
 }
 
 .footer-socials {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .footer-socials a {
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background-color: var(--bg-subtle);
-  color: var(--text-main);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.1rem;
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   transition: var(--transition);
 }
 
 .footer-socials a:hover {
-  background: var(--accent-gradient);
-  color: #fff;
-  transform: translateY(-1px);
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .footer-bottom {
   font-size: 0.8rem;
-  color: var(--text-muted);
-  border-top: 1px solid var(--border-subtle);
+  color: #7c8aa0;
+  border-top: 1px solid #1e2637;
   padding-top: 1.5rem;
   width: 100%;
 }

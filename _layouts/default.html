@@ -25,10 +25,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-  <!-- FontAwesome Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
+  
   <!-- Estilos Customizados -->
   <link rel="stylesheet" href="{{ '/assets/css/custom.css' | relative_url }}">
   
@@ -53,17 +50,17 @@
       <div class="nav-actions">
         <!-- Botão de Alternância de Tema (Modo Escuro / Claro) -->
         <button id="themeToggle" class="btn-theme-toggle" aria-label="Alternar modo escuro ou claro" title="Alternar Tema">
-          <i class="fa-solid fa-moon theme-icon-moon"></i>
-          <i class="fa-solid fa-sun theme-icon-sun"></i>
+          <span class="theme-icon-moon" aria-hidden="true">☾</span>
+          <span class="theme-icon-sun" aria-hidden="true">☼</span>
         </button>
 
         <a href="mailto:renevajr@gmail.com" class="btn-nav-contact">
-          <i class="fa-regular fa-envelope"></i> Contato
+          Contato
         </a>
 
         <!-- Botão Hambúrguer (menu em telas estreitas) -->
         <button id="navToggle" class="nav-toggle" aria-label="Abrir menu de navegação" aria-expanded="false" aria-controls="navMenu">
-          <i class="fa-solid fa-bars"></i>
+          <span aria-hidden="true">☰</span>
         </button>
       </div>
     </div>
@@ -82,15 +79,9 @@
         <p>Cientista de Dados | Especialista em Otimização de Sistemas & Machine Learning</p>
       </div>
       <div class="footer-socials">
-        <a href="https://github.com/rvanguita" target="_blank" rel="noopener noreferrer" title="GitHub">
-          <i class="fa-brands fa-github"></i>
-        </a>
-        <a href="https://linkedin.com/in/rvanguita" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-          <i class="fa-brands fa-linkedin-in"></i>
-        </a>
-        <a href="mailto:renevajr@gmail.com" title="E-mail">
-          <i class="fa-regular fa-envelope"></i>
-        </a>
+        <a href="https://github.com/rvanguita" target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href="https://linkedin.com/in/rvanguita" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="mailto:renevajr@gmail.com">E-mail</a>
       </div>
       <div class="footer-bottom">
         <p>© 2026 Rene Verinaud Anguita Junior • Desenvolvido com Jekyll & GitHub Actions</p>
