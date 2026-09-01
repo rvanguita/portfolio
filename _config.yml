@@ -27,6 +27,20 @@ plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
+# Cartão de Compartilhamento Social (Open Graph / Twitter Card): jekyll-seo-tag lê
+# `page.image`, não `site.image` — via `defaults` isso vale para toda página sem precisar
+# repetir no front matter de cada uma. Uma vez presente, o twitter:card vira
+# automaticamente "summary_large_image" (jekyll-seo-tag decide isso sozinho).
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: "/assets/img/social-card.png"
+        height: 630
+        width: 1200
+        alt: "Rene Anguita — Data Scientist & Ph.D. Engenharia Elétrica"
+
 # Estilos e Customização
 include_css:
   - /assets/css/custom.css
