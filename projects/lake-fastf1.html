@@ -3,19 +3,19 @@ layout: default
 title: "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1 | Rene Verinaud"
 description: "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e dashboard Streamlit."
 architecture_steps:
-  - emoji: "☁️"
+  - icon: "cloud"
     title: "1. Ingestão & Raw Layer"
     description: "Extração automatizada de dados de corridas, treinos livres, classificações e telemetria da Fórmula 1 utilizando a biblioteca <code>FastF1</code>, salvando os resultados brutos particionados em formato <strong>Parquet</strong>."
     tags: ["FastF1", "Python", "Parquet", "AWS S3 Boto3"]
-  - emoji: "🧱"
+  - icon: "square-3-stack-3d"
     title: "2. Bronze & Silver (Delta Lake)"
     description: "Consolidação dos dados em tabelas <strong>Delta Lake</strong> na camada Bronze com versionamento ACID e criação da camada Silver curada com estatísticas agregadas de pilotos, construtores e histórico de voltas."
     tags: ["Delta Lake", "PySpark", "Pandas / NumPy", "ACID Transactions"]
-  - emoji: "⏱️"
+  - icon: "clock"
     title: "3. Orquestração no Airflow"
     description: "DAG programada para execução semanal com monitoramento de linhagem de dados (<code>Asset</code>), controle de concorrência e tarefas sequenciais com tolerância a falhas e espelhamento final para <strong>MySQL</strong>."
     tags: ["Apache Airflow", "DAGs", "MySQL / SQLAlchemy", "Data Lineage"]
-  - emoji: "📈"
+  - icon: "chart-bar"
     title: "4. MLOps, API & Dashboard"
     description: "Modelo de Machine Learning para predição de campeonatos treinado com <code>Scikit-Learn</code> e rastreado no <code>MLflow</code>, exposto via API de baixa latência no <strong>FastAPI</strong> e painel analítico no <strong>Streamlit</strong>."
     tags: ["MLflow", "Scikit-Learn", "FastAPI", "Streamlit / Plotly"]
@@ -34,7 +34,7 @@ architecture_steps:
   <div class="case-study-heading">
     <div>
       <span class="project-category-badge cat-de">
-        <span class="emoji" aria-hidden="true">🏁</span> Engenharia de Dados, Lakehouse & MLOps
+        {% include icon.html name='flag' class='badge-icon' %} Engenharia de Dados, Lakehouse & MLOps
       </span>
       <h1>
         FastF1 Data Platform: Data Lakehouse e Predição da Fórmula 1
@@ -50,10 +50,10 @@ architecture_steps:
       Acessar Repositório no GitHub
     </a>
     <span class="social-chip">
-      <span class="emoji" aria-hidden="true">✅</span> Status: Ativo / Produção
+      {% include icon.html name='check-circle' class='chip-icon' %} Status: Ativo / Produção
     </span>
     <span class="social-chip">
-      <span class="emoji" aria-hidden="true">🐳</span> Docker & Docker Compose
+      {% include icon.html name='cube' class='chip-icon' %} Docker & Docker Compose
     </span>
   </div>
 </div>
@@ -82,7 +82,7 @@ architecture_steps:
 <section class="case-study-section">
   <div class="section-header section-header-first">
     <span class="section-tag">Design de Engenharia</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">🏗️</span>Arquitetura da Plataforma</h2>
+    <h2 class="section-title">{% include icon.html name='squares-2x2' class='section-icon' %}Arquitetura da Plataforma</h2>
     <p class="section-desc">Fluxo de dados completo desde a coleta bruta via API FastF1 até as interfaces de predição e visualização.</p>
   </div>
 
@@ -110,11 +110,11 @@ architecture_steps:
 <section class="case-study-section">
   <div class="section-header">
     <span class="section-tag">Engenharia de Dados</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">🧱</span>Estrutura das Camadas e Componentes</h2>
+    <h2 class="section-title">{% include icon.html name='square-3-stack-3d' class='section-icon' %}Estrutura das Camadas e Componentes</h2>
   </div>
 
   <div class="skills-grid">
-    {% for step in page.architecture_steps %}{% include skill-card.html emoji=step.emoji title=step.title description=step.description tags=step.tags %}
+    {% for step in page.architecture_steps %}{% include skill-card.html icon=step.icon title=step.title description=step.description tags=step.tags %}
     {% endfor %}
   </div>
 </section>
@@ -125,7 +125,7 @@ architecture_steps:
 <section class="case-study-section">
   <div class="section-header">
     <span class="section-tag">Tecnologias</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">⚙️</span>Stack Tecnológica Completa</h2>
+    <h2 class="section-title">{% include icon.html name='cog-6-tooth' class='section-icon' %}Stack Tecnológica Completa</h2>
   </div>
 
   <div class="about-card stack-table-wrapper">
@@ -139,14 +139,14 @@ architecture_steps:
       </thead>
       <tbody>
         <tr>
-          <td><span class="emoji" aria-hidden="true">☁️</span> Coleta & Acesso a Dados</td>
+          <td>{% include icon.html name='cloud' class='stack-icon' %} Coleta & Acesso a Dados</td>
           <td class="stack-table-techs">
             <span class="tech-tag">FastF1</span>
           </td>
           <td>Extração de telemetrias, tempos de volta e dados climáticos.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">🧱</span> Processamento & Lakehouse</td>
+          <td>{% include icon.html name='square-3-stack-3d' class='stack-icon' %} Processamento & Lakehouse</td>
           <td class="stack-table-techs">
             <span class="tech-tag">Delta Lake</span>
             <span class="tech-tag">PySpark</span>
@@ -155,14 +155,14 @@ architecture_steps:
           <td>Transformações em camadas Raw, Bronze e Silver com particionamento.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">⏱️</span> Orquestração de Pipelines</td>
+          <td>{% include icon.html name='clock' class='stack-icon' %} Orquestração de Pipelines</td>
           <td class="stack-table-techs">
             <span class="tech-tag">Apache Airflow</span>
           </td>
           <td>Agendamento semanal automatizado e governança de dados.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">📈</span> Machine Learning & Tracking</td>
+          <td>{% include icon.html name='chart-bar' class='stack-icon' %} Machine Learning & Tracking</td>
           <td class="stack-table-techs">
             <span class="tech-tag">Scikit-Learn</span>
             <span class="tech-tag">MLflow</span>
@@ -170,7 +170,7 @@ architecture_steps:
           <td>Treinamento, versionamento de modelos e rastreamento de métricas.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">🔌</span> API de Inferência</td>
+          <td>{% include icon.html name='server' class='stack-icon' %} API de Inferência</td>
           <td class="stack-table-techs">
             <span class="tech-tag">FastAPI</span>
             <span class="tech-tag">Uvicorn</span>
@@ -178,7 +178,7 @@ architecture_steps:
           <td>Endpoint REST (<code>/predict</code>) para inferências de predição em tempo real.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">📊</span> Visualização & BI</td>
+          <td>{% include icon.html name='chart-pie' class='stack-icon' %} Visualização & BI</td>
           <td class="stack-table-techs">
             <span class="tech-tag">Streamlit</span>
             <span class="tech-tag">Plotly</span>
@@ -187,7 +187,7 @@ architecture_steps:
           <td>Dashboard interativo para exploração visual e espelhamento relacional.</td>
         </tr>
         <tr>
-          <td><span class="emoji" aria-hidden="true">🐳</span> DevOps & Infraestrutura</td>
+          <td>{% include icon.html name='cube' class='stack-icon' %} DevOps & Infraestrutura</td>
           <td class="stack-table-techs">
             <span class="tech-tag">Docker</span>
             <span class="tech-tag">Docker Compose</span>

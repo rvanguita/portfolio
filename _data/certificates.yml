@@ -1,5 +1,5 @@
 - key: ds-python
-  emoji: '🐍'
+  icon: 'beaker'
   title: 'Data Science & Python Avançado'
   items:
     - title: 'Introduction to Data Science in Python'
@@ -40,7 +40,7 @@
       path: '/certificates/Python for Everybody/Capstone: Retrieving, Processing, and Visualizing Data with Python/Coursera QJN7QJTLGFLT.pdf'
 
 - key: math-ml
-  emoji: '📐'
+  icon: 'calculator'
   title: 'Matemática, Álgebra Linear & Machine Learning'
   items:
     - title: 'Mathematics for Machine Learning (Completo)'
@@ -72,7 +72,7 @@
       path: '/certificates/Stochastic processes/Certificate.pdf'
 
 - key: biz-stats
-  emoji: '📈'
+  icon: 'presentation-chart-bar'
   title: 'Estatística Empresarial & Business Analytics'
   items:
     - title: 'Introduction to Data Analysis Using Excel'

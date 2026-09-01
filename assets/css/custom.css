@@ -620,29 +620,56 @@ a:hover {
   color: var(--text-light);
 }
 
-/* Emojis por seção / categoria */
-.emoji {
-  font-style: normal;
-  line-height: 1;
+/* Ícones SVG inline por seção / categoria — herdam a cor via currentColor,
+   sem depender da renderização de fonte de emoji (evita o "tofu") */
+.icon,
+.section-icon,
+.skill-icon,
+.cert-icon,
+.badge-icon,
+.about-icon,
+.chip-icon,
+.stack-icon {
   flex: 0 0 auto;
 }
 
-.section-title .emoji {
-  font-size: 1.1em;
+.icon,
+.about-icon,
+.chip-icon {
+  width: 1em;
+  height: 1em;
+  vertical-align: -0.125em;
 }
 
-.skill-card-header .emoji,
-.cert-category-header .emoji {
-  font-size: 1.4rem;
+.section-icon {
+  width: 1.35rem;
+  height: 1.35rem;
 }
 
-.project-category-badge .emoji {
-  font-size: 0.95rem;
+.skill-icon,
+.cert-icon {
+  width: 1.4rem;
+  height: 1.4rem;
 }
 
-.about-intro h2 .emoji {
-  font-size: 1em;
+.badge-icon {
+  width: 0.95rem;
+  height: 0.95rem;
+}
+
+.about-icon {
   margin-right: 0.15em;
+}
+
+.chip-icon {
+  margin-right: 0.1em;
+}
+
+.stack-icon {
+  width: 1.05em;
+  height: 1.05em;
+  margin-right: 0.4rem;
+  vertical-align: -0.18em;
 }
 
 /* --- 7. Títulos de Seções & Cabeçalhos --- */
@@ -845,10 +872,6 @@ section {
 .stack-table td:first-child {
   font-weight: 700;
   white-space: nowrap;
-}
-
-.stack-table td:first-child .emoji {
-  margin-right: 0.4rem;
 }
 
 .stack-table td:last-child {

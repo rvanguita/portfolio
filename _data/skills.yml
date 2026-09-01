@@ -1,4 +1,4 @@
-- emoji: '🤖'
+- icon: 'cpu-chip'
   title: 'Ciência de Dados & ML'
   tags:
     - 'Python'
@@ -10,7 +10,7 @@
     - 'Regressão & Classificação'
     - 'Feature Engineering'
 
-- emoji: '⚡'
+- icon: 'bolt'
   title: 'Pesquisa Operacional & Otimização'
   tags:
     - 'CPLEX'
@@ -20,7 +20,7 @@
     - 'Metaheurísticas'
     - 'Otimização de Redes Elétricas'
 
-- emoji: '📊'
+- icon: 'chart-pie'
   title: 'Visualização & Business Analytics'
   tags:
     - 'Power BI'
@@ -30,7 +30,7 @@
     - 'Excel Avançado'
     - 'Estatística Descritiva & Inferencial'
 
-- emoji: '🧰'
+- icon: 'command-line'
   title: 'Linguagens, Cloud & Ferramentas'
   tags:
     - 'SQL'

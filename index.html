@@ -79,7 +79,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
   <div class="about-card">
     <div class="about-intro">
       <span class="section-tag">Perfil profissional</span>
-      <h2><span class="emoji" aria-hidden="true">👤</span>Ciência aplicada para problemas que importam.</h2>
+      <h2>{% include icon.html name='user' class='about-icon' %}Ciência aplicada para problemas que importam.</h2>
     </div>
     <p class="about-copy">
       Profissional com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e sólida experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão. No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; seu background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.
@@ -108,12 +108,12 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
 <section id="habilidades">
   <div class="section-header">
     <span class="section-tag">Competências</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">🧠</span>Matriz de Habilidades Técnicas</h2>
+    <h2 class="section-title">{% include icon.html name='wrench' class='section-icon' %}Matriz de Habilidades Técnicas</h2>
     <p class="section-desc">Uma combinação de profundidade técnica e visão de negócio para transformar dados em produtos e decisões melhores.</p>
   </div>
 
   <div class="skills-grid">
-    {% for cat in site.data.skills %}{% include skill-card.html emoji=cat.emoji title=cat.title tags=cat.tags %}
+    {% for cat in site.data.skills %}{% include skill-card.html icon=cat.icon title=cat.title tags=cat.tags %}
     {% endfor %}
   </div>
 </section>
@@ -124,7 +124,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
 <section id="projetos">
   <div class="section-header">
     <span class="section-tag">Portfólio de Aplicações</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">💻</span>Projetos em Destaque</h2>
+    <h2 class="section-title">{% include icon.html name='briefcase' class='section-icon' %}Projetos em Destaque</h2>
     <p class="section-desc">Casos reais de dados, otimização e machine learning — apresentados do desafio ao impacto.</p>
   </div>
 
@@ -159,7 +159,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
 <section id="experiencia">
   <div class="section-header">
     <span class="section-tag">Trajetória Profissional</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">💼</span>Experiência Profissional</h2>
+    <h2 class="section-title">{% include icon.html name='chart-bar' class='section-icon' %}Experiência Profissional</h2>
   </div>
 
   <div class="education-timeline">
@@ -174,7 +174,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
 <section id="formacao">
   <div class="section-header">
     <span class="section-tag">Trajetória Acadêmica</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">🎓</span>Formação Acadêmica</h2>
+    <h2 class="section-title">{% include icon.html name='academic-cap' class='section-icon' %}Formação Acadêmica</h2>
   </div>
 
   <div class="education-timeline">
@@ -189,7 +189,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
 <section id="certificados">
   <div class="section-header">
     <span class="section-tag">Educação Continuada</span>
-    <h2 class="section-title"><span class="emoji" aria-hidden="true">🏅</span>Certificações & Especializações</h2>
+    <h2 class="section-title">{% include icon.html name='document' class='section-icon' %}Certificações & Especializações</h2>
     <p class="section-desc">Formação contínua em ciência de dados, matemática aplicada, estatística e análise de negócios.</p>
   </div>
 
@@ -213,7 +213,7 @@ title: "Rene Verinaud Anguita Junior | Data Scientist & Optimization Specialist"
     {% for cat in site.data.certificates %}
     <div class="cert-category-group" data-cert-category="{{ cat.key }}">
       <div class="cert-category-header">
-        <span class="emoji" aria-hidden="true">{{ cat.emoji }}</span><h3>{{ cat.title }}</h3>
+        {% include icon.html name=cat.icon class='cert-icon' %}<h3>{{ cat.title }}</h3>
       </div>
 
       <div class="cert-items-grid">

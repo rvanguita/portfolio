@@ -1,6 +1,6 @@
 <div class="skill-card">
   <div class="skill-card-header">
-    <span class="emoji" aria-hidden="true">{{ include.emoji }}</span><h3>{{ include.title }}</h3>
+    {% include icon.html name=include.icon class='skill-icon' %}<h3>{{ include.title }}</h3>
   </div>
   {% if include.description %}<p class="case-study-copy">{{ include.description }}</p>{% endif %}
   <div class="skill-tags-group">

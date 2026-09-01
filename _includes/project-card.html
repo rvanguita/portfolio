@@ -1,7 +1,7 @@
 <div class="project-card-item" data-category="{{ include.project.category }}">
   <div>
     <span class="project-category-badge cat-{{ include.project.category }}">
-      <span class="emoji" aria-hidden="true">{{ include.project.badge_emoji }}</span> {{ include.project.badge_label }}
+      {% include icon.html name=include.project.badge_icon class='badge-icon' %} {{ include.project.badge_label }}
     </span>
     <h3>{{ include.project.title }}</h3>
     <p class="project-summary"><strong>Desafio:</strong> {{ include.project.challenge }}</p>

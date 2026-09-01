@@ -1,6 +1,6 @@
 - key: fastf1
   category: de
-  badge_emoji: '🏁'
+  badge_icon: 'flag'
   badge_label: 'Lakehouse & MLOps'
   title: 'FastF1 Data Platform'
   challenge: 'transformar dados de corridas em uma plataforma confiável para análise e previsão.'
@@ -19,7 +19,7 @@
 
 - key: wind-farm
   category: ml
-  badge_emoji: '💨'
+  badge_icon: 'sun'
   badge_label: 'Regressão & Energia Renovável'
   title: 'Wind Farm Generation Modeling'
   challenge: 'prever a geração de energia de quatro turbinas eólicas ao longo de um ano, com curvas de geração não lineares.'
@@ -35,7 +35,7 @@
 
 - key: bank-churn
   category: analytics
-  badge_emoji: '🏦'
+  badge_icon: 'building-library'
   badge_label: 'Classificação & Negócios'
   title: 'Bank Customer Churn Prediction'
   challenge: 'identificar clientes com maior risco de evasão antes do cancelamento em uma instituição bancária europeia.'
@@ -51,7 +51,7 @@
 
 - key: distribuicao-eletrica
   category: opt
-  badge_emoji: '⚡'
+  badge_icon: 'bolt'
   badge_label: 'Pesquisa Operacional (Mestrado & Doutorado)'
   title: 'Otimização de Sistemas de Distribuição Elétrica'
   challenge: 'acelerar decisões de planejamento e expansão em redes elétricas de distribuição de grande porte.'
@@ -72,7 +72,7 @@
 
 - key: fraud-detection
   category: analytics
-  badge_emoji: '🛡️'
+  badge_icon: 'shield-check'
   badge_label: 'Detecção de Fraude & Risco'
   title: 'Credit Card Fraud Detection'
   challenge: 'identificar transações fraudulentas em um dataset real de cartão de crédito extremamente desbalanceado (fraude é menos de 1% dos casos).'
@@ -88,7 +88,7 @@
 
 - key: sentiment-nlp
   category: ml
-  badge_emoji: '💬'
+  badge_icon: 'chat-bubble'
   badge_label: 'NLP & Processamento de Linguagem Natural'
   title: 'Sentiment Identification NLP'
   challenge: 'classificar o sentimento de ~100 mil avaliações de clientes de um e-commerce brasileiro (dataset Olist).'
