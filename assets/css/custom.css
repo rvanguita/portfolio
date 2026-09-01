@@ -403,6 +403,9 @@ a:hover {
 }
 
 .hero-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
   text-align: center;
   position: relative;
   z-index: 1;
@@ -415,6 +418,7 @@ a:hover {
 }
 
 .hero-tagline {
+  align-self: center;
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
@@ -425,33 +429,36 @@ a:hover {
   border: 1px solid var(--cat-ml-border);
   padding: 0.3rem 0.8rem;
   border-radius: var(--radius-sm);
-  margin-bottom: 0.9rem;
 }
 
+@media (min-width: 860px) {
+  .hero-tagline {
+    align-self: flex-start;
+  }
+}
+
+/* Hierarquia tipográfica do hero: H1 (nome) > headline (cargo) > lead (descrição) */
 .hero-title {
-  font-size: 2.3rem;
+  font-size: clamp(2rem, 4vw, 2.6rem);
   font-weight: 700;
   color: var(--primary);
-  line-height: 1.15;
-  letter-spacing: -0.4px;
-  margin-bottom: 0.4rem;
+  line-height: 1.12;
+  letter-spacing: -0.5px;
 }
 
-.hero-subtitle {
+.hero-headline {
   max-width: 640px;
-  font-size: clamp(1.05rem, 2vw, 1.25rem);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
   font-weight: 600;
   color: var(--text-main);
-  line-height: 1.4;
-  margin-bottom: 0.8rem;
+  line-height: 1.45;
 }
 
-.hero-description {
+.hero-lead {
   max-width: 560px;
   color: var(--text-muted);
   font-size: 0.98rem;
   line-height: 1.7;
-  margin-bottom: 1.6rem;
 }
 
 .availability-dot {
@@ -467,7 +474,12 @@ a:hover {
   flex-wrap: wrap;
   gap: 0.7rem;
   justify-content: center;
-  margin-bottom: 1.4rem;
+}
+
+@media (min-width: 860px) {
+  .hero-actions {
+    justify-content: flex-start;
+  }
 }
 
 .btn-primary, .btn-secondary {
@@ -503,7 +515,18 @@ a:hover {
   background: var(--tag-bg);
 }
 
-.hero-socials {
+/* Reforço da ação primária dentro do hero (btn-primary/secondary são compartilhados) */
+.hero-actions .btn-primary {
+  box-shadow: 0 1px 2px rgba(37, 99, 235, 0.25);
+}
+
+.hero-actions .btn-secondary:hover {
+  background: var(--tag-bg);
+  border-color: var(--accent);
+}
+
+/* Bloco de links sociais — chips horizontais com ícone SVG */
+.hero-links {
   display: flex;
   flex-wrap: wrap;
   gap: 0.6rem;
@@ -511,9 +534,34 @@ a:hover {
 }
 
 @media (min-width: 860px) {
-  .hero-socials {
+  .hero-links {
     justify-content: flex-start;
   }
+}
+
+.hero-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--tag-bg);
+  color: var(--accent);
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  border: 1px solid var(--cat-ml-border);
+  transition: var(--transition);
+}
+
+.hero-link:hover {
+  border-color: var(--accent);
+  background-color: var(--bg-highlight);
+}
+
+.hero-link-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
 }
 
 .social-chip {
@@ -535,11 +583,12 @@ a:hover {
   background-color: var(--bg-highlight);
 }
 
+/* Bloco de metadados — separado dos links: texto discreto, ícones SVG suaves */
 .hero-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.3rem 1.1rem;
-  margin-top: 0.9rem;
+  gap: 0.4rem 1.4rem;
+  list-style: none;
   font-size: 0.85rem;
   color: var(--text-light);
   justify-content: center;
@@ -549,6 +598,19 @@ a:hover {
   .hero-meta {
     justify-content: flex-start;
   }
+}
+
+.hero-meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.hero-meta-icon {
+  width: 15px;
+  height: 15px;
+  flex: 0 0 auto;
+  color: var(--text-light);
 }
 
 /* Emojis por seção / categoria */
@@ -1324,7 +1386,7 @@ section {
   }
 
   .hero-title {
-    font-size: 1.85rem;
+    font-size: 2rem;
   }
 
   .hero-section {
@@ -1333,8 +1395,18 @@ section {
     border-radius: var(--radius-lg);
   }
 
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
   .hero-actions > a {
-    flex: 1 1 170px;
+    width: 100%;
+  }
+
+  .hero-links,
+  .hero-meta {
+    justify-content: center;
   }
 
   .about-card {
