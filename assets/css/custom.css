@@ -266,6 +266,13 @@ a:hover {
   background-color: var(--bg-subtle);
 }
 
+/* Ícones sólidos do menu — herdam a cor (currentColor) do .nav-link */
+.nav-link-icon {
+  width: 16px;
+  height: 16px;
+  flex: 0 0 auto;
+}
+
 .nav-actions {
   display: flex;
   align-items: center;
