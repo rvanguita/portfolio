@@ -40,6 +40,10 @@ text_styles:
 exclude:
   - .github/
   - .gitignore
+  - .bundle/
+  - vendor/
   - Gemfile
   - Gemfile.lock
   - README.md.bak
+  - CLAUDE.md
+  - scripts/

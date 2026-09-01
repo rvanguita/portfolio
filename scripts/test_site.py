@@ -107,10 +107,12 @@ class IdCollector(HTMLParser):
 
 
 class HashLinkExtractor(HTMLParser):
-    """Extrai o fragmento (#...) de qualquer href que aponte para uma âncora interna.
+    """Extrai o fragmento (#...) de todo href de link do MENU de navegação (class="nav-link").
 
     Cobre tanto `#sobre` quanto formas com prefixo de página, como
-    `{{ '/' | relative_url }}#sobre` ou `/portfolio/#sobre`.
+    `{{ '/' | relative_url }}#sobre` ou `/portfolio/#sobre`. Outros links com âncora
+    (ex.: o skip-link de acessibilidade, que aponta para `id="main-content"` no próprio
+    layout) não fazem parte do menu e ficam fora desta checagem de propósito.
     """
 
     def __init__(self):
@@ -119,6 +121,8 @@ class HashLinkExtractor(HTMLParser):
 
     def handle_starttag(self, tag, attrs):
         attr_dict = dict(attrs)
+        if "nav-link" not in attr_dict.get("class", "").split():
+            return
         href = attr_dict.get("href", "")
         before, sep, fragment = href.partition("#")
         if sep and fragment:
