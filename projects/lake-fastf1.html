@@ -2,6 +2,23 @@
 layout: default
 title: "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1 | Rene Verinaud"
 description: "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e dashboard Streamlit."
+architecture_steps:
+  - emoji: "☁️"
+    title: "1. Ingestão & Raw Layer"
+    description: "Extração automatizada de dados de corridas, treinos livres, classificações e telemetria da Fórmula 1 utilizando a biblioteca <code>FastF1</code>, salvando os resultados brutos particionados em formato <strong>Parquet</strong>."
+    tags: ["FastF1", "Python", "Parquet", "AWS S3 Boto3"]
+  - emoji: "🧱"
+    title: "2. Bronze & Silver (Delta Lake)"
+    description: "Consolidação dos dados em tabelas <strong>Delta Lake</strong> na camada Bronze com versionamento ACID e criação da camada Silver curada com estatísticas agregadas de pilotos, construtores e histórico de voltas."
+    tags: ["Delta Lake", "PySpark", "Pandas / NumPy", "ACID Transactions"]
+  - emoji: "⏱️"
+    title: "3. Orquestração no Airflow"
+    description: "DAG programada para execução semanal com monitoramento de linhagem de dados (<code>Asset</code>), controle de concorrência e tarefas sequenciais com tolerância a falhas e espelhamento final para <strong>MySQL</strong>."
+    tags: ["Apache Airflow", "DAGs", "MySQL / SQLAlchemy", "Data Lineage"]
+  - emoji: "📈"
+    title: "4. MLOps, API & Dashboard"
+    description: "Modelo de Machine Learning para predição de campeonatos treinado com <code>Scikit-Learn</code> e rastreado no <code>MLflow</code>, exposto via API de baixa latência no <strong>FastAPI</strong> e painel analítico no <strong>Streamlit</strong>."
+    tags: ["MLflow", "Scikit-Learn", "FastAPI", "Streamlit / Plotly"]
 ---
 
 <div class="case-study-nav">
@@ -33,10 +50,10 @@ description: "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fór
       Acessar Repositório no GitHub
     </a>
     <span class="social-chip">
-      Status: Ativo / Produção
+      <span class="emoji" aria-hidden="true">✅</span> Status: Ativo / Produção
     </span>
     <span class="social-chip">
-      Docker & Docker Compose
+      <span class="emoji" aria-hidden="true">🐳</span> Docker & Docker Compose
     </span>
   </div>
 </div>
@@ -97,69 +114,8 @@ description: "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fór
   </div>
 
   <div class="skills-grid">
-    <!-- Card 1 -->
-    <div class="skill-card">
-      <div class="skill-card-header">
-        <span class="emoji" aria-hidden="true">☁️</span><h3>1. Ingestão & Raw Layer</h3>
-      </div>
-      <p class="case-study-copy">
-        Extração automatizada de dados de corridas, treinos livres, classificações e telemetria da Fórmula 1 utilizando a biblioteca <code>FastF1</code>, salvando os resultados brutos particionados em formato <strong>Parquet</strong>.
-      </p>
-      <div class="skill-tags-group">
-        <span class="skill-pill">FastF1</span>
-        <span class="skill-pill">Python</span>
-        <span class="skill-pill">Parquet</span>
-        <span class="skill-pill">AWS S3 Boto3</span>
-      </div>
-    </div>
-
-    <!-- Card 2 -->
-    <div class="skill-card">
-      <div class="skill-card-header">
-        <span class="emoji" aria-hidden="true">🧱</span><h3>2. Bronze & Silver (Delta Lake)</h3>
-      </div>
-      <p class="case-study-copy">
-        Consolidação dos dados em tabelas <strong>Delta Lake</strong> na camada Bronze com versionamento ACID e criação da camada Silver curada com estatísticas agregadas de pilotos, construtores e histórico de voltas.
-      </p>
-      <div class="skill-tags-group">
-        <span class="skill-pill">Delta Lake</span>
-        <span class="skill-pill">PySpark</span>
-        <span class="skill-pill">Pandas / NumPy</span>
-        <span class="skill-pill">ACID Transactions</span>
-      </div>
-    </div>
-
-    <!-- Card 3 -->
-    <div class="skill-card">
-      <div class="skill-card-header">
-        <span class="emoji" aria-hidden="true">⏱️</span><h3>3. Orquestração no Airflow</h3>
-      </div>
-      <p class="case-study-copy">
-        DAG programada para execução semanal com monitoramento de linhagem de dados (<code>Asset</code>), controle de concorrência e tarefas sequenciais com tolerância a falhas e espelhamento final para <strong>MySQL</strong>.
-      </p>
-      <div class="skill-tags-group">
-        <span class="skill-pill">Apache Airflow</span>
-        <span class="skill-pill">DAGs</span>
-        <span class="skill-pill">MySQL / SQLAlchemy</span>
-        <span class="skill-pill">Data Lineage</span>
-      </div>
-    </div>
-
-    <!-- Card 4 -->
-    <div class="skill-card">
-      <div class="skill-card-header">
-        <span class="emoji" aria-hidden="true">📈</span><h3>4. MLOps, API & Dashboard</h3>
-      </div>
-      <p class="case-study-copy">
-        Modelo de Machine Learning para predição de campeonatos treinado com <code>Scikit-Learn</code> e rastreado no <code>MLflow</code>, exposto via API de baixa latência no <strong>FastAPI</strong> e painel analítico no <strong>Streamlit</strong>.
-      </p>
-      <div class="skill-tags-group">
-        <span class="skill-pill">MLflow</span>
-        <span class="skill-pill">Scikit-Learn</span>
-        <span class="skill-pill">FastAPI</span>
-        <span class="skill-pill">Streamlit / Plotly</span>
-      </div>
-    </div>
+    {% for step in page.architecture_steps %}{% include skill-card.html emoji=step.emoji title=step.title description=step.description tags=step.tags %}
+    {% endfor %}
   </div>
 </section>
 
@@ -183,38 +139,61 @@ description: "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fór
       </thead>
       <tbody>
         <tr>
-          <td>Coleta & Acesso a Dados</td>
-          <td><code>FastF1</code></td>
+          <td><span class="emoji" aria-hidden="true">☁️</span> Coleta & Acesso a Dados</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">FastF1</span>
+          </td>
           <td>Extração de telemetrias, tempos de volta e dados climáticos.</td>
         </tr>
         <tr>
-          <td>Processamento & Lakehouse</td>
-          <td><code>Delta Lake</code>, <code>PySpark</code>, <code>Pandas</code></td>
+          <td><span class="emoji" aria-hidden="true">🧱</span> Processamento & Lakehouse</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">Delta Lake</span>
+            <span class="tech-tag">PySpark</span>
+            <span class="tech-tag">Pandas</span>
+          </td>
           <td>Transformações em camadas Raw, Bronze e Silver com particionamento.</td>
         </tr>
         <tr>
-          <td>Orquestração de Pipelines</td>
-          <td><code>Apache Airflow</code></td>
+          <td><span class="emoji" aria-hidden="true">⏱️</span> Orquestração de Pipelines</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">Apache Airflow</span>
+          </td>
           <td>Agendamento semanal automatizado e governança de dados.</td>
         </tr>
         <tr>
-          <td>Machine Learning & Tracking</td>
-          <td><code>Scikit-Learn</code>, <code>MLflow</code></td>
+          <td><span class="emoji" aria-hidden="true">📈</span> Machine Learning & Tracking</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">Scikit-Learn</span>
+            <span class="tech-tag">MLflow</span>
+          </td>
           <td>Treinamento, versionamento de modelos e rastreamento de métricas.</td>
         </tr>
         <tr>
-          <td>API de Inferência</td>
-          <td><code>FastAPI</code>, <code>Uvicorn</code></td>
+          <td><span class="emoji" aria-hidden="true">🔌</span> API de Inferência</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">FastAPI</span>
+            <span class="tech-tag">Uvicorn</span>
+          </td>
           <td>Endpoint REST (<code>/predict</code>) para inferências de predição em tempo real.</td>
         </tr>
         <tr>
-          <td>Visualização & BI</td>
-          <td><code>Streamlit</code>, <code>Plotly</code>, <code>MySQL</code></td>
+          <td><span class="emoji" aria-hidden="true">📊</span> Visualização & BI</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">Streamlit</span>
+            <span class="tech-tag">Plotly</span>
+            <span class="tech-tag">MySQL</span>
+          </td>
           <td>Dashboard interativo para exploração visual e espelhamento relacional.</td>
         </tr>
         <tr>
-          <td>DevOps & Infraestrutura</td>
-          <td><code>Docker</code>, <code>Docker Compose</code>, <code>uv</code>, <code>AWS S3</code></td>
+          <td><span class="emoji" aria-hidden="true">🐳</span> DevOps & Infraestrutura</td>
+          <td class="stack-table-techs">
+            <span class="tech-tag">Docker</span>
+            <span class="tech-tag">Docker Compose</span>
+            <span class="tech-tag">uv</span>
+            <span class="tech-tag">AWS S3</span>
+          </td>
           <td>Ambiente isolado em contêineres, gerenciamento moderno de pacotes e backup cloud.</td>
         </tr>
       </tbody>

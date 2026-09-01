@@ -1,0 +1,28 @@
+<div class="project-card-item" data-category="{{ include.project.category }}">
+  <div>
+    <span class="project-category-badge cat-{{ include.project.category }}">
+      <span class="emoji" aria-hidden="true">{{ include.project.badge_emoji }}</span> {{ include.project.badge_label }}
+    </span>
+    <h3>{{ include.project.title }}</h3>
+    <p class="project-summary"><strong>Desafio:</strong> {{ include.project.challenge }}</p>
+    <ul class="project-highlights">
+      {% for h in include.project.highlights %}<li><span><strong>{{ h.label }}:</strong> {{ h.text }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="project-footer">
+    <div class="project-techs">
+      {% for t in include.project.tech_tags %}<span class="tech-tag">{{ t }}</span>
+      {% endfor %}
+    </div>
+    {% assign action_count = include.project.actions | size %}
+    {% if action_count > 1 %}
+    <div class="project-actions">
+      {% for a in include.project.actions %}{% include project-action-link.html action=a primary=a.primary %}{% endfor %}
+    </div>
+    {% else %}
+      {% assign only_action = include.project.actions.first %}
+      {% include project-action-link.html action=only_action primary=false %}
+    {% endif %}
+  </div>
+</div>

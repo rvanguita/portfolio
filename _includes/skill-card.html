@@ -1,0 +1,10 @@
+<div class="skill-card">
+  <div class="skill-card-header">
+    <span class="emoji" aria-hidden="true">{{ include.emoji }}</span><h3>{{ include.title }}</h3>
+  </div>
+  {% if include.description %}<p class="case-study-copy">{{ include.description }}</p>{% endif %}
+  <div class="skill-tags-group">
+    {% for tag in include.tags %}<span class="skill-pill">{{ tag }}</span>
+    {% endfor %}
+  </div>
+</div>

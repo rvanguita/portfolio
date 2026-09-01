@@ -690,11 +690,16 @@ section {
 .case-study-meta {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  align-items: stretch;
   gap: 0.7rem;
   margin-top: 1.25rem;
   padding-top: 1.25rem;
   border-top: 1px solid var(--border-subtle);
+}
+
+.case-study-meta .btn-primary {
+  padding: 0.42rem 0.9rem;
+  font-size: 0.85rem;
 }
 
 .icon-accent {
@@ -758,6 +763,10 @@ section {
   text-align: left;
 }
 
+.stack-table tbody tr:hover {
+  background: var(--bg-subtle);
+}
+
 .stack-table td {
   padding: 0.8rem;
   border-bottom: 1px solid var(--border-subtle);
@@ -766,10 +775,24 @@ section {
 
 .stack-table td:first-child {
   font-weight: 700;
+  white-space: nowrap;
+}
+
+.stack-table td:first-child .emoji {
+  margin-right: 0.4rem;
 }
 
 .stack-table td:last-child {
   color: var(--text-muted);
+}
+
+.stack-table-techs {
+  min-width: 200px;
+}
+
+.stack-table-techs .tech-tag {
+  display: inline-flex;
+  margin: 0.15rem 0.3rem 0.15rem 0;
 }
 
 .case-study-actions {

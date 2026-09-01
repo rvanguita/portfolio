@@ -242,6 +242,8 @@ def test_index_html_and_local_assets():
     log_pass(f"Todas as âncoras de navegação {required_anchors} estão presentes.")
 
     # Valida links locais e certificados
+    import urllib.parse
+
     checked_files = 0
     for link in parser.local_links:
         # Limpa Liquid tags se presentes ex: {{ '/certificates/...' | relative_url }}
@@ -255,9 +257,6 @@ def test_index_html_and_local_assets():
             if rel_path.startswith("portfolio/"):
                 rel_path = rel_path[len("portfolio/") :]
 
-            # Tratamento de espaços decodificados
-            import urllib.parse
-
             decoded_path = urllib.parse.unquote(rel_path)
             target_path = REPO_ROOT / decoded_path
 
@@ -266,6 +265,23 @@ def test_index_html_and_local_assets():
             )
             checked_files += 1
 
+    # Certificados também são referenciados via _data/certificates.yml (consumidos por
+    # _includes/cert-badge.html), não mais como href literal em index.html.
+    certs_data_file = REPO_ROOT / "_data" / "certificates.yml"
+    if certs_data_file.exists():
+        certs_content = certs_data_file.read_text(encoding="utf-8")
+        for raw_path in re.findall(r"^\s*path:\s*'(.*?)'\s*$", certs_content, re.MULTILINE):
+            decoded_path = urllib.parse.unquote(raw_path.lstrip("/"))
+            target_path = REPO_ROOT / decoded_path
+            assert target_path.exists(), (
+                f"Certificado referenciado em _data/certificates.yml não existe no disco: {target_path}"
+            )
+            checked_files += 1
+
+    assert checked_files > 0, (
+        "Nenhum arquivo local foi verificado — a checagem pode ter parado de encontrar links "
+        "(ex.: após um refactor para _data/_includes que mudou onde os hrefs vivem)."
+    )
     log_pass(
         f"Todos os {checked_files} arquivos locais (imagens, CSS e PDFs de certificados) foram validados com sucesso!"
     )
@@ -328,6 +344,9 @@ def test_html_tag_balance():
     projects_dir = REPO_ROOT / "projects"
     if projects_dir.exists():
         files_to_check += sorted(projects_dir.glob("*.html"))
+    includes_dir = REPO_ROOT / "_includes"
+    if includes_dir.exists():
+        files_to_check += sorted(includes_dir.glob("*.html"))
 
     for file_path in files_to_check:
         content = file_path.read_text(encoding="utf-8")
@@ -342,7 +361,7 @@ def test_html_tag_balance():
 
 
 def test_category_filters_consistency():
-    """Garante que os data-category dos cards de projeto batem com os botões de filtro."""
+    """Garante que as categorias dos projetos (_data/projects.yml) batem com os botões de filtro."""
     print("\n🔍 8. Testando consistência dos filtros de categoria de projetos...")
     content = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
 
@@ -350,11 +369,13 @@ def test_category_filters_consistency():
     filter_parser.feed(content)
     filter_categories = {c for c in filter_parser.values if c != "all"}
 
-    card_parser = AttributeExtractor("project-card-item", "data-category")
-    card_parser.feed(content)
-    card_categories = set(card_parser.values)
+    # Os cards de projeto são renderizados a partir de _data/projects.yml via
+    # _includes/project-card.html — a categoria de cada card vive lá, não mais como
+    # atributo literal em index.html.
+    projects_data = (REPO_ROOT / "_data" / "projects.yml").read_text(encoding="utf-8")
+    card_categories = set(re.findall(r"^\s*category:\s*(\S+)\s*$", projects_data, re.MULTILINE))
 
-    assert card_categories, "Nenhum project-card-item com data-category encontrado!"
+    assert card_categories, "Nenhuma categoria encontrada em _data/projects.yml!"
     unknown = card_categories - filter_categories
     assert not unknown, f"Card(s) com data-category sem filtro correspondente: {unknown}"
     orphan_filters = filter_categories - card_categories
@@ -364,7 +385,7 @@ def test_category_filters_consistency():
 
 
 def test_cert_filters_consistency():
-    """Garante que os data-cert-category dos grupos batem com os filtros de certificados."""
+    """Garante que as categorias de certificado (_data/certificates.yml) batem com os filtros."""
     print("\n🔍 9. Testando consistência dos filtros de categoria de certificados...")
     content = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
 
@@ -372,11 +393,12 @@ def test_cert_filters_consistency():
     filter_parser.feed(content)
     filter_categories = {c for c in filter_parser.values if c != "all"}
 
-    group_parser = AttributeExtractor("cert-category-group", "data-cert-category")
-    group_parser.feed(content)
-    group_categories = set(group_parser.values)
+    # Os grupos de certificado são renderizados a partir de _data/certificates.yml — a
+    # categoria (key) de cada grupo vive lá, não mais como atributo literal em index.html.
+    certs_data = (REPO_ROOT / "_data" / "certificates.yml").read_text(encoding="utf-8")
+    group_categories = set(re.findall(r"^-\s*key:\s*(\S+)\s*$", certs_data, re.MULTILINE))
 
-    assert group_categories, "Nenhum cert-category-group com data-cert-category encontrado!"
+    assert group_categories, "Nenhuma categoria (key) encontrada em _data/certificates.yml!"
     unknown = group_categories - filter_categories
     assert not unknown, f"Grupo(s) de certificado sem filtro correspondente: {unknown}"
     orphan_filters = filter_categories - group_categories
@@ -428,12 +450,24 @@ def test_nav_sections_consistency():
 def test_external_links_security_attrs():
     """Garante que todo link externo (target='_blank') usa rel='noopener'."""
     print("\n🔍 12. Testando atributos de segurança em links externos...")
-    content = (REPO_ROOT / "index.html").read_text(encoding="utf-8")
 
-    checker = ExternalLinkChecker()
-    checker.feed(content)
+    # Cert badges e ações de projeto com target="_blank" agora são renderizados via
+    # _includes/*.html (o rel="noopener" vive no include, não mais em index.html).
+    files = [REPO_ROOT / "index.html"]
+    includes_dir = REPO_ROOT / "_includes"
+    if includes_dir.exists():
+        files += sorted(includes_dir.glob("*.html"))
+    projects_dir = REPO_ROOT / "projects"
+    if projects_dir.exists():
+        files += sorted(projects_dir.glob("*.html"))
 
-    assert not checker.violations, f"Link(s) target='_blank' sem rel='noopener': {checker.violations}"
+    violations = []
+    for file_path in files:
+        checker = ExternalLinkChecker()
+        checker.feed(file_path.read_text(encoding="utf-8"))
+        violations += checker.violations
+
+    assert not violations, f"Link(s) target='_blank' sem rel='noopener': {violations}"
     log_pass("Todos os links externos usam rel=\"noopener\" corretamente.")
 
 

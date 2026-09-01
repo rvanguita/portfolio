@@ -1,0 +1,43 @@
+- emoji: '🤖'
+  title: 'Ciência de Dados & ML'
+  tags:
+    - 'Python'
+    - 'Pandas'
+    - 'NumPy'
+    - 'Scikit-Learn'
+    - 'Statsmodels'
+    - 'XGBoost / LightGBM'
+    - 'Regressão & Classificação'
+    - 'Feature Engineering'
+
+- emoji: '⚡'
+  title: 'Pesquisa Operacional & Otimização'
+  tags:
+    - 'CPLEX'
+    - 'AMPL'
+    - 'Programação Inteira Mista (MILP)'
+    - 'Modelagem Não-Linear'
+    - 'Metaheurísticas'
+    - 'Otimização de Redes Elétricas'
+
+- emoji: '📊'
+  title: 'Visualização & Business Analytics'
+  tags:
+    - 'Power BI'
+    - 'Tableau'
+    - 'Matplotlib'
+    - 'Seaborn'
+    - 'Excel Avançado'
+    - 'Estatística Descritiva & Inferencial'
+
+- emoji: '🧰'
+  title: 'Linguagens, Cloud & Ferramentas'
+  tags:
+    - 'SQL'
+    - 'Apache Airflow'
+    - 'Delta Lake / PySpark'
+    - 'FastAPI'
+    - 'Streamlit'
+    - 'Docker'
+    - 'Git / GitHub Actions'
+    - 'Linux / Shell'
