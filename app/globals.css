@@ -44,6 +44,10 @@
   --btn-primary-fg: #ffffff;
 
   /* Categorias (tom navy claro) */
+  --cat-de-bg: #eef2fb;
+  --cat-de-text: #2563eb;
+  --cat-de-border: #d7dfef;
+
   --cat-ml-bg: #eef2fb;
   --cat-ml-text: #2563eb;
   --cat-ml-border: #d7dfef;
@@ -104,6 +108,10 @@
   --btn-primary-fg: #ffffff;
 
   /* Categorias Modo Escuro (tom azul) */
+  --cat-de-bg: rgba(79, 111, 240, 0.16);
+  --cat-de-text: #a9c3ff;
+  --cat-de-border: rgba(169, 195, 255, 0.28);
+
   --cat-ml-bg: rgba(79, 111, 240, 0.16);
   --cat-ml-text: #a9c3ff;
   --cat-ml-border: rgba(169, 195, 255, 0.28);
@@ -1067,6 +1075,7 @@ section {
   width: fit-content;
 }
 
+.cat-de { background-color: var(--cat-de-bg); color: var(--cat-de-text); border: 1px solid var(--cat-de-border); }
 .cat-ml { background-color: var(--cat-ml-bg); color: var(--cat-ml-text); border: 1px solid var(--cat-ml-border); }
 .cat-opt { background-color: var(--cat-opt-bg); color: var(--cat-opt-text); border: 1px solid var(--cat-opt-border); }
 .cat-analytics { background-color: var(--cat-biz-bg); color: var(--cat-biz-text); border: 1px solid var(--cat-biz-border); }
