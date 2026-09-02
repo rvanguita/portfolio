@@ -63,7 +63,7 @@ export function Navbar() {
   };
 
   return (
-    <nav className="navbar" ref={navRef}>
+    <nav className="navbar" aria-label="Navegação principal" ref={navRef}>
       <div className="nav-container">
         <Link href="/" className="nav-logo" onClick={handleLogoClick}>
           <span className="logo-accent">CH0 · </span>Rene Anguita Jr.

@@ -43,3 +43,40 @@ export const baseMetadata: Metadata = {
     images: [SOCIAL_CARD],
   },
 };
+
+/**
+ * Metadata de uma página de estudo de caso: `<title>` próprio (o template base
+ * acrescenta " | Rene Verinaud" uma única vez — passe o título *sem* o sufixo),
+ * canonical apontando para a própria rota e OG/Twitter `type: "article"`.
+ * Sem isso as páginas herdavam o canonical/OG da home.
+ */
+export function caseStudyMetadata(o: {
+  slug: string;
+  title: string;
+  description: string;
+}): Metadata {
+  const url = `${SITE_URL}/projects/${o.slug}/`;
+  const fullTitle = `${o.title} | Rene Verinaud`;
+  return {
+    title: o.title,
+    description: o.description,
+    alternates: { canonical: url },
+    openGraph: {
+      type: "article",
+      locale: "pt_BR",
+      url,
+      siteName: "Rene Verinaud Anguita Junior",
+      title: fullTitle,
+      description: o.description,
+      images: [
+        { url: SOCIAL_CARD, width: 1200, height: 630, alt: fullTitle },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description: o.description,
+      images: [SOCIAL_CARD],
+    },
+  };
+}

@@ -1,6 +1,3 @@
-Para uso com IA, eu estruturaria o **SDD (Software Design Document)** para reduzir ambiguidades e permitir que agentes de código implementem o projeto por etapas, sem tomar decisões arquiteturais arbitrárias.
-
-````markdown
 # SDD — Site Pessoal / Portfólio Técnico
 
 ## 1. Document Control
@@ -67,7 +64,7 @@ SDD
  ├── Performance
  ├── Testes
  └── Deploy
-````
+```
 
 O SDD não deve contradizer o PRD.
 
@@ -347,6 +344,12 @@ A composição poderá ser alterada durante a implementação se testes de UX
 indicarem uma estrutura superior.
 
 Alterações estruturais devem ser registradas.
+
+> **Desvio registrado (2026-09):** não há seção `Contact` dedicada. O contato é
+> atendido pelo Hero (e-mail, LinkedIn, GitHub, localização, idiomas), pelo Footer
+> e pelo botão "Contato" na navbar. Isso preserva o invariante de exatamente 6
+> canais de navegação (`CH1–CH6`) verificado por `tests/nav.test.tsx`. Ver
+> `docs/audit/spec-completion-2026-09.md`.
 
 ---
 
@@ -1028,8 +1031,3 @@ Automated Delivery
 O site não deve apenas apresentar competência técnica.
 
 A implementação deve ser uma evidência dessa competência.
-
-```
-
-A diferença principal em relação ao PRD é que este SDD deve funcionar também como **contrato operacional para a IA**: reduz liberdade onde decisões precisam ser consistentes e mantém liberdade apenas onde existe uma decisão explicitamente delegada.
-```

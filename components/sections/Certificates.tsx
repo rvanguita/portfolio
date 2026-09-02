@@ -1,14 +1,12 @@
 "use client";
 
 import { useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { Icon } from "@/components/ui/Icon";
 import { CertBadge } from "@/components/cards/CertBadge";
 import { certificates } from "@/lib/data/certificates";
 import type { CertCategory, CertificateGroup } from "@/lib/types";
 import { ALL_CATEGORY, useCategoryFilter } from "@/hooks/useCategoryFilter";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { cx } from "@/lib/cx";
 
 const FILTERS: { value: CertCategory | typeof ALL_CATEGORY; label: string }[] = [
@@ -18,9 +16,9 @@ const FILTERS: { value: CertCategory | typeof ALL_CATEGORY; label: string }[] = 
   { value: "biz-stats", label: "Estatística & Negócios" },
 ];
 
-function CertGroupInner({ group }: { group: CertificateGroup }) {
+function CertGroup({ group }: { group: CertificateGroup }) {
   return (
-    <>
+    <div className="cert-category-group" data-cert-category={group.key}>
       <div className="cert-category-header">
         <Icon name={group.icon} className="cert-icon" />
         <h3>{group.title}</h3>
@@ -30,14 +28,6 @@ function CertGroupInner({ group }: { group: CertificateGroup }) {
           <CertBadge key={`${cert.title}-${cert.path}`} cert={cert} />
         ))}
       </div>
-    </>
-  );
-}
-
-function CertGroup({ group }: { group: CertificateGroup }) {
-  return (
-    <div className="cert-category-group" data-cert-category={group.key}>
-      <CertGroupInner group={group} />
     </div>
   );
 }
@@ -48,14 +38,14 @@ export function Certificates() {
     certificates,
     getCategory,
   );
-  const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <section id="certificados">
+    <section id="certificados" aria-labelledby="certificados-heading">
       <SectionHeader
         tag="Educação Continuada"
         title="Certificações & Especializações"
         channel={6}
+        id="certificados-heading"
         desc="Formação contínua em ciência de dados, matemática aplicada, estatística e análise de negócios."
       />
 
@@ -82,28 +72,9 @@ export function Certificates() {
       </div>
 
       <div className="cert-categories-container">
-        {reduceMotion ? (
-          filtered.map((group) => (
-            <CertGroup key={group.key} group={group} />
-          ))
-        ) : (
-          <AnimatePresence mode="popLayout" initial={false}>
-            {filtered.map((group) => (
-              <motion.div
-                key={group.key}
-                className="cert-category-group"
-                data-cert-category={group.key}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.25 }}
-              >
-                <CertGroupInner group={group} />
-              </motion.div>
-            ))}
-          </AnimatePresence>
-        )}
+        {filtered.map((group) => (
+          <CertGroup key={group.key} group={group} />
+        ))}
       </div>
     </section>
   );

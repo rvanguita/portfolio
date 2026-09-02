@@ -5,11 +5,12 @@ import { experience } from "@/lib/data/timeline";
 /** Porte da "EXPERIÊNCIA PROFISSIONAL" (#experiencia). */
 export function Experience() {
   return (
-    <section id="experiencia">
+    <section id="experiencia" aria-labelledby="experiencia-heading">
       <SectionHeader
         tag="Trajetória Profissional"
         title="Experiência Profissional"
         channel={4}
+        id="experiencia-heading"
       />
       <div className="education-timeline">
         {experience.map((entry) => (

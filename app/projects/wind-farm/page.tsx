@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { SkillCard } from "@/components/cards/SkillCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { caseStudyMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
-export const metadata: Metadata = {
+const DESCRIPTION =
+  "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; RMSE de 12,41% e R² de 81,93%.";
+
+export const metadata = caseStudyMetadata({
+  slug: "wind-farm",
   title:
-    "Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP | Rene Verinaud",
-  description:
-    "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; RMSE de 12,41% e R² de 81,93%.",
-};
+    "Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP",
+  description: DESCRIPTION,
+});
 
 const MODEL_STEPS: ArchitectureStep[] = [
   {
@@ -129,6 +134,28 @@ const STACK_ROWS: {
 export default function WindFarmPage() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Início", path: "/" },
+              { name: "Projetos", path: "/#projetos" },
+              {
+                name: "Modelagem da Geração de Energia Eólica",
+                path: "/projects/wind-farm/",
+              },
+            ]),
+            caseStudySchema("wind-farm", {
+              slug: "wind-farm",
+              headline:
+                "Modelagem da Geração de Energia Eólica: Previsão de Potência com XGBoost",
+              description: DESCRIPTION,
+            }),
+          ],
+        }}
+      />
+
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos
@@ -200,10 +227,10 @@ export default function WindFarmPage() {
         </div>
       </div>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-metodologia">
         <div className="section-header section-header-first">
           <span className="section-tag">Abordagem</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-metodologia">
             <Icon name="squares-2x2" className="section-icon" />
             Metodologia do Pipeline
           </h2>
@@ -214,14 +241,19 @@ export default function WindFarmPage() {
         </div>
 
         <div className="about-card architecture-card">
-          <pre>{PIPELINE_DIAGRAM}</pre>
+          <pre
+            role="img"
+            aria-label="Fluxo do pipeline de modelagem: CSV por turbina amostrado a cada 10 minutos (Zenodo) → limpeza de nulos e duplicatas → análise exploratória com heatmap de correlação e boxplots por mês → seleção das features V, D, rho, I e Sb → XGBRegressor com validação por janela expansível → análise SHAP identifica a velocidade do vento como variável dominante → resultado: RMSE 12,41% e R² 81,93%."
+          >
+            {PIPELINE_DIAGRAM}
+          </pre>
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-etapas">
         <div className="section-header">
           <span className="section-tag">Ciência de Dados</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-etapas">
             <Icon name="square-3-stack-3d" className="section-icon" />
             Etapas da Modelagem
           </h2>
@@ -240,10 +272,10 @@ export default function WindFarmPage() {
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-stack">
         <div className="section-header">
           <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-stack">
             <Icon name="cog-6-tooth" className="section-icon" />
             Stack Tecnológica Completa
           </h2>
@@ -251,11 +283,15 @@ export default function WindFarmPage() {
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
+            <caption className="sr-only">
+              Stack tecnológica do projeto: camada ou domínio, tecnologias
+              utilizadas e responsabilidade de cada uma.
+            </caption>
             <thead>
               <tr>
-                <th>Camada / Domínio</th>
-                <th>Tecnologias Utilizadas</th>
-                <th>Responsabilidade</th>
+                <th scope="col">Camada / Domínio</th>
+                <th scope="col">Tecnologias Utilizadas</th>
+                <th scope="col">Responsabilidade</th>
               </tr>
             </thead>
             <tbody>

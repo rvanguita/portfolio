@@ -1,16 +1,20 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { SkillCard } from "@/components/cards/SkillCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { caseStudyMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
-export const metadata: Metadata = {
-  title:
-    "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1 | Rene Verinaud",
-  description:
-    "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.",
-};
+const DESCRIPTION =
+  "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.";
+
+export const metadata = caseStudyMetadata({
+  slug: "lake-fastf1",
+  title: "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1",
+  description: DESCRIPTION,
+});
 
 const ARCHITECTURE_STEPS: ArchitectureStep[] = [
   {
@@ -119,6 +123,28 @@ const STACK_ROWS: {
 export default function LakeFastF1Page() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Início", path: "/" },
+              { name: "Projetos", path: "/#projetos" },
+              {
+                name: "FastF1 Data Platform",
+                path: "/projects/lake-fastf1/",
+              },
+            ]),
+            caseStudySchema("fastf1", {
+              slug: "lake-fastf1",
+              headline:
+                "FastF1 Data Platform: Data Lakehouse e Predição da Fórmula 1",
+              description: DESCRIPTION,
+            }),
+          ],
+        }}
+      />
+
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos
@@ -183,10 +209,10 @@ export default function LakeFastF1Page() {
         </div>
       </div>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-arquitetura">
         <div className="section-header section-header-first">
           <span className="section-tag">Design de Engenharia</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-arquitetura">
             <Icon name="squares-2x2" className="section-icon" />
             Arquitetura da Plataforma
           </h2>
@@ -197,14 +223,19 @@ export default function LakeFastF1Page() {
         </div>
 
         <div className="about-card architecture-card">
-          <pre>{ARCHITECTURE_DIAGRAM}</pre>
+          <pre
+            role="img"
+            aria-label="Diagrama da arquitetura: uma DAG semanal do Apache Airflow move os dados da API FastF1 para Raw (Parquet), depois Bronze (Delta Lake), Silver (Delta Lake) e um espelho MySQL; uma CLI de arquivamento envia cópias para o AWS S3. O MLflow rastreia o modelo preditivo, servido pela FastAPI na porta 5002 em /predict; o painel Streamlit na porta 8501 consome a API e lê as camadas Bronze e Silver."
+          >
+            {ARCHITECTURE_DIAGRAM}
+          </pre>
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-camadas">
         <div className="section-header">
           <span className="section-tag">Engenharia de Dados</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-camadas">
             <Icon name="square-3-stack-3d" className="section-icon" />
             Estrutura das Camadas e Componentes
           </h2>
@@ -223,10 +254,10 @@ export default function LakeFastF1Page() {
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-stack">
         <div className="section-header">
           <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-stack">
             <Icon name="cog-6-tooth" className="section-icon" />
             Stack Tecnológica Completa
           </h2>
@@ -234,11 +265,15 @@ export default function LakeFastF1Page() {
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
+            <caption className="sr-only">
+              Stack tecnológica do projeto: camada ou domínio, tecnologias
+              utilizadas e responsabilidade de cada uma.
+            </caption>
             <thead>
               <tr>
-                <th>Camada / Domínio</th>
-                <th>Tecnologias Utilizadas</th>
-                <th>Responsabilidade</th>
+                <th scope="col">Camada / Domínio</th>
+                <th scope="col">Tecnologias Utilizadas</th>
+                <th scope="col">Responsabilidade</th>
               </tr>
             </thead>
             <tbody>

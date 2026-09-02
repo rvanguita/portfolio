@@ -4,18 +4,19 @@ import { HeroSignature } from "@/components/HeroSignature";
 import { ChannelLabel } from "@/components/ui/ChannelLabel";
 import { MetricTile } from "@/components/ui/MetricTile";
 import { HERO_STATS } from "@/lib/site-stats";
+import { profile } from "@/lib/data/profile";
 
 /** Hero — canal CH0 do sistema "Telemetria". */
 export function Hero() {
   return (
-    <section className="hero-section">
+    <section className="hero-section" aria-labelledby="hero-heading">
       <div className="hero-content">
         <div className="hero-topline">
-          <ChannelLabel channel={0}>Rene V. Anguita Jr.</ChannelLabel>
+          <ChannelLabel channel={0}>{profile.shortName}</ChannelLabel>
           <div className="hero-avatar-wrapper">
             <Image
               src={asset("/assets/img/face.png")}
-              alt="Rene Verinaud Anguita Junior"
+              alt={profile.name}
               className="hero-avatar"
               width={200}
               height={200}
@@ -26,25 +27,19 @@ export function Hero() {
         </div>
 
         <div className="hero-tagline">
-          <span className="availability-dot" aria-hidden="true" /> REC ·
-          Disponível para novos desafios
+          <span className="availability-dot" aria-hidden="true" />
+          {" " + profile.heroTagline}
         </div>
 
-        <h1 className="hero-title">Rene Verinaud Anguita Junior</h1>
-        <p className="hero-headline">
-          Cientista de Dados &amp; Ph.D. em Engenharia Elétrica — Machine
-          Learning, otimização e engenharia de dados.
-        </p>
-        <p className="hero-lead">
-          Transformo dados complexos em decisões melhores, modelos preditivos e
-          sistemas mais eficientes.
-        </p>
+        <h1 className="hero-title" id="hero-heading">{profile.name}</h1>
+        <p className="hero-headline">{profile.heroHeadline}</p>
+        <p className="hero-lead">{profile.heroLead}</p>
 
         <div className="hero-actions">
           <a href="#projetos" className="btn-primary">
             Explorar projetos
           </a>
-          <a href="mailto:renevajr@gmail.com" className="btn-secondary">
+          <a href={`mailto:${profile.email}`} className="btn-secondary">
             Vamos conversar
           </a>
         </div>
@@ -66,7 +61,7 @@ export function Hero() {
       <div className="hero-content">
         <div className="hero-links">
           <a
-            href="https://linkedin.com/in/rvanguita"
+            href={profile.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="hero-link"
@@ -89,7 +84,7 @@ export function Hero() {
             <span>LinkedIn</span>
           </a>
           <a
-            href="https://github.com/rvanguita"
+            href={profile.social.github}
             target="_blank"
             rel="noopener noreferrer"
             className="hero-link"
@@ -110,7 +105,7 @@ export function Hero() {
             </svg>
             <span>GitHub</span>
           </a>
-          <a href="mailto:renevajr@gmail.com" className="hero-link">
+          <a href={`mailto:${profile.email}`} className="hero-link">
             <svg
               className="hero-link-icon"
               viewBox="0 0 24 24"
@@ -125,7 +120,7 @@ export function Hero() {
               <rect width="20" height="16" x="2" y="4" rx="2" />
               <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
             </svg>
-            <span>renevajr@gmail.com</span>
+            <span>{profile.email}</span>
           </a>
         </div>
 
@@ -145,7 +140,7 @@ export function Hero() {
               <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
               <circle cx="12" cy="10" r="3" />
             </svg>
-            <span>Campinas, SP · Brasil</span>
+            <span>{profile.location}</span>
           </li>
           <li className="hero-meta-item">
             <svg
@@ -166,7 +161,7 @@ export function Hero() {
               <path d="m22 22-5-10-5 10" />
               <path d="M14 18h6" />
             </svg>
-            <span>Português (nativo) · Inglês (avançado)</span>
+            <span>{profile.languages}</span>
           </li>
         </ul>
       </div>

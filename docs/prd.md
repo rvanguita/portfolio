@@ -1,4 +1,3 @@
-````markdown
 # PRD — Site Pessoal / Portfólio Técnico
 
 ## 1. Objetivo
@@ -158,7 +157,7 @@ O site deverá possuir, no mínimo, as seguintes seções:
 ├── Experiência / Formação
 ├── Contato
 └── Footer
-````
+
 
 A implementação pode utilizar uma Single Page Application ou site estático com múltiplas páginas, desde que a solução seja adequada ao GitHub Pages.
 
@@ -827,6 +826,3 @@ O próprio site deve funcionar como uma demonstração indireta de:
 * Arquitetura.
 * Qualidade.
 * Atenção aos detalhes.
-
-```
-```

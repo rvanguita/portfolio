@@ -9,6 +9,7 @@ export const projects: Project[] = [
   {
     key: "fastf1",
     category: "de",
+    featured: true,
     badgeIcon: "flag",
     badgeLabel: "Lakehouse & MLOps",
     title: "FastF1 Data Platform",
@@ -42,6 +43,7 @@ export const projects: Project[] = [
   {
     key: "wind-farm",
     category: "ml",
+    featured: true,
     badgeIcon: "sun",
     badgeLabel: "Regressão & Energia Renovável",
     title: "Modelagem da Geração de Energia Eólica",

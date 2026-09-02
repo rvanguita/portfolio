@@ -1,16 +1,12 @@
 "use client";
 
 import { useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/cards/ProjectCard";
 import { projects } from "@/lib/data/projects";
 import type { Project, ProjectCategory } from "@/lib/types";
 import { ALL_CATEGORY, useCategoryFilter } from "@/hooks/useCategoryFilter";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { cx } from "@/lib/cx";
-
-const MotionProjectCard = motion.create(ProjectCard);
 
 const FILTERS: { value: ProjectCategory | typeof ALL_CATEGORY; label: string }[] =
   [
@@ -21,20 +17,23 @@ const FILTERS: { value: ProjectCategory | typeof ALL_CATEGORY; label: string }[]
     { value: "analytics", label: "Análise Preditiva" },
   ];
 
+const featuredProjects = projects.filter((project) => project.featured);
+const otherProjects = projects.filter((project) => !project.featured);
+
 export function Projects() {
   const getCategory = useCallback((project: Project) => project.category, []);
   const { active, setActive, filtered } = useCategoryFilter(
     projects,
     getCategory,
   );
-  const reduceMotion = usePrefersReducedMotion();
 
   return (
-    <section id="projetos">
+    <section id="projetos" aria-labelledby="projetos-heading">
       <SectionHeader
         tag="Portfólio de Aplicações"
         title="Projetos em Destaque"
         channel={3}
+        id="projetos-heading"
         desc="Casos reais de dados, otimização e machine learning — apresentados do desafio ao impacto."
       />
 
@@ -53,27 +52,31 @@ export function Projects() {
         ))}
       </div>
 
-      <div className="projects-grid">
-        {reduceMotion ? (
-          filtered.map((project) => (
-            <ProjectCard key={project.key} project={project} />
-          ))
-        ) : (
-          <AnimatePresence mode="popLayout" initial={false}>
-            {filtered.map((project) => (
-              <MotionProjectCard
-                key={project.key}
-                project={project}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.25 }}
-              />
+      {active === ALL_CATEGORY ? (
+        <>
+          <p className="section-tag projects-group-tag">Em destaque</p>
+          <div className="projects-grid projects-grid-featured">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.key} project={project} />
             ))}
-          </AnimatePresence>
-        )}
-      </div>
+          </div>
+
+          <details className="projects-other">
+            <summary>Ver todos os projetos ({otherProjects.length})</summary>
+            <div className="projects-grid">
+              {otherProjects.map((project) => (
+                <ProjectCard key={project.key} project={project} />
+              ))}
+            </div>
+          </details>
+        </>
+      ) : (
+        <div className="projects-grid">
+          {filtered.map((project) => (
+            <ProjectCard key={project.key} project={project} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }
