@@ -9,13 +9,13 @@ export const metadata: Metadata = {
   title:
     "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1 | Rene Verinaud",
   description:
-    "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e dashboard Streamlit.",
+    "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.",
 };
 
 const ARCHITECTURE_STEPS: ArchitectureStep[] = [
   {
     icon: "cloud",
-    title: "1. Ingestão & Raw Layer",
+    title: "1. Ingestão & Camada Bruta",
     description:
       "Extração automatizada de dados de corridas, treinos livres, classificações e telemetria da Fórmula 1 utilizando a biblioteca <code>FastF1</code>, salvando os resultados brutos particionados em formato <strong>Parquet</strong>.",
     tags: ["FastF1", "Python", "Parquet", "AWS S3 Boto3"],
@@ -25,18 +25,18 @@ const ARCHITECTURE_STEPS: ArchitectureStep[] = [
     title: "2. Bronze & Silver (Delta Lake)",
     description:
       "Consolidação dos dados em tabelas <strong>Delta Lake</strong> na camada Bronze com versionamento ACID e criação da camada Silver curada com estatísticas agregadas de pilotos, construtores e histórico de voltas.",
-    tags: ["Delta Lake", "PySpark", "Pandas / NumPy", "ACID Transactions"],
+    tags: ["Delta Lake", "PySpark", "Pandas / NumPy", "Transações ACID"],
   },
   {
     icon: "clock",
     title: "3. Orquestração no Airflow",
     description:
       "DAG programada para execução semanal com monitoramento de linhagem de dados (<code>Asset</code>), controle de concorrência e tarefas sequenciais com tolerância a falhas e espelhamento final para <strong>MySQL</strong>.",
-    tags: ["Apache Airflow", "DAGs", "MySQL / SQLAlchemy", "Data Lineage"],
+    tags: ["Apache Airflow", "DAGs", "MySQL / SQLAlchemy", "Linhagem de Dados"],
   },
   {
     icon: "chart-bar",
-    title: "4. MLOps, API & Dashboard",
+    title: "4. MLOps, API & Painel",
     description:
       "Modelo de Machine Learning para predição de campeonatos treinado com <code>Scikit-Learn</code> e rastreado no <code>MLflow</code>, exposto via API de baixa latência no <strong>FastAPI</strong> e painel analítico no <strong>Streamlit</strong>.",
     tags: ["MLflow", "Scikit-Learn", "FastAPI", "Streamlit / Plotly"],
@@ -45,7 +45,7 @@ const ARCHITECTURE_STEPS: ArchitectureStep[] = [
 
 const ARCHITECTURE_DIAGRAM = `┌────────────────────────── Apache Airflow DAG: data-pipeline (Semanal) ──────────────────────────┐
 │                                                                                                  │
-│   FastF1 API ──► Raw (Parquet) ──► Bronze (Delta Lake) ──► Silver (Delta Lake) ──► MySQL Mirror │
+│   FastF1 API ──► Raw (Parquet) ──► Bronze (Delta Lake) ──► Silver (Delta Lake) ──► Espelho MySQL│
 │                       │                                                                          │
 └───────────────────────┼──────────────────────────────────────────────────────────────────────────┘
                         │ CLI de Arquivamento
@@ -53,7 +53,7 @@ const ARCHITECTURE_DIAGRAM = `┌───────────────�
                   │  AWS S3   │
                   └───────────┘
 
-    MLflow (Tracking) ──Modelo Preditivo──► FastAPI (:5002 /predict) ◄──── Streamlit Dashboard (:8501)
+    MLflow (Rastreamento) ──Modelo Preditivo──► FastAPI (:5002 /predict) ◄──── Painel Streamlit (:8501)
                                                                                   │
                                       Bronze + Silver (Delta Lake) ──Leitura──────┘`;
 
@@ -84,7 +84,7 @@ const STACK_ROWS: {
   },
   {
     icon: "chart-bar",
-    domain: "Machine Learning & Tracking",
+    domain: "Machine Learning & Rastreamento",
     techs: ["Scikit-Learn", "MLflow"],
     responsibility:
       "Treinamento, versionamento de modelos e rastreamento de métricas.",
@@ -105,14 +105,14 @@ const STACK_ROWS: {
     domain: "Visualização & BI",
     techs: ["Streamlit", "Plotly", "MySQL"],
     responsibility:
-      "Dashboard interativo para exploração visual e espelhamento relacional.",
+      "Painel interativo para exploração visual e espelhamento relacional.",
   },
   {
     icon: "cube",
     domain: "DevOps & Infraestrutura",
     techs: ["Docker", "Docker Compose", "uv", "AWS S3"],
     responsibility:
-      "Ambiente isolado em contêineres, gerenciamento moderno de pacotes e backup cloud.",
+      "Ambiente isolado em contêineres, gerenciamento moderno de pacotes e backup em nuvem.",
   },
 ];
 
@@ -178,7 +178,7 @@ export default function LakeFastF1Page() {
         <div className="metric-box">
           <div className="metric-number">2 Serviços</div>
           <div className="metric-label">
-            FastAPI (:5002) + Dashboard Streamlit (:8501) conteinerizados
+            FastAPI (:5002) + Painel Streamlit (:8501) conteinerizados
           </div>
         </div>
       </div>
