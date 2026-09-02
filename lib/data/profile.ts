@@ -23,7 +23,13 @@ export const profile = {
 
   aboutHeading: "Da pesquisa em otimização à ciência de dados aplicada.",
   aboutBio:
-    "Cientista de Dados com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão. No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; o background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.",
+    "<p>Cientista de Dados com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão.</p><p>No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; o background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.</p>",
+  /** Fatos-chave para a faixa escaneável do Sobre — todos derivados do texto acima. */
+  aboutFacts: [
+    "Doutorado — Engenharia Elétrica, UNICAMP",
+    "Foco em otimização e pesquisa operacional",
+    "Machine learning e engenharia de dados",
+  ],
 
   footerTitle: "Rene Verinaud Anguita Junior, Ph.D.",
   footerTagline:

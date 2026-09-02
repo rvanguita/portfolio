@@ -1,27 +1,21 @@
-/** Métricas do hero / seção "Sobre" — readout tiles. `trend` alimenta o sparkline. */
+/** Métricas do hero — readout tiles (número em mono + rótulo). */
 export interface SiteStat {
   value: string;
   label: string;
-  trend: number[];
 }
 
 export const HERO_STATS: SiteStat[] = [
   {
     value: "Ph.D.",
-    label:
-      "Doutorado em Eng. Elétrica pela UNICAMP com foco em Otimização",
-    trend: [2, 3, 3, 5, 6, 8, 9, 12],
+    label: "Engenharia Elétrica pela UNICAMP, com foco em otimização",
   },
   {
     value: "10x",
     label:
-      "Redução no tempo computacional com heurística validada no mestrado (mesma qualidade do método Cônico clássico)",
-    trend: [10, 9, 7, 6, 4, 3, 2, 1],
+      "Redução no tempo de cálculo com heurística validada no mestrado, mantendo a qualidade do método Cônico clássico",
   },
   {
     value: "20+",
-    label:
-      "Certificações e Especializações Internacionais em Data Science",
-    trend: [1, 3, 4, 6, 9, 12, 16, 21],
+    label: "Certificações e especializações internacionais em Ciência de Dados",
   },
 ];

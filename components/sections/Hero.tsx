@@ -50,12 +50,7 @@ export function Hero() {
 
       <div className="about-metrics">
         {HERO_STATS.map((stat) => (
-          <MetricTile
-            key={stat.value}
-            value={stat.value}
-            label={stat.label}
-            trend={stat.trend}
-          />
+          <MetricTile key={stat.value} value={stat.value} label={stat.label} />
         ))}
       </div>
 
