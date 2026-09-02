@@ -65,7 +65,7 @@ and they carry `export const dynamic = "force-static"` so they survive the expor
 
 `skills.ts`, `projects.ts`, `timeline.ts` (`experience` + `education`), `certificates.ts`, `profile.ts`
 (long-form About bio + hero/footer identity + contact links — the sanctioned home for professional prose,
-SDD §9), typed by `lib/types.ts`; `lib/site-stats.ts` holds the hero/About readout-tile data. Section
+SDD §9), typed by `lib/types.ts`; `lib/site-stats.ts` holds the hero readout-tile data. Section
 components map over these. Rich strings in the data (`<strong>`, `<code>`) are rendered through
 `components/ui/Rich.tsx` — a sanctioned `dangerouslySetInnerHTML` for repo-authored content (not user
 input). `components/seo/JsonLd.tsx` (structured data, built by `lib/seo/schema.ts`) and `Icon.tsx` (static
@@ -107,17 +107,20 @@ layer (`docs/adr/project/003` amendment). Visual language = a multi-channel inst
   tabular-nums` (`.metric-number`/`.edu-year` add `"tnum"`+`"zero"`); see `docs/adr/design/004` amendment.
 - **Fonts** via `next/font` in `layout.tsx`: **Archivo** (`--font-archivo`, display + body) and
   **JetBrains Mono** (`--font-mono-face`) — every number, label, tech tag, channel label, and `code` is
-  mono. No Inter.
+  mono. No Inter. **UPPERCASE** is narrowed to `.section-tag` / `.project-category-badge` /
+  `.stack-table th` (the "instrument" labels); nav links, buttons, filters and `.channel-label` are
+  mono **sentence-case** (`docs/adr/design/004` — passe de sobriedade 2026-09).
 - **Channel-label convention**: `CHn · TÍTULO`. `CH0` = hero/logo, `CH1…CH6` = the six nav sections (the
   number is `NAV_ITEMS` index+1 from `lib/nav.ts`, rendered in `Navbar.tsx`; sections pass a matching
   `channel` prop to `SectionHeader`). Rendered by `.section-tag` / `.channel-label` /
   `components/ui/ChannelLabel.tsx`, each with a leading signal dot. `tests/nav.test.tsx` +
   `tests/home.test.tsx` enforce that there are exactly these six — a 7th section (e.g. a real `#contato`)
   means renumbering and touching both tests.
-- **Signature element**: `components/HeroSignature.tsx` — an ambient SVG waveform strip under the navbar,
-  animated with a CSS `@keyframes` (frozen under `prefers-reduced-motion`). `Sparkline.tsx` carries a
-  faint `aria-hidden` axis grid (no data); `SectionHeader` closes with `<hr class="trace-divider">` — a
-  per-header channel marker.
+- **Signature element**: `components/HeroSignature.tsx` — a low (28px), subtle `aria-hidden` SVG
+  waveform strip under the navbar, animated with a CSS `@keyframes` (frozen under
+  `prefers-reduced-motion`). `SectionHeader` closes with `<hr class="trace-divider">` — a per-header
+  channel marker. The hero availability dot is static (no `blink`); the readout tiles carry no
+  sparkline (`Sparkline.tsx` was removed — its only feed was placeholder data).
 - Class names are reused from the pre-redesign markup so section/card/case-study components barely change
   when restyling — `globals.css` carries the look. Category badges (`.cat-de/.cat-ml/.cat-opt/.cat-analytics`)
   each map to their own muted domain hue (colour + icon + label, never colour alone — WCAG 1.4.1); cert

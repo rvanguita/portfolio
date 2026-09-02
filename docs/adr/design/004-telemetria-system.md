@@ -186,3 +186,66 @@ distinto).
 
 Reverte a orientação do `CLAUDE.md` de que os quatro `.cat-*` "resolvem para um
 único chip ciano".
+
+## Update — passe de sobriedade (2026-09)
+
+Terceira iteração de estilo, pedida como "mais profissional para a área de
+dados". A identidade "Telemetria" é mantida; o que sai é o *excesso* que fazia o
+site parecer esforçado em vez de sênior. Decisão do proprietário: suavizar, não
+recuar da identidade.
+
+### Caixa-alta
+
+CAIXA-ALTA monoespaçada era usada em quase tudo. Passou a valer só onde carrega
+significado de "instrumento": `.section-tag` (o `CHn ·` dos cabeçalhos de seção),
+`.project-category-badge` (códigos curtos de domínio) e `.stack-table th`.
+Perderam a caixa-alta (e o tracking largo, agora `0.02em`): `.nav-link`,
+`.btn-primary/.btn-secondary/.btn-project`, `.btn-nav-contact`,
+`.filter-btn/.cert-filter-btn`, `.projects-other > summary`, `.footer-socials a`,
+`.social-chip` e `.channel-label` (o `CH0 ·` do hero e o `CH∞` do rodapé — não se
+grita o nome de uma pessoa). Tudo continua monoespaçado.
+
+### Hero
+
+- `--fs-hero` `clamp(2.6rem, 6vw, 4.4rem)` → `clamp(1.9rem, 4vw, 3rem)`;
+  `.hero-title` `font-stretch` 108% → 102%. Editorial, não outdoor.
+- `heroTagline` "REC · Disponível para novos desafios" → "Disponível para novos
+  projetos". O `REC` (metáfora de gravador) sai; o chip âmbar bordado vira uma
+  linha mono discreta em `--label` com um ponto verde estático.
+- `@keyframes blink` removido (o ponto não pulsa mais).
+- `.hero-signature` 46px → 28px, sem a grade vertical
+  (`repeating-linear-gradient`); amplitudes da onda 9/5 → 5/3, opacidades
+  0.55 / 0.22. Continua rolando (congelada sob `prefers-reduced-motion`).
+
+### Telhas de leitura
+
+Apareciam duas vezes (hero e Sobre) e cada uma trazia um sparkline desenhado a
+partir de arrays de tendência inventados — o oposto de "profissional para dados".
+Agora: só no hero, sem sparkline (valor + rótulo). `components/ui/Sparkline.tsx`
+foi removido; `lib/site-stats.ts` perdeu o campo `trend`.
+
+### Conteúdo (copy)
+
+Reescrita de tom sênior no `lib/data/profile.ts` e nos rótulos de ação de
+`lib/data/projects.ts` — **todo fato, número, nome, data e resultado preservado
+literalmente** (ADR-005 / PRD §21). Só o enquadramento muda. O Sobre passou a
+dois parágrafos + uma faixa de três fatos escaneáveis (`.about-facts`, todos
+derivados do próprio texto). `profile.name` / `shortName` intactos.
+
+### Verificação
+
+- Lighthouse (mediana de 3, local): idêntico à linha de base — home mobile **94**,
+  desktop 100; casos 95-96 / 100; A11y / Best Practices / SEO **100** em todas as
+  rotas.
+- Contraste: 160 amostras headless (home + 2 casos × 2 temas) — **0 abaixo de
+  4,5:1**; o texto sem caixa-alta e a nova `.hero-tagline` em `--label` passam.
+- CSS inlinado da home: **34 012 → 32 984 B gzip** (o passe remove mais do que
+  adiciona).
+- O overflow horizontal pré-existente da navbar em ~821–1099 px
+  (`spec-reverify-2026-09.md` risco 4) **diminuiu** — de ~171 px para ~85 px em
+  900 px, zerando por volta de 1000 px — porque `.nav-link` ficou mais estreito.
+  Ainda não é zero nessa faixa; o fix completo (subir o breakpoint) segue sendo
+  um follow-up próprio.
+
+Identidade preservada: `CHn`, o ponto de sinal, dark-first, a onda `trace-scroll`,
+a legenda categórica de domínio.

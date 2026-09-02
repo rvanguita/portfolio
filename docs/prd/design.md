@@ -487,6 +487,11 @@ O objetivo é permitir que recrutadores encontrem o profissional através de mec
 
 ## 21. Conteúdo
 
+> **Nota (2026-09) — passe de sobriedade:** hero, Sobre e rótulos de ação foram
+> reescritos para um tom mais sênior. Todo fato, número, credencial, nome, data
+> e resultado foi preservado literalmente; só o enquadramento mudou. Ver
+> `docs/adr/design/004` (emenda) e `docs/audit/professional-2026-09.md`.
+
 ### Regra principal
 
 **Não alterar o conteúdo factual existente sem necessidade.**
