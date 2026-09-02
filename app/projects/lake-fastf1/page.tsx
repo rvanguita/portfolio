@@ -183,10 +183,10 @@ export default function LakeFastF1Page() {
         </div>
       </div>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-arquitetura">
         <div className="section-header section-header-first">
           <span className="section-tag">Design de Engenharia</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-arquitetura">
             <Icon name="squares-2x2" className="section-icon" />
             Arquitetura da Plataforma
           </h2>
@@ -197,14 +197,19 @@ export default function LakeFastF1Page() {
         </div>
 
         <div className="about-card architecture-card">
-          <pre>{ARCHITECTURE_DIAGRAM}</pre>
+          <pre
+            role="img"
+            aria-label="Diagrama da arquitetura: uma DAG semanal do Apache Airflow move os dados da API FastF1 para Raw (Parquet), depois Bronze (Delta Lake), Silver (Delta Lake) e um espelho MySQL; uma CLI de arquivamento envia cópias para o AWS S3. O MLflow rastreia o modelo preditivo, servido pela FastAPI na porta 5002 em /predict; o painel Streamlit na porta 8501 consome a API e lê as camadas Bronze e Silver."
+          >
+            {ARCHITECTURE_DIAGRAM}
+          </pre>
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-camadas">
         <div className="section-header">
           <span className="section-tag">Engenharia de Dados</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-camadas">
             <Icon name="square-3-stack-3d" className="section-icon" />
             Estrutura das Camadas e Componentes
           </h2>
@@ -223,10 +228,10 @@ export default function LakeFastF1Page() {
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="lf-stack">
         <div className="section-header">
           <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="lf-stack">
             <Icon name="cog-6-tooth" className="section-icon" />
             Stack Tecnológica Completa
           </h2>
@@ -234,11 +239,15 @@ export default function LakeFastF1Page() {
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
+            <caption className="sr-only">
+              Stack tecnológica do projeto: camada ou domínio, tecnologias
+              utilizadas e responsabilidade de cada uma.
+            </caption>
             <thead>
               <tr>
-                <th>Camada / Domínio</th>
-                <th>Tecnologias Utilizadas</th>
-                <th>Responsabilidade</th>
+                <th scope="col">Camada / Domínio</th>
+                <th scope="col">Tecnologias Utilizadas</th>
+                <th scope="col">Responsabilidade</th>
               </tr>
             </thead>
             <tbody>

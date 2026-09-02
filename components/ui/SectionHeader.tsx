@@ -7,6 +7,7 @@ export function SectionHeader({
   channel,
   desc,
   first = false,
+  id,
 }: {
   tag: string;
   title: string;
@@ -14,6 +15,8 @@ export function SectionHeader({
   channel?: number;
   desc?: string;
   first?: boolean;
+  /** id do <h2>, para `aria-labelledby` da <section> que o contém. */
+  id?: string;
 }) {
   return (
     <div className={cx("section-header", first && "section-header-first")}>
@@ -21,7 +24,7 @@ export function SectionHeader({
         {channel != null ? `CH${channel} · ` : ""}
         {tag}
       </span>
-      <h2 className="section-title">{title}</h2>
+      <h2 className="section-title" id={id}>{title}</h2>
       {desc ? <p className="section-desc">{desc}</p> : null}
     </div>
   );

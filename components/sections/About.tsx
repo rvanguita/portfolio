@@ -6,11 +6,11 @@ import { profile } from "@/lib/data/profile";
 /** Seção "SOBRE MIM & MÉTRICAS" (#sobre) — canal CH1. */
 export function About() {
   return (
-    <section id="sobre">
+    <section id="sobre" aria-labelledby="sobre-heading">
       <div className="about-card">
         <div className="about-intro">
           <span className="section-tag">CH1 · Perfil profissional</span>
-          <h2>{profile.aboutHeading}</h2>
+          <h2 id="sobre-heading">{profile.aboutHeading}</h2>
         </div>
         <Rich as="p" className="about-copy" html={profile.aboutBio} />
 

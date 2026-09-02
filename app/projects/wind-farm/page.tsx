@@ -200,10 +200,10 @@ export default function WindFarmPage() {
         </div>
       </div>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-metodologia">
         <div className="section-header section-header-first">
           <span className="section-tag">Abordagem</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-metodologia">
             <Icon name="squares-2x2" className="section-icon" />
             Metodologia do Pipeline
           </h2>
@@ -214,14 +214,19 @@ export default function WindFarmPage() {
         </div>
 
         <div className="about-card architecture-card">
-          <pre>{PIPELINE_DIAGRAM}</pre>
+          <pre
+            role="img"
+            aria-label="Fluxo do pipeline de modelagem: CSV por turbina amostrado a cada 10 minutos (Zenodo) → limpeza de nulos e duplicatas → análise exploratória com heatmap de correlação e boxplots por mês → seleção das features V, D, rho, I e Sb → XGBRegressor com validação por janela expansível → análise SHAP identifica a velocidade do vento como variável dominante → resultado: RMSE 12,41% e R² 81,93%."
+          >
+            {PIPELINE_DIAGRAM}
+          </pre>
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-etapas">
         <div className="section-header">
           <span className="section-tag">Ciência de Dados</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-etapas">
             <Icon name="square-3-stack-3d" className="section-icon" />
             Etapas da Modelagem
           </h2>
@@ -240,10 +245,10 @@ export default function WindFarmPage() {
         </div>
       </section>
 
-      <section className="case-study-section">
+      <section className="case-study-section" aria-labelledby="wf-stack">
         <div className="section-header">
           <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title">
+          <h2 className="section-title" id="wf-stack">
             <Icon name="cog-6-tooth" className="section-icon" />
             Stack Tecnológica Completa
           </h2>
@@ -251,11 +256,15 @@ export default function WindFarmPage() {
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
+            <caption className="sr-only">
+              Stack tecnológica do projeto: camada ou domínio, tecnologias
+              utilizadas e responsabilidade de cada uma.
+            </caption>
             <thead>
               <tr>
-                <th>Camada / Domínio</th>
-                <th>Tecnologias Utilizadas</th>
-                <th>Responsabilidade</th>
+                <th scope="col">Camada / Domínio</th>
+                <th scope="col">Tecnologias Utilizadas</th>
+                <th scope="col">Responsabilidade</th>
               </tr>
             </thead>
             <tbody>

@@ -9,7 +9,7 @@ import { profile } from "@/lib/data/profile";
 /** Hero — canal CH0 do sistema "Telemetria". */
 export function Hero() {
   return (
-    <section className="hero-section">
+    <section className="hero-section" aria-labelledby="hero-heading">
       <div className="hero-content">
         <div className="hero-topline">
           <ChannelLabel channel={0}>{profile.shortName}</ChannelLabel>
@@ -31,7 +31,7 @@ export function Hero() {
           {" " + profile.heroTagline}
         </div>
 
-        <h1 className="hero-title">{profile.name}</h1>
+        <h1 className="hero-title" id="hero-heading">{profile.name}</h1>
         <p className="hero-headline">{profile.heroHeadline}</p>
         <p className="hero-lead">{profile.heroLead}</p>
 

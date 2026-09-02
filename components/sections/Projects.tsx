@@ -25,11 +25,12 @@ export function Projects() {
   );
 
   return (
-    <section id="projetos">
+    <section id="projetos" aria-labelledby="projetos-heading">
       <SectionHeader
         tag="Portfólio de Aplicações"
         title="Projetos em Destaque"
         channel={3}
+        id="projetos-heading"
         desc="Casos reais de dados, otimização e machine learning — apresentados do desafio ao impacto."
       />
 

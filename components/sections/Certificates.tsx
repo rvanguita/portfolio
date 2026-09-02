@@ -40,11 +40,12 @@ export function Certificates() {
   );
 
   return (
-    <section id="certificados">
+    <section id="certificados" aria-labelledby="certificados-heading">
       <SectionHeader
         tag="Educação Continuada"
         title="Certificações & Especializações"
         channel={6}
+        id="certificados-heading"
         desc="Formação contínua em ciência de dados, matemática aplicada, estatística e análise de negócios."
       />
 

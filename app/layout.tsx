@@ -64,7 +64,9 @@ export default function RootLayout({
         </a>
         <ThemeProvider>
           <ErrorBoundary>
-            <Navbar />
+            <header>
+              <Navbar />
+            </header>
             <main className="main-wrapper" id="main-content">
               {children}
             </main>
