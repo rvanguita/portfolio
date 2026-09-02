@@ -59,10 +59,13 @@ forma reproduzível os invariantes que um restyle costuma quebrar.
 | `wind-farm` | 94 / 100 | 100 | 100 | 100 |
 | `lake-fastf1` | 96 / 100 | 100 | 100 | 100 |
 
-Performance móvel oscila na casa dos baixos 90 entre execuções (mediana de 95 e
-93 em duas rodadas). Fica acima do limite de 90 do CI, com folga pequena na home
-— uma queda futura deve ser tratada com otimização de LCP, não baixando o limite
-(ADR-008). Relatórios completos em `lighthouse-report/`.
+Performance móvel oscila na casa dos baixos 90 entre execuções (medianas de 93 e
+95 já vistas no CI; execuções locais em Chromium mediram 88–89 com o mesmo
+`out/`). Fica acima do limite de 90 do CI, com folga pequena na home — uma queda
+real deve ser tratada com otimização de LCP, não baixando o limite. A tabela
+acima é a medição de referência única, replicada em `docs/adr/project/008` e
+`docs/tasks/project/010-performance.md`. Relatórios completos em
+`lighthouse-report/`.
 
 ## Validação de produção
 
