@@ -1,16 +1,21 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { SkillCard } from "@/components/cards/SkillCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { caseStudyMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
-export const metadata: Metadata = {
+const DESCRIPTION =
+  "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; RMSE de 12,41% e R² de 81,93%.";
+
+export const metadata = caseStudyMetadata({
+  slug: "wind-farm",
   title:
-    "Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP | Rene Verinaud",
-  description:
-    "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; RMSE de 12,41% e R² de 81,93%.",
-};
+    "Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP",
+  description: DESCRIPTION,
+});
 
 const MODEL_STEPS: ArchitectureStep[] = [
   {
@@ -129,6 +134,28 @@ const STACK_ROWS: {
 export default function WindFarmPage() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Início", path: "/" },
+              { name: "Projetos", path: "/#projetos" },
+              {
+                name: "Modelagem da Geração de Energia Eólica",
+                path: "/projects/wind-farm/",
+              },
+            ]),
+            caseStudySchema("wind-farm", {
+              slug: "wind-farm",
+              headline:
+                "Modelagem da Geração de Energia Eólica: Previsão de Potência com XGBoost",
+              description: DESCRIPTION,
+            }),
+          ],
+        }}
+      />
+
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos

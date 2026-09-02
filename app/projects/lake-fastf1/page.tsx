@@ -1,16 +1,20 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { SkillCard } from "@/components/cards/SkillCard";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { caseStudyMetadata } from "@/lib/metadata";
+import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
-export const metadata: Metadata = {
-  title:
-    "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1 | Rene Verinaud",
-  description:
-    "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.",
-};
+const DESCRIPTION =
+  "Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.";
+
+export const metadata = caseStudyMetadata({
+  slug: "lake-fastf1",
+  title: "FastF1 Data Platform — Data Lakehouse & MLOps para Fórmula 1",
+  description: DESCRIPTION,
+});
 
 const ARCHITECTURE_STEPS: ArchitectureStep[] = [
   {
@@ -119,6 +123,28 @@ const STACK_ROWS: {
 export default function LakeFastF1Page() {
   return (
     <>
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@graph": [
+            breadcrumbSchema([
+              { name: "Início", path: "/" },
+              { name: "Projetos", path: "/#projetos" },
+              {
+                name: "FastF1 Data Platform",
+                path: "/projects/lake-fastf1/",
+              },
+            ]),
+            caseStudySchema("fastf1", {
+              slug: "lake-fastf1",
+              headline:
+                "FastF1 Data Platform: Data Lakehouse e Predição da Fórmula 1",
+              description: DESCRIPTION,
+            }),
+          ],
+        }}
+      />
+
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos
