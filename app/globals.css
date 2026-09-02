@@ -2,7 +2,7 @@
    Portfólio — Rene Verinaud Anguita Junior, Ph.D.
    Direção visual: "Telemetria" — painel de instrumento multi-canal.
    Fundo escuro por padrão; variante clara ("daytime"). Faces: Archivo
-   (display + corpo) e Recursive Mono (todo dado/rótulo/número).
+   (display + corpo) e JetBrains Mono (todo dado/rótulo/número).
    ========================================================================== */
 
 @layer reset, tokens, base, layout, components, utilities;

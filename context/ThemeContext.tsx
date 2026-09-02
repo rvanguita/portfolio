@@ -5,14 +5,9 @@ import {
   useCallback,
   useEffect,
   useReducer,
-  type Dispatch,
   type ReactNode,
 } from "react";
 import { THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
-
-// Reexporta para os consumidores que já importam daqui.
-export { THEME_STORAGE_KEY };
-export type { Theme };
 
 interface ThemeState {
   theme: Theme;
@@ -34,8 +29,6 @@ function reducer(state: ThemeState, action: ThemeAction): ThemeState {
 interface ThemeContextValue {
   theme: Theme;
   toggle: () => void;
-  setTheme: (theme: Theme) => void;
-  dispatch: Dispatch<ThemeAction>;
 }
 
 export const ThemeContext = createContext<ThemeContextValue | undefined>(
@@ -66,7 +59,10 @@ function initialState(): ThemeState {
     const attr = document.documentElement.getAttribute("data-theme");
     if (attr === "light" || attr === "dark") return { theme: attr };
   }
-  return { theme: "light" };
+  // Fora do browser (frame RSC do export estático) não há atributo para ler.
+  // O sistema "Telemetria" é dark-first (`:root` puro = escuro); o script
+  // anti-FOUC ainda ajusta `data-theme` antes da hidratação.
+  return { theme: "dark" };
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
@@ -88,15 +84,9 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   }, [state.theme]);
 
   const toggle = useCallback(() => dispatch({ type: "TOGGLE" }), []);
-  const setTheme = useCallback(
-    (theme: Theme) => dispatch({ type: "SET", theme }),
-    [],
-  );
 
   return (
-    <ThemeContext.Provider
-      value={{ theme: state.theme, toggle, setTheme, dispatch }}
-    >
+    <ThemeContext.Provider value={{ theme: state.theme, toggle }}>
       {children}
     </ThemeContext.Provider>
   );

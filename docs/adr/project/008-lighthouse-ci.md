@@ -71,7 +71,15 @@ o CI já roda em `ubuntu-latest` com Chrome pré-instalado.
   script.
 * `experimental.inlineCss` é uma flag experimental do Next; cada HTML exportado
   cresce ~5 kB (gzip) em troca de um round trip a menos.
-* Medição de referência (mediana de 3, 2026-09): home mobile **95** / desktop
-  **100**; estudos de caso mobile **96** / desktop **100**; Accessibility, Best
-  Practices e SEO **100** em todas as rotas. Ver
-  `docs/audit/spec-completion-2026-09.md`.
+* Medição de referência — **CI** (`google-chrome`, `LH_RUNS=3`, mediana de 3),
+  2026-09: home mobile **93** / desktop **100**; `wind-farm` mobile **94** /
+  desktop **100**; `lake-fastf1` mobile **96** / desktop **100**; Accessibility,
+  Best Practices e SEO **100** em todas as rotas. Mesma tabela em
+  `docs/tasks/project/010-performance.md`, `docs/audit/spec-completion-2026-09.md`
+  e `docs/audit/visual-qa-2026-09.md`.
+* A performance móvel da home oscila na casa dos baixos 90 entre execuções
+  (medianas de 93 e 95 já observadas no CI; execuções locais em outras builds de
+  Chrome — ex.: Chromium — chegaram a medir 88–89 com este mesmo `out/`). A
+  folga sobre o limite de 90 é pequena na home. Uma queda real abaixo de 90 se
+  resolve com otimização de LCP, **nunca** baixando o limite do script (ver
+  acima).

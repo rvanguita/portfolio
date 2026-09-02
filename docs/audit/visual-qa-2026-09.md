@@ -21,10 +21,16 @@ forma reproduzível os invariantes que um restyle costuma quebrar.
 | 390 / 1280 | estudo de caso `wind-farm` | nenhum | ok | ok |
 | 390 / 1280 | estudo de caso `lake-fastf1` | nenhum | ok | ok |
 
+> **Lacuna de cobertura (2026-09, re-verificação):** a matriz salta de 820 para
+> 1280 px e nunca cobriu ~821–1099 px. Uma varredura extra nessa faixa acha
+> overflow horizontal na navbar (o botão "Contato" volta antes de os 6 links
+> caberem). Pré-existente — ver `docs/audit/spec-reverify-2026-09.md` §Riscos 4.
+
 ## Verificado
 
-* **Sem scroll horizontal** em 320–1680 px, nos dois temas, nas 3 páginas
-  (`documentElement.scrollWidth ≤ clientWidth`).
+* **Sem scroll horizontal** em 320–1680 px (larguras da matriz), nos dois temas,
+  nas 3 páginas (`documentElement.scrollWidth ≤ clientWidth`). Exceção conhecida:
+  faixa ~821–1099 px, acima (ver lacuna de cobertura).
 * **Tema** — `prefers-color-scheme` e o toggle manual (`localStorage`) aplicam
   `data-theme` corretamente; paletas clara e escura íntegras. O `<script>`
   anti-FOUC roda (sem `SyntaxError` — ver `docs/adr/project/008` e o fix do
@@ -59,10 +65,13 @@ forma reproduzível os invariantes que um restyle costuma quebrar.
 | `wind-farm` | 94 / 100 | 100 | 100 | 100 |
 | `lake-fastf1` | 96 / 100 | 100 | 100 | 100 |
 
-Performance móvel oscila na casa dos baixos 90 entre execuções (mediana de 95 e
-93 em duas rodadas). Fica acima do limite de 90 do CI, com folga pequena na home
-— uma queda futura deve ser tratada com otimização de LCP, não baixando o limite
-(ADR-008). Relatórios completos em `lighthouse-report/`.
+Performance móvel oscila na casa dos baixos 90 entre execuções (medianas de 93 e
+95 já vistas no CI; execuções locais em Chromium mediram 88–89 com o mesmo
+`out/`). Fica acima do limite de 90 do CI, com folga pequena na home — uma queda
+real deve ser tratada com otimização de LCP, não baixando o limite. A tabela
+acima é a medição de referência única, replicada em `docs/adr/project/008` e
+`docs/tasks/project/010-performance.md`. Relatórios completos em
+`lighthouse-report/`.
 
 ## Validação de produção
 

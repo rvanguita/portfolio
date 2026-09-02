@@ -1,5 +1,3 @@
-import type { CSSProperties } from "react";
-
 /**
  * Ícones SVG sólidos monocromáticos (herdam a cor via currentColor).
  * Migrado de _includes/icon.html — mesmos paths (Heroicons v2 solid, MIT).
@@ -66,14 +64,12 @@ export type IconName = keyof typeof ICON_PATHS;
 interface IconProps {
   name: IconName;
   className?: string;
-  style?: CSSProperties;
 }
 
-export function Icon({ name, className, style }: IconProps) {
+export function Icon({ name, className }: IconProps) {
   return (
     <svg
       className={className}
-      style={style}
       viewBox="0 0 24 24"
       fill="currentColor"
       aria-hidden="true"

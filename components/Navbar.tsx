@@ -14,7 +14,7 @@ import { cx } from "@/lib/cx";
 const NAV_IDS = NAV_ITEMS.map((item) => item.id);
 
 export function Navbar() {
-  const [menuOpen, , setMenuOpen] = useToggle(false);
+  const [menuOpen, toggleMenu, setMenuOpen] = useToggle(false);
   const activeId = useScrollSpy(NAV_IDS);
   const reducedMotion = usePrefersReducedMotion();
   const navRef = useRef<HTMLElement>(null);
@@ -98,7 +98,7 @@ export function Navbar() {
             aria-label="Abrir menu de navegação"
             aria-expanded={menuOpen}
             aria-controls="navMenu"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={toggleMenu}
           >
             <span aria-hidden="true">☰</span>
           </button>

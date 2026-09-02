@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { ProjectAction } from "@/lib/types";
+import { ExternalLink } from "@/components/ui/ExternalLink";
+import { isExternalUrl } from "@/lib/url";
 import { cx } from "@/lib/cx";
 
 /** Porte de _includes/project-action-link.html. */
@@ -11,18 +13,12 @@ export function ProjectActionLink({
   primary?: boolean;
 }) {
   const className = cx("btn-project", primary && "btn-project-primary");
-  const isExternal = action.url.includes("://");
 
-  if (isExternal) {
+  if (isExternalUrl(action.url)) {
     return (
-      <a
-        href={action.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
+      <ExternalLink href={action.url} className={className}>
         {action.label}
-      </a>
+      </ExternalLink>
     );
   }
 

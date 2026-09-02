@@ -1,4 +1,5 @@
 import { SITE_URL } from "@/lib/base-path";
+import { isExternalUrl } from "@/lib/url";
 import { profile } from "@/lib/data/profile";
 import { education } from "@/lib/data/timeline";
 import { skills } from "@/lib/data/skills";
@@ -60,7 +61,7 @@ export function caseStudySchema(
   o: { slug: string; headline: string; description: string },
 ) {
   const project = projects.find((p) => p.key === projectKey);
-  const repo = project?.actions.find((a) => a.url.startsWith("http"))?.url;
+  const repo = project?.actions.find((a) => isExternalUrl(a.url))?.url;
   const url = `${SITE_URL}/projects/${o.slug}/`;
   return {
     "@type": "Article",

@@ -197,6 +197,38 @@ Estrutura inicial esperada:
 
 A estrutura definitiva pode variar conforme o framework escolhido.
 
+## Estrutura implementada (Next.js App Router, 2026-09)
+
+O esqueleto `src/{…}` acima é ilustrativo. A convenção do App Router coloca as
+rotas em `app/` na raiz; a estrutura real é:
+
+```text
+/
+├── app/                       # rotas + layout + app/globals.css + robots.ts + sitemap.ts
+│   └── projects/<slug>/page.tsx
+├── components/
+│   ├── sections/              # uma por seção da home
+│   ├── cards/                 # ProjectCard, EduCard, SkillCard, CertBadge, ProjectActionLink
+│   ├── ui/                    # SectionHeader, ChannelLabel, Icon, Rich, Tag, ExternalLink, …
+│   ├── seo/                   # JsonLd
+│   └── Navbar / Footer / ThemeToggle / HeroSignature / ErrorBoundary
+├── lib/
+│   ├── data/                  # conteúdo (ver §8) — skills, projects, timeline, certificates, profile
+│   ├── seo/                   # schema.ts (JSON-LD)
+│   └── nav.ts · theme.ts · base-path.ts · metadata.ts · scroll.ts · url.ts · cx.ts · site-stats.ts · types.ts
+├── hooks/ · context/          # client-only (tema, media query, scroll-spy, toggle, filtro)
+├── tests/                     # Vitest + RTL
+├── scripts/lighthouse.mjs
+├── docs/{prd,sdd,adr,tasks,audit}/
+├── .github/workflows/{ci,deploy}.yml
+├── next.config.mjs · tsconfig.json · vitest.config.mts
+└── package.json · README.md
+```
+
+Não há diretório `src/`, `layouts/`, `pages/`, `styles/` nem `config/`: o
+layout é `app/layout.tsx`, o estilo é a folha única `app/globals.css` e a
+configuração fica em `next.config.mjs` + `lib/*`.
+
 ---
 
 # 8. Organização de Responsabilidades
@@ -240,6 +272,11 @@ content/
 
 O conteúdo deve ser separado da apresentação sempre que isso melhorar
 manutenção e reutilização.
+
+> **Implementado (2026-09):** o `content/` conceitual é
+> `lib/data/*.ts` — `profile.ts`, `projects.ts`, `skills.ts`, `timeline.ts`
+> (`experience` + `education`), `certificates.ts` — tipados por `lib/types.ts`.
+> `lib/site-stats.ts` guarda os dados das telhas de leitura do Hero/About.
 
 ## Lib
 
@@ -531,11 +568,12 @@ O workflow deve falhar quando uma etapa obrigatória falhar.
 
 # 21. CI/CD
 
-Workflow:
+Workflow (implementado, 2026-09):
 
 ```text
 .github/workflows/
-└── deploy.yml
+├── ci.yml       # PR → main: lint · typecheck · testes · build · Lighthouse (≥ 90)
+└── deploy.yml   # push → main: build + publish no GitHub Pages (job deploy needs: build)
 ```
 
 Pipeline:
@@ -649,15 +687,25 @@ Se a resposta indicar que a dependência não é necessária, não adicioná-la.
 
 Decisões arquiteturais relevantes devem ser registradas.
 
-Estrutura:
+Estrutura (implementada, 2026-09 — dois trilhos):
 
 ```text
 docs/
 └── adr/
-    ├── 001-framework.md
-    ├── 002-content-architecture.md
-    ├── 003-styling.md
-    └── ...
+    ├── project/           # trilho de construção (Jekyll → Next.js static export)
+    │   ├── 001-framework.md
+    │   ├── 002-content-architecture.md
+    │   ├── 003-design-system.md
+    │   ├── 004-static-hosting.md
+    │   ├── 005-ai-development.md
+    │   ├── 006-remove-framer-motion.md
+    │   ├── 007-featured-projects-split.md
+    │   └── 008-lighthouse-ci.md
+    └── design/             # trilho do redesign visual "Telemetria"
+        ├── 001-visual-direction.md
+        ├── 002-static-hosting.md
+        ├── 003-minimal-dependencies.md
+        └── 004-telemetria-system.md
 ```
 
 Formato:
