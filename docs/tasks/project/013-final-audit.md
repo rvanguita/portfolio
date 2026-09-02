@@ -30,8 +30,8 @@ Realizar auditoria completa antes da publicação definitiva.
 
 ### UX
 
-* [ ] Desktop validado.
-* [ ] Mobile validado.
+* [x] Desktop validado.
+* [x] Mobile validado.
 * [x] Navegação validada.
 * [x] Links validados.
 
@@ -62,7 +62,7 @@ Realizar auditoria completa antes da publicação definitiva.
 
 * [x] GitHub Actions funcionando.
 * [x] GitHub Pages funcionando.
-* [ ] Produção validada.
+* [x] Produção validada.
 
 ## Final Acceptance
 
@@ -74,14 +74,20 @@ obrigatórios forem validados.
 Relatório completo, item a item do PRD §30 / SDD §30 e das Tasks 001–012, com
 evidência por commit: **`docs/audit/spec-completion-2026-09.md`**.
 
-Itens ainda em aberto:
+Fechado no passe do Lighthouse (2026-09):
 
-* **Desktop / Mobile validado** — pendente de QA visual manual
-  (`npm run dev` + preview do export). Os testes cobrem estrutura e
-  comportamento, não a aparência.
-* **Produção validada** — depende do merge do PR e do deploy no Pages.
-* **Lighthouse** (Task 010) — precisa de uma execução (`npx lighthouse … --preset=desktop`)
-  ou de um passo de Lighthouse CI; ainda não medido nesta base.
+* **Lighthouse** (Task 010) — `scripts/lighthouse.mjs`, obrigatório no CI
+  (**ADR-008**); mediana de 3, todas as categorias ≥ 90.
+* **Desktop / Mobile validado** — QA visual headless em 320–1680 px × 2 temas,
+  home + 2 estudos de caso: sem scroll horizontal, sem erros de console, menu
+  mobile OK. Ver `docs/audit/visual-qa-2026-09.md`. Achou e corrigiu: overflow
+  da navbar < 408 px, `SyntaxError` no anti-FOUC, contraste WCAG AA.
+
+Produção validada em 2026-09-02: home e os dois estudos de caso retornaram HTTP
+200; canonical, Open Graph, JSON-LD, `robots.txt` e `sitemap.xml` foram
+verificados nas URLs públicas. Rotas, assets e links internos principais foram
+confirmados no export publicado. Os checks locais do passe final também foram
+aprovados: ESLint, typecheck, 52 testes e build estático.
 
 Desvio de escopo registrado e aceito: o PRD §7/§15 lista uma seção "Contato"
 dedicada; o site atende o requisito via Hero + Footer + botão de contato na

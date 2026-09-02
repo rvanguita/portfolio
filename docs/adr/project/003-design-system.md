@@ -53,3 +53,19 @@ três categorias que ainda estavam com valores fixos:
 
 As substituições mantêm os valores byte a byte; nenhuma mudança visual.
 
+## Update — contraste WCAG AA (2026-09, passe do Lighthouse)
+
+A auditoria Lighthouse (ADR-008) reprovou `color-contrast` (WCAG 2.2 AA — SDD §13,
+PRD §17): o acento ciano e o âmbar do **tema claro** ficavam abaixo de 4,5:1 em
+texto pequeno, e `.nav-link-ch` usava `--rule-strong` como cor de texto
+(1,76:1 no tema escuro). Ajustes, só em `app/globals.css`:
+
+* tema claro — `--trace-1` `#0e8fa0` → `#086b78`, `--alert` `#b9740c` → `#946000`
+  (≥ 4,5:1 sobre `--panel` / `--panel-raised` / `--panel-sunken`, nos dois
+  sentidos: acento como texto e texto claro sobre o acento);
+* `.nav-link-ch` passa de `--rule-strong` para `--label` (token de texto
+  secundário, legível nos dois temas).
+
+Tokens do **tema escuro** e a identidade "Telemetria" ficam inalterados.
+Resultado: Accessibility 100 em todas as rotas.
+

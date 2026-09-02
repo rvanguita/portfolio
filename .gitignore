@@ -7,6 +7,8 @@ next-env.d.ts
 *.tsbuildinfo
 .eslintcache
 .vitest
+lighthouse-report
+.preview
 
 # --- Editores / SO ---
 # .claude/ apareceu sem procedência conhecida (skill React não relacionada) —

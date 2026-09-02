@@ -8,10 +8,11 @@ import {
   type Dispatch,
   type ReactNode,
 } from "react";
+import { THEME_STORAGE_KEY, type Theme } from "@/lib/theme";
 
-export type Theme = "light" | "dark";
-
-export const THEME_STORAGE_KEY = "portfolio_theme";
+// Reexporta para os consumidores que já importam daqui.
+export { THEME_STORAGE_KEY };
+export type { Theme };
 
 interface ThemeState {
   theme: Theme;

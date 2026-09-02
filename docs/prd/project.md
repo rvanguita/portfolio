@@ -691,24 +691,27 @@ Mesmo sendo um site estático:
 
 O projeto será considerado concluído quando:
 
-* [ ] O site estiver totalmente em português.
-* [ ] O conteúdo tiver sido tecnicamente revisado.
-* [ ] O layout tiver sido modernizado.
-* [ ] O site for responsivo.
-* [ ] O site funcionar corretamente no GitHub Pages.
-* [ ] Não existir dependência de backend.
-* [ ] SEO básico estiver implementado.
-* [ ] Acessibilidade básica estiver implementada.
-* [ ] Performance estiver otimizada.
-* [ ] Os projetos estiverem apresentados de forma profissional.
-* [ ] GitHub e demais canais profissionais estiverem acessíveis.
-* [ ] O código estiver organizado e manutenível.
-* [ ] Não existirem dependências desnecessárias.
-* [ ] O build funcionar de forma reproduzível.
-* [ ] O deploy via GitHub Actions estiver configurado.
-* [ ] Não existirem erros no console do navegador.
-* [ ] Não existirem links quebrados.
-* [ ] O conteúdo não contenha informações profissionais inventadas.
+* [x] O site estiver totalmente em português.
+* [x] O conteúdo tiver sido tecnicamente revisado.
+* [x] O layout tiver sido modernizado.
+* [x] O site for responsivo.
+* [x] O site funcionar corretamente no GitHub Pages.
+* [x] Não existir dependência de backend.
+* [x] SEO básico estiver implementado.
+* [x] Acessibilidade básica estiver implementada.
+* [x] Performance estiver otimizada.
+* [x] Os projetos estiverem apresentados de forma profissional.
+* [x] GitHub e demais canais profissionais estiverem acessíveis.
+* [x] O código estiver organizado e manutenível.
+* [x] Não existirem dependências desnecessárias.
+* [x] O build funcionar de forma reproduzível.
+* [x] O deploy via GitHub Actions estiver configurado.
+* [x] Não existirem erros no console do navegador.
+* [x] Não existirem links quebrados.
+* [x] O conteúdo não contenha informações profissionais inventadas.
+
+> Evidência item a item: `docs/audit/spec-completion-2026-09.md`. A verificação
+> final em produção está registrada na Task 013 e foi concluída em 2026-09-02.
 
 ---
 
