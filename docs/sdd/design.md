@@ -95,6 +95,14 @@ Não deve existir comunicação obrigatória com backend para renderização ou 
 
 ## 5.1 Design Tokens
 
+> **Substituído (2026-09) — ver `docs/adr/design/004-telemetria-system.md`.**
+> Os nomes de token abaixo (`--color-*`, `--font-body`, `--content-width`,
+> `--reading-width`) são ilustrativos e não correspondem à implementação. O
+> vocabulário real é `--panel` / `--panel-raised` / `--readout` / `--label` /
+> `--rule` / `--trace-1` (ciano) / `--trace-2` / `--alert` / `--fs-*` /
+> `--sp-*` / `--r-sm` / `--r-md` / `--wrap`, definido em `app/globals.css`. O
+> princípio — valores centralizados, consumidos como tokens — é mantido.
+
 Os valores visuais devem ser centralizados.
 
 Exemplo:

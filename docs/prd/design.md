@@ -122,6 +122,12 @@ Evitar:
 
 ## 5. Paleta de Cores
 
+> **Substituído (2026-09) — ver `docs/adr/design/004-telemetria-system.md`.**
+> A implementação "Telemetria" é escura por padrão e usa três cores de sinal
+> (ciano / magenta / âmbar) como leitura de instrumento. O objetivo desta
+> seção — cor a serviço de precisão e confiabilidade, sem excesso decorativo —
+> é mantido; a base neutra clara e a "única cor de destaque" não.
+
 A paleta deve transmitir:
 
 * conhecimento;
@@ -376,6 +382,12 @@ A hierarquia deve ser adaptada para leitura vertical.
 ---
 
 ## 16. Animações
+
+> **Desvio registrado (2026-09) — ver `docs/adr/design/004-telemetria-system.md`.**
+> Há uma animação contínua: a faixa de onda `trace-scroll` (14s) sob a navbar.
+> É ambiente e não informativa — congela sob `prefers-reduced-motion` e o site
+> permanece profissional com ela desligada (regra final desta seção mantida).
+> Todo o resto abaixo continua valendo.
 
 Animações devem ser mínimas.
 

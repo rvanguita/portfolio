@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
+import { SectionHeader } from "@/components/ui/SectionHeader";
+import { ExternalLink } from "@/components/ui/ExternalLink";
 import { SkillCard } from "@/components/cards/SkillCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { caseStudyMetadata } from "@/lib/metadata";
@@ -170,14 +172,12 @@ export default function LakeFastF1Page() {
         </div>
 
         <div className="case-study-meta">
-          <a
+          <ExternalLink
             href="https://github.com/rvanguita/lake-fastf1"
-            target="_blank"
-            rel="noopener noreferrer"
             className="btn-primary"
           >
             Acessar Repositório no GitHub
-          </a>
+          </ExternalLink>
           <span className="social-chip">
             <Icon name="check-circle" className="chip-icon" /> Status: Ativo /
             Produção
@@ -210,17 +210,13 @@ export default function LakeFastF1Page() {
       </div>
 
       <section className="case-study-section" aria-labelledby="lf-arquitetura">
-        <div className="section-header section-header-first">
-          <span className="section-tag">Design de Engenharia</span>
-          <h2 className="section-title" id="lf-arquitetura">
-            <Icon name="squares-2x2" className="section-icon" />
-            Arquitetura da Plataforma
-          </h2>
-          <p className="section-desc">
-            Fluxo de dados completo desde a coleta bruta via API FastF1 até as
-            interfaces de predição e visualização.
-          </p>
-        </div>
+        <SectionHeader
+          first
+          tag="Design de Engenharia"
+          title="Arquitetura da Plataforma"
+          id="lf-arquitetura"
+          desc="Fluxo de dados completo desde a coleta bruta via API FastF1 até as interfaces de predição e visualização."
+        />
 
         <div className="about-card architecture-card">
           <pre
@@ -233,13 +229,11 @@ export default function LakeFastF1Page() {
       </section>
 
       <section className="case-study-section" aria-labelledby="lf-camadas">
-        <div className="section-header">
-          <span className="section-tag">Engenharia de Dados</span>
-          <h2 className="section-title" id="lf-camadas">
-            <Icon name="square-3-stack-3d" className="section-icon" />
-            Estrutura das Camadas e Componentes
-          </h2>
-        </div>
+        <SectionHeader
+          tag="Engenharia de Dados"
+          title="Estrutura das Camadas e Componentes"
+          id="lf-camadas"
+        />
 
         <div className="skills-grid">
           {ARCHITECTURE_STEPS.map((step) => (
@@ -255,13 +249,11 @@ export default function LakeFastF1Page() {
       </section>
 
       <section className="case-study-section" aria-labelledby="lf-stack">
-        <div className="section-header">
-          <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title" id="lf-stack">
-            <Icon name="cog-6-tooth" className="section-icon" />
-            Stack Tecnológica Completa
-          </h2>
-        </div>
+        <SectionHeader
+          tag="Tecnologias"
+          title="Stack Tecnológica Completa"
+          id="lf-stack"
+        />
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
@@ -296,14 +288,12 @@ export default function LakeFastF1Page() {
       </section>
 
       <div className="case-study-actions">
-        <a
+        <ExternalLink
           href="https://github.com/rvanguita/lake-fastf1"
-          target="_blank"
-          rel="noopener noreferrer"
           className="btn-primary"
         >
           Explorar Código no GitHub
-        </a>
+        </ExternalLink>
         <Link href="/#projetos" className="btn-secondary">
           Ver Outros Projetos
         </Link>

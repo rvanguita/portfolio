@@ -50,30 +50,42 @@ robots + JSON-LD) com JavaScript mínimo no cliente; `basePath`/`trailingSlash`/
 `next/font`/`next/link` são de primeira classe e resolvem o deploy em subpath do
 Pages sem gambiarra; e o ecossistema/DX reduzem o atrito para manutenção por
 diferentes agentes. Astro/Eleventy/Hugo seriam igualmente válidos para conteúdo
-estático; a decisão pende para Next.js pela integração SEO + o componente-modelo
-já existente (`app/projects/<slug>/page.tsx`).
+estático; a decisão ficou com o Next.js pela integração SEO + o
+componente-modelo já existente (`app/projects/<slug>/page.tsx`).
 
 ## Alternatives Considered
 
+Todas foram avaliadas e preteridas em favor do Next.js (ver *Decision*).
+
 ### Astro
 
-Possui forte orientação para sites estáticos, baixo JavaScript enviado ao cliente e boa integração com conteúdo.
+Forte orientação para sites estáticos, baixo JavaScript no cliente e boa
+integração com conteúdo. Preterido: a integração de SEO (Metadata API baseada
+em arquivos) e o componente-modelo de estudo de caso já existente no Next.js
+pesaram mais que o menor bundle-base do Astro.
 
 ### Eleventy
 
 Solução simples e orientada a geração estática, com baixa complexidade.
+Preterido: sem camada de componentes React nem tipagem de primeira classe, o
+que aumentaria o atrito de manutenção por agentes de IA.
 
 ### Hugo
 
-Excelente performance de build e arquitetura adequada para sites estáticos.
-
-### Next.js
-
-Pode ser utilizado com exportação estática, porém adiciona complexidade que pode não ser necessária para este projeto.
+Excelente performance de build. Preterido: o modelo de templates Go e a
+ausência de um ecossistema React/TS afastam da DX pretendida.
 
 ### Implementação sem framework
 
-HTML, CSS e JavaScript podem ser suficientes caso os requisitos permaneçam simples.
+HTML, CSS e JavaScript nativos poderiam bastar. Preterido: perderíamos
+roteamento, Metadata API, `next/font` e `basePath`/`trailingSlash` de primeira
+classe — reimplementá-los à mão custaria mais do que o peso de build do Next.
+
+### Custo aceito do Next.js
+
+O build é mais pesado que o de um gerador puramente estático e funcionalidades
+de servidor do framework não sobrevivem ao `output: 'export'` (ver
+*Consequences*). Trade-off aceito pelo ganho de SEO + DX.
 
 ## Consequences
 

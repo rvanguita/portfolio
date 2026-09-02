@@ -2,6 +2,7 @@ import Image from "next/image";
 import { asset } from "@/lib/base-path";
 import { HeroSignature } from "@/components/HeroSignature";
 import { ChannelLabel } from "@/components/ui/ChannelLabel";
+import { ExternalLink } from "@/components/ui/ExternalLink";
 import { MetricTile } from "@/components/ui/MetricTile";
 import { HERO_STATS } from "@/lib/site-stats";
 import { profile } from "@/lib/data/profile";
@@ -60,12 +61,7 @@ export function Hero() {
 
       <div className="hero-content">
         <div className="hero-links">
-          <a
-            href={profile.social.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero-link"
-          >
+          <ExternalLink href={profile.social.linkedin} className="hero-link">
             <svg
               className="hero-link-icon"
               viewBox="0 0 24 24"
@@ -82,13 +78,8 @@ export function Hero() {
               <circle cx="4" cy="4" r="2" />
             </svg>
             <span>LinkedIn</span>
-          </a>
-          <a
-            href={profile.social.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hero-link"
-          >
+          </ExternalLink>
+          <ExternalLink href={profile.social.github} className="hero-link">
             <svg
               className="hero-link-icon"
               viewBox="0 0 24 24"
@@ -104,7 +95,7 @@ export function Hero() {
               <path d="M9 18c-4.51 2-5-2-7-2" />
             </svg>
             <span>GitHub</span>
-          </a>
+          </ExternalLink>
           <a href={`mailto:${profile.email}`} className="hero-link">
             <svg
               className="hero-link-icon"

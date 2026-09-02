@@ -88,3 +88,14 @@ pelo **Footer** e pelo botão "Contato" na **navbar**. Uma seção dedicada exig
 7º item de navegação e a renumeração dos canais `CH1–CH6`, quebrando o invariante
 verificado por `tests/nav.test.tsx` e `tests/home.test.tsx`. Registrado em
 `docs/sdd/project.md` §11 (que permite desvios de layout desde que registrados).
+
+## Adendo — Re-verificação (2026-09)
+
+Um segundo passe (`docs/audit/spec-reverify-2026-09.md`) re-verificou as Tasks
+001–013 contra o código atual, removeu código morto residual (`ui/Card.tsx`,
+superfície não usada de `ThemeContext`, prop `style` de `Icon`), consolidou
+padrões repetidos (primitiva única `ExternalLink` + `isExternalUrl`, cabeçalho de
+seção via `SectionHeader` nos estudos de caso, rótulo de canal do rodapé via
+`ChannelLabel`), reconciliou os documentos de spec com a árvore real e criou
+`docs/adr/design/004-telemetria-system.md` para o sistema visual. Riscos
+residuais aceitos estão listados lá.

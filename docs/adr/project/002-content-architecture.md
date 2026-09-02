@@ -26,6 +26,12 @@ content/
 └── education
 ```
 
+> **Implementado (2026-09):** o `content/` conceitual mora em `lib/data/*.ts`
+> (`profile.ts`, `projects.ts`, `skills.ts`, `timeline.ts` com `experience` +
+> `education`, `certificates.ts`), tipado por `lib/types.ts`. Módulos TS, não
+> Markdown/CMS — a separação conteúdo ↔ apresentação (abaixo) é mantida e a
+> migração futura continua viável.
+
 Projetos devem possuir uma estrutura consistente contendo, quando disponível:
 
 * Nome.
