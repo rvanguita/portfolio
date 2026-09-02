@@ -35,7 +35,7 @@ export const projects: Project[] = [
       "Docker",
     ],
     actions: [
-      { label: "Case Study", url: "/projects/lake-fastf1/", primary: true },
+      { label: "Estudo de Caso", url: "/projects/lake-fastf1/", primary: true },
       { label: "GitHub", url: "https://github.com/rvanguita/lake-fastf1" },
     ],
   },
@@ -44,7 +44,7 @@ export const projects: Project[] = [
     category: "ml",
     badgeIcon: "sun",
     badgeLabel: "Regressão & Energia Renovável",
-    title: "Wind Farm Generation Modeling",
+    title: "Modelagem da Geração de Energia Eólica",
     challenge:
       "prever a geração de energia de quatro turbinas eólicas ao longo de um ano, com curvas de geração não lineares.",
     highlights: [
@@ -59,6 +59,7 @@ export const projects: Project[] = [
     ],
     techTags: ["Python", "XGBoost", "SHAP", "Pandas", "Matplotlib"],
     actions: [
+      { label: "Estudo de Caso", url: "/projects/wind-farm/", primary: true },
       {
         label: "Ver Código no GitHub",
         url: "https://github.com/rvanguita/wind-farm",

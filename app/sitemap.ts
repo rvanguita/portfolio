@@ -13,5 +13,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "yearly",
       priority: 0.8,
     },
+    {
+      url: `${SITE_URL}/projects/wind-farm/`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.8,
+    },
   ];
 }
