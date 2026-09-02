@@ -797,6 +797,10 @@
 /* --- responsivo: menu mobile --------------------------------------- */
 @media (max-width: 820px) {
   .nav-toggle { display: inline-flex; }
+  /* logo + toggle de tema + hambúrguer têm de caber em telas de 320px; o
+     botão "Contato" some (Hero e Footer já cobrem o contato). */
+  .nav-container { gap: var(--sp-4); padding-inline: var(--sp-4); }
+  .nav-actions .btn-nav-contact { display: none; }
   .nav-menu {
     position: absolute;
     top: 100%;
