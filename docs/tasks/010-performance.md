@@ -23,9 +23,9 @@ Avaliar:
 
 ## Acceptance Criteria
 
-* [ ] Assets otimizados.
-* [ ] Imagens possuem dimensões adequadas.
-* [ ] JavaScript desnecessário removido.
-* [ ] Dependências desnecessárias removidas.
-* [ ] Third-party scripts minimizados.
+* [x] Assets otimizados.
+* [x] Imagens possuem dimensões adequadas.
+* [x] JavaScript desnecessário removido.
+* [x] Dependências desnecessárias removidas.
+* [x] Third-party scripts minimizados.
 * [ ] Lighthouse apresenta resultados adequados.

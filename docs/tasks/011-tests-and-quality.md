@@ -22,9 +22,9 @@ Implementar ou revisar:
 
 ## Acceptance Criteria
 
-* [ ] Testes relevantes implementados.
-* [ ] Typecheck passa.
-* [ ] Lint passa.
-* [ ] Build passa.
-* [ ] Links internos verificados.
-* [ ] Nenhum teste foi removido apenas para contornar falhas.
+* [x] Testes relevantes implementados.
+* [x] Typecheck passa.
+* [x] Lint passa.
+* [x] Build passa.
+* [x] Links internos verificados.
+* [x] Nenhum teste foi removido apenas para contornar falhas.

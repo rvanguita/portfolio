@@ -39,9 +39,9 @@ Quando uma informação não estiver disponível, manter placeholder explícito 
 
 ## Acceptance Criteria
 
-* [ ] Conteúdo existente foi revisado.
-* [ ] Conteúdo está separado da apresentação.
-* [ ] Textos estão em pt-BR.
-* [ ] Informações técnicas foram preservadas.
-* [ ] Informações não foram inventadas.
-* [ ] Projetos possuem estrutura consistente.
+* [x] Conteúdo existente foi revisado.
+* [x] Conteúdo está separado da apresentação.
+* [x] Textos estão em pt-BR.
+* [x] Informações técnicas foram preservadas.
+* [x] Informações não foram inventadas.
+* [x] Projetos possuem estrutura consistente.

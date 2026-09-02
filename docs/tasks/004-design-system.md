@@ -35,10 +35,10 @@ Evitar efeitos decorativos sem função.
 
 ## Acceptance Criteria
 
-* [ ] Tokens centralizados.
-* [ ] Tipografia definida.
-* [ ] Escala de espaçamento definida.
-* [ ] Breakpoints definidos.
-* [ ] Estados de interação definidos.
-* [ ] Contraste adequado.
-* [ ] `prefers-reduced-motion` considerado.
+* [x] Tokens centralizados.
+* [x] Tipografia definida.
+* [x] Escala de espaçamento definida.
+* [x] Breakpoints definidos.
+* [x] Estados de interação definidos.
+* [x] Contraste adequado.
+* [x] `prefers-reduced-motion` considerado.

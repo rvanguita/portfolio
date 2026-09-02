@@ -11,8 +11,8 @@ Implementar as seções de experiência profissional e formação acadêmica.
 
 ## Acceptance Criteria
 
-* [ ] Experiências são apresentadas cronologicamente.
-* [ ] Formação é apresentada de forma objetiva.
-* [ ] Descrições enfatizam aspectos técnicos.
-* [ ] Conteúdo é responsivo.
-* [ ] Estrutura semântica está correta.
+* [x] Experiências são apresentadas cronologicamente.
+* [x] Formação é apresentada de forma objetiva.
+* [x] Descrições enfatizam aspectos técnicos.
+* [x] Conteúdo é responsivo.
+* [x] Estrutura semântica está correta.

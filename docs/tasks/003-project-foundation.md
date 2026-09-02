@@ -23,12 +23,12 @@ Implementar:
 
 ## Acceptance Criteria
 
-* [ ] Projeto inicia localmente.
-* [ ] Build funciona.
-* [ ] Lint funciona.
-* [ ] Testes funcionam.
-* [ ] Estrutura de diretórios segue o SDD.
-* [ ] Não existem dependências não utilizadas.
+* [x] Projeto inicia localmente.
+* [x] Build funciona.
+* [x] Lint funciona.
+* [x] Testes funcionam.
+* [x] Estrutura de diretórios segue o SDD.
+* [x] Não existem dependências não utilizadas.
 
 ## Validation
 

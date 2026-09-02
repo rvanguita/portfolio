@@ -32,8 +32,14 @@ A solução deve:
 
 ## Acceptance Criteria
 
-* [ ] Stack definida.
-* [ ] Decisão registrada na ADR-001.
-* [ ] Dependências principais justificadas.
-* [ ] Estratégia de build definida.
-* [ ] Estratégia de deploy definida.
+* [x] Stack definida.
+* [x] Decisão registrada na ADR-001.
+* [x] Dependências principais justificadas.
+* [x] Estratégia de build definida.
+* [x] Estratégia de deploy definida.
+
+## Decisão (resolvida)
+
+Ver **ADR-001** (status `Accepted`): Next.js 15 App Router com `output: 'export'`,
+TypeScript `strict`, CSS único em `@layer`, Vitest + RTL, ESLint, npm, GitHub
+Actions → GitHub Pages.

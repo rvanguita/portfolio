@@ -29,11 +29,11 @@ Implementar:
 
 ## Acceptance Criteria
 
-* [ ] SEO metadata implementado.
-* [ ] Open Graph implementado.
-* [ ] Sitemap gerado.
-* [ ] Robots configurado.
-* [ ] Structured data válido quando aplicável.
-* [ ] Navegação por teclado funciona.
-* [ ] Contraste adequado.
-* [ ] Não existem problemas críticos de acessibilidade.
+* [x] SEO metadata implementado.
+* [x] Open Graph implementado.
+* [x] Sitemap gerado.
+* [x] Robots configurado.
+* [x] Structured data válido quando aplicável.
+* [x] Navegação por teclado funciona.
+* [x] Contraste adequado.
+* [x] Não existem problemas críticos de acessibilidade.

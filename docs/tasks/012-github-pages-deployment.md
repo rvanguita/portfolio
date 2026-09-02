@@ -32,9 +32,9 @@ Deploy
 
 ## Acceptance Criteria
 
-* [ ] Workflow executa automaticamente.
-* [ ] Build é reproduzível.
-* [ ] Pipeline falha quando validações obrigatórias falham.
-* [ ] Site é publicado no GitHub Pages.
-* [ ] Assets carregam corretamente em produção.
-* [ ] Rotas e links funcionam em produção.
+* [x] Workflow executa automaticamente.
+* [x] Build é reproduzível.
+* [x] Pipeline falha quando validações obrigatórias falham.
+* [x] Site é publicado no GitHub Pages.
+* [x] Assets carregam corretamente em produção.
+* [x] Rotas e links funcionam em produção.

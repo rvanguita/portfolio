@@ -41,13 +41,13 @@ Produzir um relatório contendo:
 
 ## Acceptance Criteria
 
-* [ ] Projeto atual foi analisado.
-* [ ] Stack atual foi identificada.
-* [ ] Dependências foram catalogadas.
-* [ ] Problemas técnicos foram documentados.
-* [ ] Problemas de UX/UI foram documentados.
-* [ ] Compatibilidade com GitHub Pages foi avaliada.
-* [ ] Recomendação técnica foi produzida.
+* [x] Projeto atual foi analisado.
+* [x] Stack atual foi identificada.
+* [x] Dependências foram catalogadas.
+* [x] Problemas técnicos foram documentados.
+* [x] Problemas de UX/UI foram documentados.
+* [x] Compatibilidade com GitHub Pages foi avaliada.
+* [x] Recomendação técnica foi produzida.
 
 ## Validation
 

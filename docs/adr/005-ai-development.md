@@ -14,9 +14,9 @@ Isso aumenta a necessidade de documentação explícita das decisões arquitetur
 
 Agentes de IA deverão utilizar como fonte de contexto:
 
-1. `AGENTS.md`
-2. `docs/PRD.md`
-3. `docs/SDD.md`
+1. `CLAUDE.md` na raiz (o papel historicamente descrito como `AGENTS.md`)
+2. `docs/prd.md`
+3. `docs/sdd.md`
 4. ADRs relevantes
 5. Task atual
 

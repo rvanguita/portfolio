@@ -22,10 +22,10 @@ Implementar:
 
 ## Acceptance Criteria
 
-* [ ] Navegação funciona.
-* [ ] Links internos funcionam.
-* [ ] Navegação mobile funciona.
-* [ ] Navegação por teclado funciona.
-* [ ] Focus states existem.
-* [ ] Layout é responsivo.
-* [ ] HTML semântico é utilizado.
+* [x] Navegação funciona.
+* [x] Links internos funcionam.
+* [x] Navegação mobile funciona.
+* [x] Navegação por teclado funciona.
+* [x] Focus states existem.
+* [x] Layout é responsivo.
+* [x] HTML semântico é utilizado.

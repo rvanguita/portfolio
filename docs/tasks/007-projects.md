@@ -28,9 +28,9 @@ Resultados mensuráveis devem ser priorizados quando disponíveis.
 
 ## Acceptance Criteria
 
-* [ ] Projetos são renderizados a partir dos dados.
-* [ ] Não existem projetos hardcoded dentro dos componentes.
-* [ ] Links funcionam.
-* [ ] Cards são responsivos.
-* [ ] Cards são acessíveis.
-* [ ] Featured Projects possuem destaque visual.
+* [x] Projetos são renderizados a partir dos dados.
+* [x] Não existem projetos hardcoded dentro dos componentes.
+* [x] Links funcionam.
+* [x] Cards são responsivos.
+* [x] Cards são acessíveis.
+* [x] Featured Projects possuem destaque visual.
