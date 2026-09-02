@@ -1,31 +1,30 @@
+import { profile } from "@/lib/data/profile";
+
 export function Footer() {
   return (
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-info">
           <span className="section-tag">CH∞ · Fim da transmissão</span>
-          <h3>Rene Verinaud Anguita Junior, Ph.D.</h3>
-          <p>
-            Cientista de Dados | Especialista em Otimização de Sistemas &amp;
-            Machine Learning
-          </p>
+          <h3>{profile.footerTitle}</h3>
+          <p>{profile.footerTagline}</p>
         </div>
         <div className="footer-socials">
           <a
-            href="https://github.com/rvanguita"
+            href={profile.social.github}
             target="_blank"
             rel="noopener noreferrer"
           >
             GitHub
           </a>
           <a
-            href="https://linkedin.com/in/rvanguita"
+            href={profile.social.linkedin}
             target="_blank"
             rel="noopener noreferrer"
           >
             LinkedIn
           </a>
-          <a href="mailto:renevajr@gmail.com">E-mail</a>
+          <a href={`mailto:${profile.email}`}>E-mail</a>
         </div>
         <div className="footer-bottom">
           <p>
