@@ -62,7 +62,7 @@ Realizar auditoria completa antes da publicação definitiva.
 
 * [x] GitHub Actions funcionando.
 * [x] GitHub Pages funcionando.
-* [ ] Produção validada.
+* [x] Produção validada.
 
 ## Final Acceptance
 
@@ -83,11 +83,11 @@ Fechado no passe do Lighthouse (2026-09):
   mobile OK. Ver `docs/audit/visual-qa-2026-09.md`. Achou e corrigiu: overflow
   da navbar < 408 px, `SyntaxError` no anti-FOUC, contraste WCAG AA.
 
-Itens ainda em aberto:
-
-* **Produção validada** — depende do merge do PR e do deploy no Pages
-  (conferir canonical/OG/JSON-LD/robots/sitemap e ausência de links quebrados
-  com o site no ar).
+Produção validada em 2026-09-02: home e os dois estudos de caso retornaram HTTP
+200; canonical, Open Graph, JSON-LD, `robots.txt` e `sitemap.xml` foram
+verificados nas URLs públicas. Rotas, assets e links internos principais foram
+confirmados no export publicado. Os checks locais do passe final também foram
+aprovados: ESLint, typecheck, 52 testes e build estático.
 
 Desvio de escopo registrado e aceito: o PRD §7/§15 lista uma seção "Contato"
 dedicada; o site atende o requisito via Hero + Footer + botão de contato na

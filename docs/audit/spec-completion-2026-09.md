@@ -67,12 +67,18 @@ sem erros de console, menu mobile OK. Ver `docs/audit/visual-qa-2026-09.md`.
 `docs/{prd,sdd}/{project,design}.md`, `docs/adr/{project,design}/`, `docs/tasks/project/…` +
 `docs/tasks/design.md`. Os caminhos citados neste arquivo seguem a nova árvore.
 
-## Pendências (antes/depois do merge)
+## Registro final (antes/depois do merge)
 
 | Item | Ação |
 | --- | --- |
-| Produção validada (Task 013) | Após merge do PR + deploy: conferir canonical/OG/JSON-LD/robots/sitemap e ausência de links quebrados com o site no ar (Rich Results Test / validador Schema.org); então marcar `Produção validada` e virar o `Status` do SDD `project` para `Final` |
+| Produção validada (Task 013) | ✅ Verificada em 2026-09-02: home e dois estudos de caso retornaram HTTP 200; canonical/OG/JSON-LD/robots/sitemap presentes e coerentes nas URLs públicas; links e assets internos principais retornaram HTTP 200. |
 | `README.md` | Reescrito como documentação do repositório neste ciclo (era do projeto externo *FastF1 Data Platform*) |
+
+Os checks locais do passe final também ficaram verdes: ESLint sem warnings,
+TypeScript sem erros, 13 arquivos / 52 testes aprovados e `next build` com
+export estático de todas as rotas. A execução usou os binários instalados no
+repositório; o `mise` não pôde instalar o Node 22.12.0 por restrição de
+filesystem, portanto o runtime fixado deve continuar sendo usado em CI.
 
 ## Desvio de escopo aceito
 

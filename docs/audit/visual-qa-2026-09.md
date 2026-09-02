@@ -64,6 +64,8 @@ Performance móvel oscila na casa dos baixos 90 entre execuções (mediana de 95
 — uma queda futura deve ser tratada com otimização de LCP, não baixando o limite
 (ADR-008). Relatórios completos em `lighthouse-report/`.
 
-## Pendente
+## Validação de produção
 
-* **Produção validada** (Task 013) — depende do merge do PR + deploy no Pages.
+Validada em 2026-09-02 nas rotas públicas da home e dos dois estudos de caso:
+HTTP 200, canonical, Open Graph, JSON-LD, `robots.txt` e `sitemap.xml`
+presentes. A verificação foi feita contra o artefato publicado no GitHub Pages.

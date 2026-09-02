@@ -7,7 +7,7 @@
 | Projeto | Personal Portfolio |
 | Documento | Software Design Document |
 | Versão | 1.0 |
-| Status | Draft |
+| Status | Final |
 | Idioma da aplicação | pt-BR |
 | Deploy | GitHub Pages |
 | Tipo | Static Website |
@@ -787,19 +787,19 @@ sem:
 
 Uma tarefa somente estará concluída quando:
 
-* [ ] Implementação concluída.
-* [ ] Código organizado.
-* [ ] Sem duplicação desnecessária.
-* [ ] Sem warnings relevantes.
-* [ ] Lint aprovado.
-* [ ] Typecheck aprovado.
-* [ ] Testes aprovados.
-* [ ] Build aprovado.
-* [ ] Responsividade verificada.
-* [ ] Acessibilidade verificada.
-* [ ] SEO preservado.
-* [ ] Nenhuma informação inventada.
-* [ ] Documentação atualizada quando necessário.
+* [x] Implementação concluída.
+* [x] Código organizado.
+* [x] Sem duplicação desnecessária.
+* [x] Sem warnings relevantes.
+* [x] Lint aprovado.
+* [x] Typecheck aprovado.
+* [x] Testes aprovados.
+* [x] Build aprovado.
+* [x] Responsividade verificada.
+* [x] Acessibilidade verificada.
+* [x] SEO preservado.
+* [x] Nenhuma informação inventada.
+* [x] Documentação atualizada quando necessário.
 
 ---
 
@@ -876,6 +876,9 @@ O que explicitamente não deve ser alterado.
 ---
 
 # 33. Exemplo de Task
+
+Os checkboxes abaixo pertencem apenas ao exemplo de especificação e não
+representam pendências do projeto.
 
 ```markdown
 # Task — Implementar ProjectCard

@@ -1,5 +1,7 @@
 # SDD — Personal Portfolio Redesign
 
+**Status:** Final — validado em 2026-09.
+
 ## 1. Objetivo
 
 Definir a arquitetura técnica e a estratégia de implementação do redesign visual do portfólio pessoal.

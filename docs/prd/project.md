@@ -711,8 +711,7 @@ O projeto será considerado concluído quando:
 * [x] O conteúdo não contenha informações profissionais inventadas.
 
 > Evidência item a item: `docs/audit/spec-completion-2026-09.md`. A verificação
-> final de "funcionar corretamente no GitHub Pages" e "links quebrados" **em
-> produção** (site no ar) fica registrada na Task 013 → `Produção validada`.
+> final em produção está registrada na Task 013 e foi concluída em 2026-09-02.
 
 ---
 

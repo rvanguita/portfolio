@@ -550,42 +550,46 @@ O redesign será considerado concluído quando:
 
 ### Visual
 
-* [ ] A página possui identidade visual consistente.
-* [ ] A aparência comunica pesquisa + engenharia + dados.
-* [ ] O design não parece um template genérico de portfolio.
-* [ ] A tipografia possui hierarquia clara.
-* [ ] A paleta é profissional e discreta.
-* [ ] O espaçamento é consistente.
-* [ ] Não existem elementos visuais decorativos sem propósito.
+* [x] A página possui identidade visual consistente.
+* [x] A aparência comunica pesquisa + engenharia + dados.
+* [x] O design não parece um template genérico de portfolio.
+* [x] A tipografia possui hierarquia clara.
+* [x] A paleta é profissional e discreta.
+* [x] O espaçamento é consistente.
+* [x] Não existem elementos visuais decorativos sem propósito.
 
 ### Conteúdo
 
-* [ ] Todo conteúdo factual existente foi preservado.
-* [ ] Projetos continuam acessíveis.
-* [ ] Links continuam funcionando.
-* [ ] Informações profissionais permanecem corretas.
+* [x] Todo conteúdo factual existente foi preservado.
+* [x] Projetos continuam acessíveis.
+* [x] Links continuam funcionando.
+* [x] Informações profissionais permanecem corretas.
 
 ### Técnica
 
-* [ ] Build executa sem erros.
-* [ ] Site funciona no GitHub Pages.
-* [ ] Não existe dependência obrigatória de backend.
-* [ ] Não existem erros no console.
-* [ ] Layout funciona em mobile.
-* [ ] Layout funciona em desktop.
-* [ ] Navegação por teclado funciona.
-* [ ] `prefers-reduced-motion` é respeitado.
+* [x] Build executa sem erros.
+* [x] Site funciona no GitHub Pages.
+* [x] Não existe dependência obrigatória de backend.
+* [x] Não existem erros no console.
+* [x] Layout funciona em mobile.
+* [x] Layout funciona em desktop.
+* [x] Navegação por teclado funciona.
+* [x] `prefers-reduced-motion` é respeitado.
 
 ### Performance
 
-* [ ] Assets são otimizados.
-* [ ] JavaScript é utilizado somente quando necessário.
-* [ ] Não existem bibliotecas adicionadas sem necessidade.
-* [ ] Recursos externos são minimizados.
+* [x] Assets são otimizados.
+* [x] JavaScript é utilizado somente quando necessário.
+* [x] Não existem bibliotecas adicionadas sem necessidade.
+* [x] Recursos externos são minimizados.
 
 ---
 
 ## 25. Resultado Esperado
+
+Resultado verificado em `docs/audit/spec-completion-2026-09.md` e
+`docs/audit/visual-qa-2026-09.md`. A validação pública de 2026-09-02 confirmou
+as rotas publicadas e os metadados essenciais.
 
 O resultado final deve parecer um portfólio de um:
 
