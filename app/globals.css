@@ -145,6 +145,8 @@
     font-family: var(--font-display);
     font-size: var(--fs-base);
     font-synthesis-weight: none;
+    /* leitura de instrumento: todo algarismo alinha em coluna */
+    font-variant-numeric: tabular-nums;
   }
 
   h1, h2, h3 { letter-spacing: -0.015em; }
@@ -554,6 +556,7 @@
   .metric-number {
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
+    font-variant-numeric: tabular-nums slashed-zero;
     font-size: var(--fs-xl);
     font-weight: 600;
     color: var(--trace-1);
@@ -686,6 +689,7 @@
   .edu-year {
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
+    font-variant-numeric: tabular-nums slashed-zero;
     font-size: var(--fs-2xs);
     color: var(--trace-1);
     letter-spacing: 0.04em;
