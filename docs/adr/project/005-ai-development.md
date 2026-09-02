@@ -15,10 +15,15 @@ Isso aumenta a necessidade de documentação explícita das decisões arquitetur
 Agentes de IA deverão utilizar como fonte de contexto:
 
 1. `CLAUDE.md` na raiz (o papel historicamente descrito como `AGENTS.md`)
-2. `docs/prd.md`
-3. `docs/sdd.md`
-4. ADRs relevantes
-5. Task atual
+2. O PRD do trilho relevante — `docs/prd/project.md` (construção) ou
+   `docs/prd/design.md` (redesign visual)
+3. O SDD do trilho relevante — `docs/sdd/project.md` ou `docs/sdd/design.md`
+4. ADRs relevantes — `docs/adr/project/*` e `docs/adr/design/*`
+5. A task atual — `docs/tasks/project/001–013` ou `docs/tasks/design.md`
+
+> **Nota (2026-09):** a documentação foi reorganizada em dois trilhos
+> (`project/` e `design/`). Os caminhos antigos `docs/prd.md` / `docs/sdd.md`
+> não existem mais.
 
 As alterações devem ser pequenas, verificáveis e limitadas ao escopo da task.
 

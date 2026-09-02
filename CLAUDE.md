@@ -192,7 +192,10 @@ development · 006 framer-motion removal · 007 featured-projects split · 008 L
 Conventional Commit subjects (`feat:`/`fix:`/`style:`/`refactor:`/`test:`/`chore:`, `feat(design):`).
 Everything lands via a PR to `main`; CI (`.github/workflows/ci.yml`) must be green; `deploy.yml` builds +
 publishes to Pages on push to `main` (its `deploy` job `needs: build`). `main` should be protected
-(PR-only, `CI` check required) — the CI job in `ci.yml` is named `CI` for exactly that.
+(PR-only, the `ci.yml` check required). `ci.yml`'s single job runs lint → typecheck → tests → build →
+Lighthouse; its status-check name is the job's display name (`🔍 Lint, Types, Testes & Build`, workflow
+`🧪 Validação do Portfólio (CI)`), so set branch protection to require *that* check, not a check literally
+named `CI`.
 
 Note: a user-global Claude Code `Stop` hook (`~/.claude/hooks/auto-pr.sh`) auto-branches, commits stray
 changes, pushes, and opens a draft PR at the end of each turn when the tree has un-pushed work — so work
