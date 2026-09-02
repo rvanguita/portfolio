@@ -100,8 +100,11 @@ the one exception is the `prefers-reduced-motion` kill-switch, deliberately unla
 layer (`docs/adr/project/003` amendment). Visual language = a multi-channel instrument readout:
 
 - **Named tokens** (`tokens` layer): `--panel` / `--panel-raised` / `--readout` / `--label` / `--rule` /
-  `--trace-1` (cyan accent — links, active, focus ring) / `--trace-2` (magenta) / `--alert` (amber). Plus
-  `--fs-*` type scale, `--sp-*` spacing, `--r-sm/--r-md`.
+  `--trace-1` (cyan accent — links, active, focus ring) / `--trace-2` (magenta) / `--alert` (amber) /
+  `--ok` (green). Plus the domain legend `--cat-de` (= `--trace-1`) / `--cat-ml` (violet) / `--cat-opt`
+  (= `--alert`) / `--cat-analytics` (= `--ok`) — the `.cat-*` class sets `--c` and the badge reads it.
+  Plus `--fs-*` type scale, `--sp-*` spacing, `--r-sm/--r-md`. Every number is `font-variant-numeric:
+  tabular-nums` (`.metric-number`/`.edu-year` add `"tnum"`+`"zero"`); see `docs/adr/design/004` amendment.
 - **Fonts** via `next/font` in `layout.tsx`: **Archivo** (`--font-archivo`, display + body) and
   **JetBrains Mono** (`--font-mono-face`) — every number, label, tech tag, channel label, and `code` is
   mono. No Inter.
@@ -112,10 +115,13 @@ layer (`docs/adr/project/003` amendment). Visual language = a multi-channel inst
   `tests/home.test.tsx` enforce that there are exactly these six — a 7th section (e.g. a real `#contato`)
   means renumbering and touching both tests.
 - **Signature element**: `components/HeroSignature.tsx` — an ambient SVG waveform strip under the navbar,
-  animated with a CSS `@keyframes` (frozen under `prefers-reduced-motion`).
+  animated with a CSS `@keyframes` (frozen under `prefers-reduced-motion`). `Sparkline.tsx` carries a
+  faint `aria-hidden` axis grid (no data); `SectionHeader` closes with `<hr class="trace-divider">` — a
+  per-header channel marker.
 - Class names are reused from the pre-redesign markup so section/card/case-study components barely change
   when restyling — `globals.css` carries the look. Category badges (`.cat-de/.cat-ml/.cat-opt/.cat-analytics`)
-  all resolve to one cyan chip in this direction.
+  each map to their own muted domain hue (colour + icon + label, never colour alone — WCAG 1.4.1); cert
+  filters/groups stay cyan. `docs/adr/design/004` amendment (2026-09).
 
 ### Category filtering
 
@@ -174,11 +180,12 @@ Two tracks under `docs/`:
 - **`project/`** — the build spec (Jekyll → Next.js static export, stack, content model, deploy):
   `docs/prd/project.md`, `docs/sdd/project.md`, `docs/adr/project/001–008`, `docs/tasks/project/001–013`.
 - **`design/`** — the "Telemetria" visual redesign spec: `docs/prd/design.md`, `docs/sdd/design.md`,
-  `docs/adr/design/001–003` (visual-direction · static-hosting · minimal-dependencies),
+  `docs/adr/design/001–004` (visual-direction · static-hosting · minimal-dependencies ·
+  telemetria-system, whose 2026-09 amendment adds the per-domain `--cat-*` legend),
   `docs/tasks/design.md` (phased `TASK-nnn`).
 
-`docs/audit/` holds the completion reports: `spec-completion-2026-09.md` (Task 013 deliverable) and
-`visual-qa-2026-09.md`. Per **`docs/adr/project/005`** (AI development): read the relevant PRD, SDD, ADRs
+`docs/audit/` holds the completion reports: `spec-completion-2026-09.md` (Task 013 deliverable),
+`spec-reverify-2026-09.md`, `visual-qa-2026-09.md`, and `restyle-2026-09.md` (the categorical-legend pass). Per **`docs/adr/project/005`** (AI development): read the relevant PRD, SDD, ADRs
 and the current task before non-trivial work; keep changes small and task-scoped; **a change that alters
 architecture (framework, content model, design system, deploy) must create or update an ADR**; never
 invent professional facts (rewriting/reordering/tightening existing content is fine — fabricating

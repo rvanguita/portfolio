@@ -127,6 +127,10 @@ Evitar:
 > (ciano / magenta / âmbar) como leitura de instrumento. O objetivo desta
 > seção — cor a serviço de precisão e confiabilidade, sem excesso decorativo —
 > é mantido; a base neutra clara e a "única cor de destaque" não.
+>
+> **Emenda (2026-09):** além do acento, há uma **legenda categórica** — quatro
+> hues discretas (não neon), uma por domínio de atuação (`--cat-de/-ml/-opt/-analytics`),
+> sempre acompanhadas de ícone + rótulo (a cor nunca é o único diferenciador).
 
 A paleta deve transmitir:
 

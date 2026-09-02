@@ -90,3 +90,21 @@ matriz headless 320–1680px × 2 temas + Lighthouse).
 vencer todas as camadas, sempre. O SDD §13 usa exatamente esse bloco
 não-camadado como exemplo. Comentado no arquivo para não parecer esquecimento.
 
+
+## Update — legenda categórica de domínio (2026-09)
+
+A paleta ganha a família `--cat-*` (`--cat-de` / `--cat-ml` / `--cat-opt` /
+`--cat-analytics`): uma leitura de sinal por área de atuação, para que projetos e
+skills sejam lidos como uma legenda de gráfico. Três reaproveitam sinais
+existentes (`--trace-1`, `--alert`, `--ok`); só `--cat-ml` (violeta `#9d8df1`
+escuro / `#5b4bc4` claro) é hue nova. São **tokens documentados**, não valores
+soltos — "novos valores visuais não devem ser introduzidos arbitrariamente"
+continua valendo.
+
+`--ok` (verde) estava definido sem uso; ao entrar em uso, seu valor no tema
+claro passou de `#2f8f3f` (≈ 4:1 sobre branco) para `#1a7a34` (≥ 4,5:1) —
+estendendo a mesma sintonia WCAG AA já aplicada a `--trace-1` / `--alert`.
+
+`--fs-2xl` (0 usos) e o seletor `.panel-card` (0 renders) foram removidos.
+Detalhe visual e verificação em `docs/adr/design/004-telemetria-system.md`
+(emenda) e `docs/audit/restyle-2026-09.md`.

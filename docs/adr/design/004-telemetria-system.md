@@ -117,3 +117,72 @@ Formação).
   `prefers-reduced-motion` é o guarda.
 - `prd/design.md` §5/§16 e `sdd/design.md` §5.1 passam a ter uma anotação de
   "substituído"; quem edita o design precisa cruzar com este ADR.
+
+## Update — legenda categórica de domínio (2026-09)
+
+Passo de *refinamento* dentro da direção já aceita (não um novo sistema): o site
+passa a **ler como uma legenda de instrumento**, empurrando a identidade "dados /
+DS / ML / DE" um pouco mais longe sem virar dashboard. A decisão de nível de
+ambição (refinamento, não reskin) e o motivo condutor ("legenda de instrumento")
+foram do proprietário.
+
+### Cores por domínio
+
+As quatro áreas de atuação ganham uma leitura de sinal própria — antes
+`.cat-de/-ml/-opt/-analytics` resolviam todas para o mesmo chip ciano.
+
+| Domínio | Token | Origem | Escuro | Claro (WCAG AA) |
+|---|---|---|---|---|
+| Engenharia de Dados | `--cat-de` | = `--trace-1` (ciano — a espinha dorsal) | `#4fd1e0` | `#086b78` |
+| Machine Learning | `--cat-ml` | **novo** — violeta discreto | `#9d8df1` | `#5b4bc4` |
+| Pesquisa Operacional | `--cat-opt` | = `--alert` (âmbar — restrições/limites) | `#f5a524` | `#946000` |
+| Analytics & BI | `--cat-analytics` | = `--ok` (verde — resultado) | `#3fb950` | `#1a7a34` |
+
+Três reaproveitam sinais existentes; só o violeta é hue nova. Aplicadas via CSS
+(os ganchos `data-category` / classe `.cat-*` já vinham do TSX): tinta do
+`.project-category-badge` (um custom-prop `--c` definido pela classe `.cat-*`), a
+barra lateral do card em destaque, o filtro ativo (`.filter-btn[data-category]`)
+e o ícone do grupo de skills. Filtros/grupos de **certificados ficam ciano** —
+não são a taxonomia DE/ML/OR/BI.
+
+**A cor nunca é o único diferenciador** (WCAG 1.4.1): todo chip de domínio traz
+ícone + rótulo de texto. Contraste verificado nos dois temas, nos dois sentidos
+(hue como texto sobre panel/raised/sunken e `--panel` como texto sobre a hue
+preenchida): mínimo medido 4,63:1 — 106 amostras headless, 0 reprovações.
+`--trace-2` (magenta) segue reservado para o pico do sparkline, não é domínio.
+
+### Algarismos tabulares
+
+`body { font-variant-numeric: tabular-nums }` — todo dígito alinha em coluna,
+inclusive em prosa (R², RMSE, datas). `.metric-number` / `.edu-year` acrescentam
+`font-feature-settings: "tnum" 1, "zero" 1` (zero cortado — o "tell" de editor de
+código; JetBrains Mono traz a feature).
+
+### Sparkline como mini-plot
+
+`components/ui/Sparkline.tsx` ganha uma grade horizontal fraca (base + 1/3 + 2/3)
+a 0,22 de opacidade, `aria-hidden` — moldura de eixo, **sem** informação (o
+componente já era "Decorativo"). A linha continua sendo o único dado.
+
+### `.trace-divider` sob os cabeçalhos de seção
+
+`.trace-divider` (regra reserva, 0 usos) vira o fecho do `<SectionHeader>`:
+`<hr class="trace-divider" aria-hidden>` — cada cabeçalho encerra com um marcador
+de canal, delimitado do corpo. About mantém o cabeçalho em painel (tratamento
+distinto).
+
+### Contraste / custo
+
+- `--ok` estava definido e sem uso; o valor claro `#2f8f3f` só alcançava ~4:1
+  sobre branco. Escurecido para `#1a7a34` (≥ 4,5:1) — a mesma sintonia WCAG AA
+  que `docs/adr/project/003` já aplicara a `--trace-1`/`--alert`, agora que
+  `--ok` está em uso. Registrado também em ADR-003 (emenda 2026-09).
+- Delta de CSS: **+708 B gzip** na página inicial inlinada (orçamento +1 KB);
+  `--fs-2xl` e o seletor `.panel-card` (ambos 0 usos) removidos para compensar.
+- Lighthouse (mediana de 3, local): home mobile **94 → 94**, desktop 100;
+  estudos de caso mobile 95-94 (dentro do ruído documentado); A11y / Best
+  Practices / SEO **100** em todas as rotas. Ver
+  `docs/audit/restyle-2026-09.md`.
+
+Reverte a orientação do `CLAUDE.md` de que os quatro `.cat-*` "resolvem para um
+único chip ciano".
