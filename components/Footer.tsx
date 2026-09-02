@@ -1,3 +1,4 @@
+import { ChannelLabel } from "@/components/ui/ChannelLabel";
 import { profile } from "@/lib/data/profile";
 
 export function Footer() {
@@ -5,7 +6,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-info">
-          <span className="section-tag">CH∞ · Fim da transmissão</span>
+          <ChannelLabel channel="∞">Fim da transmissão</ChannelLabel>
           <h3>{profile.footerTitle}</h3>
           <p>{profile.footerTagline}</p>
         </div>
