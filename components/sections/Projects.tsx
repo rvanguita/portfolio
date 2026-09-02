@@ -1,16 +1,12 @@
 "use client";
 
 import { useCallback } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/cards/ProjectCard";
 import { projects } from "@/lib/data/projects";
 import type { Project, ProjectCategory } from "@/lib/types";
 import { ALL_CATEGORY, useCategoryFilter } from "@/hooks/useCategoryFilter";
-import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 import { cx } from "@/lib/cx";
-
-const MotionProjectCard = motion.create(ProjectCard);
 
 const FILTERS: { value: ProjectCategory | typeof ALL_CATEGORY; label: string }[] =
   [
@@ -27,7 +23,6 @@ export function Projects() {
     projects,
     getCategory,
   );
-  const reduceMotion = usePrefersReducedMotion();
 
   return (
     <section id="projetos">
@@ -54,25 +49,9 @@ export function Projects() {
       </div>
 
       <div className="projects-grid">
-        {reduceMotion ? (
-          filtered.map((project) => (
-            <ProjectCard key={project.key} project={project} />
-          ))
-        ) : (
-          <AnimatePresence mode="popLayout" initial={false}>
-            {filtered.map((project) => (
-              <MotionProjectCard
-                key={project.key}
-                project={project}
-                layout
-                initial={{ opacity: 0, y: 16 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -16 }}
-                transition={{ duration: 0.25 }}
-              />
-            ))}
-          </AnimatePresence>
-        )}
+        {filtered.map((project) => (
+          <ProjectCard key={project.key} project={project} />
+        ))}
       </div>
     </section>
   );

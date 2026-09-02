@@ -293,6 +293,16 @@
   .edu-card:hover { border-color: var(--rule-strong); }
   .project-card-item:hover { transform: translateY(-2px); }
 
+  /* fade de entrada dos cards ao trocar de filtro (substitui o framer-motion);
+     neutralizado pelo bloco @media (prefers-reduced-motion: reduce) abaixo. */
+  @media (prefers-reduced-motion: no-preference) {
+    .projects-grid > .project-card-item,
+    .cert-categories-container > .cert-category-group {
+      animation: card-fade-in var(--dur) var(--easing) both;
+    }
+  }
+  @keyframes card-fade-in { from { opacity: 0; transform: translateY(8px); } }
+
   /* -- navbar ------------------------------------------------------- */
   .navbar {
     position: sticky;
