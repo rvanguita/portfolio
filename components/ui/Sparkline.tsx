@@ -1,4 +1,8 @@
-/** Mini-gráfico inline (SVG) a partir de uma lista de valores. Decorativo. */
+/**
+ * Mini-plot inline (SVG) a partir de uma lista de valores. A linha é o dado; a
+ * grade horizontal fraca é só a moldura de eixo (não carrega informação).
+ * Decorativo — `aria-hidden`.
+ */
 export function Sparkline({
   data,
   className = "sparkline",
@@ -23,6 +27,10 @@ export function Sparkline({
     })
     .join(" ");
   const peakIndex = data.indexOf(max);
+  // linhas de grade: base + dois traços a 1/3 e 2/3 da altura útil
+  const grid = [1, height / 3 + 1, (2 * height) / 3 + 1].map((y) =>
+    (height - y).toFixed(1),
+  );
 
   return (
     <svg
@@ -32,6 +40,11 @@ export function Sparkline({
       aria-hidden="true"
       focusable="false"
     >
+      <g className="sparkline-grid" stroke="currentColor" strokeWidth="0.5">
+        {grid.map((y) => (
+          <line key={y} x1="0" x2={width} y1={y} y2={y} />
+        ))}
+      </g>
       <polyline
         points={points}
         fill="none"
