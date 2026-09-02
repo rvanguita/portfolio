@@ -17,6 +17,9 @@ const FILTERS: { value: ProjectCategory | typeof ALL_CATEGORY; label: string }[]
     { value: "analytics", label: "Análise Preditiva" },
   ];
 
+const featuredProjects = projects.filter((project) => project.featured);
+const otherProjects = projects.filter((project) => !project.featured);
+
 export function Projects() {
   const getCategory = useCallback((project: Project) => project.category, []);
   const { active, setActive, filtered } = useCategoryFilter(
@@ -49,11 +52,31 @@ export function Projects() {
         ))}
       </div>
 
-      <div className="projects-grid">
-        {filtered.map((project) => (
-          <ProjectCard key={project.key} project={project} />
-        ))}
-      </div>
+      {active === ALL_CATEGORY ? (
+        <>
+          <p className="section-tag projects-group-tag">Em destaque</p>
+          <div className="projects-grid projects-grid-featured">
+            {featuredProjects.map((project) => (
+              <ProjectCard key={project.key} project={project} />
+            ))}
+          </div>
+
+          <details className="projects-other">
+            <summary>Ver todos os projetos ({otherProjects.length})</summary>
+            <div className="projects-grid">
+              {otherProjects.map((project) => (
+                <ProjectCard key={project.key} project={project} />
+              ))}
+            </div>
+          </details>
+        </>
+      ) : (
+        <div className="projects-grid">
+          {filtered.map((project) => (
+            <ProjectCard key={project.key} project={project} />
+          ))}
+        </div>
+      )}
     </section>
   );
 }

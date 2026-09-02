@@ -303,6 +303,36 @@
   }
   @keyframes card-fade-in { from { opacity: 0; transform: translateY(8px); } }
 
+  /* -- projetos: destaque / outros ---------------------------------- */
+  .projects-group-tag { margin-bottom: var(--sp-4); }
+  .projects-grid-featured > .project-card-item { border-left: 3px solid var(--trace-1); }
+
+  .projects-other { margin-top: var(--sp-8); }
+  .projects-other > summary {
+    cursor: pointer;
+    list-style: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6ch;
+    font-family: var(--font-mono);
+    font-variation-settings: var(--mono-settings);
+    font-size: var(--fs-2xs);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--label);
+    padding: var(--sp-3) 0;
+    transition: color var(--dur) var(--easing);
+  }
+  .projects-other > summary::-webkit-details-marker { display: none; }
+  .projects-other > summary::before {
+    content: "▸";
+    color: var(--trace-1);
+  }
+  .projects-other[open] > summary::before { content: "▾"; }
+  .projects-other[open] > summary { color: var(--readout); }
+  .projects-other > summary:hover { color: var(--readout); }
+  .projects-other > .projects-grid { margin-top: var(--sp-4); }
+
   /* -- navbar ------------------------------------------------------- */
   .navbar {
     position: sticky;

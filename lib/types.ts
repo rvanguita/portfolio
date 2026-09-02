@@ -35,6 +35,8 @@ export interface Project {
   highlights: ProjectHighlight[];
   techTags: string[];
   actions: ProjectAction[];
+  /** Projeto em destaque (PRD §12) — renderizado acima, fora do <details> "ver todos". */
+  featured?: boolean;
 }
 
 export interface TimelineEntry {
