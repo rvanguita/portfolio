@@ -41,7 +41,7 @@ export function Hero() {
             Explorar projetos
           </a>
           <a href={`mailto:${profile.email}`} className="btn-secondary">
-            Vamos conversar
+            Entrar em contato
           </a>
         </div>
       </div>
