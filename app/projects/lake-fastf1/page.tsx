@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { ExternalLink } from "@/components/ui/ExternalLink";
 import { SkillCard } from "@/components/cards/SkillCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { caseStudyMetadata } from "@/lib/metadata";
@@ -171,14 +172,12 @@ export default function LakeFastF1Page() {
         </div>
 
         <div className="case-study-meta">
-          <a
+          <ExternalLink
             href="https://github.com/rvanguita/lake-fastf1"
-            target="_blank"
-            rel="noopener noreferrer"
             className="btn-primary"
           >
             Acessar Repositório no GitHub
-          </a>
+          </ExternalLink>
           <span className="social-chip">
             <Icon name="check-circle" className="chip-icon" /> Status: Ativo /
             Produção
@@ -289,14 +288,12 @@ export default function LakeFastF1Page() {
       </section>
 
       <div className="case-study-actions">
-        <a
+        <ExternalLink
           href="https://github.com/rvanguita/lake-fastf1"
-          target="_blank"
-          rel="noopener noreferrer"
           className="btn-primary"
         >
           Explorar Código no GitHub
-        </a>
+        </ExternalLink>
         <Link href="/#projetos" className="btn-secondary">
           Ver Outros Projetos
         </Link>
