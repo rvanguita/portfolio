@@ -28,7 +28,7 @@ jobs:
       - name: 🟢 Configurar Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '22'
           cache: npm
 
       - name: 📦 Instalar dependências
@@ -45,6 +45,20 @@ jobs:
 
       - name: 🔨 Build estático (next build → out/)
         run: npm run build
+
+      - name: 💡 Lighthouse (orçamento ≥ 90 — ADR-008)
+        run: node scripts/lighthouse.mjs
+        env:
+          CHROME_PATH: /usr/bin/google-chrome
+          LH_RUNS: '3'
+
+      - name: 📎 Upload dos relatórios do Lighthouse
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: lighthouse-report
+          path: lighthouse-report/
+          retention-days: 14
 
       - name: 📑 Auditar artefatos do export
         id: audit
@@ -67,6 +81,7 @@ jobs:
           | 🔎 Typecheck | 🟢 Aprovado | \`tsc --noEmit\` |
           | 🧪 Testes | 🟢 Aprovado | Vitest + Testing Library |
           | 🔨 Build | 🟢 Aprovado | \`${{ steps.audit.outputs.page_count }}\` HTML em \`out/\` |
+          | 💡 Lighthouse | 🟢 Aprovado | Todas as categorias ≥ 90 (mediana de 3) — artefato \`lighthouse-report\` |
           | 📜 Certificados | 🟢 Aprovado | \`${{ steps.audit.outputs.pdf_count }}\` PDF(s) |
           | 🚫 \`.nojekyll\` | 🟢 Presente | ${{ steps.audit.outputs.nojekyll }} |
 
