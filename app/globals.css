@@ -99,9 +99,11 @@
     --label: #5a6472;
     --rule: #dce1e8;
     --rule-strong: #c2cad6;
-    --trace-1: #0e8fa0;
+    /* trace-1/alert escurecidos p/ WCAG AA (≥4.5:1) sobre panel/raised/sunken
+       — texto de acento e chip ciano; ver ADR-003 (emenda 2026-09). */
+    --trace-1: #086b78;
     --trace-2: #c13a80;
-    --alert: #b9740c;
+    --alert: #946000;
     --ok: #2f8f3f;
     color-scheme: light;
   }
@@ -115,9 +117,9 @@
       --label: #5a6472;
       --rule: #dce1e8;
       --rule-strong: #c2cad6;
-      --trace-1: #0e8fa0;
+      --trace-1: #086b78;
       --trace-2: #c13a80;
-      --alert: #b9740c;
+      --alert: #946000;
       --ok: #2f8f3f;
       color-scheme: light;
     }
@@ -398,7 +400,7 @@
   .nav-link.active { color: var(--trace-1); border-bottom-color: var(--trace-1); }
   .nav-link.active .nav-link-ch { color: var(--trace-1); }
   .nav-link-icon { display: none; }
-  .nav-link-ch { color: var(--rule-strong); }
+  .nav-link-ch { color: var(--label); }
 
   .nav-actions { display: flex; align-items: center; gap: var(--sp-3); }
   .btn-theme-toggle {

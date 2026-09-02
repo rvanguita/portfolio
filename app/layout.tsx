@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider, THEME_STORAGE_KEY } from "@/context/ThemeContext";
+import { ThemeProvider } from "@/context/ThemeContext";
+import { THEME_INIT_SCRIPT } from "@/lib/theme";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
@@ -29,21 +30,6 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono-face",
 });
 
-// Executa antes da pintura: aplica data-theme em <html> lendo localStorage
-// (com try/catch) e caindo para prefers-color-scheme. Evita flash de tema.
-const themeInitScript = `
-(function(){
-  try {
-    var t = null;
-    try { t = localStorage.getItem('${THEME_STORAGE_KEY}'); } catch (e) {}
-    if (t !== 'light' && t !== 'dark') {
-      t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-    }
-    document.documentElement.setAttribute('data-theme', t);
-  } catch (e) {}
-})();
-`;
-
 export default function RootLayout({
   children,
 }: {
@@ -56,7 +42,7 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
         <a href="#main-content" className="skip-link">
