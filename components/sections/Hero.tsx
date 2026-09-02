@@ -1,27 +1,33 @@
 import Image from "next/image";
 import { asset } from "@/lib/base-path";
+import { HeroSignature } from "@/components/HeroSignature";
+import { ChannelLabel } from "@/components/ui/ChannelLabel";
+import { MetricTile } from "@/components/ui/MetricTile";
+import { HERO_STATS } from "@/lib/site-stats";
 
-/** Porte do HERO SECTION do index.html original. */
+/** Hero — canal CH0 do sistema "Telemetria". */
 export function Hero() {
   return (
     <section className="hero-section">
-      <div className="hero-avatar-wrapper">
-        <Image
-          // `next/image` NÃO prefixa o basePath para um asset de /public com
-          // output:'export' + unoptimized — por isso o asset() aqui.
-          src={asset("/assets/img/face.png")}
-          alt="Rene Verinaud Anguita Junior"
-          className="hero-avatar"
-          width={200}
-          height={200}
-          priority
-          unoptimized
-        />
-      </div>
       <div className="hero-content">
+        <div className="hero-topline">
+          <ChannelLabel channel={0}>Rene V. Anguita Jr.</ChannelLabel>
+          <div className="hero-avatar-wrapper">
+            <Image
+              src={asset("/assets/img/face.png")}
+              alt="Rene Verinaud Anguita Junior"
+              className="hero-avatar"
+              width={200}
+              height={200}
+              priority
+              unoptimized
+            />
+          </div>
+        </div>
+
         <div className="hero-tagline">
-          <span className="availability-dot" aria-hidden="true" /> Disponível para
-          novos desafios
+          <span className="availability-dot" aria-hidden="true" /> REC ·
+          Disponível para novos desafios
         </div>
 
         <h1 className="hero-title">Rene Verinaud Anguita Junior</h1>
@@ -42,7 +48,22 @@ export function Hero() {
             Vamos conversar
           </a>
         </div>
+      </div>
 
+      <HeroSignature />
+
+      <div className="about-metrics">
+        {HERO_STATS.map((stat) => (
+          <MetricTile
+            key={stat.value}
+            value={stat.value}
+            label={stat.label}
+            trend={stat.trend}
+          />
+        ))}
+      </div>
+
+      <div className="hero-content">
         <div className="hero-links">
           <a
             href="https://linkedin.com/in/rvanguita"

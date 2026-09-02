@@ -1,34 +1,14 @@
-import { Icon } from "@/components/ui/Icon";
+import { MetricTile } from "@/components/ui/MetricTile";
+import { HERO_STATS } from "@/lib/site-stats";
 
-const METRICS = [
-  {
-    number: "10x",
-    label:
-      "Redução no tempo computacional com heurística validada no mestrado (mesma qualidade do método Cônico clássico)",
-  },
-  {
-    number: "Ph.D.",
-    label:
-      "Doutorado em Eng. Elétrica pela UNICAMP com foco em Otimização",
-  },
-  {
-    number: "20+",
-    label:
-      "Certificações e Especializações Internacionais em Data Science",
-  },
-];
-
-/** Porte da seção "SOBRE MIM & MÉTRICAS" (#sobre). */
+/** Seção "SOBRE MIM & MÉTRICAS" (#sobre) — canal CH1. */
 export function About() {
   return (
     <section id="sobre">
       <div className="about-card">
         <div className="about-intro">
-          <span className="section-tag">Perfil profissional</span>
-          <h2>
-            <Icon name="user" className="about-icon" />
-            Ciência aplicada para problemas que importam.
-          </h2>
+          <span className="section-tag">CH1 · Perfil profissional</span>
+          <h2>Ciência aplicada para problemas que importam.</h2>
         </div>
         <p className="about-copy">
           Profissional com{" "}
@@ -45,11 +25,13 @@ export function About() {
         </p>
 
         <div className="about-metrics">
-          {METRICS.map((metric) => (
-            <div className="metric-box" key={metric.number}>
-              <div className="metric-number">{metric.number}</div>
-              <div className="metric-label">{metric.label}</div>
-            </div>
+          {HERO_STATS.map((stat) => (
+            <MetricTile
+              key={stat.value}
+              value={stat.value}
+              label={stat.label}
+              trend={stat.trend}
+            />
           ))}
         </div>
       </div>
