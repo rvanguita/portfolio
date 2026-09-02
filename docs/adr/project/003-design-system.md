@@ -69,3 +69,42 @@ texto pequeno, e `.nav-link-ch` usava `--rule-strong` como cor de texto
 Tokens do **tema escuro** e a identidade "Telemetria" ficam inalterados.
 Resultado: Accessibility 100 em todas as rotas.
 
+## Update — higiene de `@layer` nos `@media` (2026-09)
+
+Os dois blocos `@media` no fim de `app/globals.css` (menu mobile ≤ 820px e
+`prefers-reduced-motion`) estavam **fora de qualquer `@layer`**. Estilos
+não-camadados vencem qualquer estilo camadado, então o bloco mobile sobrepunha
+a camada `components` por *não* estar em camada — não pela ordem de camadas
+(que o `CLAUDE.md` diz ser o mecanismo de resolução). Frágil: qualquer regra
+não-camadada nova passaria por cima de todo o sistema em silêncio.
+
+Regra: **todo bloco `@media` em `globals.css` mora dentro de uma camada
+nomeada.** O bloco `@media (max-width: 820px)` passou para `@layer components`
+(mesma camada dos componentes que ele sobrepõe — `.navbar`, `.nav-menu`,
+`.hero-meta`; como vem depois na ordem de fonte da camada, continua vencendo).
+Mesmos seletores e declarações; nenhuma mudança visual (verificado por build +
+matriz headless 320–1680px × 2 temas + Lighthouse).
+
+**Exceção:** o bloco `@media (prefers-reduced-motion: reduce)` fica
+**deliberadamente fora de camada** — um interruptor de "reduzir movimento" deve
+vencer todas as camadas, sempre. O SDD §13 usa exatamente esse bloco
+não-camadado como exemplo. Comentado no arquivo para não parecer esquecimento.
+
+
+## Update — legenda categórica de domínio (2026-09)
+
+A paleta ganha a família `--cat-*` (`--cat-de` / `--cat-ml` / `--cat-opt` /
+`--cat-analytics`): uma leitura de sinal por área de atuação, para que projetos e
+skills sejam lidos como uma legenda de gráfico. Três reaproveitam sinais
+existentes (`--trace-1`, `--alert`, `--ok`); só `--cat-ml` (violeta `#9d8df1`
+escuro / `#5b4bc4` claro) é hue nova. São **tokens documentados**, não valores
+soltos — "novos valores visuais não devem ser introduzidos arbitrariamente"
+continua valendo.
+
+`--ok` (verde) estava definido sem uso; ao entrar em uso, seu valor no tema
+claro passou de `#2f8f3f` (≈ 4:1 sobre branco) para `#1a7a34` (≥ 4,5:1) —
+estendendo a mesma sintonia WCAG AA já aplicada a `--trace-1` / `--alert`.
+
+`--fs-2xl` (0 usos) e o seletor `.panel-card` (0 renders) foram removidos.
+Detalhe visual e verificação em `docs/adr/design/004-telemetria-system.md`
+(emenda) e `docs/audit/restyle-2026-09.md`.

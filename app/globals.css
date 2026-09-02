@@ -44,10 +44,19 @@
     --trace-1: #4fd1e0;   /* ciano — acento primário */
     --trace-2: #e0529c;   /* magenta — série secundária */
     --alert: #f5a524;     /* âmbar — REC, destaques */
-    --ok: #3fb950;
+    --ok: #3fb950;        /* verde — sinal positivo */
 
     --trace-1-dim: color-mix(in srgb, var(--trace-1) 14%, transparent);
     --trace-1-edge: color-mix(in srgb, var(--trace-1) 34%, transparent);
+
+    /* Legenda por domínio — cada área de atuação tem uma leitura de sinal
+       própria. Sempre acompanhada de ícone + rótulo (a cor nunca é o único
+       diferenciador — WCAG 1.4.1). Três reaproveitam sinais já existentes;
+       só o violeta é novo. Ver ADR-003 (emenda 2026-09) e ADR-design-004. */
+    --cat-de: var(--trace-1);    /* Engenharia de Dados — ciano (a espinha dorsal) */
+    --cat-ml: #9d8df1;           /* Machine Learning — violeta discreto */
+    --cat-opt: var(--alert);     /* Pesquisa Operacional — âmbar (restrições/limites) */
+    --cat-analytics: var(--ok);  /* Analytics & BI — verde (resultado) */
 
     /* escala tipográfica (rem) */
     --fs-2xs: 0.6875rem;
@@ -57,7 +66,6 @@
     --fs-md: 1.15rem;
     --fs-lg: 1.4rem;
     --fs-xl: 1.85rem;
-    --fs-2xl: 2.6rem;
     --fs-hero: clamp(2.6rem, 6vw, 4.4rem);
 
     /* espaçamento */
@@ -99,12 +107,13 @@
     --label: #5a6472;
     --rule: #dce1e8;
     --rule-strong: #c2cad6;
-    /* trace-1/alert escurecidos p/ WCAG AA (≥4.5:1) sobre panel/raised/sunken
-       — texto de acento e chip ciano; ver ADR-003 (emenda 2026-09). */
+    /* trace-1/alert/ok escurecidos p/ WCAG AA (≥4.5:1) sobre panel/raised/sunken
+       — acento como texto e como preenchimento; ver ADR-003 (emenda 2026-09). */
     --trace-1: #086b78;
     --trace-2: #c13a80;
     --alert: #946000;
-    --ok: #2f8f3f;
+    --ok: #1a7a34;
+    --cat-ml: #5b4bc4;   /* violeta escurecido p/ WCAG AA no tema claro */
     color-scheme: light;
   }
 
@@ -120,7 +129,8 @@
       --trace-1: #086b78;
       --trace-2: #c13a80;
       --alert: #946000;
-      --ok: #2f8f3f;
+      --ok: #1a7a34;
+      --cat-ml: #5b4bc4;
       color-scheme: light;
     }
   }
@@ -134,6 +144,8 @@
     font-family: var(--font-display);
     font-size: var(--fs-base);
     font-synthesis-weight: none;
+    /* leitura de instrumento: todo algarismo alinha em coluna */
+    font-variant-numeric: tabular-nums;
   }
 
   h1, h2, h3 { letter-spacing: -0.015em; }
@@ -279,7 +291,6 @@
   }
 
   /* -- superfícies ---------------------------------------------------- */
-  .panel-card,
   .about-card,
   .skill-card,
   .project-card-item,
@@ -322,7 +333,11 @@
 
   /* -- projetos: destaque / outros ---------------------------------- */
   .projects-group-tag { margin-bottom: var(--sp-4); }
-  .projects-grid-featured > .project-card-item { border-left: 3px solid var(--trace-1); }
+  /* barra lateral do card em destaque = cor do domínio (data-category vem do TSX) */
+  .projects-grid-featured > .project-card-item { border-left: 3px solid var(--cat-de); }
+  .projects-grid-featured > .project-card-item[data-category="ml"] { border-left-color: var(--cat-ml); }
+  .projects-grid-featured > .project-card-item[data-category="opt"] { border-left-color: var(--cat-opt); }
+  .projects-grid-featured > .project-card-item[data-category="analytics"] { border-left-color: var(--cat-analytics); }
 
   .projects-other { margin-top: var(--sp-8); }
   .projects-other > summary {
@@ -539,6 +554,7 @@
   .metric-number {
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
+    font-feature-settings: "tnum" 1, "zero" 1; /* algarismos tabulares + zero cortado */
     font-size: var(--fs-xl);
     font-weight: 600;
     color: var(--trace-1);
@@ -553,6 +569,7 @@
   }
   .sparkline { width: 100%; height: 22px; color: var(--trace-1); }
   .sparkline .peak { color: var(--trace-2); }
+  .sparkline .sparkline-grid { opacity: 0.22; }
 
   /* -- cabeçalho de seção ----------------------------------------------- */
   .section-header { display: flex; flex-direction: column; gap: var(--sp-3); margin-bottom: var(--sp-6); }
@@ -595,6 +612,8 @@
   /* -- habilidades ------------------------------------------------------ */
   .skill-card-header { display: flex; align-items: center; gap: 0.6ch; margin-bottom: var(--sp-3); }
   .skill-card-header h3 { font-size: var(--fs-md); }
+  /* ícone do grupo assume a cor do domínio (--c vem da classe .cat-* no header) */
+  .skill-card-header .skill-icon { color: var(--c, var(--trace-1)); }
   .skill-icon, .cert-icon, .badge-icon, .chip-icon, .stack-icon, .icon { width: 16px; height: 16px; flex: none; color: var(--trace-1); }
   .skill-tags-group, .project-techs, .stack-table-techs { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
   .case-study-copy { color: var(--label); font-size: var(--fs-sm); margin-bottom: var(--sp-3); }
@@ -625,15 +644,15 @@
     border-radius: var(--r-sm);
     margin-bottom: var(--sp-3);
     width: fit-content;
-    background: var(--trace-1-dim);
-    color: var(--trace-1);
-    border: var(--rule-w) solid var(--trace-1-edge);
+    /* --c = a cor do domínio (definida pelas classes .cat-* abaixo) */
+    background: color-mix(in srgb, var(--c, var(--trace-1)) 14%, transparent);
+    color: var(--c, var(--trace-1));
+    border: var(--rule-w) solid color-mix(in srgb, var(--c, var(--trace-1)) 34%, transparent);
   }
-  .cat-de, .cat-ml, .cat-opt, .cat-analytics { /* uma única leitura no tema */
-    background: var(--trace-1-dim);
-    color: var(--trace-1);
-    border-color: var(--trace-1-edge);
-  }
+  .cat-de { --c: var(--cat-de); }
+  .cat-ml { --c: var(--cat-ml); }
+  .cat-opt { --c: var(--cat-opt); }
+  .cat-analytics { --c: var(--cat-analytics); }
   .project-card-item h3 { font-size: var(--fs-md); margin: var(--sp-2) 0; }
   .project-summary { color: var(--label); font-size: var(--fs-sm); }
   .project-highlights { display: flex; flex-direction: column; gap: var(--sp-2); margin-top: var(--sp-3); }
@@ -658,6 +677,10 @@
   }
   .filter-btn:hover, .cert-filter-btn:hover { color: var(--readout); border-color: var(--rule-strong); }
   .filter-btn.active, .cert-filter-btn.active { color: var(--panel); background: var(--trace-1); border-color: var(--trace-1); }
+  /* filtro ativo assume a cor do domínio ("Todos"/"de" ficam ciano) */
+  .filter-btn[data-category="ml"].active { background: var(--cat-ml); border-color: var(--cat-ml); }
+  .filter-btn[data-category="opt"].active { background: var(--cat-opt); border-color: var(--cat-opt); }
+  .filter-btn[data-category="analytics"].active { background: var(--cat-analytics); border-color: var(--cat-analytics); }
   .is-hidden { display: none !important; }
 
   /* -- timeline ---------------------------------------------------------- */
@@ -667,6 +690,7 @@
   .edu-year {
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
+    font-feature-settings: "tnum" 1, "zero" 1;
     font-size: var(--fs-2xs);
     color: var(--trace-1);
     letter-spacing: 0.04em;
@@ -794,36 +818,46 @@
   }
 }
 
-/* --- responsivo: menu mobile --------------------------------------- */
-@media (max-width: 820px) {
-  .nav-toggle { display: inline-flex; }
-  /* logo + toggle de tema + hambúrguer têm de caber em telas de 320px; o
-     botão "Contato" some (Hero e Footer já cobrem o contato). */
-  .nav-container { gap: var(--sp-4); padding-inline: var(--sp-4); }
-  .nav-actions .btn-nav-contact { display: none; }
-  .nav-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    background: var(--panel-raised);
-    border-bottom: var(--rule-w) solid var(--rule);
-    padding: var(--sp-2) var(--sp-6);
-    display: none;
+/* --- responsivo: menu mobile -------------------------------------------
+   Dentro de @layer components (mesma camada dos componentes que sobrepõe:
+   .navbar, .nav-menu, .hero-meta). Como este bloco vem depois na ordem de
+   fonte da camada, ele vence — sem depender de estar fora de camada. Ver
+   docs/adr/project/003 (emenda 2026-09). @media aninhado em @layer é CSS
+   válido e suportado pelo pipeline experimental.inlineCss. */
+@layer components {
+  @media (max-width: 820px) {
+    .nav-toggle { display: inline-flex; }
+    /* logo + toggle de tema + hambúrguer têm de caber em telas de 320px; o
+       botão "Contato" some (Hero e Footer já cobrem o contato). */
+    .nav-container { gap: var(--sp-4); padding-inline: var(--sp-4); }
+    .nav-actions .btn-nav-contact { display: none; }
+    .nav-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--panel-raised);
+      border-bottom: var(--rule-w) solid var(--rule);
+      padding: var(--sp-2) var(--sp-6);
+      display: none;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu .nav-link {
+      padding: var(--sp-3) 0;
+      border-bottom: var(--rule-w) solid var(--rule);
+    }
+    .nav-menu li:last-child .nav-link { border-bottom: 0; }
+    .hero-meta { flex-direction: column; gap: var(--sp-2); }
   }
-  .nav-menu.open { display: flex; }
-  .nav-menu .nav-link {
-    padding: var(--sp-3) 0;
-    border-bottom: var(--rule-w) solid var(--rule);
-  }
-  .nav-menu li:last-child .nav-link { border-bottom: 0; }
-  .hero-meta { flex-direction: column; gap: var(--sp-2); }
 }
 
-/* --- movimento reduzido ------------------------------------------- */
+/* --- movimento reduzido -----------------------------------------------
+   Deliberadamente FORA de qualquer @layer: o interruptor de "reduzir
+   movimento" precisa vencer todas as camadas, sempre (SDD §13 usa o mesmo
+   bloco não-camadado como exemplo). Não mover para dentro de @layer. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

@@ -10,6 +10,8 @@ export interface SkillGroup {
   icon: IconName;
   title: string;
   tags: string[];
+  /** Domínio de atuação — tinge o ícone do grupo com a cor da legenda. */
+  domain?: ProjectCategory;
 }
 
 export interface ProjectHighlight {
