@@ -794,36 +794,46 @@
   }
 }
 
-/* --- responsivo: menu mobile --------------------------------------- */
-@media (max-width: 820px) {
-  .nav-toggle { display: inline-flex; }
-  /* logo + toggle de tema + hambúrguer têm de caber em telas de 320px; o
-     botão "Contato" some (Hero e Footer já cobrem o contato). */
-  .nav-container { gap: var(--sp-4); padding-inline: var(--sp-4); }
-  .nav-actions .btn-nav-contact { display: none; }
-  .nav-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    background: var(--panel-raised);
-    border-bottom: var(--rule-w) solid var(--rule);
-    padding: var(--sp-2) var(--sp-6);
-    display: none;
+/* --- responsivo: menu mobile -------------------------------------------
+   Dentro de @layer components (mesma camada dos componentes que sobrepõe:
+   .navbar, .nav-menu, .hero-meta). Como este bloco vem depois na ordem de
+   fonte da camada, ele vence — sem depender de estar fora de camada. Ver
+   docs/adr/project/003 (emenda 2026-09). @media aninhado em @layer é CSS
+   válido e suportado pelo pipeline experimental.inlineCss. */
+@layer components {
+  @media (max-width: 820px) {
+    .nav-toggle { display: inline-flex; }
+    /* logo + toggle de tema + hambúrguer têm de caber em telas de 320px; o
+       botão "Contato" some (Hero e Footer já cobrem o contato). */
+    .nav-container { gap: var(--sp-4); padding-inline: var(--sp-4); }
+    .nav-actions .btn-nav-contact { display: none; }
+    .nav-menu {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+      background: var(--panel-raised);
+      border-bottom: var(--rule-w) solid var(--rule);
+      padding: var(--sp-2) var(--sp-6);
+      display: none;
+    }
+    .nav-menu.open { display: flex; }
+    .nav-menu .nav-link {
+      padding: var(--sp-3) 0;
+      border-bottom: var(--rule-w) solid var(--rule);
+    }
+    .nav-menu li:last-child .nav-link { border-bottom: 0; }
+    .hero-meta { flex-direction: column; gap: var(--sp-2); }
   }
-  .nav-menu.open { display: flex; }
-  .nav-menu .nav-link {
-    padding: var(--sp-3) 0;
-    border-bottom: var(--rule-w) solid var(--rule);
-  }
-  .nav-menu li:last-child .nav-link { border-bottom: 0; }
-  .hero-meta { flex-direction: column; gap: var(--sp-2); }
 }
 
-/* --- movimento reduzido ------------------------------------------- */
+/* --- movimento reduzido -----------------------------------------------
+   Deliberadamente FORA de qualquer @layer: o interruptor de "reduzir
+   movimento" precisa vencer todas as camadas, sempre (SDD §13 usa o mesmo
+   bloco não-camadado como exemplo). Não mover para dentro de @layer. */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     scroll-behavior: auto !important;

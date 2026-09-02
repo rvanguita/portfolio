@@ -93,8 +93,11 @@ WCAG AA — `docs/adr/project/003` amendment).
 ### Design system — "Telemetria"
 
 `app/globals.css` is a single sheet ordered by `@layer reset, tokens, base, layout, components, utilities`
-(the layer order, not selector specificity, resolves conflicts — keep all outer spacing in the `layout`
-layer, never on components). Visual language = a multi-channel instrument readout:
+(the layer order, not selector specificity, resolves conflicts). Page/section outer spacing lives in the
+`layout` layer; a component's own responsive spacing (e.g. `.nav-container` in the `@media (max-width:820px)`
+block) lives with the component in `components`. **Every `@media` block must sit inside a named layer** —
+the one exception is the `prefers-reduced-motion` kill-switch, deliberately unlayered so it beats every
+layer (`docs/adr/project/003` amendment). Visual language = a multi-channel instrument readout:
 
 - **Named tokens** (`tokens` layer): `--panel` / `--panel-raised` / `--readout` / `--label` / `--rule` /
   `--trace-1` (cyan accent — links, active, focus ring) / `--trace-2` (magenta) / `--alert` (amber). Plus
