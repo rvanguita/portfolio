@@ -612,6 +612,8 @@
   /* -- habilidades ------------------------------------------------------ */
   .skill-card-header { display: flex; align-items: center; gap: 0.6ch; margin-bottom: var(--sp-3); }
   .skill-card-header h3 { font-size: var(--fs-md); }
+  /* ícone do grupo assume a cor do domínio (--c vem da classe .cat-* no header) */
+  .skill-card-header .skill-icon { color: var(--c, var(--trace-1)); }
   .skill-icon, .cert-icon, .badge-icon, .chip-icon, .stack-icon, .icon { width: 16px; height: 16px; flex: none; color: var(--trace-1); }
   .skill-tags-group, .project-techs, .stack-table-techs { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
   .case-study-copy { color: var(--label); font-size: var(--fs-sm); margin-bottom: var(--sp-3); }

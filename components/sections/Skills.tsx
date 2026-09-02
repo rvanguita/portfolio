@@ -20,6 +20,7 @@ export function Skills() {
             icon={group.icon}
             title={group.title}
             tags={group.tags}
+            domain={group.domain}
           />
         ))}
       </div>
