@@ -70,6 +70,21 @@
     --rule-w: 1px;
     --wrap: 1140px;
 
+    /* elevação — anéis de brilho do sistema "Telemetria" (não há drop-shadow) */
+    --shadow-ring: 0 0 0 3px var(--trace-1-dim);
+    --shadow-ring-lg: 0 0 0 4px var(--trace-1-dim);
+
+    /* z-index */
+    --z-navbar: 100;
+    --z-skip-link: 200;
+
+    /* Breakpoints — custom properties não valem dentro de @media; este é um
+       registro. Mantenha todos os @media deste arquivo em sincronia:
+         sm 640px (grade de certificados → 2 col)
+         md 720px (about-metrics → 3 col)
+         lg 820px (colapso do menu mobile)
+         xl 860px (skills/projetos → 2 col) */
+
     --easing: cubic-bezier(0.22, 0.61, 0.36, 1);
     --dur: 0.18s;
 
@@ -152,7 +167,7 @@
     position: fixed;
     top: var(--sp-2);
     left: var(--sp-2);
-    z-index: 200;
+    z-index: var(--z-skip-link);
     transform: translateY(-160%);
     background: var(--panel-raised);
     color: var(--readout);
@@ -228,7 +243,7 @@
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--trace-1);
-    box-shadow: 0 0 0 3px var(--trace-1-dim);
+    box-shadow: var(--shadow-ring);
     flex: none;
   }
 
@@ -337,7 +352,7 @@
   .navbar {
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: var(--z-navbar);
     background: color-mix(in srgb, var(--panel) 82%, transparent);
     backdrop-filter: blur(10px);
     border-bottom: var(--rule-w) solid var(--rule);
@@ -461,7 +476,7 @@
     object-fit: cover;
     filter: grayscale(1) contrast(1.05);
     border: 2px solid var(--trace-1);
-    box-shadow: 0 0 0 4px var(--trace-1-dim);
+    box-shadow: var(--shadow-ring-lg);
   }
   .hero-content { display: flex; flex-direction: column; gap: var(--sp-4); }
   .hero-tagline {
@@ -556,7 +571,7 @@
     width: 6px; height: 6px;
     border-radius: 50%;
     background: var(--trace-1);
-    box-shadow: 0 0 0 3px var(--trace-1-dim);
+    box-shadow: var(--shadow-ring);
     flex: none;
   }
   .section-title {
