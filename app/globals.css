@@ -349,8 +349,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--label);
     padding: var(--sp-3) 0;
     transition: color var(--dur) var(--easing);
@@ -404,8 +403,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--label);
     padding: var(--sp-2) 0;
     border-bottom: 2px solid transparent;
@@ -437,8 +435,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--panel);
     background: var(--trace-1);
     padding: var(--sp-2) var(--sp-3);
@@ -457,8 +454,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-xs);
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     padding: var(--sp-3) var(--sp-4);
     border-radius: var(--r-sm);
     border: var(--rule-w) solid transparent;
@@ -666,8 +662,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--label);
     background: transparent;
     border: var(--rule-w) solid var(--rule);
@@ -729,8 +724,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--label);
   }
   .footer-socials a:hover { color: var(--trace-1); }
@@ -760,8 +754,7 @@
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
     font-size: var(--fs-2xs);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
+    letter-spacing: 0.02em;
     color: var(--label);
     border: var(--rule-w) solid var(--rule);
     padding: var(--sp-2) var(--sp-3);
