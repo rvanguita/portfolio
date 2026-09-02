@@ -36,7 +36,7 @@ export const projects: Project[] = [
       "Docker",
     ],
     actions: [
-      { label: "Estudo de Caso", url: "/projects/lake-fastf1/", primary: true },
+      { label: "Estudo de caso", url: "/projects/lake-fastf1/", primary: true },
       { label: "GitHub", url: "https://github.com/rvanguita/lake-fastf1" },
     ],
   },
@@ -61,9 +61,9 @@ export const projects: Project[] = [
     ],
     techTags: ["Python", "XGBoost", "SHAP", "Pandas", "Matplotlib"],
     actions: [
-      { label: "Estudo de Caso", url: "/projects/wind-farm/", primary: true },
+      { label: "Estudo de caso", url: "/projects/wind-farm/", primary: true },
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/wind-farm",
       },
     ],
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     techTags: ["Python", "XGBoost", "SHAP", "MLflow", "Docker"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/bank-customer-churn",
       },
     ],
@@ -147,7 +147,7 @@ export const projects: Project[] = [
     techTags: ["Python", "PCA", "Machine Learning"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/fraud-detection",
       },
     ],
@@ -173,7 +173,7 @@ export const projects: Project[] = [
     techTags: ["Python", "XGBoost", "TF-IDF", "Optuna"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/sentiment-identification-nlp",
       },
     ],
