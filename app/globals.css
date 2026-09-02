@@ -66,7 +66,7 @@
     --fs-md: 1.15rem;
     --fs-lg: 1.4rem;
     --fs-xl: 1.85rem;
-    --fs-hero: clamp(2.6rem, 6vw, 4.4rem);
+    --fs-hero: clamp(1.9rem, 4vw, 3rem);
 
     /* espaçamento */
     --sp-1: 0.25rem;  --sp-2: 0.5rem;  --sp-3: 0.75rem; --sp-4: 1rem;
@@ -264,12 +264,10 @@
   /* -- faixa de onda ambiente (assinatura) --------------------------- */
   .hero-signature {
     position: relative;
-    height: 46px;
+    height: 28px;
     margin: var(--sp-6) 0 var(--sp-8);
     border-block: var(--rule-w) solid var(--rule);
     overflow: hidden;
-    background:
-      repeating-linear-gradient(90deg, var(--rule) 0 1px, transparent 1px 64px);
   }
   .hero-signature svg { position: absolute; inset: 0; width: 200%; height: 100%; }
   .hero-signature .trace-scroll { animation: trace-scroll 14s linear infinite; }
@@ -499,25 +497,20 @@
     align-self: flex-start;
     font-family: var(--font-mono);
     font-variation-settings: var(--mono-settings);
-    font-size: var(--fs-2xs);
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--alert);
-    border: var(--rule-w) solid color-mix(in srgb, var(--alert) 40%, transparent);
-    padding: var(--sp-1) var(--sp-2);
-    border-radius: var(--r-sm);
+    font-size: var(--fs-xs);
+    letter-spacing: 0.02em;
+    color: var(--label);
   }
   .availability-dot {
-    width: 7px; height: 7px; border-radius: 50%;
-    background: var(--alert);
-    animation: blink 1.6s steps(1, end) infinite;
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--ok);
+    flex: none;
   }
-  @keyframes blink { 50% { opacity: 0.25; } }
 
   .hero-title {
     font-size: var(--fs-hero);
     font-weight: 700;
-    font-stretch: 108%;
+    font-stretch: 102%;
     letter-spacing: -0.02em;
   }
   .hero-headline { font-size: var(--fs-md); color: var(--readout); max-width: 46ch; }
@@ -861,5 +854,4 @@
     animation-iteration-count: 1 !important;
   }
   .hero-signature .trace-scroll { animation: none; transform: none; }
-  .availability-dot { animation: none; }
 }

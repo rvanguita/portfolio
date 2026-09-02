@@ -3,7 +3,7 @@
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
 
 const VIEW_W = 2400;
-const VIEW_H = 46;
+const VIEW_H = 28;
 const LOOP = 1200; // largura que se repete (casa com translateX(-50%))
 
 /** Onda periódica em [0, VIEW_W] com período LOOP — emenda sem costura. */
@@ -23,8 +23,8 @@ function wavePath(cycles: number, amp: number, phase: number, mid: number): stri
  */
 export function HeroSignature() {
   const still = usePrefersReducedMotion();
-  const primary = wavePath(4, 9, 0, VIEW_H / 2);
-  const secondary = wavePath(7, 5, 1.4, VIEW_H / 2);
+  const primary = wavePath(4, 5, 0, VIEW_H / 2);
+  const secondary = wavePath(7, 3, 1.4, VIEW_H / 2);
 
   return (
     <div className="hero-signature" aria-hidden="true">
@@ -38,13 +38,14 @@ export function HeroSignature() {
             d={secondary}
             fill="none"
             stroke="var(--trace-2)"
-            strokeOpacity="0.35"
+            strokeOpacity="0.22"
             strokeWidth="1.25"
           />
           <path
             d={primary}
             fill="none"
             stroke="var(--trace-1)"
+            strokeOpacity="0.55"
             strokeWidth="1.5"
           />
         </g>
