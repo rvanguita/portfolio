@@ -26,6 +26,7 @@ export function SectionHeader({
       </span>
       <h2 className="section-title" id={id}>{title}</h2>
       {desc ? <p className="section-desc">{desc}</p> : null}
+      <hr className="trace-divider" aria-hidden="true" />
     </div>
   );
 }

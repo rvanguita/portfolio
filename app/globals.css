@@ -66,7 +66,6 @@
     --fs-md: 1.15rem;
     --fs-lg: 1.4rem;
     --fs-xl: 1.85rem;
-    --fs-2xl: 2.6rem;
     --fs-hero: clamp(2.6rem, 6vw, 4.4rem);
 
     /* espaçamento */
@@ -292,7 +291,6 @@
   }
 
   /* -- superfícies ---------------------------------------------------- */
-  .panel-card,
   .about-card,
   .skill-card,
   .project-card-item,
