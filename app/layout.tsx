@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider, THEME_STORAGE_KEY } from "@/context/ThemeContext";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
@@ -9,10 +9,24 @@ import { baseMetadata } from "@/lib/metadata";
 
 export const metadata: Metadata = baseMetadata;
 
-const inter = Inter({
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: "#0a0c10" },
+    { media: "(prefers-color-scheme: light)", color: "#f4f6f8" },
+  ],
+};
+
+// "Telemetria": Archivo (display + corpo) e JetBrains Mono (todo dado/rótulo).
+const archivo = Archivo({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  axes: ["wdth"],
+  variable: "--font-archivo",
+});
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-mono-face",
 });
 
 // Executa antes da pintura: aplica data-theme em <html> lendo localStorage
@@ -36,7 +50,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR" className={inter.variable} suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      className={`${archivo.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>

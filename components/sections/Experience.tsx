@@ -9,7 +9,7 @@ export function Experience() {
       <SectionHeader
         tag="Trajetória Profissional"
         title="Experiência Profissional"
-        icon="chart-bar"
+        channel={4}
       />
       <div className="education-timeline">
         {experience.map((entry) => (

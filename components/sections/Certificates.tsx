@@ -55,7 +55,7 @@ export function Certificates() {
       <SectionHeader
         tag="Educação Continuada"
         title="Certificações & Especializações"
-        icon="document"
+        channel={6}
         desc="Formação contínua em ciência de dados, matemática aplicada, estatística e análise de negócios."
       />
 

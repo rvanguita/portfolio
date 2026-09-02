@@ -3,6 +3,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-info">
+          <span className="section-tag">CH∞ · Fim da transmissão</span>
           <h3>Rene Verinaud Anguita Junior, Ph.D.</h3>
           <p>
             Cientista de Dados | Especialista em Otimização de Sistemas &amp;

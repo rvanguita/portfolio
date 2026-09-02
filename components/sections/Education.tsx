@@ -9,7 +9,7 @@ export function Education() {
       <SectionHeader
         tag="Trajetória Acadêmica"
         title="Formação Acadêmica"
-        icon="academic-cap"
+        channel={5}
       />
       <div className="education-timeline">
         {education.map((entry) => (

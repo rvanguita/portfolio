@@ -34,7 +34,7 @@ export function Projects() {
       <SectionHeader
         tag="Portfólio de Aplicações"
         title="Projetos em Destaque"
-        icon="briefcase"
+        channel={3}
         desc="Casos reais de dados, otimização e machine learning — apresentados do desafio ao impacto."
       />
 
