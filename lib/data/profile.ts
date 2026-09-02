@@ -15,19 +15,19 @@ export const profile = {
   location: "Campinas, SP · Brasil",
   languages: "Português (nativo) · Inglês (avançado)",
 
-  heroTagline: "REC · Disponível para novos desafios",
+  heroTagline: "Disponível para novos projetos",
   heroHeadline:
-    "Cientista de Dados & Ph.D. em Engenharia Elétrica — Machine Learning, otimização e engenharia de dados.",
+    "Cientista de Dados e Ph.D. em Engenharia Elétrica — machine learning, otimização e engenharia de dados.",
   heroLead:
-    "Transformo dados complexos em decisões melhores, modelos preditivos e sistemas mais eficientes.",
+    "Transformo dados em modelos preditivos, pipelines confiáveis e decisões melhores, com base em otimização e engenharia elétrica.",
 
-  aboutHeading: "Ciência aplicada para problemas que importam.",
+  aboutHeading: "Da pesquisa em otimização à ciência de dados aplicada.",
   aboutBio:
-    "Profissional com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e sólida experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão. No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; seu background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.",
+    "Cientista de Dados com <strong>Doutorado em Engenharia Elétrica pela UNICAMP</strong> e experiência em <strong>modelagem preditiva</strong>, <strong>machine learning</strong> e <strong>engenharia de features</strong>, transformando dados brutos em insights acionáveis para otimização de processos e tomada de decisão. No doutorado, aplicou a metaheurística de <strong>Busca Tabu</strong> e métodos de apoio à decisão ao planejamento de expansão de sistemas de distribuição de energia elétrica; o background em Engenharia Elétrica confere uma visão analítica diferenciada para desafios em Big Data e Ciência de Dados.",
 
   footerTitle: "Rene Verinaud Anguita Junior, Ph.D.",
   footerTagline:
-    "Cientista de Dados | Especialista em Otimização de Sistemas & Machine Learning",
+    "Cientista de Dados · Otimização de sistemas e machine learning",
 
   social: {
     github: "https://github.com/rvanguita",
