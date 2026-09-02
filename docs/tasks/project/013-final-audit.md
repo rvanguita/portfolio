@@ -30,8 +30,8 @@ Realizar auditoria completa antes da publicação definitiva.
 
 ### UX
 
-* [ ] Desktop validado.
-* [ ] Mobile validado.
+* [x] Desktop validado.
+* [x] Mobile validado.
 * [x] Navegação validada.
 * [x] Links validados.
 
@@ -74,14 +74,20 @@ obrigatórios forem validados.
 Relatório completo, item a item do PRD §30 / SDD §30 e das Tasks 001–012, com
 evidência por commit: **`docs/audit/spec-completion-2026-09.md`**.
 
+Fechado no passe do Lighthouse (2026-09):
+
+* **Lighthouse** (Task 010) — `scripts/lighthouse.mjs`, obrigatório no CI
+  (**ADR-008**); mediana de 3, todas as categorias ≥ 90.
+* **Desktop / Mobile validado** — QA visual headless em 320–1680 px × 2 temas,
+  home + 2 estudos de caso: sem scroll horizontal, sem erros de console, menu
+  mobile OK. Ver `docs/audit/visual-qa-2026-09.md`. Achou e corrigiu: overflow
+  da navbar < 408 px, `SyntaxError` no anti-FOUC, contraste WCAG AA.
+
 Itens ainda em aberto:
 
-* **Desktop / Mobile validado** — pendente de QA visual manual
-  (`npm run dev` + preview do export). Os testes cobrem estrutura e
-  comportamento, não a aparência.
-* **Produção validada** — depende do merge do PR e do deploy no Pages.
-* **Lighthouse** (Task 010) — precisa de uma execução (`npx lighthouse … --preset=desktop`)
-  ou de um passo de Lighthouse CI; ainda não medido nesta base.
+* **Produção validada** — depende do merge do PR e do deploy no Pages
+  (conferir canonical/OG/JSON-LD/robots/sitemap e ausência de links quebrados
+  com o site no ar).
 
 Desvio de escopo registrado e aceito: o PRD §7/§15 lista uma seção "Contato"
 dedicada; o site atende o requisito via Hero + Footer + botão de contato na
