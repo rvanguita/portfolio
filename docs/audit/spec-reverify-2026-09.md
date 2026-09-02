@@ -84,6 +84,17 @@ numeração **não** coincide com `docs/tasks/project/`. Nenhuma pendência.
    o nome real (`🔍 Lint, Types, Testes & Build`). Fora do alcance deste passe.
 3. **`mise` / Node 22.12.0.** Continua sem instalar por restrição de filesystem;
    o runtime fixado do repositório é o usado.
+4. **Overflow horizontal da navbar em ~821–1050px (pré-existente).** A matriz
+   headless deste passe (320/375/414/768/820/1280/1680) está limpa, mas
+   varreduras extra a 900/1000/1024px acham scroll horizontal (~171px em 900,
+   ~47px em 1024, zero em ≥ 1100): acima de 820px o botão "Contato" volta a
+   aparecer e o hambúrguer some, mas os 6 links + logo + ações só cabem a partir
+   de ~1100px. Confirmado presente em `origin/main` (com as edições da higiene
+   de `@layer` stashed) — não é regressão de nenhum dos dois PRs deste passe. A
+   matriz de `docs/audit/visual-qa-2026-09.md` pula de 820 para 1280 e nunca
+   cobriu essa faixa. **Follow-up sugerido:** subir o ponto em que
+   `.btn-nav-contact` some (ou o colapso do menu) para ~1100px — mexe no
+   registro de breakpoints, então merece PR + nota em `docs/adr/project/003`.
 
 ## Validação de produção
 
