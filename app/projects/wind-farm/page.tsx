@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SkillCard } from "@/components/cards/SkillCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { caseStudyMetadata } from "@/lib/metadata";
@@ -228,17 +229,13 @@ export default function WindFarmPage() {
       </div>
 
       <section className="case-study-section" aria-labelledby="wf-metodologia">
-        <div className="section-header section-header-first">
-          <span className="section-tag">Abordagem</span>
-          <h2 className="section-title" id="wf-metodologia">
-            <Icon name="squares-2x2" className="section-icon" />
-            Metodologia do Pipeline
-          </h2>
-          <p className="section-desc">
-            Do dado bruto coletado a cada 10 minutos até a previsão de potência
-            interpretada com SHAP.
-          </p>
-        </div>
+        <SectionHeader
+          first
+          tag="Abordagem"
+          title="Metodologia do Pipeline"
+          id="wf-metodologia"
+          desc="Do dado bruto coletado a cada 10 minutos até a previsão de potência interpretada com SHAP."
+        />
 
         <div className="about-card architecture-card">
           <pre
@@ -251,13 +248,11 @@ export default function WindFarmPage() {
       </section>
 
       <section className="case-study-section" aria-labelledby="wf-etapas">
-        <div className="section-header">
-          <span className="section-tag">Ciência de Dados</span>
-          <h2 className="section-title" id="wf-etapas">
-            <Icon name="square-3-stack-3d" className="section-icon" />
-            Etapas da Modelagem
-          </h2>
-        </div>
+        <SectionHeader
+          tag="Ciência de Dados"
+          title="Etapas da Modelagem"
+          id="wf-etapas"
+        />
 
         <div className="skills-grid">
           {MODEL_STEPS.map((step) => (
@@ -273,13 +268,11 @@ export default function WindFarmPage() {
       </section>
 
       <section className="case-study-section" aria-labelledby="wf-stack">
-        <div className="section-header">
-          <span className="section-tag">Tecnologias</span>
-          <h2 className="section-title" id="wf-stack">
-            <Icon name="cog-6-tooth" className="section-icon" />
-            Stack Tecnológica Completa
-          </h2>
-        </div>
+        <SectionHeader
+          tag="Tecnologias"
+          title="Stack Tecnológica Completa"
+          id="wf-stack"
+        />
 
         <div className="about-card stack-table-wrapper">
           <table className="stack-table">
