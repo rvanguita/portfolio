@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP | Rene Verinaud</title>
+  <meta name="description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <link rel="canonical" href="https://rvanguita.github.io/portfolio/projects/wind-farm/">
+  <meta name="theme-color" content="#fcfcfb">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Rene Verinaud Anguita Junior">
+  <meta property="og:url" content="https://rvanguita.github.io/portfolio/projects/wind-farm/">
+  <meta property="og:title" content="Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP | Rene Verinaud">
+  <meta property="og:description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <meta property="og:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Modelagem da Geração de Energia Eólica — XGBoost, janela expansível e SHAP | Rene Verinaud">
+  <meta name="twitter:description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <meta name="twitter:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+</head>
+<body>
+<main>
+<article class="wrap doc">
+
+  <a class="backlink" href="../../#projetos">← Projetos</a>
+
+  <h1>Modelagem da Geração de Energia Eólica</h1>
+  <hr class="sig" aria-hidden="true">
+
+  <p class="lead">
+    Prever a geração de energia de quatro turbinas eólicas ao longo de um ano.
+    A curva de potência de uma turbina é <strong>não linear</strong>, o que
+    descarta modelos lineares; e, por ser uma <strong>série temporal</strong>, a
+    validação cruzada tradicional também não se aplica — removeria o viés
+    sazonal de alguns meses.
+  </p>
+
+  <p>
+    Os dados vêm do repositório público do <strong>Zenodo</strong>: séries
+    amostradas a cada 10 minutos de seis turbinas (WT1–WT6) e três mastros
+    meteorológicos. Foram modeladas as turbinas onshore WT3 e WT4, com cinco
+    variáveis ambientais — velocidade e direção do vento, densidade do ar,
+    intensidade de turbulência e cisalhamento vertical. A análise exploratória
+    (heatmap de correlação, boxplots por mês) mostra relação forte entre
+    potência, velocidade do vento e mês do ano.
+  </p>
+
+  <p>
+    Como a curva de potência é não linear, um modelo baseado em árvores leva
+    vantagem: o <strong>XGBRegressor</strong> constrói árvores em sequência, cada
+    uma corrigindo os resíduos da anterior. A validação usa
+    <strong>janela expansível</strong> (expanding window), preservando a ordem
+    cronológica e o viés sazonal dos meses.
+  </p>
+
+  <p>
+    A análise <strong>SHAP</strong> quantifica a contribuição de cada variável
+    na previsão — a velocidade do vento é a mais relevante. O modelo alcançou
+    erro de previsão baixo e bom ajuste.
+  </p>
+
+  <p class="tech">Tecnologias: Python · XGBoost · SHAP · Pandas · Matplotlib</p>
+
+  <p class="repo">
+    <a href="https://github.com/rvanguita/wind-farm" target="_blank" rel="noopener noreferrer">Repositório no GitHub ↗</a>
+  </p>
+
+</article>
+</main>
+
+<footer class="site-footer">
+  Rene Verinaud Anguita Junior, Ph.D.
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="mailto:renevajr@gmail.com">renevajr@gmail.com</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://github.com/rvanguita" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://linkedin.com/in/rvanguita" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <span class="sep" aria-hidden="true">·</span>© 2026
+</footer>
+</body>
+</html>

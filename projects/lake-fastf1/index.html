@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FastF1 Data Platform — Data Lakehouse &amp; MLOps para Fórmula 1 | Rene Verinaud</title>
+  <meta name="description" content="Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.">
+  <link rel="canonical" href="https://rvanguita.github.io/portfolio/projects/lake-fastf1/">
+  <meta name="theme-color" content="#fcfcfb">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="Rene Verinaud Anguita Junior">
+  <meta property="og:url" content="https://rvanguita.github.io/portfolio/projects/lake-fastf1/">
+  <meta property="og:title" content="FastF1 Data Platform — Data Lakehouse &amp; MLOps para Fórmula 1 | Rene Verinaud">
+  <meta property="og:description" content="Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.">
+  <meta property="og:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="FastF1 Data Platform — Data Lakehouse &amp; MLOps para Fórmula 1 | Rene Verinaud">
+  <meta name="twitter:description" content="Estudo de caso da FastF1 Data Platform: ingestão de dados de Fórmula 1, arquitetura Raw/Bronze/Silver com Delta Lake, orquestração no Airflow, MLOps com MLflow, API FastAPI e painel Streamlit.">
+  <meta name="twitter:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+</head>
+<body>
+<main>
+<article class="wrap doc">
+
+  <a class="backlink" href="../../#projetos">← Projetos</a>
+
+  <h1>FastF1 Data Platform</h1>
+  <hr class="sig" aria-hidden="true">
+
+  <p class="lead">
+    Transformar dados de corridas de Fórmula 1 numa base confiável para análise
+    e previsão. A plataforma combina um <strong>Data Lakehouse</strong>,
+    práticas de <strong>MLOps</strong> e interfaces analíticas num fluxo ponta a
+    ponta.
+  </p>
+
+  <p>
+    A ingestão usa a biblioteca <strong>FastF1</strong> para extrair corridas,
+    treinos livres, classificações e telemetria, gravando os dados brutos
+    particionados em Parquet.
+  </p>
+
+  <p>
+    Uma DAG semanal do <strong>Apache Airflow</strong> consolida esses dados em
+    tabelas <strong>Delta Lake</strong>: a camada Bronze com versionamento ACID
+    e a camada Silver curada, com estatísticas agregadas de pilotos,
+    construtores e histórico de voltas; ao final, um espelho em MySQL. Cópias
+    são arquivadas no AWS S3 por uma CLI dedicada.
+  </p>
+
+  <p>
+    Um modelo de machine learning para predição de campeonatos é treinado com
+    Scikit-Learn e rastreado no <strong>MLflow</strong>, servido por uma API
+    <strong>FastAPI</strong> de baixa latência e explorado num painel
+    <strong>Streamlit</strong>. Todo o ambiente roda em contêineres Docker.
+  </p>
+
+  <p class="tech">
+    Tecnologias: FastF1 · Delta Lake · PySpark · Apache Airflow · Scikit-Learn ·
+    MLflow · FastAPI · Streamlit · Docker · AWS S3
+  </p>
+
+  <p class="repo">
+    <a href="https://github.com/rvanguita/lake-fastf1" target="_blank" rel="noopener noreferrer">Repositório no GitHub ↗</a>
+  </p>
+
+</article>
+</main>
+
+<footer class="site-footer">
+  Rene Verinaud Anguita Junior, Ph.D.
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="mailto:renevajr@gmail.com">renevajr@gmail.com</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://github.com/rvanguita" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://linkedin.com/in/rvanguita" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <span class="sep" aria-hidden="true">·</span>© 2026
+</footer>
+</body>
+</html>
