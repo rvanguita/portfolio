@@ -4,9 +4,7 @@ import { Tag } from "@/components/ui/Tag";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { SkillCard } from "@/components/cards/SkillCard";
-import { JsonLd } from "@/components/seo/JsonLd";
 import { caseStudyMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
 const DESCRIPTION =
@@ -125,28 +123,6 @@ const STACK_ROWS: {
 export default function LakeFastF1Page() {
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            breadcrumbSchema([
-              { name: "Início", path: "/" },
-              { name: "Projetos", path: "/#projetos" },
-              {
-                name: "FastF1 Data Platform",
-                path: "/projects/lake-fastf1/",
-              },
-            ]),
-            caseStudySchema("fastf1", {
-              slug: "lake-fastf1",
-              headline:
-                "FastF1 Data Platform: Data Lakehouse e Predição da Fórmula 1",
-              description: DESCRIPTION,
-            }),
-          ],
-        }}
-      />
-
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos
@@ -156,7 +132,7 @@ export default function LakeFastF1Page() {
       <div className="case-study-hero about-card">
         <div className="case-study-heading">
           <div>
-            <span className="project-category-badge cat-de">
+            <span className="project-category-badge">
               <Icon name="flag" className="badge-icon" /> Engenharia de Dados,
               Lakehouse &amp; MLOps
             </span>
@@ -185,27 +161,6 @@ export default function LakeFastF1Page() {
           <span className="social-chip">
             <Icon name="cube" className="chip-icon" /> Docker &amp; Docker Compose
           </span>
-        </div>
-      </div>
-
-      <div className="about-metrics case-study-metrics">
-        <div className="metric-box">
-          <div className="metric-number">3 Camadas</div>
-          <div className="metric-label">
-            Arquitetura Lakehouse (Raw Parquet, Bronze Delta, Silver Curada)
-          </div>
-        </div>
-        <div className="metric-box">
-          <div className="metric-number">Semanal</div>
-          <div className="metric-label">
-            Orquestração automatizada via DAG no Apache Airflow
-          </div>
-        </div>
-        <div className="metric-box">
-          <div className="metric-number">2 Serviços</div>
-          <div className="metric-label">
-            FastAPI (:5002) + Painel Streamlit (:8501) conteinerizados
-          </div>
         </div>
       </div>
 

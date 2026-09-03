@@ -9,7 +9,6 @@ export function Skills() {
       <SectionHeader
         tag="Competências"
         title="Matriz de Habilidades Técnicas"
-        channel={2}
         id="habilidades-heading"
         desc="Uma combinação de profundidade técnica e visão de negócio para transformar dados em produtos e decisões melhores."
       />
@@ -20,7 +19,6 @@ export function Skills() {
             icon={group.icon}
             title={group.title}
             tags={group.tags}
-            domain={group.domain}
           />
         ))}
       </div>

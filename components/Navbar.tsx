@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { NAV_ITEMS } from "@/lib/nav";
 import { Icon } from "@/components/ui/Icon";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useToggle } from "@/hooks/useToggle";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
@@ -66,11 +65,11 @@ export function Navbar() {
     <nav className="navbar" aria-label="Navegação principal" ref={navRef}>
       <div className="nav-container">
         <Link href="/" className="nav-logo" onClick={handleLogoClick}>
-          <span className="logo-accent">CH0 · </span>Rene Anguita Jr.
+          Rene Anguita Jr.
         </Link>
 
         <ul className={cx("nav-menu", menuOpen && "open")} id="navMenu">
-          {NAV_ITEMS.map((item, i) => (
+          {NAV_ITEMS.map((item) => (
             <li key={item.id}>
               <Link
                 href={`/#${item.id}`}
@@ -78,15 +77,13 @@ export function Navbar() {
                 onClick={(event) => handleNavClick(event, item.id)}
               >
                 <Icon name={item.icon} className="nav-link-icon" />
-                <span className="nav-link-ch">CH{i + 1}</span> {item.label}
+                {item.label}
               </Link>
             </li>
           ))}
         </ul>
 
         <div className="nav-actions">
-          <ThemeToggle />
-
           <a href="mailto:renevajr@gmail.com" className="btn-nav-contact">
             Contato
           </a>

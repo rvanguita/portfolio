@@ -15,10 +15,6 @@ const nextConfig = {
   // Exposto ao cliente para montar hrefs de arquivos em /public (ver lib/base-path.ts).
   env: { NEXT_PUBLIC_BASE_PATH: basePath },
   reactStrictMode: true,
-  // Inlina o CSS no <head> de cada página exportada: remove a requisição
-  // render-blocking da folha de estilos do caminho crítico (ganho de LCP no
-  // primeiro carregamento móvel). Ver ADR-008.
-  experimental: { inlineCss: true },
 };
 
 export default nextConfig;

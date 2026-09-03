@@ -1,15 +1,12 @@
 import type { Project } from "@/lib/types";
 
 /**
- * Migrado de _data/projects.yml. Única mudança de conteúdo: a action do case
- * study aponta para a rota Next `/projects/lake-fastf1/` (antes
- * `/projects/lake-fastf1.html`).
+ * Projetos do portfólio. Descrições qualitativas — sem cifras de resultado
+ * (método, dataset e stack ficam; nada é inventado).
  */
 export const projects: Project[] = [
   {
     key: "fastf1",
-    category: "de",
-    featured: true,
     badgeIcon: "flag",
     badgeLabel: "Lakehouse & MLOps",
     title: "FastF1 Data Platform",
@@ -36,14 +33,12 @@ export const projects: Project[] = [
       "Docker",
     ],
     actions: [
-      { label: "Estudo de Caso", url: "/projects/lake-fastf1/", primary: true },
+      { label: "Estudo de caso", url: "/projects/lake-fastf1/", primary: true },
       { label: "GitHub", url: "https://github.com/rvanguita/lake-fastf1" },
     ],
   },
   {
     key: "wind-farm",
-    category: "ml",
-    featured: true,
     badgeIcon: "sun",
     badgeLabel: "Regressão & Energia Renovável",
     title: "Modelagem da Geração de Energia Eólica",
@@ -56,21 +51,20 @@ export const projects: Project[] = [
       },
       {
         label: "Resultado",
-        text: "RMSE de 12,41% e R² de 81,93%, com velocidade do vento como variável mais relevante.",
+        text: "erro de previsão baixo e bom ajuste, com a velocidade do vento como variável mais relevante.",
       },
     ],
     techTags: ["Python", "XGBoost", "SHAP", "Pandas", "Matplotlib"],
     actions: [
-      { label: "Estudo de Caso", url: "/projects/wind-farm/", primary: true },
+      { label: "Estudo de caso", url: "/projects/wind-farm/", primary: true },
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/wind-farm",
       },
     ],
   },
   {
     key: "bank-churn",
-    category: "analytics",
     badgeIcon: "building-library",
     badgeLabel: "Classificação & Negócios",
     title: "Bank Customer Churn Prediction",
@@ -83,20 +77,19 @@ export const projects: Project[] = [
       },
       {
         label: "Resultado",
-        text: "ROC-AUC de 93,63% e acurácia de 90,43% com o modelo XGBoost em produção.",
+        text: "alta separação entre clientes que evadem e os que permanecem, com XGBoost em produção.",
       },
     ],
     techTags: ["Python", "XGBoost", "SHAP", "MLflow", "Docker"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/bank-customer-churn",
       },
     ],
   },
   {
     key: "distribuicao-eletrica",
-    category: "opt",
     badgeIcon: "bolt",
     badgeLabel: "Pesquisa Operacional (Mestrado & Doutorado)",
     title: "Otimização de Sistemas de Distribuição Elétrica",
@@ -109,7 +102,7 @@ export const projects: Project[] = [
       },
       {
         label: "Resultado",
-        text: "mesma qualidade de solução do método Cônico clássico, com redução de até <strong>10x no tempo computacional</strong>.",
+        text: "mesma qualidade de solução do método Cônico clássico, com redução expressiva do tempo computacional.",
       },
     ],
     techTags: ["AMPL", "CPLEX", "Python", "Busca Tabu", "Metaheurísticas"],
@@ -128,12 +121,11 @@ export const projects: Project[] = [
   },
   {
     key: "fraud-detection",
-    category: "analytics",
     badgeIcon: "shield-check",
     badgeLabel: "Detecção de Fraude & Risco",
     title: "Credit Card Fraud Detection",
     challenge:
-      "identificar transações fraudulentas em um dataset real de cartão de crédito extremamente desbalanceado (fraude é menos de 1% dos casos).",
+      "identificar transações fraudulentas em um dataset real de cartão de crédito fortemente desbalanceado, em que as fraudes são uma fração mínima dos casos.",
     highlights: [
       {
         label: "Solução",
@@ -147,33 +139,32 @@ export const projects: Project[] = [
     techTags: ["Python", "PCA", "Machine Learning"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/fraud-detection",
       },
     ],
   },
   {
     key: "sentiment-nlp",
-    category: "ml",
     badgeIcon: "chat-bubble",
     badgeLabel: "NLP & Processamento de Linguagem Natural",
     title: "Sentiment Identification NLP",
     challenge:
-      "classificar o sentimento de ~100 mil avaliações de clientes de um e-commerce brasileiro (dataset Olist).",
+      "classificar o sentimento de um grande volume de avaliações de clientes de um e-commerce brasileiro (dataset Olist).",
     highlights: [
       {
         label: "Solução",
-        text: "pipeline de pré-processamento textual (stopwords em português, stemming RSLP, TF-IDF) e XGBClassifier com tuning via Optuna (100 trials, validação cruzada estratificada).",
+        text: "pipeline de pré-processamento textual (stopwords em português, stemming RSLP, TF-IDF) e XGBClassifier com tuning via Optuna e validação cruzada estratificada.",
       },
       {
         label: "Resultado",
-        text: "acurácia de 89,17% e ROC-AUC de 94,77% na classificação binária, com experimento A/B estendendo o modelo para a classe neutra.",
+        text: "boa acurácia e separação de classes na classificação binária, com experimento A/B estendendo o modelo para a classe neutra.",
       },
     ],
     techTags: ["Python", "XGBoost", "TF-IDF", "Optuna"],
     actions: [
       {
-        label: "Ver Código no GitHub",
+        label: "GitHub",
         url: "https://github.com/rvanguita/sentiment-identification-nlp",
       },
     ],

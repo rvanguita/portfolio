@@ -1,11 +1,6 @@
-# ==============================================================================
-# GitHub Actions: Publicação no GitHub Pages — Next.js (static export)
-# ==============================================================================
-# `next build` com `output: 'export'` gera ./out, publicado no Pages. Os testes
-# rodam antes do build; o job `deploy` depende do `build` (needs: build), então
-# um teste ou build que falha bloqueia a publicação.
-# ==============================================================================
-
+# Deploy: valida, compila (next build → out/) e publica no GitHub Pages a cada
+# push em main. O job `deploy` depende do `build`, então lint/typecheck/testes
+# ou build que falham bloqueiam a publicação.
 name: 🚀 Deploy (GitHub Pages)
 
 on:
@@ -25,7 +20,7 @@ concurrency:
 
 jobs:
   build:
-    name: 📦 Testar & Compilar (next build)
+    name: 📦 Testar & Compilar
     runs-on: ubuntu-latest
     steps:
       - name: 📥 Checkout
@@ -55,25 +50,10 @@ jobs:
       - name: 🔨 Build estático (next build → out/)
         run: npm run build
 
-      - name: 📊 Métricas do build
-        id: metrics
-        run: |
-          PAGE_COUNT=$(find ./out -name "*.html" | wc -l)
-          PDF_COUNT=$(find ./out/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
-          SITE_SIZE=$(du -sh ./out | cut -f1)
-          echo "page_count=$PAGE_COUNT" >> "$GITHUB_OUTPUT"
-          echo "pdf_count=$PDF_COUNT" >> "$GITHUB_OUTPUT"
-          echo "site_size=$SITE_SIZE" >> "$GITHUB_OUTPUT"
-
       - name: 📤 Upload do artefato do Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./out
-
-    outputs:
-      page_count: ${{ steps.metrics.outputs.page_count }}
-      pdf_count: ${{ steps.metrics.outputs.pdf_count }}
-      site_size: ${{ steps.metrics.outputs.site_size }}
 
   deploy:
     name: 🌐 Publicar
@@ -86,24 +66,3 @@ jobs:
       - name: 🚀 Deploy
         id: deployment
         uses: actions/deploy-pages@v4
-
-      - name: 📢 Notificação
-        run: |
-          echo "::notice title=🚀 Portfólio publicado::${{ steps.deployment.outputs.page_url }}"
-
-      - name: 📊 Dashboard de publicação
-        run: |
-          cat << EOF >> "$GITHUB_STEP_SUMMARY"
-          # 🚀 Publicação do Portfólio
-
-          | Campo | Detalhe |
-          | :--- | :--- |
-          | 🟢 Status | Online |
-          | 🔗 URL | ${{ steps.deployment.outputs.page_url }} |
-          | 🌿 Branch | \`${{ github.ref_name }}\` |
-          | 📌 Commit | \`${{ github.sha }}\` |
-          | 📄 Páginas HTML | \`${{ needs.build.outputs.page_count }}\` |
-          | 📜 Certificados PDF | \`${{ needs.build.outputs.pdf_count }}\` |
-          | 💾 Tamanho do build | \`${{ needs.build.outputs.site_size }}\` |
-          | ⚡ Motor | Next.js (static export) |
-          EOF
