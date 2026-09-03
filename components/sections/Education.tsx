@@ -9,7 +9,6 @@ export function Education() {
       <SectionHeader
         tag="Trajetória Acadêmica"
         title="Formação Acadêmica"
-        channel={5}
         id="formacao-heading"
       />
       <div className="education-timeline">

@@ -1,4 +1,4 @@
-import { ChannelLabel } from "@/components/ui/ChannelLabel";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { profile } from "@/lib/data/profile";
 
@@ -7,7 +7,7 @@ export function Footer() {
     <footer className="footer">
       <div className="footer-container">
         <div className="footer-info">
-          <ChannelLabel channel="∞">Fim da transmissão</ChannelLabel>
+          <Eyebrow>Contato</Eyebrow>
           <h3>{profile.footerTitle}</h3>
           <p>{profile.footerTagline}</p>
         </div>

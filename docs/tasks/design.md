@@ -6,6 +6,13 @@
 no passe de 2026-09 (`docs/audit/spec-reverify-2026-09.md`). Não há trabalho
 pendente.
 
+> **Nota (2026-09):** o sistema visual descrito aqui como "Telemetria" foi
+> substituído em parte pelo passe **editorial** — `docs/adr/design/005` e
+> `docs/audit/editorial-sobriety-2026-09.md`. As entregas das tarefas abaixo
+> (Hero, Header, About, Skills, …) continuam válidas como componentes; só a
+> linguagem visual mudou (claro por padrão, serifa, sem canais `CHn` nem faixa
+> de onda).
+
 > **A numeração `TASK-nnn` deste arquivo NÃO é a mesma de `Task nnn` em
 > `docs/tasks/project/`.** Este é o trilho do redesign visual; o trilho de
 > projeto (Jekyll → Next.js static export) é outro. Os números colidem por

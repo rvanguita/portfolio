@@ -8,7 +8,8 @@
  */
 export const profile = {
   name: "Rene Verinaud Anguita Junior",
-  /** Rótulo curto (logo / CH0). NÃO alterar — assertado por tests/hero.test.tsx. */
+  /** Rótulo curto (nome abreviado). Sem uso após o passe editorial — o logo da
+   *  navbar usa uma string própria; mantido para reuso futuro. */
   shortName: "Rene V. Anguita Jr.",
   jobTitle: "Cientista de Dados",
   email: "renevajr@gmail.com",

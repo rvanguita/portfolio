@@ -2,6 +2,14 @@
 
 ## Status
 
+**Superseded in part (2026-09) por [ADR-005](005-editorial-sobriety.md).** O site
+passou a um sistema **editorial / acadêmico**: claro por padrão, um único acento
+(azul-ardósia), serifa (Source Serif 4) nos títulos, sem numeração de canais
+`CHn`, sem a faixa de onda `HeroSignature`, sem a legenda categórica `--cat-*` e
+com o mono restrito a código/diagramas. O que o ADR-005 substitui está tabelado
+lá em "Supersedes"; o restante deste documento é histórico do que esteve no ar
+entre 2026-09 e o passe editorial.
+
 Accepted (2026-09 — registro retroativo; o sistema já estava implementado e no
 ar. Formaliza, no trilho de design, uma decisão que até aqui só existia em
 `docs/adr/project/003-design-system.md`, `app/globals.css` e `CLAUDE.md`.)

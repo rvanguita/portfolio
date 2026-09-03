@@ -167,7 +167,7 @@ export default function WindFarmPage() {
       <div className="case-study-hero about-card">
         <div className="case-study-heading">
           <div>
-            <span className="project-category-badge cat-ml">
+            <span className="project-category-badge">
               <Icon name="sun" className="badge-icon" /> Regressão &amp; Energia
               Renovável
             </span>

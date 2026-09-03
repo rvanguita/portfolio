@@ -122,15 +122,15 @@ Evitar:
 
 ## 5. Paleta de Cores
 
-> **Substituído (2026-09) — ver `docs/adr/design/004-telemetria-system.md`.**
-> A implementação "Telemetria" é escura por padrão e usa três cores de sinal
-> (ciano / magenta / âmbar) como leitura de instrumento. O objetivo desta
-> seção — cor a serviço de precisão e confiabilidade, sem excesso decorativo —
-> é mantido; a base neutra clara e a "única cor de destaque" não.
+> **Histórico (2026-09):** a implementação "Telemetria"
+> (`docs/adr/design/004`) foi escura por padrão e usou três cores de sinal
+> (ciano / magenta / âmbar) + uma legenda categórica `--cat-*`.
 >
-> **Emenda (2026-09):** além do acento, há uma **legenda categórica** — quatro
-> hues discretas (não neon), uma por domínio de atuação (`--cat-de/-ml/-opt/-analytics`),
-> sempre acompanhadas de ícone + rótulo (a cor nunca é o único diferenciador).
+> **Em vigor (2026-09) — ver `docs/adr/design/005-editorial-sobriety.md`.**
+> O passe editorial trouxe o sistema de volta para a **letra** desta seção:
+> base clara ("papel"), **uma** cor de destaque discreta (azul-ardósia
+> `#2e4b63`), sem gradientes chamativos, sem neon. A legenda `--cat-*` foi
+> colapsada — o badge de domínio é agora ícone + rótulo em tinta única.
 
 A paleta deve transmitir:
 
@@ -387,11 +387,13 @@ A hierarquia deve ser adaptada para leitura vertical.
 
 ## 16. Animações
 
-> **Desvio registrado (2026-09) — ver `docs/adr/design/004-telemetria-system.md`.**
-> Há uma animação contínua: a faixa de onda `trace-scroll` (14s) sob a navbar.
-> É ambiente e não informativa — congela sob `prefers-reduced-motion` e o site
-> permanece profissional com ela desligada (regra final desta seção mantida).
-> Todo o resto abaixo continua valendo.
+> **Histórico (2026-09):** "Telemetria" (`docs/adr/design/004`) tinha uma
+> animação contínua — a faixa de onda `trace-scroll` (14s) sob a navbar.
+>
+> **Em vigor (2026-09) — `docs/adr/design/005`.** O passe editorial removeu a
+> faixa de onda; **não há mais nenhuma animação contínua**. Esta seção volta a
+> valer pela letra. Resta só a entrada discreta de cards ao trocar de filtro
+> (`card-fade-in`), neutralizada por `prefers-reduced-motion`.
 
 Animações devem ser mínimas.
 

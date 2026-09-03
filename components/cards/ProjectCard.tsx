@@ -4,7 +4,6 @@ import { Tag } from "@/components/ui/Tag";
 import { Rich } from "@/components/ui/Rich";
 import { ProjectActionLink } from "@/components/cards/ProjectActionLink";
 import type { Project } from "@/lib/types";
-import { cx } from "@/lib/cx";
 
 /** Porte de _includes/project-card.html. Memoizado (padrão da skill). */
 function ProjectCardBase({ project }: { project: Project }) {
@@ -13,9 +12,7 @@ function ProjectCardBase({ project }: { project: Project }) {
   return (
     <div className="project-card-item" data-category={project.category}>
       <div>
-        <span
-          className={cx("project-category-badge", `cat-${project.category}`)}
-        >
+        <span className="project-category-badge">
           <Icon name={project.badgeIcon} className="badge-icon" />{" "}
           {project.badgeLabel}
         </span>

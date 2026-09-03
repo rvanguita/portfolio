@@ -74,10 +74,10 @@ Heroicons-v2-solid `<path>` markup) use it the same way.
 ### Server vs Client
 
 Sections are Server Components **except** `Projects` and `Certificates` (`"use client"` for the category
-filter). `Navbar`, `ThemeToggle`, `ErrorBoundary`, `HeroSignature`, and every `hooks/*` are client. Keep
+filter). `Navbar`, `ThemeToggle`, `ErrorBoundary`, and every `hooks/*` are client. Keep
 client boundaries small; pass data down from Server Components.
 
-### Theme (no-FOUC, dark-first)
+### Theme (no-FOUC, light-first)
 
 Inline `<script>` in `app/layout.tsx` sets `data-theme` on `<html>` before paint from
 `localStorage.portfolio_theme` (try/catch) → `prefers-color-scheme`. Its source **and** the storage key
@@ -85,46 +85,48 @@ live in `lib/theme.ts` (`THEME_INIT_SCRIPT`, `THEME_STORAGE_KEY`) — a module w
 importing them from `context/ThemeContext.tsx` (which is `"use client"`) makes the RSC build stringify a
 client-reference stub into the script → `SyntaxError`, no no-FOUC (`tests/theme-init-script.test.ts`
 guards this). `context/ThemeContext.tsx` (**Context + `useReducer`**) re-exports both, seeds its state
-from the attribute, then owns the attribute + persistence. `<html>` has `suppressHydrationWarning`.
-`globals.css` is **dark-first**: bare `:root` = dark palette, `:root[data-theme="light"]` + a guarded
-`prefers-color-scheme: light` block = light palette (its `--trace-1` / `--alert` are tuned darker for
-WCAG AA — `docs/adr/project/003` amendment).
+from the attribute (falling back to `"light"` in the RSC frame), then owns the attribute + persistence.
+`<html>` has `suppressHydrationWarning`; `components/ThemeToggle.tsx` gates `aria-pressed` behind a
+`mounted` flag (the static frame can't know the client theme). `globals.css` is **light-first**: bare
+`:root` = light ("paper") palette, `:root[data-theme="dark"]` + a `@media (prefers-color-scheme: dark)`
+block guarded by `:root:not([data-theme="light"])` = dark palette (`--trace-1` lightened for WCAG AA).
 
-### Design system — "Telemetria"
+### Design system — editorial (ADR-design-005)
 
 `app/globals.css` is a single sheet ordered by `@layer reset, tokens, base, layout, components, utilities`
 (the layer order, not selector specificity, resolves conflicts). Page/section outer spacing lives in the
 `layout` layer; a component's own responsive spacing (e.g. `.nav-container` in the `@media (max-width:820px)`
 block) lives with the component in `components`. **Every `@media` block must sit inside a named layer** —
 the one exception is the `prefers-reduced-motion` kill-switch, deliberately unlayered so it beats every
-layer (`docs/adr/project/003` amendment). Visual language = a multi-channel instrument readout:
+layer (`docs/adr/project/003` amendment). Visual language = editorial / academic (a well-set research
+paper): serif display, one accent, hairline rules, generous whitespace, **no instrument metaphor**. This
+replaces the earlier "Telemetria" readout (`docs/adr/design/004`, superseded in part by `005`).
 
-- **Named tokens** (`tokens` layer): `--panel` / `--panel-raised` / `--readout` / `--label` / `--rule` /
-  `--trace-1` (cyan accent — links, active, focus ring) / `--trace-2` (magenta) / `--alert` (amber) /
-  `--ok` (green). Plus the domain legend `--cat-de` (= `--trace-1`) / `--cat-ml` (violet) / `--cat-opt`
-  (= `--alert`) / `--cat-analytics` (= `--ok`) — the `.cat-*` class sets `--c` and the badge reads it.
-  Plus `--fs-*` type scale, `--sp-*` spacing, `--r-sm/--r-md`. Every number is `font-variant-numeric:
-  tabular-nums` (`.metric-number`/`.edu-year` add `"tnum"`+`"zero"`); see `docs/adr/design/004` amendment.
-- **Fonts** via `next/font` in `layout.tsx`: **Archivo** (`--font-archivo`, display + body) and
-  **JetBrains Mono** (`--font-mono-face`) — every number, label, tech tag, channel label, and `code` is
-  mono. No Inter. **UPPERCASE** is narrowed to `.section-tag` / `.project-category-badge` /
-  `.stack-table th` (the "instrument" labels); nav links, buttons, filters and `.channel-label` are
-  mono **sentence-case** (`docs/adr/design/004` — passe de sobriedade 2026-09).
-- **Channel-label convention**: `CHn · TÍTULO`. `CH0` = hero/logo, `CH1…CH6` = the six nav sections (the
-  number is `NAV_ITEMS` index+1 from `lib/nav.ts`, rendered in `Navbar.tsx`; sections pass a matching
-  `channel` prop to `SectionHeader`). Rendered by `.section-tag` / `.channel-label` /
-  `components/ui/ChannelLabel.tsx`, each with a leading signal dot. `tests/nav.test.tsx` +
-  `tests/home.test.tsx` enforce that there are exactly these six — a 7th section (e.g. a real `#contato`)
-  means renumbering and touching both tests.
-- **Signature element**: `components/HeroSignature.tsx` — a low (28px), subtle `aria-hidden` SVG
-  waveform strip under the navbar, animated with a CSS `@keyframes` (frozen under
-  `prefers-reduced-motion`). `SectionHeader` closes with `<hr class="trace-divider">` — a per-header
-  channel marker. The hero availability dot is static (no `blink`); the readout tiles carry no
-  sparkline (`Sparkline.tsx` was removed — its only feed was placeholder data).
+- **Named tokens** (`tokens` layer): `--panel` (paper `#f7f6f3`) / `--panel-raised` / `--panel-sunken` /
+  `--readout` (ink) / `--label` / `--rule` / `--rule-strong` / `--trace-1` (the **single** accent —
+  slate-blue `#2e4b63`, lightened `#7fa9c9` in dark: links, active, focus, `code`, `::selection`,
+  featured-card spine) / `--trace-1-dim` (12% mix, `code` bg) / `--ok` (green — **only** the hero
+  availability dot). Plus `--fs-*` type scale, `--sp-*` spacing, `--r-sm` (2px) / `--r-md` (4px), `--wrap`
+  1140px. **Removed vs Telemetria**: `--trace-2`, `--alert`, `--cat-de/-ml/-opt/-analytics`,
+  `--shadow-ring*`, `--mono-settings`; no global `tabular-nums`, no `"zero"` digit feature.
+- **Fonts** via `next/font` in `layout.tsx`: **Source Serif 4** (`--font-serif` — `h1–h3`, `.hero-title`,
+  `.section-title`, `.edu-degree`, `.nav-logo`, `.metric-number`), **Archivo** (`--font-display` — body,
+  nav, buttons, filters, tags, labels, eyebrows), **JetBrains Mono** (`--font-mono` — **only** `code` and
+  the `.architecture-card pre` ASCII diagrams). No UPPERCASE outside content.
+- **Section eyebrow**: `components/ui/Eyebrow.tsx` (`.eyebrow`) and `SectionHeader`'s `.section-tag` —
+  a short sans label with a leading hairline rule (`::before`). **No channel numbering** (`CHn`), no
+  signal dot. `SectionHeader` has no `channel` prop; it closes with `<hr class="section-rule">` (plain
+  hairline). `Navbar` logo is the name in serif; nav links are plain labels. `tests/nav.test.tsx` +
+  `tests/home.test.tsx` still enforce exactly the six nav sections (`lib/nav.ts` `NAV_ITEMS` ids ↔
+  `<section id>`) — a 7th means touching both tests, but there is no renumbering to do.
+- **Signature element**: the hero is an **author block** — role (eyebrow) · grayscale portrait plate
+  (hairline border) · name in Source Serif 4 · synthesis · the three stat tiles as serif *pull-figures*
+  under a thin rule. There is **no** `HeroSignature` (the animated waveform was deleted with
+  `@keyframes trace-scroll`); the only motion is `card-fade-in` on filter change (reduced-motion-safe).
 - Class names are reused from the pre-redesign markup so section/card/case-study components barely change
-  when restyling — `globals.css` carries the look. Category badges (`.cat-de/.cat-ml/.cat-opt/.cat-analytics`)
-  each map to their own muted domain hue (colour + icon + label, never colour alone — WCAG 1.4.1); cert
-  filters/groups stay cyan. `docs/adr/design/004` amendment (2026-09).
+  when restyling — `globals.css` carries the look. `.project-category-badge` is a plain icon + label in
+  one ink colour (the per-domain `--cat-*` hues are gone); `data-category` attrs stay on the card and
+  filter button (`tests/filters.test.tsx`). The featured-projects grid keeps a 2px `--trace-1` left spine.
 
 ### Category filtering
 
@@ -172,8 +174,9 @@ budget, CI-gated) and `docs/audit/visual-qa-2026-09.md` (headless 320–1680px �
   `ArchitectureStep[]`, `<pre role="img">` diagram, stack table), add a
   `{label:"Estudo de Caso", url:"/projects/<slug>/", primary:true}` action, a `sitemap.ts` entry, and a
   `ROUTES` entry in `tests/internal-links.test.tsx`.
-- **Nav section:** new `<section id="…">` component, register in `lib/nav.ts` `NAV_ITEMS` (icon must exist
-  in `Icon.tsx`), pass `channel={n}` to its `SectionHeader`. `tests/nav.test.tsx` checks the id resolves.
+- **Nav section:** new `<section id="…">` component with `aria-labelledby`, register in `lib/nav.ts`
+  `NAV_ITEMS` (icon must exist in `Icon.tsx`), give its `SectionHeader` a `tag` + `title` + `id`.
+  `tests/nav.test.tsx` checks the id resolves.
 - **Icon:** add a `name: '<path .../>'` entry to `Icon.tsx` (`viewBox="0 0 24 24"`, Heroicons v2 solid).
 
 ## Spec-driven docs (`docs/`)
@@ -182,13 +185,15 @@ Two tracks under `docs/`:
 
 - **`project/`** — the build spec (Jekyll → Next.js static export, stack, content model, deploy):
   `docs/prd/project.md`, `docs/sdd/project.md`, `docs/adr/project/001–008`, `docs/tasks/project/001–013`.
-- **`design/`** — the "Telemetria" visual redesign spec: `docs/prd/design.md`, `docs/sdd/design.md`,
-  `docs/adr/design/001–004` (visual-direction · static-hosting · minimal-dependencies ·
-  telemetria-system, whose 2026-09 amendment adds the per-domain `--cat-*` legend),
-  `docs/tasks/design.md` (phased `TASK-nnn`).
+- **`design/`** — the visual redesign spec: `docs/prd/design.md`, `docs/sdd/design.md`,
+  `docs/adr/design/001–005` (visual-direction · static-hosting · minimal-dependencies ·
+  telemetria-system [superseded in part] · **editorial-sobriety** — the current light-first editorial
+  system), `docs/tasks/design.md` (phased `TASK-nnn`).
 
 `docs/audit/` holds the completion reports: `spec-completion-2026-09.md` (Task 013 deliverable),
-`spec-reverify-2026-09.md`, `visual-qa-2026-09.md`, and `restyle-2026-09.md` (the categorical-legend pass). Per **`docs/adr/project/005`** (AI development): read the relevant PRD, SDD, ADRs
+`spec-reverify-2026-09.md`, `visual-qa-2026-09.md`, `restyle-2026-09.md` (the categorical-legend pass),
+`professional-2026-09.md` (the sobriety pass) and `editorial-sobriety-2026-09.md` (the move off
+"Telemetria"). Per **`docs/adr/project/005`** (AI development): read the relevant PRD, SDD, ADRs
 and the current task before non-trivial work; keep changes small and task-scoped; **a change that alters
 architecture (framework, content model, design system, deploy) must create or update an ADR**; never
 invent professional facts (rewriting/reordering/tightening existing content is fine — fabricating

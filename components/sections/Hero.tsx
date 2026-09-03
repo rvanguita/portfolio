@@ -1,19 +1,18 @@
 import Image from "next/image";
 import { asset } from "@/lib/base-path";
-import { HeroSignature } from "@/components/HeroSignature";
-import { ChannelLabel } from "@/components/ui/ChannelLabel";
+import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { MetricTile } from "@/components/ui/MetricTile";
 import { HERO_STATS } from "@/lib/site-stats";
 import { profile } from "@/lib/data/profile";
 
-/** Hero — canal CH0 do sistema "Telemetria". */
+/** Hero — bloco de autoria: função, nome, síntese e formas de contato. */
 export function Hero() {
   return (
     <section className="hero-section" aria-labelledby="hero-heading">
       <div className="hero-content">
         <div className="hero-topline">
-          <ChannelLabel channel={0}>{profile.shortName}</ChannelLabel>
+          <Eyebrow>{profile.jobTitle}</Eyebrow>
           <div className="hero-avatar-wrapper">
             <Image
               src={asset("/assets/img/face.png")}
@@ -45,8 +44,6 @@ export function Hero() {
           </a>
         </div>
       </div>
-
-      <HeroSignature />
 
       <div className="about-metrics">
         {HERO_STATS.map((stat) => (

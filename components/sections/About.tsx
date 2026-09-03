@@ -7,7 +7,7 @@ export function About() {
     <section id="sobre" aria-labelledby="sobre-heading">
       <div className="about-card">
         <div className="about-intro">
-          <span className="section-tag">CH1 · Perfil profissional</span>
+          <span className="section-tag">Perfil profissional</span>
           <h2 id="sobre-heading">{profile.aboutHeading}</h2>
         </div>
         <Rich as="div" className="about-copy" html={profile.aboutBio} />

@@ -156,7 +156,7 @@ export default function LakeFastF1Page() {
       <div className="case-study-hero about-card">
         <div className="case-study-heading">
           <div>
-            <span className="project-category-badge cat-de">
+            <span className="project-category-badge">
               <Icon name="flag" className="badge-icon" /> Engenharia de Dados,
               Lakehouse &amp; MLOps
             </span>

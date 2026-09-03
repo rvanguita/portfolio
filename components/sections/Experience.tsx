@@ -9,7 +9,6 @@ export function Experience() {
       <SectionHeader
         tag="Trajetória Profissional"
         title="Experiência Profissional"
-        channel={4}
         id="experiencia-heading"
       />
       <div className="education-timeline">

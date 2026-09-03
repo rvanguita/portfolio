@@ -66,11 +66,11 @@ export function Navbar() {
     <nav className="navbar" aria-label="Navegação principal" ref={navRef}>
       <div className="nav-container">
         <Link href="/" className="nav-logo" onClick={handleLogoClick}>
-          <span className="logo-accent">CH0 · </span>Rene Anguita Jr.
+          Rene Anguita Jr.
         </Link>
 
         <ul className={cx("nav-menu", menuOpen && "open")} id="navMenu">
-          {NAV_ITEMS.map((item, i) => (
+          {NAV_ITEMS.map((item) => (
             <li key={item.id}>
               <Link
                 href={`/#${item.id}`}
@@ -78,7 +78,7 @@ export function Navbar() {
                 onClick={(event) => handleNavClick(event, item.id)}
               >
                 <Icon name={item.icon} className="nav-link-icon" />
-                <span className="nav-link-ch">CH{i + 1}</span> {item.label}
+                {item.label}
               </Link>
             </li>
           ))}

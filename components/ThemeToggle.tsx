@@ -1,11 +1,18 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
 
 /** Botão de alternância de tema — consome o ThemeContext (Context + useReducer). */
 export function ThemeToggle() {
   const { theme, toggle } = useTheme();
-  const isDark = theme === "dark";
+
+  // O quadro estático não conhece o tema do cliente (ver lib/theme.ts). Só
+  // refletimos o estado real depois da montagem — evita divergência de
+  // hidratação em `aria-pressed` para quem prefere o tema escuro.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+  const isDark = mounted && theme === "dark";
 
   return (
     <button

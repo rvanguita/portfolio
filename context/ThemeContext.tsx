@@ -60,9 +60,9 @@ function initialState(): ThemeState {
     if (attr === "light" || attr === "dark") return { theme: attr };
   }
   // Fora do browser (frame RSC do export estático) não há atributo para ler.
-  // O sistema "Telemetria" é dark-first (`:root` puro = escuro); o script
+  // O sistema editorial é claro por padrão (`:root` puro = claro); o script
   // anti-FOUC ainda ajusta `data-theme` antes da hidratação.
-  return { theme: "dark" };
+  return { theme: "light" };
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
