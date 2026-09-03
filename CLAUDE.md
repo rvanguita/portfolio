@@ -8,14 +8,19 @@ project overview; `README.md` is the public-facing version.
 One-page personal portfolio of Rene Verinaud Anguita Junior — **Next.js 15 App
 Router**, **statically exported** (`output: 'export'`) to **GitHub Pages** at
 `https://rvanguita.github.io/portfolio` (base path `/portfolio`). No server
-runtime; the deploy is a folder of static HTML/JS/CSS. Content is Portuguese,
-single light theme.
+runtime; the deploy is a folder of static HTML/CSS + Next's baseline JS. Content
+is Portuguese, single light theme.
+
+Design is **"Dossiê"**: one narrow reading column, one type family (Newsreader),
+one accent, a year rail on the Trajetória. **No navbar and no client JS at all**
+— every component is a static Server Component.
 
 This project deliberately has **no spec/ADR process** — decisions live in git
-history and `docs/NOTES.md`. A prior `docs/` tree (prd/sdd/adr/tasks/audit) plus
-the dark-theme toggle, category filters, JSON-LD/sitemap/robots, the Lighthouse
-CI gate and the on-page number "metrics" were all removed in a simplification
-pass. Don't reintroduce them without the user asking.
+history and `docs/NOTES.md`. Prior passes removed a `docs/` tree
+(prd/sdd/adr/tasks/audit), the dark-theme toggle, category filters,
+JSON-LD/sitemap/robots, the Lighthouse CI gate, the on-page number "metrics",
+the navbar/scroll-spy/mobile-menu, `next/image` avatars and the icon set. Don't
+reintroduce them without the user asking.
 
 ## Commands
 
@@ -35,7 +40,7 @@ gate (what CI runs). Preview the real artifact with `npm run build && npx serve
 out`. The `.githooks/pre-commit` hook runs lint + typecheck + tests — enable
 once per clone with `git config core.hooksPath .githooks`.
 
-Single test: `npx vitest run tests/hero.test.tsx` or `npx vitest run -t "<name>"`.
+Single test: `npx vitest run tests/intro.test.tsx` or `npx vitest run -t "<name>"`.
 
 ## Architecture
 
@@ -47,79 +52,68 @@ Every route emits `<route>/index.html`. **Do not** add server-only features
 (Route Handlers, `dynamic`, `next/image` optimization, middleware) — they don't
 survive export.
 
-`next/link` and file-based metadata prepend `basePath` automatically; **`next/image`
-does not** for a `/public` src under `output:'export' + unoptimized`. Use
-`asset(path)` from `lib/base-path.ts` for every `/public` reference (hero avatar,
-certificate PDFs, OG image). `SITE_URL` also comes from there (used by
-`lib/metadata.ts`). `public/.nojekyll` stops Pages Jekyll-processing `_next/`.
+`next/link` and file-based metadata prepend `basePath` automatically. Use
+`asset(path)` from `lib/base-path.ts` for every `/public` reference (certificate
+PDFs, the OG image). `SITE_URL` also comes from there (used by `lib/metadata.ts`
+— `baseMetadata` + `caseStudyMetadata`). `public/.nojekyll` stops Pages
+Jekyll-processing `_next/`.
 
 ### Content lives in `lib/data/`
 
-`profile.ts` (long-form About bio + hero/footer identity + contact — the home
-for professional prose), `projects.ts`, `skills.ts`, `timeline.ts` (`experience`
-+ `education`), `certificates.ts`; typed by `lib/types.ts`. Section components
-map over these. Rich strings (`<strong>`, `<code>`) render through
-`components/ui/Rich.tsx` — a sanctioned `dangerouslySetInnerHTML` for
-repo-authored content. `Icon.tsx` (static Heroicons-v2-solid `<path>`) is the
-same. Project descriptions are **qualitative — no result figures** (RMSE/R²/etc.
-were removed); keep it that way unless the user asks.
+`profile.ts` (long-form bio + footer identity + contact — the home for
+professional prose), `projects.ts`, `skills.ts`, `timeline.ts` (`experience` +
+`education`), `certificates.ts`; typed by `lib/types.ts`. `lib/timeline-merge.ts`
+folds experience+education into one reverse-chronological `trajetoria` (sort by
+trailing 4-digit year; presentation only). Section components in `components/`
+(`Intro`, `Projetos`, `Trajetoria`, `Competencias`, `Certificacoes`) map over
+these; `app/page.tsx` composes them inside `<article class="wrap">`. Rich strings
+(`<strong>`) render through `components/ui/Rich.tsx` — a sanctioned
+`dangerouslySetInnerHTML` for repo-authored content. Project descriptions are
+**qualitative — no result figures** (RMSE/R²/etc. were removed); keep it that way.
 
 ### Server vs Client
 
-Almost everything is a Server Component. Client: `Navbar`, `ErrorBoundary`, and
-`hooks/*` (`useMediaQuery`, `useScrollSpy`, `useToggle`). Keep client boundaries
-small; pass data down.
+**Everything is a static Server Component.** There is no `"use client"` anywhere,
+no `hooks/`, no `ErrorBoundary`. Interactivity is limited to what HTML gives for
+free (the certificates `<details>`). Keep it that way — a new client component is
+a real decision.
 
-### Design system — editorial
+### Design system — "Dossiê"
 
-`app/globals.css` is a single sheet ordered by `@layer reset, tokens, base,
-layout, components, utilities` (layer order, not specificity, resolves
-conflicts). Section outer spacing lives in `layout`; a component's own
-responsive spacing lives with it in `components`. **Every `@media` sits inside a
-named layer** except the `prefers-reduced-motion` kill-switch (unlayered, so it
-beats every layer). Single light theme (`:root` only, `color-scheme: light`).
+`app/globals.css` is a flat ~180-line sheet (no `@layer`, no build step). One
+light theme. Structure is the design: a single `.wrap` column
+(`max-width: 42rem`, centered), one type family, one accent, a two-column year
+rail on the Trajetória that collapses under `@media (max-width: 32rem)`.
 
-Tokens: `--panel` (paper `#f7f6f3`) / `--panel-raised` / `--panel-sunken` /
-`--readout` (ink) / `--label` / `--rule` / `--rule-strong` / `--trace-1` (the
-one accent — slate-blue `#2e4b63`: links, active, focus, `code`, `::selection`)
-/ `--ok` (green — only the hero availability dot). Plus `--fs-*`, `--sp-*`,
-`--r-sm`/`--r-md`, `--wrap` 1140px. Fonts via `next/font` in `layout.tsx`:
-**Source Serif 4** (`--font-serif` — headings, `.hero-title`, `.nav-logo`),
-**Archivo** (`--font-display` — body/UI), **JetBrains Mono** (`--font-mono` —
-only `code` + `.architecture-card pre`). Class names are reused across
-section/card/case-study components so `globals.css` carries the look.
-
-### Motion
-
-Gate every programmatic scroll on `usePrefersReducedMotion()`
-(`hooks/useMediaQuery.ts`) — JS `behavior: 'smooth'` overrides the CSS
-`@media (prefers-reduced-motion)`. Nav/logo scroll → `lib/scroll.ts`. Scroll-spy
-→ `hooks/useScrollSpy.ts` (`IntersectionObserver`).
+Tokens on `:root`: `--bg` `#fcfcfb` · `--ink` `#1a1a1a` · `--ink-soft` `#6b6b68`
+(labels, years, meta) · `--rule` `#e4e3df` · `--accent` `#3a5a78` (links + the
+rule under the name — the only accent). `--font-serif` = **Newsreader** (via
+`next/font` in `layout.tsx`, the only webfont); `--font-mono` = a system stack,
+used only by `code`. Key classes: `.intro` / `.sig` / `.kicker` (section
+heading) / `.projects` + `.project-*` / `.rail` + `.entry-*` / `.skills` (a
+`<dl>`) / `.certs` (`<details>`) / `.site-footer` / `.doc` (case-study prose).
 
 ## Tests
 
 Vitest + RTL (jsdom); `tests/*.test.tsx` assert **structure/data invariants**,
-not visuals. `vitest.config.mts` has `css: false` — no test catches a CSS
-regression. `vitest.setup.ts` stubs `matchMedia` / `IntersectionObserver` /
-`localStorage`. Suite: `home` / `nav` (six nav sections ↔ `<section id>`, unique
-ids), `hero`, `icon` (every referenced icon name resolves), `external-links`
-(`rel="noopener"` on `target="_blank"`), `internal-links` (project action URLs,
-certificate PDFs exist), `mobile-nav` (hamburger open/close/Esc/click-out),
-`a11y-structure` (section `aria-labelledby`, one `<h1>`, case-study
-`<pre role="img">` + `<table><caption>`/`scope`). Don't delete tests to get green.
+not visuals. `vitest.config.mts` has `css: false`. Five files: `home` (section
+ids resolve, unique ids), `intro` (name in `<h1>`, email link), `a11y-structure`
+(each `<section>` has resolvable `aria-labelledby`; one `<h1>` on home and on
+each case study), `internal-links` (project action URLs are https or a real
+route; certificate PDFs exist in `public/`), `external-links` (`rel="noopener"`
+on every `target="_blank"`). Don't delete tests to get green.
 
 ## Adding content
 
 - **Project:** add to `lib/data/projects.ts` (qualitative — no figures). Case
   study: `app/projects/<slug>/page.tsx` (copy `wind-farm/page.tsx` — bare title
-  via `caseStudyMetadata()`, `ArchitectureStep[]`, `<pre role="img">` diagram,
-  stack table), a `{label:"Estudo de caso", url:"/projects/<slug>/", primary:true}`
-  action, and a `ROUTES` entry in `tests/internal-links.test.tsx`.
-- **Nav section:** `<section id="…">` with `aria-labelledby`, register in
-  `lib/nav.ts` `NAV_ITEMS` (icon must exist in `Icon.tsx`), give its
-  `SectionHeader` a `tag` + `title` + `id`. `tests/nav.test.tsx` checks it.
-- **Icon:** add `name: '<path .../>'` to `Icon.tsx` (`viewBox="0 0 24 24"`,
-  Heroicons v2 solid).
+  via `caseStudyMetadata()`, short prose + a repo link, wrapped in
+  `<article class="wrap doc">`), a
+  `{label:"Estudo de caso", url:"/projects/<slug>/", primary:true}` action, and a
+  `ROUTES` entry in `tests/internal-links.test.tsx`.
+- **New page block:** a `<section id="…" class="block">` with
+  `<h2 class="kicker" id="…-h">` + `aria-labelledby`, added to `app/page.tsx`;
+  add the id to `tests/home.test.tsx`.
 
 ## Workflow
 

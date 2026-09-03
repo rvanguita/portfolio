@@ -1,21 +1,17 @@
-import { Hero } from "@/components/sections/Hero";
-import { About } from "@/components/sections/About";
-import { Skills } from "@/components/sections/Skills";
-import { Projects } from "@/components/sections/Projects";
-import { Experience } from "@/components/sections/Experience";
-import { Education } from "@/components/sections/Education";
-import { Certificates } from "@/components/sections/Certificates";
+import { Intro } from "@/components/Intro";
+import { Projetos } from "@/components/Projetos";
+import { Trajetoria } from "@/components/Trajetoria";
+import { Competencias } from "@/components/Competencias";
+import { Certificacoes } from "@/components/Certificacoes";
 
 export default function HomePage() {
   return (
-    <>
-      <Hero />
-      <About />
-      <Skills />
-      <Projects />
-      <Experience />
-      <Education />
-      <Certificates />
-    </>
+    <article className="wrap">
+      <Intro />
+      <Projetos />
+      <Trajetoria />
+      <Competencias />
+      <Certificacoes />
+    </article>
   );
 }

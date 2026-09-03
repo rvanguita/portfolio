@@ -7,7 +7,6 @@ import type { Project } from "@/lib/types";
 export const projects: Project[] = [
   {
     key: "fastf1",
-    badgeIcon: "flag",
     badgeLabel: "Lakehouse & MLOps",
     title: "FastF1 Data Platform",
     challenge:
@@ -39,7 +38,6 @@ export const projects: Project[] = [
   },
   {
     key: "wind-farm",
-    badgeIcon: "sun",
     badgeLabel: "Regressão & Energia Renovável",
     title: "Modelagem da Geração de Energia Eólica",
     challenge:
@@ -65,7 +63,6 @@ export const projects: Project[] = [
   },
   {
     key: "bank-churn",
-    badgeIcon: "building-library",
     badgeLabel: "Classificação & Negócios",
     title: "Bank Customer Churn Prediction",
     challenge:
@@ -90,7 +87,6 @@ export const projects: Project[] = [
   },
   {
     key: "distribuicao-eletrica",
-    badgeIcon: "bolt",
     badgeLabel: "Pesquisa Operacional (Mestrado & Doutorado)",
     title: "Otimização de Sistemas de Distribuição Elétrica",
     challenge:
@@ -121,7 +117,6 @@ export const projects: Project[] = [
   },
   {
     key: "fraud-detection",
-    badgeIcon: "shield-check",
     badgeLabel: "Detecção de Fraude & Risco",
     title: "Credit Card Fraud Detection",
     challenge:
@@ -146,7 +141,6 @@ export const projects: Project[] = [
   },
   {
     key: "sentiment-nlp",
-    badgeIcon: "chat-bubble",
     badgeLabel: "NLP & Processamento de Linguagem Natural",
     title: "Sentiment Identification NLP",
     challenge:
