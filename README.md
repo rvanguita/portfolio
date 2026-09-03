@@ -48,6 +48,10 @@ Push em `main` → `.github/workflows/deploy.yml` copia
 `_site/` e publica no GitHub Pages. Também dá para disparar manualmente pelo
 Actions (`workflow_dispatch`).
 
+Pull requests para `main` passam por `.github/workflows/ci.yml`, que roda
+`python3 .github/check.py`: confere que as 3 páginas existem e estão bem
+formadas e que todo link local aponta para um arquivo real. Sem npm.
+
 ## Licença
 
 Portfólio pessoal e materiais profissionais. Para reutilização de conteúdo,

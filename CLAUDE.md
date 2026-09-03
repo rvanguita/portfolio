@@ -49,6 +49,10 @@ the user explicitly asks. The site deliberately has none.
   `index.html`.
 - Deploy: push to `main` → `.github/workflows/deploy.yml` copies
   `index.html style.css icon.png .nojekyll projects/ certificates/ assets/` into
-  `_site/` and publishes to GitHub Pages. There is no PR gate.
+  `_site/` and publishes to GitHub Pages.
+- PR gate: `.github/workflows/ci.yml` runs `python3 .github/check.py` — pages
+  exist, tags balanced, one `<h1>`/`lang`/`<title>` each, every local `href`
+  resolves to a real file, deploy targets present. No npm.
 
-Conventional Commit subjects; everything lands via a PR to `main`.
+Conventional Commit subjects; everything lands via a PR to `main` (branch
+protection requires the `ci.yml` check).

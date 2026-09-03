@@ -1,0 +1,22 @@
+# Verificação leve do site estático em Pull Requests para main.
+# Sem npm/build — só confere que as páginas existem, estão bem formadas e
+# que todo link/arquivo referenciado resolve.
+name: 🧪 Validação do Portfólio (CI)
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: 🔍 Lint, Types, Testes & Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: 🔎 Verificar as páginas e os links
+        run: python3 .github/check.py
