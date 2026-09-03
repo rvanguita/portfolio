@@ -4,7 +4,6 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, type MouseEvent } from "react";
 import { NAV_ITEMS } from "@/lib/nav";
 import { Icon } from "@/components/ui/Icon";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { useToggle } from "@/hooks/useToggle";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { usePrefersReducedMotion } from "@/hooks/useMediaQuery";
@@ -85,8 +84,6 @@ export function Navbar() {
         </ul>
 
         <div className="nav-actions">
-          <ThemeToggle />
-
           <a href="mailto:renevajr@gmail.com" className="btn-nav-contact">
             Contato
           </a>

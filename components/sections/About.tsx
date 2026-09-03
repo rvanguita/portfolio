@@ -1,7 +1,7 @@
 import { Rich } from "@/components/ui/Rich";
 import { profile } from "@/lib/data/profile";
 
-/** Seção "Perfil profissional" (#sobre) — canal CH1. */
+/** Seção "Perfil profissional" (#sobre). */
 export function About() {
   return (
     <section id="sobre" aria-labelledby="sobre-heading">
@@ -11,11 +11,6 @@ export function About() {
           <h2 id="sobre-heading">{profile.aboutHeading}</h2>
         </div>
         <Rich as="div" className="about-copy" html={profile.aboutBio} />
-        <ul className="about-facts">
-          {profile.aboutFacts.map((fact) => (
-            <li key={fact}>{fact}</li>
-          ))}
-        </ul>
       </div>
     </section>
   );

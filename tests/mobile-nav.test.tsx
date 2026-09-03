@@ -1,16 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it } from "vitest";
-import { ThemeProvider } from "@/context/ThemeContext";
 import { Navbar } from "@/components/Navbar";
 
-/** Navbar renderiza <ThemeToggle>, que precisa do ThemeProvider. */
 function renderNavbar() {
-  return render(
-    <ThemeProvider>
-      <Navbar />
-    </ThemeProvider>,
-  );
+  return render(<Navbar />);
 }
 
 function getMenu(container: HTMLElement) {

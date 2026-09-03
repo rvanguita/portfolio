@@ -5,7 +5,6 @@ export const skills: SkillGroup[] = [
   {
     icon: "cpu-chip",
     title: "Ciência de Dados & ML",
-    domain: "ml",
     tags: [
       "Python",
       "Pandas",
@@ -20,7 +19,6 @@ export const skills: SkillGroup[] = [
   {
     icon: "bolt",
     title: "Pesquisa Operacional & Otimização",
-    domain: "opt",
     tags: [
       "CPLEX",
       "AMPL",
@@ -33,7 +31,6 @@ export const skills: SkillGroup[] = [
   {
     icon: "chart-pie",
     title: "Visualização & Business Analytics",
-    domain: "analytics",
     tags: [
       "Power BI",
       "Tableau",
@@ -46,7 +43,6 @@ export const skills: SkillGroup[] = [
   {
     icon: "command-line",
     title: "Linguagens, Cloud & Ferramentas",
-    domain: "de",
     tags: [
       "SQL",
       "Apache Airflow",

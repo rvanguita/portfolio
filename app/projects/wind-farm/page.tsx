@@ -4,13 +4,11 @@ import { Tag } from "@/components/ui/Tag";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 import { SkillCard } from "@/components/cards/SkillCard";
-import { JsonLd } from "@/components/seo/JsonLd";
 import { caseStudyMetadata } from "@/lib/metadata";
-import { breadcrumbSchema, caseStudySchema } from "@/lib/seo/schema";
 import type { ArchitectureStep } from "@/lib/types";
 
 const DESCRIPTION =
-  "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; RMSE de 12,41% e R² de 81,93%.";
+  "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.";
 
 export const metadata = caseStudyMetadata({
   slug: "wind-farm",
@@ -45,7 +43,7 @@ const MODEL_STEPS: ArchitectureStep[] = [
     icon: "shield-check",
     title: "4. Interpretabilidade & Resultados",
     description:
-      "Análise <strong>SHAP</strong> para quantificar a contribuição de cada variável na previsão — a <strong>velocidade do vento</strong> é a mais relevante. O modelo alcançou <strong>RMSE de 12,41%</strong> e <strong>R² de 81,93%</strong> na previsão de potência.",
+      "Análise <strong>SHAP</strong> para quantificar a contribuição de cada variável na previsão — a <strong>velocidade do vento</strong> é a mais relevante. O modelo alcançou <strong>erro de previsão baixo</strong> e <strong>bom ajuste</strong> na previsão de potência.",
     tags: ["SHAP", "Feature Importance", "RMSE", "R²"],
   },
 ];
@@ -71,7 +69,7 @@ const PIPELINE_DIAGRAM = `        Pipeline de Modelagem  ·  main.ipynb
    SHAP  ──►  velocidade do vento = variável dominante
         │
         ▼
-   Resultado  ──►  RMSE 12,41%   ·   R² 81,93%`;
+   Resultado  ──►  erro de previsão baixo   ·   bom ajuste`;
 
 const STACK_ROWS: {
   icon: Parameters<typeof Icon>[0]["name"];
@@ -136,28 +134,6 @@ const STACK_ROWS: {
 export default function WindFarmPage() {
   return (
     <>
-      <JsonLd
-        data={{
-          "@context": "https://schema.org",
-          "@graph": [
-            breadcrumbSchema([
-              { name: "Início", path: "/" },
-              { name: "Projetos", path: "/#projetos" },
-              {
-                name: "Modelagem da Geração de Energia Eólica",
-                path: "/projects/wind-farm/",
-              },
-            ]),
-            caseStudySchema("wind-farm", {
-              slug: "wind-farm",
-              headline:
-                "Modelagem da Geração de Energia Eólica: Previsão de Potência com XGBoost",
-              description: DESCRIPTION,
-            }),
-          ],
-        }}
-      />
-
       <div className="case-study-nav">
         <Link href="/#projetos" className="btn-secondary">
           Voltar aos Projetos
@@ -204,29 +180,6 @@ export default function WindFarmPage() {
         </div>
       </div>
 
-      <div className="about-metrics case-study-metrics">
-        <div className="metric-box">
-          <div className="metric-number">4 Turbinas</div>
-          <div className="metric-label">
-            Turbinas onshore WT3 e WT4 modeladas ao longo de um ano (as offshore
-            WT5 e WT6 foram analisadas em paralelo)
-          </div>
-        </div>
-        <div className="metric-box">
-          <div className="metric-number">R² 81,93%</div>
-          <div className="metric-label">
-            Coeficiente de determinação do XGBRegressor na previsão de potência
-          </div>
-        </div>
-        <div className="metric-box">
-          <div className="metric-number">RMSE 12,41%</div>
-          <div className="metric-label">
-            Erro quadrático médio da previsão; a velocidade do vento é a variável
-            mais relevante
-          </div>
-        </div>
-      </div>
-
       <section className="case-study-section" aria-labelledby="wf-metodologia">
         <SectionHeader
           first
@@ -239,7 +192,7 @@ export default function WindFarmPage() {
         <div className="about-card architecture-card">
           <pre
             role="img"
-            aria-label="Fluxo do pipeline de modelagem: CSV por turbina amostrado a cada 10 minutos (Zenodo) → limpeza de nulos e duplicatas → análise exploratória com heatmap de correlação e boxplots por mês → seleção das features V, D, rho, I e Sb → XGBRegressor com validação por janela expansível → análise SHAP identifica a velocidade do vento como variável dominante → resultado: RMSE 12,41% e R² 81,93%."
+            aria-label="Fluxo do pipeline de modelagem: CSV por turbina amostrado a cada 10 minutos (Zenodo) → limpeza de nulos e duplicatas → análise exploratória com heatmap de correlação e boxplots por mês → seleção das features V, D, rho, I e Sb → XGBRegressor com validação por janela expansível → análise SHAP identifica a velocidade do vento como variável dominante → resultado: erro de previsão baixo e bom ajuste."
           >
             {PIPELINE_DIAGRAM}
           </pre>

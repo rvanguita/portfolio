@@ -1,10 +1,4 @@
-# ==============================================================================
-# GitHub Actions: Validação Contínua (CI) — Next.js
-# ==============================================================================
-# Lint + typecheck + testes (Vitest) + build estático (next build) em Pull
-# Requests para main. Um build que falha bloqueia a mesclagem.
-# ==============================================================================
-
+# CI: lint + typecheck + testes + build estático em Pull Requests para main.
 name: 🧪 Validação do Portfólio (CI)
 
 on:
@@ -20,7 +14,6 @@ jobs:
   validate:
     name: 🔍 Lint, Types, Testes & Build
     runs-on: ubuntu-latest
-
     steps:
       - name: 📥 Checkout
         uses: actions/checkout@v4
@@ -37,7 +30,7 @@ jobs:
       - name: 🎨 ESLint
         run: npm run lint
 
-      - name: 🔎 Typecheck (tsc --noEmit)
+      - name: 🔎 Typecheck
         run: npm run typecheck
 
       - name: 🧪 Testes (Vitest)
@@ -45,45 +38,3 @@ jobs:
 
       - name: 🔨 Build estático (next build → out/)
         run: npm run build
-
-      - name: 💡 Lighthouse (orçamento ≥ 90 — ADR-008)
-        run: node scripts/lighthouse.mjs
-        env:
-          CHROME_PATH: /usr/bin/google-chrome
-          LH_RUNS: '3'
-
-      - name: 📎 Upload dos relatórios do Lighthouse
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: lighthouse-report
-          path: lighthouse-report/
-          retention-days: 14
-
-      - name: 📑 Auditar artefatos do export
-        id: audit
-        run: |
-          PAGE_COUNT=$(find ./out -name "*.html" | wc -l)
-          PDF_COUNT=$(find ./out/certificates -name "*.pdf" 2>/dev/null | wc -l || echo "0")
-          NOJEKYLL=$([ -f ./out/.nojekyll ] && echo "Sim" || echo "Não")
-          echo "page_count=$PAGE_COUNT" >> "$GITHUB_OUTPUT"
-          echo "pdf_count=$PDF_COUNT" >> "$GITHUB_OUTPUT"
-          echo "nojekyll=$NOJEKYLL" >> "$GITHUB_OUTPUT"
-
-      - name: 📊 Relatório
-        run: |
-          cat << EOF >> "$GITHUB_STEP_SUMMARY"
-          # 🧪 Relatório de Validação (CI)
-
-          | Item | Status | Detalhe |
-          | :--- | :--- | :--- |
-          | 🎨 ESLint | 🟢 Aprovado | \`next lint\` |
-          | 🔎 Typecheck | 🟢 Aprovado | \`tsc --noEmit\` |
-          | 🧪 Testes | 🟢 Aprovado | Vitest + Testing Library |
-          | 🔨 Build | 🟢 Aprovado | \`${{ steps.audit.outputs.page_count }}\` HTML em \`out/\` |
-          | 💡 Lighthouse | 🟢 Aprovado | Todas as categorias ≥ 90 (mediana de 3) — artefato \`lighthouse-report\` |
-          | 📜 Certificados | 🟢 Aprovado | \`${{ steps.audit.outputs.pdf_count }}\` PDF(s) |
-          | 🚫 \`.nojekyll\` | 🟢 Presente | ${{ steps.audit.outputs.nojekyll }} |
-
-          Branch: \`${{ github.head_ref || github.ref_name }}\`
-          EOF

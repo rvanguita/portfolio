@@ -17,10 +17,10 @@ O portfólio organiza as informações profissionais em uma única página, com 
 - apresentação profissional e disponibilidade;
 - resumo de experiência e formação;
 - competências em Ciência de Dados, Machine Learning, otimização, analytics e ferramentas de engenharia de dados;
-- projetos em destaque e projetos complementares, com problema, solução, tecnologias e resultados;
+- projetos, com problema, solução e tecnologias;
 - experiência acadêmica e profissional;
 - certificados em PDF;
-- links para GitHub, LinkedIn, currículo e estudos de caso.
+- links para GitHub, LinkedIn e estudos de caso.
 
 Os estudos de caso estão disponíveis em:
 
@@ -31,7 +31,7 @@ Os estudos de caso estão disponíveis em:
 
 - **Next.js 15** com App Router;
 - **React 19** e **TypeScript**;
-- CSS próprio, com tokens de design e suporte a tema claro/escuro;
+- CSS próprio, com tokens de design (tema claro único);
 - exportação estática (`output: "export"`), gerando a pasta `out/`;
 - Vitest e Testing Library para testes;
 - ESLint e TypeScript para validação do código;
@@ -82,7 +82,6 @@ O resultado será gerado em `out/`. Essa pasta é um artefato de build e não de
 | `npm run typecheck` | Verifica os tipos TypeScript sem gerar arquivos. |
 | `npm test` | Executa os testes uma vez. |
 | `npm run test:watch` | Executa os testes em modo de observação. |
-| `npm run lighthouse` | Gera a build e executa a auditoria Lighthouse local. |
 
 Antes de abrir um pull request, execute:
 
@@ -100,7 +99,7 @@ O conteúdo profissional fica centralizado em arquivos TypeScript para evitar te
 | Arquivo | Conteúdo |
 | --- | --- |
 | [`lib/data/profile.ts`](lib/data/profile.ts) | Nome, título, apresentação, localização, e-mail e redes profissionais. |
-| [`lib/data/projects.ts`](lib/data/projects.ts) | Projetos, categorias, tecnologias, métricas e links. |
+| [`lib/data/projects.ts`](lib/data/projects.ts) | Projetos, tecnologias e links (descrições qualitativas). |
 | [`lib/data/skills.ts`](lib/data/skills.ts) | Grupos de competências técnicas. |
 | [`lib/data/timeline.ts`](lib/data/timeline.ts) | Experiência e formação. |
 | [`lib/data/certificates.ts`](lib/data/certificates.ts) | Certificados e caminhos dos PDFs publicados. |
@@ -112,9 +111,9 @@ Não inclua credenciais, tokens ou dados pessoais locais no repositório. O `.gi
 
 ## Testes e qualidade
 
-Os testes cobrem, entre outros pontos, navegação, menu mobile, tema, filtros de projetos, links internos e externos, acessibilidade estrutural e dados estruturados de SEO. Eles estão em `tests/`.
+Os testes cobrem navegação, menu mobile, links internos e externos, ícones e acessibilidade estrutural. Eles estão em `tests/`.
 
-O pipeline de CI executa, em pull requests para `main`, ESLint, verificação de tipos, testes, build estático e auditoria dos artefatos gerados.
+O pipeline de CI executa, em pull requests para `main`, ESLint, verificação de tipos, testes e build estático.
 
 ## Publicação
 
@@ -133,11 +132,7 @@ Se qualquer etapa de validação falhar, a publicação não é realizada. O dep
 
 ## Documentação do projeto
 
-- [`docs/prd.md`](docs/prd.md): requisitos de produto, público-alvo e critérios de aceitação;
-- [`docs/sdd.md`](docs/sdd.md): decisões de arquitetura e implementação;
-- [`docs/adr/`](docs/adr/): decisões arquiteturais registradas;
-- [`docs/tasks/`](docs/tasks/): tarefas e etapas de implementação;
-- [`docs/audit/`](docs/audit/): auditorias e verificações do projeto.
+- [`docs/NOTES.md`](docs/NOTES.md): stack, como rodar, deploy e como editar o conteúdo.
 
 ## Licença
 

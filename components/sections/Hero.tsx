@@ -2,8 +2,6 @@ import Image from "next/image";
 import { asset } from "@/lib/base-path";
 import { Eyebrow } from "@/components/ui/Eyebrow";
 import { ExternalLink } from "@/components/ui/ExternalLink";
-import { MetricTile } from "@/components/ui/MetricTile";
-import { HERO_STATS } from "@/lib/site-stats";
 import { profile } from "@/lib/data/profile";
 
 /** Hero — bloco de autoria: função, nome, síntese e formas de contato. */
@@ -43,12 +41,6 @@ export function Hero() {
             Entrar em contato
           </a>
         </div>
-      </div>
-
-      <div className="about-metrics">
-        {HERO_STATS.map((stat) => (
-          <MetricTile key={stat.value} value={stat.value} label={stat.label} />
-        ))}
       </div>
 
       <div className="hero-content">

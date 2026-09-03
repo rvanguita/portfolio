@@ -1,16 +1,14 @@
-import { memo } from "react";
 import { Icon } from "@/components/ui/Icon";
 import { Tag } from "@/components/ui/Tag";
 import { Rich } from "@/components/ui/Rich";
 import { ProjectActionLink } from "@/components/cards/ProjectActionLink";
 import type { Project } from "@/lib/types";
 
-/** Porte de _includes/project-card.html. Memoizado (padrão da skill). */
-function ProjectCardBase({ project }: { project: Project }) {
+export function ProjectCard({ project }: { project: Project }) {
   const multipleActions = project.actions.length > 1;
 
   return (
-    <div className="project-card-item" data-category={project.category}>
+    <div className="project-card-item">
       <div>
         <span className="project-category-badge">
           <Icon name={project.badgeIcon} className="badge-icon" />{" "}
@@ -56,5 +54,3 @@ function ProjectCardBase({ project }: { project: Project }) {
     </div>
   );
 }
-
-export const ProjectCard = memo(ProjectCardBase);

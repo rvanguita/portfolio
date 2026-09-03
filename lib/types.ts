@@ -1,17 +1,9 @@
 import type { IconName } from "@/components/ui/Icon";
 
-/** Categoria de projeto — deve casar com um botão de filtro em <Projects>. */
-export type ProjectCategory = "de" | "ml" | "opt" | "analytics";
-
-/** Categoria (key) de um grupo de certificados — casa com um filtro em <Certificates>. */
-export type CertCategory = "ds-python" | "math-ml" | "biz-stats";
-
 export interface SkillGroup {
   icon: IconName;
   title: string;
   tags: string[];
-  /** Domínio de atuação — tinge o ícone do grupo com a cor da legenda. */
-  domain?: ProjectCategory;
 }
 
 export interface ProjectHighlight {
@@ -29,7 +21,6 @@ export interface ProjectAction {
 
 export interface Project {
   key: string;
-  category: ProjectCategory;
   badgeIcon: IconName;
   badgeLabel: string;
   title: string;
@@ -37,8 +28,6 @@ export interface Project {
   highlights: ProjectHighlight[];
   techTags: string[];
   actions: ProjectAction[];
-  /** Projeto em destaque (PRD §12) — renderizado acima, fora do <details> "ver todos". */
-  featured?: boolean;
 }
 
 export interface TimelineEntry {
@@ -56,7 +45,7 @@ export interface Certificate {
 }
 
 export interface CertificateGroup {
-  key: CertCategory;
+  key: string;
   icon: IconName;
   title: string;
   items: Certificate[];
