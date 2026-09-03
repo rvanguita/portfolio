@@ -1,7 +1,7 @@
 # CLAUDE.md
 
-Guidance for Claude Code working in this repo. See `docs/NOTES.md` for the
-project overview; `README.md` is the public-facing version.
+Guidance for Claude Code working in this repo. `README.md` is the human-facing
+overview.
 
 ## What this is
 
@@ -16,11 +16,11 @@ one accent, a year rail on the Trajetória. **No navbar and no client JS at all*
 — every component is a static Server Component.
 
 This project deliberately has **no spec/ADR process** — decisions live in git
-history and `docs/NOTES.md`. Prior passes removed a `docs/` tree
-(prd/sdd/adr/tasks/audit), the dark-theme toggle, category filters,
-JSON-LD/sitemap/robots, the Lighthouse CI gate, the on-page number "metrics",
-the navbar/scroll-spy/mobile-menu, `next/image` avatars and the icon set. Don't
-reintroduce them without the user asking.
+history. Prior passes removed a `docs/` tree (prd/sdd/adr/tasks/audit), the
+dark-theme toggle, category filters, JSON-LD/sitemap/robots, the Lighthouse CI
+gate, the on-page number "metrics", the navbar/scroll-spy/mobile-menu,
+`next/image` avatars and the icon set. Don't reintroduce them without the user
+asking.
 
 ## Commands
 

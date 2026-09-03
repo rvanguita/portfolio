@@ -1,4 +1,4 @@
-# --- Node / Next.js ---
+# Node / Next.js
 node_modules
 npm-debug.log*
 .next
@@ -9,26 +9,11 @@ next-env.d.ts
 .vitest
 .preview
 
-# --- Editores / SO ---
-# .claude/ apareceu sem procedência conhecida (skill React não relacionada) —
-# ignorado para não versionar por acidente; investigar/remover à parte.
+# Editores / SO
 .claude/
 .DS_Store
 *.sublime-project
 *.sublime-workspace
-codekit-config.json
-
-# --- Legado Jekyll (ainda ignorado até a limpeza final) ---
-*.gem
-.bundle
-.jekyll-cache
-.jekyll-metadata
-.sass-cache
-_asset_bundler_cache
-_site
-example/_site
-Gemfile.lock
-vendor/
 
 # Dados pessoais locais (ex.: export de currículo/LinkedIn) — nunca versionar
 Profile.pdf

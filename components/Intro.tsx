@@ -7,9 +7,7 @@ export function Intro() {
   return (
     <header className="intro">
       <h1>{profile.name}</h1>
-      <p className="role">
-        Cientista de Dados · Ph.D. em Engenharia Elétrica (UNICAMP)
-      </p>
+      <p className="role">{profile.role}</p>
       <hr className="sig" aria-hidden="true" />
       <Rich as="div" className="lead" html={profile.aboutBio} />
       <p className="contact">

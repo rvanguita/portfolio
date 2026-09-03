@@ -129,10 +129,6 @@ push em main
 
 Se qualquer etapa de validação falhar, a publicação não é realizada. O deploy manual também pode ser iniciado pelo GitHub Actions com `workflow_dispatch`.
 
-## Documentação do projeto
-
-- [`docs/NOTES.md`](docs/NOTES.md): stack, como rodar, deploy e como editar o conteúdo.
-
 ## Licença
 
 Este repositório contém um portfólio pessoal e materiais profissionais. Para reutilização de conteúdo, imagens, currículo ou certificados, entre em contato com o autor.
