@@ -1,12 +1,10 @@
-# Deploy: valida, compila (next build → out/) e publica no GitHub Pages a cada
-# push em main. O job `deploy` depende do `build`, então lint/typecheck/testes
-# ou build que falham bloqueiam a publicação.
+# Publica os arquivos estáticos no GitHub Pages a cada push em main.
+# Sem build: só copia os arquivos do site para _site/ e envia.
 name: 🚀 Deploy (GitHub Pages)
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 permissions:
@@ -15,54 +13,28 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
 
 jobs:
-  build:
-    name: 📦 Testar & Compilar
-    runs-on: ubuntu-latest
-    steps:
-      - name: 📥 Checkout
-        uses: actions/checkout@v4
-
-      - name: 🟢 Configurar Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '22'
-          cache: npm
-
-      - name: 📦 Instalar dependências
-        run: npm ci
-
-      - name: 🎨 ESLint
-        run: npm run lint
-
-      - name: 🔎 Typecheck
-        run: npm run typecheck
-
-      - name: 🧪 Testes (Vitest)
-        run: npm test
-
-      - name: ⚙️ Configurar GitHub Pages
-        uses: actions/configure-pages@v5
-
-      - name: 🔨 Build estático (next build → out/)
-        run: npm run build
-
-      - name: 📤 Upload do artefato do Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./out
-
   deploy:
-    name: 🌐 Publicar
-    needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: 🚀 Deploy
-        id: deployment
+      - uses: actions/checkout@v4
+
+      - name: 📁 Montar o site
+        run: |
+          mkdir _site
+          cp -r index.html style.css icon.png .nojekyll projects certificates assets _site/
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
         uses: actions/deploy-pages@v4

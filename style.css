@@ -1,7 +1,7 @@
 /* ==========================================================================
    Portfólio — Rene Verinaud Anguita Junior
-   "Dossiê": coluna única, uma família tipográfica (Newsreader), um acento.
-   A estrutura é o design. Tema claro único. Zero JS de cliente.
+   "Dossiê": coluna única, uma família tipográfica, um acento.
+   Site estático escrito à mão — sem framework, sem build.
    ========================================================================== */
 
 :root {
@@ -11,7 +11,7 @@
   --rule: #e4e3df;
   --accent: #3a5a78;
 
-  --font-serif: var(--font-serif-face), Georgia, "Times New Roman", serif;
+  --font-serif: Georgia, "Times New Roman", "Noto Serif", serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
   --measure: 42rem;
