@@ -1,11 +1,6 @@
 import Link from "next/link";
-import { Icon } from "@/components/ui/Icon";
-import { Tag } from "@/components/ui/Tag";
-import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ExternalLink } from "@/components/ui/ExternalLink";
-import { SkillCard } from "@/components/cards/SkillCard";
 import { caseStudyMetadata } from "@/lib/metadata";
-import type { ArchitectureStep } from "@/lib/types";
 
 const DESCRIPTION =
   "Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.";
@@ -17,258 +12,57 @@ export const metadata = caseStudyMetadata({
   description: DESCRIPTION,
 });
 
-const MODEL_STEPS: ArchitectureStep[] = [
-  {
-    icon: "cloud",
-    title: "1. Dataset & Variáveis",
-    description:
-      "Séries coletadas a cada <strong>10 minutos</strong> de seis turbinas (WT1–WT6) e três mastros meteorológicos, do repositório público do <strong>Zenodo</strong>. Foram modeladas as turbinas <strong>onshore</strong> WT3 e WT4, com cinco variáveis ambientais: velocidade (<code>V</code>) e direção (<code>D</code>) do vento, densidade do ar (<code>rho</code>), intensidade de turbulência (<code>I</code>) e cisalhamento vertical (<code>Sb</code>).",
-    tags: ["Zenodo", "CSV", "Séries temporais", "10 min"],
-  },
-  {
-    icon: "chart-pie",
-    title: "2. Análise Exploratória",
-    description:
-      "Verificação de valores nulos e duplicados, seguida de um <strong>heatmap de correlação</strong>: relação forte entre potência, velocidade do vento e mês do ano; a intensidade de turbulência tem relação inversa. Boxplots por mês mostram mediana máxima em setembro e mínima em junho.",
-    tags: ["Pandas", "Matplotlib", "Correlação", "Boxplot"],
-  },
-  {
-    icon: "bolt",
-    title: "3. Modelagem com XGBRegressor",
-    description:
-      "Como a curva de potência é <strong>não linear</strong>, métodos baseados em árvores levam vantagem. O <code>XGBRegressor</code> constrói árvores de decisão em sequência, cada uma corrigindo os resíduos da anterior. A validação usa <strong>janela expansível</strong> (expanding window), preservando a ordem cronológica e o viés sazonal dos meses.",
-    tags: ["XGBoost", "XGBRegressor", "Janela expansível", "Regressão"],
-  },
-  {
-    icon: "shield-check",
-    title: "4. Interpretabilidade & Resultados",
-    description:
-      "Análise <strong>SHAP</strong> para quantificar a contribuição de cada variável na previsão — a <strong>velocidade do vento</strong> é a mais relevante. O modelo alcançou <strong>erro de previsão baixo</strong> e <strong>bom ajuste</strong> na previsão de potência.",
-    tags: ["SHAP", "Feature Importance", "RMSE", "R²"],
-  },
-];
-
-const PIPELINE_DIAGRAM = `        Pipeline de Modelagem  ·  main.ipynb
-        ═══════════════════════════════════════
-
-   CSV por turbina (10 min, Zenodo)
-        │
-        ▼
-   Limpeza  ──  remoção de nulos e duplicatas
-        │
-        ▼
-   Análise exploratória  ──  heatmap de correlação · boxplots por mês
-        │
-        ▼
-   Seleção de features  ──►  V · D · rho · I · Sb
-        │
-        ▼
-   XGBRegressor  +  validação por janela expansível
-        │
-        ▼
-   SHAP  ──►  velocidade do vento = variável dominante
-        │
-        ▼
-   Resultado  ──►  erro de previsão baixo   ·   bom ajuste`;
-
-const STACK_ROWS: {
-  icon: Parameters<typeof Icon>[0]["name"];
-  domain: string;
-  techs: string[];
-  responsibility: React.ReactNode;
-}[] = [
-  {
-    icon: "cloud",
-    domain: "Dados & Fonte",
-    techs: ["Zenodo", "CSV"],
-    responsibility:
-      "Séries de potência e variáveis ambientais das turbinas, amostradas a cada 10 minutos.",
-  },
-  {
-    icon: "square-3-stack-3d",
-    domain: "Manipulação & Preparação",
-    techs: ["Pandas", "NumPy"],
-    responsibility:
-      "Limpeza de nulos e duplicatas, junção mastro–turbina e engenharia do atributo de mês.",
-  },
-  {
-    icon: "chart-pie",
-    domain: "Análise Exploratória",
-    techs: ["Matplotlib"],
-    responsibility:
-      "Heatmap de correlação, boxplots mensais e scatter plots da curva de potência.",
-  },
-  {
-    icon: "bolt",
-    domain: "Modelagem",
-    techs: ["XGBoost", "XGBRegressor"],
-    responsibility:
-      "Regressão por gradient boosting sobre árvores para a curva de potência não linear.",
-  },
-  {
-    icon: "clock",
-    domain: "Validação Temporal",
-    techs: ["Janela expansível"],
-    responsibility:
-      "Divisão treino/teste respeitando a ordem cronológica, sem embaralhar meses.",
-  },
-  {
-    icon: "shield-check",
-    domain: "Interpretabilidade",
-    techs: ["SHAP"],
-    responsibility:
-      "Contribuição marginal de cada variável na previsão de potência.",
-  },
-  {
-    icon: "command-line",
-    domain: "Ambiente",
-    techs: ["Python", "Jupyter"],
-    responsibility: (
-      <>
-        Todo o fluxo em <code>main.ipynb</code>, reproduzível de ponta a ponta.
-      </>
-    ),
-  },
-];
+const REPO = "https://github.com/rvanguita/wind-farm";
 
 export default function WindFarmPage() {
   return (
-    <>
-      <div className="case-study-nav">
-        <Link href="/#projetos" className="btn-secondary">
-          Voltar aos Projetos
-        </Link>
-      </div>
+    <article className="wrap doc">
+      <Link href="/#projetos" className="backlink">
+        ← Projetos
+      </Link>
 
-      <div className="case-study-hero about-card">
-        <div className="case-study-heading">
-          <div>
-            <span className="project-category-badge">
-              <Icon name="sun" className="badge-icon" /> Regressão &amp; Energia
-              Renovável
-            </span>
-            <h1>
-              Modelagem da Geração de Energia Eólica: Previsão de Potência com
-              XGBoost
-            </h1>
-            <p className="case-study-lead">
-              <strong>Desafio:</strong> prever a geração de energia de{" "}
-              <strong>quatro turbinas eólicas</strong> ao longo de um ano. A
-              curva de potência de uma turbina é <strong>não linear</strong>, o
-              que descarta modelos lineares; e, por ser uma{" "}
-              <strong>série temporal</strong>, a validação cruzada tradicional
-              também não se aplica — ela removeria o viés sazonal de alguns
-              meses.
-            </p>
-          </div>
-        </div>
+      <h1>Modelagem da Geração de Energia Eólica</h1>
+      <hr className="sig" aria-hidden="true" />
 
-        <div className="case-study-meta">
-          <ExternalLink
-            href="https://github.com/rvanguita/wind-farm"
-            className="btn-primary"
-          >
-            Acessar Repositório no GitHub
-          </ExternalLink>
-          <span className="social-chip">
-            <Icon name="check-circle" className="chip-icon" /> Dataset público
-            (Zenodo)
-          </span>
-          <span className="social-chip">
-            <Icon name="chart-bar" className="chip-icon" /> Notebook: main.ipynb
-          </span>
-        </div>
-      </div>
+      <p className="lead">
+        Prever a geração de energia de quatro turbinas eólicas ao longo de um
+        ano. A curva de potência de uma turbina é <strong>não linear</strong>, o
+        que descarta modelos lineares; e, por ser uma{" "}
+        <strong>série temporal</strong>, a validação cruzada tradicional também
+        não se aplica — removeria o viés sazonal de alguns meses.
+      </p>
 
-      <section className="case-study-section" aria-labelledby="wf-metodologia">
-        <SectionHeader
-          first
-          tag="Abordagem"
-          title="Metodologia do Pipeline"
-          id="wf-metodologia"
-          desc="Do dado bruto coletado a cada 10 minutos até a previsão de potência interpretada com SHAP."
-        />
+      <p>
+        Os dados vêm do repositório público do <strong>Zenodo</strong>: séries
+        amostradas a cada 10 minutos de seis turbinas (WT1–WT6) e três mastros
+        meteorológicos. Foram modeladas as turbinas onshore WT3 e WT4, com cinco
+        variáveis ambientais — velocidade e direção do vento, densidade do ar,
+        intensidade de turbulência e cisalhamento vertical. A análise
+        exploratória (heatmap de correlação, boxplots por mês) mostra relação
+        forte entre potência, velocidade do vento e mês do ano.
+      </p>
 
-        <div className="about-card architecture-card">
-          <pre
-            role="img"
-            aria-label="Fluxo do pipeline de modelagem: CSV por turbina amostrado a cada 10 minutos (Zenodo) → limpeza de nulos e duplicatas → análise exploratória com heatmap de correlação e boxplots por mês → seleção das features V, D, rho, I e Sb → XGBRegressor com validação por janela expansível → análise SHAP identifica a velocidade do vento como variável dominante → resultado: erro de previsão baixo e bom ajuste."
-          >
-            {PIPELINE_DIAGRAM}
-          </pre>
-        </div>
-      </section>
+      <p>
+        Como a curva de potência é não linear, um modelo baseado em árvores leva
+        vantagem: o <strong>XGBRegressor</strong> constrói árvores em sequência,
+        cada uma corrigindo os resíduos da anterior. A validação usa{" "}
+        <strong>janela expansível</strong> (expanding window), preservando a
+        ordem cronológica e o viés sazonal dos meses.
+      </p>
 
-      <section className="case-study-section" aria-labelledby="wf-etapas">
-        <SectionHeader
-          tag="Ciência de Dados"
-          title="Etapas da Modelagem"
-          id="wf-etapas"
-        />
+      <p>
+        A análise <strong>SHAP</strong> quantifica a contribuição de cada
+        variável na previsão — a velocidade do vento é a mais relevante. O
+        modelo alcançou erro de previsão baixo e bom ajuste.
+      </p>
 
-        <div className="skills-grid">
-          {MODEL_STEPS.map((step) => (
-            <SkillCard
-              key={step.title}
-              icon={step.icon}
-              title={step.title}
-              description={step.description}
-              tags={step.tags}
-            />
-          ))}
-        </div>
-      </section>
+      <p className="tech">
+        Tecnologias: Python · XGBoost · SHAP · Pandas · Matplotlib
+      </p>
 
-      <section className="case-study-section" aria-labelledby="wf-stack">
-        <SectionHeader
-          tag="Tecnologias"
-          title="Stack Tecnológica Completa"
-          id="wf-stack"
-        />
-
-        <div className="about-card stack-table-wrapper">
-          <table className="stack-table">
-            <caption className="sr-only">
-              Stack tecnológica do projeto: camada ou domínio, tecnologias
-              utilizadas e responsabilidade de cada uma.
-            </caption>
-            <thead>
-              <tr>
-                <th scope="col">Camada / Domínio</th>
-                <th scope="col">Tecnologias Utilizadas</th>
-                <th scope="col">Responsabilidade</th>
-              </tr>
-            </thead>
-            <tbody>
-              {STACK_ROWS.map((row) => (
-                <tr key={row.domain}>
-                  <td>
-                    <Icon name={row.icon} className="stack-icon" /> {row.domain}
-                  </td>
-                  <td className="stack-table-techs">
-                    {row.techs.map((tech) => (
-                      <Tag key={tech}>{tech}</Tag>
-                    ))}
-                  </td>
-                  <td>{row.responsibility}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      <div className="case-study-actions">
-        <ExternalLink
-          href="https://github.com/rvanguita/wind-farm"
-          className="btn-primary"
-        >
-          Explorar Código no GitHub
-        </ExternalLink>
-        <Link href="/#projetos" className="btn-secondary">
-          Ver Outros Projetos
-        </Link>
-      </div>
-    </>
+      <p className="repo">
+        <ExternalLink href={REPO}>Repositório no GitHub ↗</ExternalLink>
+      </p>
+    </article>
   );
 }

@@ -3,7 +3,6 @@ import type { SkillGroup } from "@/lib/types";
 /** Migrado de _data/skills.yml — conteúdo inalterado. */
 export const skills: SkillGroup[] = [
   {
-    icon: "cpu-chip",
     title: "Ciência de Dados & ML",
     tags: [
       "Python",
@@ -17,7 +16,6 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
-    icon: "bolt",
     title: "Pesquisa Operacional & Otimização",
     tags: [
       "CPLEX",
@@ -29,7 +27,6 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
-    icon: "chart-pie",
     title: "Visualização & Business Analytics",
     tags: [
       "Power BI",
@@ -41,7 +38,6 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
-    icon: "command-line",
     title: "Linguagens, Cloud & Ferramentas",
     tags: [
       "SQL",

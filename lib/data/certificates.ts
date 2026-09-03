@@ -7,7 +7,6 @@ import type { CertificateGroup } from "@/lib/types";
 export const certificates: CertificateGroup[] = [
   {
     key: "ds-python",
-    icon: "beaker",
     title: "Data Science & Python Avançado",
     items: [
       {
@@ -75,7 +74,6 @@ export const certificates: CertificateGroup[] = [
   },
   {
     key: "math-ml",
-    icon: "calculator",
     title: "Matemática, Álgebra Linear & Machine Learning",
     items: [
       {
@@ -127,7 +125,6 @@ export const certificates: CertificateGroup[] = [
   },
   {
     key: "biz-stats",
-    icon: "presentation-chart-bar",
     title: "Estatística Empresarial & Business Analytics",
     items: [
       {

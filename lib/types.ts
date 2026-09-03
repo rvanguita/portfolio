@@ -1,7 +1,4 @@
-import type { IconName } from "@/components/ui/Icon";
-
 export interface SkillGroup {
-  icon: IconName;
   title: string;
   tags: string[];
 }
@@ -21,7 +18,6 @@ export interface ProjectAction {
 
 export interface Project {
   key: string;
-  badgeIcon: IconName;
   badgeLabel: string;
   title: string;
   challenge: string;
@@ -46,15 +42,6 @@ export interface Certificate {
 
 export interface CertificateGroup {
   key: string;
-  icon: IconName;
   title: string;
   items: Certificate[];
-}
-
-export interface ArchitectureStep {
-  icon: IconName;
-  title: string;
-  /** HTML inline (<code>, <strong>). Renderizado via <Rich>. */
-  description: string;
-  tags: string[];
 }

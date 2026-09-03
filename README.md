@@ -12,15 +12,14 @@ O site é totalmente estático, responsivo e escrito em pt-BR. Ele foi projetado
 
 ## O que o site apresenta
 
-O portfólio organiza as informações profissionais em uma única página, com páginas dedicadas aos principais projetos:
+O portfólio é uma página única em coluna, no formato de um dossiê, com páginas dedicadas a dois projetos:
 
-- apresentação profissional e disponibilidade;
-- resumo de experiência e formação;
-- competências em Ciência de Dados, Machine Learning, otimização, analytics e ferramentas de engenharia de dados;
-- projetos, com problema, solução e tecnologias;
-- experiência acadêmica e profissional;
+- apresentação profissional e contato;
+- projetos, com desafio, solução e tecnologias;
+- trajetória (formação e experiência numa linha do tempo única);
+- competências em Ciência de Dados, Machine Learning, otimização, analytics e engenharia de dados;
 - certificados em PDF;
-- links para GitHub, LinkedIn e estudos de caso.
+- links para GitHub, LinkedIn e os dois estudos de caso.
 
 Os estudos de caso estão disponíveis em:
 
@@ -31,18 +30,18 @@ Os estudos de caso estão disponíveis em:
 
 - **Next.js 15** com App Router;
 - **React 19** e **TypeScript**;
-- CSS próprio, com tokens de design (tema claro único);
+- CSS próprio em `app/globals.css` (folha plana, ~180 linhas, tema claro único, coluna única);
+- uma família tipográfica (**Newsreader**), via `next/font`;
+- **sem JavaScript de cliente** — todos os componentes são Server Components estáticos;
 - exportação estática (`output: "export"`), gerando a pasta `out/`;
 - Vitest e Testing Library para testes;
-- ESLint e TypeScript para validação do código;
-- GitHub Actions para CI e deploy;
-- GitHub Pages para hospedagem.
+- GitHub Actions para CI e deploy; GitHub Pages para hospedagem.
 
-O `basePath` do Next.js está configurado como `/portfolio`, pois o site é publicado em um repositório de projeto do GitHub Pages. Como não há servidor em produção, recursos que dependem de runtime — como otimização de imagens do Next.js — permanecem desativados ou são resolvidos durante o build.
+O `basePath` do Next.js está configurado como `/portfolio`, pois o site é publicado em um repositório de projeto do GitHub Pages. Não há servidor em produção.
 
 ## Requisitos
 
-- Node.js **20.9 ou superior**;
+- Node.js **22.12 ou superior** (fixado em `.tool-versions`);
 - npm.
 
 ## Executar localmente
@@ -101,17 +100,17 @@ O conteúdo profissional fica centralizado em arquivos TypeScript para evitar te
 | [`lib/data/profile.ts`](lib/data/profile.ts) | Nome, título, apresentação, localização, e-mail e redes profissionais. |
 | [`lib/data/projects.ts`](lib/data/projects.ts) | Projetos, tecnologias e links (descrições qualitativas). |
 | [`lib/data/skills.ts`](lib/data/skills.ts) | Grupos de competências técnicas. |
-| [`lib/data/timeline.ts`](lib/data/timeline.ts) | Experiência e formação. |
+| [`lib/data/timeline.ts`](lib/data/timeline.ts) | Experiência e formação (fundidas na trajetória). |
 | [`lib/data/certificates.ts`](lib/data/certificates.ts) | Certificados e caminhos dos PDFs publicados. |
-| `public/` | Imagens, currículo, ícone e certificados estáticos. |
+| `public/` | Ícone, card social e certificados estáticos. |
 
-As seções e componentes de interface ficam em `components/`, as páginas em `app/` e utilitários compartilhados em `lib/` e `hooks/`. Ao adicionar um certificado, coloque o PDF em `public/certificates/` e registre seu caminho em `lib/data/certificates.ts`.
+Os blocos da página ficam em `components/` (`Intro`, `Projetos`, `Trajetoria`, `Competencias`, `Certificacoes`), compostos em `app/page.tsx`. Ao adicionar um certificado, coloque o PDF em `public/certificates/` e registre seu caminho em `lib/data/certificates.ts`.
 
 Não inclua credenciais, tokens ou dados pessoais locais no repositório. O `.gitignore` já exclui arquivos como `Profile.pdf`, dependências e artefatos de build.
 
 ## Testes e qualidade
 
-Os testes cobrem navegação, menu mobile, links internos e externos, ícones e acessibilidade estrutural. Eles estão em `tests/`.
+Os testes cobrem a estrutura das seções, a acessibilidade (headings, `aria-labelledby`) e os links internos e externos. Eles estão em `tests/`.
 
 O pipeline de CI executa, em pull requests para `main`, ESLint, verificação de tipos, testes e build estático.
 
