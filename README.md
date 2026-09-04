@@ -13,11 +13,13 @@ framework, sem build, sem dependências.
 src/                             fonte do site — é o que o Pages publica
   index.html                     página única ("dossiê"): intro · projetos ·
                                  trajetória · competências · certificações
-  style.css                      folha única, compartilhada pelas 3 páginas
+  style.css                      folha única, compartilhada pelas 4 páginas
   projects/wind-farm/index.html  estudo de caso (prosa curta + link do repo)
   projects/lake-fastf1/index.html  estudo de caso
+  projects/bank-customer-churn/index.html  estudo de caso
   certificates/                  24 PDFs de certificado, em subpastas
   assets/social-card.png         imagem de compartilhamento (Open Graph)
+  assets/dossie-rene-anguita.pdf  snapshot do site inteiro em PDF
   icon.png                       favicon
   .nojekyll                      impede o GitHub Pages de rodar Jekyll
 .github/check.py                 validador do site (Python puro, sem deps)
@@ -44,7 +46,8 @@ Os seis projetos em destaque no site, todos com repositório público:
   [Estudo de caso](projects/wind-farm/) ·
   [repo](https://github.com/rvanguita/wind-farm)
 - **Bank Customer Churn Prediction** — classificação do risco de evasão de
-  clientes de um banco (XGBoost, SHAP, MLflow, Docker).
+  clientes de um banco (CatBoost, LightGBM, XGBoost, SHAP, MLflow, Docker).
+  [Estudo de caso](projects/bank-customer-churn/) ·
   [repo](https://github.com/rvanguita/bank-customer-churn)
 - **Otimização de Sistemas de Distribuição Elétrica** — pesquisa operacional do
   mestrado e do doutorado (AMPL, CPLEX, Busca Tabu, metaheurísticas).
@@ -73,7 +76,7 @@ imagem.
   seção **Certificações** do `index.html` (troque espaços por `%20` no `href`) e
   atualize a contagem no `<summary>`, o `[24]` do `.axis-fig` e o segmento
   correspondente da `.cert-bar` / `.cert-legend`.
-- **`<head>` e rodapé** são copiados nas 3 páginas — ao mexer num, mexa nos três.
+- **`<head>` e rodapé** são copiados nas 4 páginas — ao mexer num, mexa nas quatro.
 
 ## Ver localmente
 
@@ -90,7 +93,7 @@ Push em `main` → `.github/workflows/deploy.yml` publica o diretório `src/`
 manualmente pelo Actions (`workflow_dispatch`).
 
 Pull requests para `main` passam por `.github/workflows/ci.yml`, que roda
-`python3 .github/check.py`: confere que as 3 páginas existem, têm tags
+`python3 .github/check.py`: confere que as 4 páginas existem, têm tags
 balanceadas, um só `<h1>`, `lang="pt-BR"` e `<title>`; que todo link local
 aponta para um arquivo real; e que os alvos do deploy existem. Sem npm. A
 proteção da branch `main` exige esse check.

@@ -11,11 +11,13 @@ Personal page of Rene Verinaud Anguita Junior. A **hand-written static site — 
 src/                             site source — this is what Pages publishes
   index.html                     home (dossiê): intro · projetos · trajetória ·
                                  competências · certificações
-  style.css                      one stylesheet, shared by all 3 pages
+  style.css                      one stylesheet, shared by all 4 pages
   projects/wind-farm/index.html  case study (short prose + repo link)
   projects/lake-fastf1/index.html  case study
+  projects/bank-customer-churn/index.html  case study
   certificates/                  24 certificate PDFs
   assets/social-card.png         Open Graph image
+  assets/dossie-rene-anguita.pdf full-site PDF snapshot, linked from contact/footer
   icon.png                       favicon
   .nojekyll                      stops GitHub Pages running Jekyll
 .github/workflows/deploy.yml     publishes src/ to Pages (shell only, no build)
@@ -48,11 +50,13 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   every measurement is monospace. Custom properties at the top: `--paper` `--ink`
   `--ink-soft` `--rule` `--grid` `--grid-bold` `--accent` (copper, text) /
   `--accent-ink` (copper, graphics), plus `--fs-*` type scale and `--measure`.
-  Classes: `.wrap` / `.intro` + `.hero-mark` (inline-SVG signature) / `.axis` /
-  `.projects` + `.project-*` + `.project-glyph` (inline-SVG domain schematic) /
-  `.timeline` + `.tl-*` (CV Gantt on a real time axis; `--t0`/`--t1` on
-  `.timeline`, `--from`/`--to` on each `.tl-track`) / `.skills` (a `<dl>`) +
-  `.skill-meter` / `.cert-bar` + `.cert-legend` / `.certs` (`<details>`) /
+  Classes: `.wrap` / `.intro` + `.hero-mark` (inline-SVG axis/curve device —
+  used on the home hero and reused as a content-specific schematic on each
+  case-study page) / `.axis` / `.projects` + `.project-*` + `.project-glyph`
+  (inline-SVG domain schematic) / `.timeline` + `.tl-*` (CV Gantt on a real
+  time axis; `--t0`/`--t1` on `.timeline`, `--from`/`--to` on each
+  `.tl-track`) / `.skills` (a `<dl>`; `.skill-n` is a plain count, not a
+  proficiency meter) / `.cert-bar` + `.cert-legend` / `.certs` (`<details>`) /
   `.site-footer` / `.doc` + `.sig` (case-study prose).
 - Inline SVG only (no asset files). The PR check parses SVG as HTML, so
   **self-close every leaf** (`<path …/>`, `<line …/>`, `<rect …/>`, `<polyline …/>`).
@@ -62,14 +66,20 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   Every color **must** be one of the 8 tokens (never a bare hex) — the `:root`,
   `@media (prefers-color-scheme: dark)`, and `:has(#theme-toggle:checked)`
   blocks at the top of `style.css` are the only place colors are defined. The
-  toggle markup is duplicated across the 3 pages, right after `<body>` (same
+  toggle markup is duplicated across the 4 pages, right after `<body>` (same
   pattern as the footer/head boilerplate).
 - **New certificate:** drop the PDF in `certificates/`, add an `<li>` in the
   right `.certs-group` of `index.html` (replace spaces with `%20` in the `href`),
   bump: the `<summary>` count, the `.axis-fig` `[24]`, and the matching
   `.cert-bar` span `flex:` value + `.cert-legend` number.
-- **Footer** and the `<head>` boilerplate are duplicated across the 3 pages —
-  change all three when you touch them.
+- **New case study:** a `projects/<slug>/index.html` following the existing
+  pattern (head boilerplate, `.doc` prose, a content-specific `.hero-mark`
+  schematic reusing the `hm-*` SVG parts, `.tech`, `.repo`), plus: a
+  "Estudo de caso →" link on its `.project` card in `index.html`, its path
+  added to `PAGES` in `.github/check.py`, and its footer/`<head>` copied from
+  another case-study page.
+- **Footer** and the `<head>` boilerplate are duplicated across the 4 pages —
+  change all four when you touch them.
 
 Don't reintroduce a build step, a framework, a package.json, or client JS unless
 the user explicitly asks. The site deliberately has none.

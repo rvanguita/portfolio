@@ -387,7 +387,7 @@ section[id] { scroll-margin-top: 2rem; }
   background: var(--accent-ink);
 }
 
-/* --- competências: barra pela contagem real de ferramentas ---- */
+/* --- competências: dt = categoria, skill-n = contagem real de itens ---- */
 .skills { display: grid; gap: 1.4rem; }
 .skill {
   display: grid;
@@ -404,16 +404,9 @@ section[id] { scroll-margin-top: 2rem; }
 }
 .skill dd {
   grid-column: 1 / -1;
-  margin: 0.2rem 0 0.5rem;
+  margin: 0.2rem 0 0;
   font: 400 var(--fs-sm)/1.6 var(--font-mono);
   color: var(--ink-soft);
-}
-.skill-meter { grid-column: 1 / -1; height: 4px; background: var(--grid-bold); }
-.skill-meter span {
-  display: block;
-  height: 100%;
-  width: calc(var(--n) / var(--nmax) * 100%);
-  background: var(--accent-ink);
 }
 
 /* --- certificações: barra segmentada (12 / 9 / 3 = 24) -------- */
