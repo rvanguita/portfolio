@@ -1,5 +1,5 @@
-# Publica os arquivos estáticos no GitHub Pages a cada push em main.
-# Sem build: só copia os arquivos do site para _site/ e envia.
+# Publica o conteúdo de src/ no GitHub Pages a cada push em main.
+# Sem build: src/ já é o site (inclui .nojekyll).
 name: 🚀 Deploy (GitHub Pages)
 
 on:
@@ -24,17 +24,9 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: 📁 Montar o site
-        run: |
-          mkdir _site
-          cp -r index.html style.css icon.png .nojekyll projects certificates assets _site/
-
       - uses: actions/configure-pages@v5
-
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
-
+          path: src
       - id: deployment
         uses: actions/deploy-pages@v4

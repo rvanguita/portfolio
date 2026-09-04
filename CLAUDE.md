@@ -8,16 +8,17 @@ Personal page of Rene Verinaud Anguita Junior. A **hand-written static site — 
 + CSS only**. No framework, no build, no npm, no tests, no config files.
 
 ```
-index.html                       home (dossiê): intro · projetos · trajetória ·
+src/                             site source — this is what Pages publishes
+  index.html                     home (dossiê): intro · projetos · trajetória ·
                                  competências · certificações
-style.css                        one stylesheet, shared by all 3 pages
-projects/wind-farm/index.html    case study (short prose + repo link)
-projects/lake-fastf1/index.html  case study
-certificates/                    24 certificate PDFs
-assets/social-card.png           Open Graph image
-icon.png                         favicon
-.nojekyll                        stops GitHub Pages running Jekyll
-.github/workflows/deploy.yml     copies the files to Pages (shell only, no build)
+  style.css                      one stylesheet, shared by all 3 pages
+  projects/wind-farm/index.html  case study (short prose + repo link)
+  projects/lake-fastf1/index.html  case study
+  certificates/                  24 certificate PDFs
+  assets/social-card.png         Open Graph image
+  icon.png                       favicon
+  .nojekyll                      stops GitHub Pages running Jekyll
+.github/workflows/deploy.yml     publishes src/ to Pages (shell only, no build)
 ```
 
 Served at `https://rvanguita.github.io/portfolio/`. **All links are relative**
@@ -55,11 +56,10 @@ the user explicitly asks. The site deliberately has none.
 
 ## Preview & deploy
 
-- Local: `python3 -m http.server 8000` in the repo root, or just open
-  `index.html`.
-- Deploy: push to `main` → `.github/workflows/deploy.yml` copies
-  `index.html style.css icon.png .nojekyll projects/ certificates/ assets/` into
-  `_site/` and publishes to GitHub Pages.
+- Local: `python3 -m http.server 8000 -d src` in the repo root, or open
+  `src/index.html`.
+- Deploy: push to `main` → `.github/workflows/deploy.yml` publishes the `src/`
+  directory (it is the site, `.nojekyll` included) to GitHub Pages.
 - PR gate: `.github/workflows/ci.yml` runs `python3 .github/check.py` — pages
   exist, tags balanced, one `<h1>`/`lang`/`<title>` each, every local `href`
   resolves to a real file, deploy targets present. No npm.
