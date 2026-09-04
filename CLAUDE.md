@@ -29,14 +29,24 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
 - **Content:** edit the text directly in the HTML files. The home page holds all
   the profile/projects/timeline/skills/certificates content; each case study is
   self-contained.
-- **Design:** all of it is in `style.css` (~180 lines, CSS custom properties at
-  the top: `--bg` `--ink` `--ink-soft` `--rule` `--accent`; a single serif font
-  stack). Classes: `.wrap` / `.intro` / `.sig` / `.kicker` / `.projects` +
-  `.project-*` / `.rail` + `.entry-*` / `.skills` (a `<dl>`) / `.certs`
-  (`<details>`) / `.site-footer` / `.doc` (case-study prose).
+- **Design:** all of it is in `style.css` (~400 lines). Concept: a "caderno em
+  papel milimetrado" — the page sits on a faint CSS grid (`body::before`),
+  section dividers are labelled axes (`.axis` + `.axis-fig`), prose is serif and
+  every measurement is monospace. Custom properties at the top: `--paper` `--ink`
+  `--ink-soft` `--rule` `--grid` `--grid-bold` `--accent` (copper, text) /
+  `--accent-ink` (copper, graphics), plus `--fs-*` type scale and `--measure`.
+  Classes: `.wrap` / `.intro` + `.hero-mark` (inline-SVG signature) / `.axis` /
+  `.projects` + `.project-*` + `.project-glyph` (inline-SVG domain schematic) /
+  `.timeline` + `.tl-*` (CV Gantt on a real time axis; `--t0`/`--t1` on
+  `.timeline`, `--from`/`--to` on each `.tl-track`) / `.skills` (a `<dl>`) +
+  `.skill-meter` / `.cert-bar` + `.cert-legend` / `.certs` (`<details>`) /
+  `.site-footer` / `.doc` + `.sig` (case-study prose).
+- Inline SVG only (no asset files). The PR check parses SVG as HTML, so
+  **self-close every leaf** (`<path …/>`, `<line …/>`, `<rect …/>`, `<polyline …/>`).
 - **New certificate:** drop the PDF in `certificates/`, add an `<li>` in the
-  Certificações section of `index.html` (replace spaces with `%20` in the `href`),
-  bump the count in the `<summary>`.
+  right `.certs-group` of `index.html` (replace spaces with `%20` in the `href`),
+  bump: the `<summary>` count, the `.axis-fig` `[24]`, and the matching
+  `.cert-bar` span `flex:` value + `.cert-legend` number.
 - **Footer** and the `<head>` boilerplate are duplicated across the 3 pages —
   change all three when you touch them.
 

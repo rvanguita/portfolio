@@ -1,25 +1,37 @@
 /* ==========================================================================
    Portfólio — Rene Verinaud Anguita Junior
-   "Dossiê": coluna única, uma família tipográfica, um acento.
-   Site estático escrito à mão — sem framework, sem build.
+   "Caderno em papel milimetrado": a página assenta sobre um plano cartesiano;
+   os divisores são eixos com ticks; a prosa é serifada e toda medição é mono.
+   Site estático escrito à mão — sem framework, sem build, sem JS.
    ========================================================================== */
 
 :root {
-  --bg: #fcfcfb;
-  --ink: #1a1a1a;
-  --ink-soft: #6b6b68;
-  --rule: #e4e3df;
-  --accent: #3a5a78;
+  --paper:      #fbfaf7;
+  --ink:        #17181a;
+  --ink-soft:   #6b6b68;
+  --rule:       #d6d3ca;   /* eixos · divisores · borda de card · grid grosso */
+  --grid:       color-mix(in srgb, var(--ink) 4%, transparent);   /* mm fino  */
+  --grid-bold:  color-mix(in srgb, var(--ink) 6.5%, transparent); /* mm 5º    */
+  --accent:     #8f4a1a;   /* cobre escuro — links e texto (~5:1 no papel)     */
+  --accent-ink: #b0632a;   /* cobre vivo — traço e preenchimento de gráfico    */
 
-  --font-serif: Georgia, "Times New Roman", "Noto Serif", serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-serif: "Iowan Old Style", "Charter", Georgia, "Noto Serif", serif;
+  --font-mono:  ui-monospace, "SF Mono", "SFMono-Regular", Menlo, "Cascadia Mono",
+                Consolas, monospace;
+
+  --fs-xs:   0.75rem;
+  --fs-sm:   0.875rem;
+  --fs-base: 1rem;
+  --fs-md:   1.0625rem;
+  --fs-lg:   1.35rem;
+  --fs-xl:   2rem;
 
   --measure: 42rem;
 
   color-scheme: light;
 }
 
-/* --- reset ----------------------------------------------------------- */
+/* --- reset --------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 * { margin: 0; }
 html { -webkit-text-size-adjust: 100%; }
@@ -27,16 +39,32 @@ img, svg { display: block; max-width: 100%; }
 ul, ol { list-style: none; padding: 0; }
 button, input { font: inherit; }
 
-/* --- base ----------------------------------------------------------- */
+/* --- papel milimetrado (substrato fixo) -------------------------------- */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right,  var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px),
+    linear-gradient(to right,  var(--grid-bold) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-bold) 1px, transparent 1px);
+  background-size: 13px 13px, 13px 13px, 65px 65px, 65px 65px;
+}
+
+/* --- base ------------------------------------------------------------- */
+html { background: var(--paper); }
 body {
-  background: var(--bg);
+  background: var(--paper);
   color: var(--ink);
   font: 400 1.05rem/1.65 var(--font-serif);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-h1, h2, h3 { font-weight: 600; line-height: 1.25; }
+h1, h2, h3 { font-weight: 600; line-height: 1.2; }
 
 a {
   color: var(--accent);
@@ -53,12 +81,6 @@ code {
   font-size: 0.86em;
   background: color-mix(in srgb, var(--ink) 6%, transparent);
   padding: 0.05em 0.3em;
-  border-radius: 2px;
-}
-
-hr {
-  border: 0;
-  border-top: 1px solid var(--rule);
 }
 
 :focus-visible {
@@ -67,103 +89,264 @@ hr {
 }
 ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
 
-/* --- container ----------------------------------------------------- */
+/* --- container ------------------------------------------------------ */
 .wrap {
   max-width: var(--measure);
   margin-inline: auto;
-  padding: 4.5rem 1.5rem 6rem;
+  padding: 4rem 1.5rem 5rem;
 }
 section[id] { scroll-margin-top: 2rem; }
 
-/* --- intro -------------------------------------------------------- */
-.intro { margin-bottom: 4.5rem; }
-.intro h1 { font-size: 1.7rem; letter-spacing: -0.01em; }
-.intro .role { margin-top: 0.4rem; color: var(--ink-soft); }
-.intro .sig {
-  width: 2.5rem;
-  border-top: 2px solid var(--accent);
-  margin: 1.25rem 0 1.5rem;
+/* --- intro --------------------------------------------------------- */
+.intro { margin-bottom: 4rem; }
+.intro h1 { font-size: var(--fs-xl); letter-spacing: -0.02em; font-weight: 700; }
+.intro .role {
+  margin-top: 0.5rem;
+  font: 400 var(--fs-sm)/1.5 var(--font-mono);
+  color: var(--ink-soft);
 }
+.intro .lead { margin-top: 0.4rem; }
 .intro .lead p + p { margin-top: 0.9rem; }
 .intro .contact {
   margin-top: 1.5rem;
-  font-size: 0.95rem;
+  font: 400 var(--fs-sm)/1.7 var(--font-mono);
   color: var(--ink-soft);
 }
-.intro .contact .sep { margin: 0 0.5ch; }
+.intro .contact .sep { margin: 0 0.5ch; color: var(--rule); }
 
-/* --- blocos de seção -------------------------------------------- */
+/* marca do hero — esquema plotado (convergência de uma busca) --------- */
+.hero-mark {
+  width: 100%;
+  height: auto;
+  margin: 1.5rem 0 0.4rem;
+  overflow: visible;
+}
+.hm-frame { stroke: var(--rule); stroke-width: 1; fill: none; }
+.hm-tick  { stroke: var(--rule); stroke-width: 1; }
+.hm-curve {
+  fill: none;
+  stroke: var(--accent-ink);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.hm-label { fill: var(--ink-soft); font: 400 11px/1 var(--font-mono); }
+.mark-cap {
+  font: 400 var(--fs-xs)/1.2 var(--font-mono);
+  color: var(--ink-soft);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .hm-curve {
+    stroke-dasharray: 680;
+    stroke-dashoffset: 680;
+    animation: hm-draw 1.1s ease-out 0.2s forwards;
+  }
+}
+@keyframes hm-draw { to { stroke-dashoffset: 0; } }
+
+/* --- divisor de seção: um eixo rotulado --------------------------- */
 .block { margin-top: 4rem; }
-.kicker {
-  font-size: 0.78rem;
-  font-weight: 600;
+.axis {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  position: relative;
+}
+.axis::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 5px;
+  background: repeating-linear-gradient(
+    to right, var(--rule) 0 1px, transparent 1px 32px);
+}
+.axis h2 {
+  font: 600 var(--fs-xs)/1 var(--font-mono);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+}
+.axis-fig {
+  font: 400 var(--fs-xs)/1 var(--font-mono);
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- projetos: painéis rotulados sobre o papel ----------------- */
+.projects { display: grid; gap: 1.5rem; }
+.project {
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 1.1rem 1.2rem 1.2rem;
+}
+.project-glyph {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 0.8rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 1px dashed var(--rule);
+}
+.project-glyph svg { width: 76px; height: 34px; flex: none; }
+.project-glyph svg * {
+  stroke: var(--accent-ink);
+  fill: none;
+  stroke-width: 1.5;
+  vector-effect: non-scaling-stroke;
+}
+.project-glyph svg .fill { fill: var(--accent-ink); stroke: none; }
+.glyph-cap { font: 400 var(--fs-xs)/1.3 var(--font-mono); color: var(--ink-soft); }
+.project-cat {
+  font: 400 var(--fs-xs)/1.2 var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
-  margin-bottom: 1.5rem;
 }
-
-/* --- projetos -------------------------------------------------- */
-.projects { display: grid; gap: 1.9rem; }
-.project-cat {
-  font-size: 0.76rem;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+.project-title { font-size: var(--fs-md); margin-top: 0.25rem; }
+.project-desc  { margin-top: 0.4rem; }
+.project-tech  {
+  margin-top: 0.5rem;
+  font: 400 var(--fs-sm)/1.55 var(--font-mono);
   color: var(--ink-soft);
 }
-.project-title { font-size: 1.05rem; margin-top: 0.15rem; }
-.project-desc { margin-top: 0.3rem; }
-.project-tech {
-  margin-top: 0.4rem;
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-.project-links { margin-top: 0.5rem; font-size: 0.95rem; }
+.project-links { margin-top: 0.6rem; font-size: var(--fs-sm); }
 .project-links a + a { margin-left: 1.25rem; }
 
-/* --- trajetória (trilho de anos) ------------------------------ */
-.rail { display: grid; gap: 1.9rem; }
-.entry {
+/* --- trajetória: Gantt do CV num eixo de tempo real ------------ */
+/* .timeline e cada .tl-row compartilham o MESMO template de colunas,
+   então a trilha da direita tem geometria idêntica linha a linha e as
+   barras se alinham verticalmente num único eixo de tempo. */
+.timeline {
+  --tl-cols: minmax(0, 1.75fr) minmax(0, 1fr);
   display: grid;
-  grid-template-columns: 5.5rem 1fr;
-  gap: 0 1.5rem;
+  grid-template-columns: var(--tl-cols);
+  column-gap: 1.5rem;
+  row-gap: 1.6rem;
 }
-.entry-year {
-  font-size: 0.85rem;
+.tl-scale {
+  grid-column: 2;
+  position: relative;
+  height: 1.25rem;
+  border-bottom: 1px solid var(--rule);
+  font: 400 var(--fs-xs)/1 var(--font-mono);
   color: var(--ink-soft);
   font-variant-numeric: tabular-nums;
-  padding-top: 0.2em;
-  white-space: nowrap;
 }
-.entry-title { font-weight: 600; }
-.entry-org { margin-top: 0.15rem; font-size: 0.95rem; color: var(--ink-soft); }
-.entry-note { margin-top: 0.35rem; font-size: 0.95rem; }
+.tl-scale span {
+  position: absolute;
+  bottom: 5px;
+  left: calc((var(--y) - var(--t0)) / (var(--t1) - var(--t0)) * 100%);
+  transform: translateX(-50%);
+}
+.tl-scale span::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -6px;
+  width: 1px;
+  height: 4px;
+  background: var(--rule);
+}
+.tl-row {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: var(--tl-cols);
+  column-gap: 1.5rem;
+}
+.tl-years {
+  font: 400 var(--fs-xs)/1 var(--font-mono);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.tl-title { font-size: var(--fs-md); margin-top: 0.2rem; }
+.tl-org   { margin-top: 0.15rem; font-size: var(--fs-sm); color: var(--ink-soft); }
+.tl-note  { margin-top: 0.35rem; font-size: var(--fs-sm); }
+.tl-track {
+  position: relative;
+  min-height: 2.4rem;
+  /* colunas de 2 em 2 anos — o "papel" atrás das barras */
+  background: repeating-linear-gradient(
+    to right, var(--grid-bold) 0 1px, transparent 1px calc(100% / 7));
+}
+.tl-bar {
+  position: absolute;
+  top: 0.35rem;
+  left:  calc((var(--from) - var(--t0)) / (var(--t1) - var(--t0)) * 100%);
+  width: calc((var(--to)   - var(--from)) / (var(--t1) - var(--t0)) * 100%);
+  min-width: 5px;
+  height: 6px;
+  background: var(--accent-ink);
+}
 
-/* --- competências ------------------------------------------- */
-.skills { display: grid; gap: 1.25rem; }
-.skills dt { font-weight: 600; }
-.skills dd {
-  margin: 0.2rem 0 0;
-  font-size: 0.95rem;
+/* --- competências: barra pela contagem real de ferramentas ---- */
+.skills { display: grid; gap: 1.4rem; }
+.skill {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  column-gap: 1rem;
+  align-items: baseline;
+}
+.skill dt { grid-column: 1; font-weight: 600; }
+.skill-n {
+  grid-column: 2;
+  font: 400 var(--fs-xs)/1 var(--font-mono);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.skill dd {
+  grid-column: 1 / -1;
+  margin: 0.2rem 0 0.5rem;
+  font: 400 var(--fs-sm)/1.6 var(--font-mono);
   color: var(--ink-soft);
 }
-
-/* --- certificações (<details>) ----------------------------- */
-.certs > summary {
-  cursor: pointer;
-  font-weight: 600;
+.skill-meter { grid-column: 1 / -1; height: 4px; background: var(--grid-bold); }
+.skill-meter span {
+  display: block;
+  height: 100%;
+  width: calc(var(--n) / var(--nmax) * 100%);
+  background: var(--accent-ink);
 }
+
+/* --- certificações: barra segmentada (12 / 9 / 3 = 24) -------- */
+.certs > summary { cursor: pointer; font-weight: 600; }
 .certs > summary::marker { color: var(--ink-soft); }
+.cert-bar {
+  display: flex;
+  margin: 0 0 0.6rem;
+  height: 0.6rem;
+}
+.cert-bar span {
+  background: var(--accent-ink);
+  border-right: 2px solid var(--paper);
+}
+.cert-bar span:last-child { border-right: 0; }
+.cert-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-bottom: 1.1rem;
+  font: 400 var(--fs-xs)/1.4 var(--font-mono);
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.cert-legend b { color: var(--accent); font-weight: 700; margin-right: 0.35ch; }
 .certs-inner { margin-top: 1.5rem; display: grid; gap: 1.75rem; }
 .certs-group h3 {
-  font-size: 0.78rem;
+  font: 600 var(--fs-xs)/1 var(--font-mono);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-soft);
   margin-bottom: 0.7rem;
 }
 .certs-group ul { display: grid; gap: 0.45rem; }
-.certs-group li { font-size: 0.95rem; }
+.certs-group li { font-size: var(--fs-sm); }
 .certs-group .issuer { color: var(--ink-soft); }
 
 /* --- rodapé ------------------------------------------------- */
@@ -172,31 +355,44 @@ section[id] { scroll-margin-top: 2rem; }
   margin-inline: auto;
   padding: 2.5rem 1.5rem 3.5rem;
   border-top: 1px solid var(--rule);
-  font-size: 0.9rem;
+  font: 400 var(--fs-xs)/1.8 var(--font-mono);
   color: var(--ink-soft);
 }
-.site-footer .sep { margin: 0 0.5ch; }
+.site-footer .sep { margin: 0 0.5ch; color: var(--rule); }
 
 /* --- estudo de caso -------------------------------------- */
-.doc .backlink { font-size: 0.9rem; }
-.doc h1 { font-size: 1.5rem; margin: 1.5rem 0 0; }
-.doc .sig {
-  width: 2.5rem;
-  border-top: 2px solid var(--accent);
-  margin: 1.25rem 0 1.5rem;
-}
+.doc .backlink { font: 400 var(--fs-sm)/1 var(--font-mono); }
+.doc h1 { font-size: var(--fs-lg); margin: 1.25rem 0 0; letter-spacing: -0.01em; }
 .doc .lead { color: var(--ink-soft); }
 .doc p + p { margin-top: 1rem; }
 .doc .tech {
   margin-top: 1.5rem;
-  font-size: 0.9rem;
+  font: 400 var(--fs-sm)/1.6 var(--font-mono);
   color: var(--ink-soft);
 }
-.doc .repo { margin-top: 1.75rem; font-size: 0.95rem; }
+.doc .repo { margin-top: 1.75rem; font-size: var(--fs-sm); }
+
+/* régua-eixo (hero dos estudos de caso) */
+.sig {
+  height: 6px;
+  border: 0;
+  margin: 1rem 0 1.5rem;
+  background:
+    linear-gradient(var(--accent-ink), var(--accent-ink)) left top / 2.5rem 2px no-repeat,
+    repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 12px)
+      left bottom / 100% 4px no-repeat;
+}
 
 /* --- estreito ------------------------------------------- */
 @media (max-width: 32rem) {
-  .wrap { padding: 2.5rem 1.25rem 4rem; }
-  .entry { grid-template-columns: 1fr; gap: 0.2rem; }
-  .entry-year { padding-top: 0; }
+  .wrap { padding: 2.5rem 1.25rem 3.5rem; }
+  .intro h1 { font-size: 1.6rem; }
+  /* a timeline colapsa para a lista empilhada — sem o Gantt */
+  .timeline, .tl-row { grid-template-columns: 1fr; }
+  .timeline { row-gap: 1.5rem; }
+  .tl-scale, .tl-track { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
 }
