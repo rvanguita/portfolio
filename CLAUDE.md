@@ -44,6 +44,14 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   `.site-footer` / `.doc` + `.sig` (case-study prose).
 - Inline SVG only (no asset files). The PR check parses SVG as HTML, so
   **self-close every leaf** (`<path …/>`, `<line …/>`, `<rect …/>`, `<polyline …/>`).
+- **Dark mode:** automatic via `prefers-color-scheme`, plus a manual override —
+  a hidden `#theme-toggle` checkbox + `.theme-toggle-btn` label (fixed circle,
+  bottom-right), matched by `:root:has(#theme-toggle:checked)` in CSS. Zero JS.
+  Every color **must** be one of the 8 tokens (never a bare hex) — the `:root`,
+  `@media (prefers-color-scheme: dark)`, and `:has(#theme-toggle:checked)`
+  blocks at the top of `style.css` are the only place colors are defined. The
+  toggle markup is duplicated across the 3 pages, right after `<body>` (same
+  pattern as the footer/head boilerplate).
 - **New certificate:** drop the PDF in `certificates/`, add an `<li>` in the
   right `.certs-group` of `index.html` (replace spaces with `%20` in the `href`),
   bump: the `<summary>` count, the `.axis-fig` `[24]`, and the matching

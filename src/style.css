@@ -28,7 +28,42 @@
 
   --measure: 42rem;
 
-  color-scheme: light;
+  color-scheme: light dark;
+}
+
+/* --- modo escuro: automático (SO) + override manual (checkbox, sem JS) --
+   "o mesmo caderno, à noite" — mesmos tokens, tons invertidos com cuidado;
+   o cobre fica mais claro/saturado pra manter contraste no papel quase-preto.
+   4 combinações resolvidas em cascata pura: claro auto, escuro auto,
+   claro→forçado-escuro (o checkbox marcado) e escuro→forçado-claro (o
+   checkbox marcado quando o SO já está escuro, por cima do bloco anterior). */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:      #17150f;
+    --ink:        #f2efe6;
+    --ink-soft:   #9c988c;
+    --rule:       #3c392f;
+    --accent:     #e2955f;
+    --accent-ink: #e8a06e;
+  }
+}
+:root:has(#theme-toggle:checked) {
+  --paper:      #17150f;
+  --ink:        #f2efe6;
+  --ink-soft:   #9c988c;
+  --rule:       #3c392f;
+  --accent:     #e2955f;
+  --accent-ink: #e8a06e;
+}
+@media (prefers-color-scheme: dark) {
+  :root:has(#theme-toggle:checked) {
+    --paper:      #fbfaf7;
+    --ink:        #17181a;
+    --ink-soft:   #6b6b68;
+    --rule:       #d6d3ca;
+    --accent:     #8f4a1a;
+    --accent-ink: #b0632a;
+  }
 }
 
 /* --- reset --------------------------------------------------------------- */
@@ -88,6 +123,45 @@ code {
   outline-offset: 2px;
 }
 ::selection { background: color-mix(in srgb, var(--accent) 22%, transparent); }
+
+/* --- toggle de tema: checkbox oculto + botão fixo, sem JS ------------ */
+.theme-toggle {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0; border: 0;
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+.theme-toggle-btn {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 10;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.theme-toggle-btn:hover { border-color: var(--accent-ink); }
+.theme-toggle-btn svg {
+  width: 1.1rem;
+  height: 1.1rem;
+  stroke: var(--accent-ink);
+  fill: none;
+  stroke-width: 1.6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.theme-toggle:focus-visible + .theme-toggle-btn {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
 
 /* --- container ------------------------------------------------------ */
 .wrap {
