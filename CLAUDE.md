@@ -27,6 +27,18 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
 
 ## Editing
 
+- **Design changes are gated on the `frontend-design` skill.** Before writing
+  or editing CSS in `style.css`, or any structural/visual HTML (new component,
+  new layout, new class — not plain copy edits), invoke the `frontend-design`
+  skill (`.claude/skill/frontend-design/SKILL.md`) first and follow its
+  process. This applies to every session, on any machine, no exceptions. Plain
+  content edits (text, links, a new certificate `<li>`) don't need it. Don't
+  confuse this with the other vendored skill, `.claude/skill/frontend-patterns`
+  — that one is React/Next.js component patterns and doesn't apply to this
+  plain-HTML site. (On the maintainer's machine this is additionally enforced
+  by a local hook in `.claude/settings.json` that blocks edits to `style.css`
+  until the skill has run in the session — that hook is gitignored and won't
+  exist on a fresh clone, so this written rule is the only guarantee elsewhere.)
 - **Content:** edit the text directly in the HTML files. The home page holds all
   the profile/projects/timeline/skills/certificates content; each case study is
   self-contained.
