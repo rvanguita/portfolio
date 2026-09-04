@@ -24,6 +24,7 @@ PAGES = [
 DEPLOY_TARGETS = [
     f"{ROOT}/index.html", f"{ROOT}/style.css", f"{ROOT}/icon.png", f"{ROOT}/.nojekyll",
     f"{ROOT}/projects", f"{ROOT}/certificates", f"{ROOT}/assets",
+    f"{ROOT}/robots.txt", f"{ROOT}/sitemap.xml",
 ]
 VOID = {
     "meta", "link", "br", "hr", "img", "input", "area", "base",
