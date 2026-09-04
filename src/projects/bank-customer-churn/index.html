@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bank Customer Churn Prediction · rvanguita</title>
+  <meta name="description" content="Estudo de caso: previsão de evasão de clientes de um banco europeu com XGBoost (ROC AUC 93,6%), comparação com CatBoost e LightGBM, engenharia de features e interpretabilidade via SHAP.">
+  <link rel="canonical" href="https://rvanguita.github.io/portfolio/projects/bank-customer-churn/">
+  <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#17150f" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="../../icon.png">
+  <link rel="stylesheet" href="../../style.css">
+
+  <meta property="og:type" content="article">
+  <meta property="og:locale" content="pt_BR">
+  <meta property="og:site_name" content="rvanguita">
+  <meta property="og:url" content="https://rvanguita.github.io/portfolio/projects/bank-customer-churn/">
+  <meta property="og:title" content="Bank Customer Churn Prediction · rvanguita">
+  <meta property="og:description" content="Estudo de caso: previsão de evasão de clientes de um banco europeu com XGBoost (ROC AUC 93,6%), comparação com CatBoost e LightGBM, engenharia de features e interpretabilidade via SHAP.">
+  <meta property="og:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Bank Customer Churn Prediction · rvanguita">
+  <meta name="twitter:description" content="Estudo de caso: previsão de evasão de clientes de um banco europeu com XGBoost (ROC AUC 93,6%), comparação com CatBoost e LightGBM, engenharia de features e interpretabilidade via SHAP.">
+  <meta name="twitter:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
+</head>
+<body>
+<input type="checkbox" id="theme-toggle" class="theme-toggle">
+<label for="theme-toggle" class="theme-toggle-btn" aria-label="Alternar tema claro/escuro">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg>
+</label>
+<main>
+<article class="wrap doc">
+
+  <a class="backlink" href="../../#projetos">← Projetos</a>
+
+  <h1>Bank Customer Churn Prediction</h1>
+  <hr class="sig" aria-hidden="true">
+
+  <svg class="hero-mark" viewBox="0 0 640 110" role="img" aria-label="Esquema do risco de evasão de um cliente crescendo com o tempo sem engajamento e cruzando um limiar de alerta, ponto em que o modelo sinaliza risco de churn.">
+    <path class="hm-frame" d="M44 10 V90 H620" />
+    <path class="hm-tick" style="stroke-dasharray:4 4" d="M44 45 H620" />
+    <polyline class="hm-curve" style="stroke-dasharray:900;stroke-dashoffset:900" points="48,85 120,80 200,72 280,60 340,48 380,38 440,26 520,20 600,16" />
+    <text class="hm-label" x="4" y="16">risco</text>
+    <text class="hm-label" x="50" y="41">limiar de alerta</text>
+    <text class="hm-label" x="620" y="106" text-anchor="end">tempo sem engajamento →</text>
+  </svg>
+  <p class="mark-cap">risco de evasão cruzando o limiar — sinal para ação de retenção</p>
+
+  <p class="lead">
+    Identificar, antes do cancelamento, quais clientes de um banco europeu têm
+    maior propensão a encerrar a conta. Reter um cliente custa bem menos do
+    que adquirir um novo — no dataset analisado, <strong>20,4%</strong> da base
+    havia deixado o banco no período coberto pelos dados.
+  </p>
+
+  <p>
+    A engenharia de features agrupou <strong>idade</strong> em faixas e
+    <strong>saldo</strong> em categorias, e cruzou as duas variáveis via
+    features polinomiais (idade², saldo², idade×saldo) — a análise exploratória
+    já apontava essa combinação como relevante. Uma decisão deliberada: a
+    coluna de reclamações do cliente foi <strong>excluída</strong> do
+    treinamento, porque no dataset praticamente todo cliente que reclamou
+    também saiu do banco — mantê-la tornaria a previsão artificialmente
+    trivial e escondida atrás de uma variável de vazamento, em vez de um
+    padrão de comportamento real.
+  </p>
+
+  <p>
+    Três modelos de árvore em gradient boosting — <strong>CatBoost</strong>,
+    <strong>LightGBM</strong> e <strong>XGBoost</strong> — foram comparados com
+    validação cruzada. O CatBoost teve o melhor ROC AUC, mas com tempo de
+    inferência cerca de <strong>5×</strong> maior que o XGBoost; para um
+    ganho marginal de métrica, XGBoost foi o modelo levado a produção, com
+    <strong>ROC AUC de 93,6%</strong>, acurácia de 90,4% e Coeficiente de
+    Matthews de 0,67 no conjunto de teste.
+  </p>
+
+  <p>
+    A análise <strong>SHAP</strong> aponta idade — sobretudo em faixas mais
+    avançadas — e ter exatamente dois produtos contratados como os fatores de
+    maior impacto na previsão. Vale uma ressalva de rigor: métricas dessa
+    magnitude num problema de churn são incomuns em dados de produção real,
+    o que sugere que o dataset público usado carrega algum viés de geração —
+    um ponto discutido no próprio repositório, não escondido dos resultados.
+  </p>
+
+  <p class="tech">Tecnologias: Python · CatBoost · LightGBM · XGBoost · SHAP · MLflow · Docker</p>
+
+  <p class="repo">
+    <a href="https://github.com/rvanguita/bank-customer-churn" target="_blank" rel="noopener noreferrer">Repositório no GitHub ↗</a>
+  </p>
+
+</article>
+</main>
+
+<footer class="site-footer">
+  Rene Verinaud Anguita Junior, Ph.D.
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="mailto:renevajr@gmail.com">renevajr@gmail.com</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://github.com/rvanguita" target="_blank" rel="noopener noreferrer">GitHub</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="https://linkedin.com/in/rvanguita" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <span class="sep" aria-hidden="true">·</span>
+  <a href="../../assets/dossie-rene-anguita.pdf" target="_blank" rel="noopener noreferrer">Dossiê (PDF)</a>
+  <span class="sep" aria-hidden="true">·</span>© 2026
+</footer>
+</body>
+</html>

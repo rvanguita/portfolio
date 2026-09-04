@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verificação do site estático — sem dependências.
 
-- as 3 páginas existem, têm tags balanceadas, um <h1>, lang=pt-BR e <title>;
+- as 4 páginas existem, têm tags balanceadas, um <h1>, lang=pt-BR e <title>;
 - todo href local (não http/mailto) aponta para um arquivo real;
 - os alvos que o deploy copia existem.
 Sai com código != 0 se algo falhar.
@@ -19,6 +19,7 @@ PAGES = [
     f"{ROOT}/index.html",
     f"{ROOT}/projects/wind-farm/index.html",
     f"{ROOT}/projects/lake-fastf1/index.html",
+    f"{ROOT}/projects/bank-customer-churn/index.html",
 ]
 DEPLOY_TARGETS = [
     f"{ROOT}/index.html", f"{ROOT}/style.css", f"{ROOT}/icon.png", f"{ROOT}/.nojekyll",
