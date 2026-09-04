@@ -60,12 +60,18 @@ Os seis projetos em destaque no site, todos com repositório público:
 ## Editar
 
 Abra `index.html` (ou uma das páginas em `projects/`) e edite o texto direto no
-HTML. A aparência inteira está em `style.css` (~200 linhas, variáveis CSS no
-topo: `--bg` `--ink` `--ink-soft` `--rule` `--accent`).
+HTML. A aparência inteira está em `style.css` (~400 linhas). O conceito é um
+"caderno em papel milimetrado": a página assenta sobre um grid CSS tênue, os
+divisores de seção são eixos rotulados, a prosa é serifada e toda medição é
+monoespaçada. Variáveis CSS no topo: `--paper` `--ink` `--ink-soft` `--rule`
+`--grid` `--grid-bold` `--accent` (cobre, texto) / `--accent-ink` (cobre,
+gráficos), mais a escala `--fs-*`. Gráficos são SVG inline — sem arquivos de
+imagem.
 
 - **Novo certificado:** coloque o PDF em `certificates/`, adicione um `<li>` na
   seção **Certificações** do `index.html` (troque espaços por `%20` no `href`) e
-  atualize a contagem no `<summary>`.
+  atualize a contagem no `<summary>`, o `[24]` do `.axis-fig` e o segmento
+  correspondente da `.cert-bar` / `.cert-legend`.
 - **`<head>` e rodapé** são copiados nas 3 páginas — ao mexer num, mexa nos três.
 
 ## Ver localmente
