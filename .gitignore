@@ -1,14 +1,6 @@
-# Site é HTML/CSS puro — nada de build. Estas entradas só barram sobras de
-# ferramentas antigas e artefatos locais.
+# Site HTML/CSS puro, sem build. Só artefatos locais e dados pessoais.
 _site/
-node_modules/
-.next/
-out/
-*.tsbuildinfo
-next-env.d.ts
-
-.DS_Store
 .claude/
-
-# Dados pessoais locais — nunca versionar
+*.swp
+.DS_Store
 Profile.pdf
