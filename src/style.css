@@ -163,6 +163,34 @@ code {
   outline-offset: 2px;
 }
 
+/* --- mini-nav: navegação + resumo (reaproveita o .axis-fig de cada
+   seção — não é decorativo, é o mesmo dado real mostrado lá embaixo) --- */
+.mini-nav {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  gap: 0;
+  align-items: baseline;
+  overflow-x: auto;
+  padding: 0.7rem 0;
+  background: var(--paper);
+  border-bottom: 1px solid var(--rule);
+  font: 400 var(--fs-xs)/1 var(--font-mono);
+  white-space: nowrap;
+}
+.mini-nav a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.mini-nav a:hover, .mini-nav a:focus-visible { color: var(--ink); }
+.mini-nav a span {
+  color: var(--accent);
+  margin-left: 0.4em;
+  font-variant-numeric: tabular-nums;
+}
+.mini-nav .sep { margin: 0 0.9ch; color: var(--rule); }
+
 /* --- container ------------------------------------------------------ */
 .wrap {
   max-width: var(--measure);
@@ -469,4 +497,41 @@ section[id] { scroll-margin-top: 2rem; }
 
 @media (prefers-reduced-motion: reduce) {
   * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+}
+
+/* --- impressão: um dossiê limpo, claro, sem interface --------------- */
+@media print {
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --ink-soft: #444444;
+    --rule: #bbbbbb;
+    --grid: transparent;
+    --grid-bold: transparent;
+    --accent: #8f4a1a;
+    --accent-ink: #8f4a1a;
+  }
+  body::before,
+  .theme-toggle, .theme-toggle-btn,
+  .mini-nav {
+    display: none !important;
+  }
+  a { color: var(--ink) !important; text-decoration: underline; }
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.75em;
+    color: var(--ink-soft);
+  }
+  .hm-curve { animation: none !important; stroke-dashoffset: 0 !important; }
+  .certs > summary { cursor: default; }
+  .certs > summary::marker, .certs > summary::-webkit-details-marker { display: none; }
+  /* Closed <details> content lives in ::details-content, hidden via
+     content-visibility (not display) — override that so it prints. */
+  .certs::details-content { content-visibility: visible !important; }
+  .certs-inner { display: grid !important; }
+  .project, .tl-row, .skill, .certs-group {
+    break-inside: avoid;
+    page-break-inside: avoid;
+  }
+  .wrap { padding-top: 0; padding-bottom: 0; }
 }
