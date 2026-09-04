@@ -10,19 +10,20 @@ framework, sem build, sem dependências.
 ## Estrutura
 
 ```
-index.html                       página única ("dossiê"): intro · projetos ·
+src/                             fonte do site — é o que o Pages publica
+  index.html                     página única ("dossiê"): intro · projetos ·
                                  trajetória · competências · certificações
-style.css                        folha única, compartilhada pelas 3 páginas
-projects/wind-farm/index.html    estudo de caso (prosa curta + link do repo)
-projects/lake-fastf1/index.html  estudo de caso
-certificates/                    24 PDFs de certificado, em subpastas
-assets/social-card.png           imagem de compartilhamento (Open Graph)
-icon.png                         favicon
-.nojekyll                        impede o GitHub Pages de rodar Jekyll
+  style.css                      folha única, compartilhada pelas 3 páginas
+  projects/wind-farm/index.html  estudo de caso (prosa curta + link do repo)
+  projects/lake-fastf1/index.html  estudo de caso
+  certificates/                  24 PDFs de certificado, em subpastas
+  assets/social-card.png         imagem de compartilhamento (Open Graph)
+  icon.png                       favicon
+  .nojekyll                      impede o GitHub Pages de rodar Jekyll
 .github/check.py                 validador do site (Python puro, sem deps)
 .github/workflows/ci.yml         roda o check.py em cada PR para main
-.github/workflows/deploy.yml     copia o site para o GitHub Pages (sem build)
-CLAUDE.md · AGENTS.md            guia para agentes de código
+.github/workflows/deploy.yml     publica src/ no GitHub Pages (sem build)
+CLAUDE.md                        guia para agentes de código
 ```
 
 Todos os links (navegação, CSS, favicon, PDFs) são **relativos** — o site
@@ -77,17 +78,16 @@ imagem.
 ## Ver localmente
 
 ```bash
-python3 -m http.server 8000      # na raiz do repo
+python3 -m http.server 8000 -d src   # na raiz do repo
 ```
 
-Abra <http://localhost:8000/>. Ou simplesmente abra `index.html` no navegador.
+Abra <http://localhost:8000/>. Ou abra `src/index.html` no navegador.
 
 ## Publicar
 
-Push em `main` → `.github/workflows/deploy.yml` copia
-`index.html style.css icon.png .nojekyll projects/ certificates/ assets/` para
-`_site/` e publica no GitHub Pages. Também dá para disparar manualmente pelo
-Actions (`workflow_dispatch`).
+Push em `main` → `.github/workflows/deploy.yml` publica o diretório `src/`
+(que já é o site, com `.nojekyll`) no GitHub Pages. Também dá para disparar
+manualmente pelo Actions (`workflow_dispatch`).
 
 Pull requests para `main` passam por `.github/workflows/ci.yml`, que roda
 `python3 .github/check.py`: confere que as 3 páginas existem, têm tags

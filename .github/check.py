@@ -14,14 +14,15 @@ import sys
 import urllib.parse
 from html.parser import HTMLParser
 
+ROOT = "src"
 PAGES = [
-    "index.html",
-    "projects/wind-farm/index.html",
-    "projects/lake-fastf1/index.html",
+    f"{ROOT}/index.html",
+    f"{ROOT}/projects/wind-farm/index.html",
+    f"{ROOT}/projects/lake-fastf1/index.html",
 ]
 DEPLOY_TARGETS = [
-    "index.html", "style.css", "icon.png", ".nojekyll",
-    "projects", "certificates", "assets",
+    f"{ROOT}/index.html", f"{ROOT}/style.css", f"{ROOT}/icon.png", f"{ROOT}/.nojekyll",
+    f"{ROOT}/projects", f"{ROOT}/certificates", f"{ROOT}/assets",
 ]
 VOID = {
     "meta", "link", "br", "hr", "img", "input", "area", "base",
