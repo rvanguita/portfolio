@@ -73,8 +73,11 @@
 
   <p>
     A análise <strong>SHAP</strong> quantifica a contribuição de cada variável
-    na previsão — a velocidade do vento é a mais relevante. O modelo alcançou
-    erro de previsão baixo e bom ajuste.
+    na previsão — a velocidade do vento é a mais relevante. Entre as técnicas
+    de validação temporal comparadas, a janela expansível não teve o menor
+    erro absoluto, mas foi a que teve o menor viés relativo entre meses —
+    critério de escolha para produção, não só a métrica isolada. Resultado:
+    <strong>R² de 81,9%</strong>, RMSE de 12,41 e MAE de 8,76.
   </p>
 
   <p class="tech">Tecnologias: Python · XGBoost · SHAP · Pandas · Matplotlib</p>
