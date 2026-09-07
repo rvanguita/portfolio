@@ -7,7 +7,50 @@ framework, sem build, sem dependências.
 - **Publicado:** <https://rvanguita.github.io/portfolio/>
 - **GitHub:** <https://github.com/rvanguita> · **LinkedIn:** <https://linkedin.com/in/rvanguita>
 
+## Como é feito
+
+Fluxo de ponta a ponta, sem build: editar HTML/CSS à mão, abrir PR, o CI valida,
+o merge publica.
+
+```mermaid
+flowchart TD
+    edit["Editar à mão<br/>src/*.html · src/style.css · SVG inline"]
+    pr["Pull request para main"]
+    ci{"CI · .github/check.py<br/>páginas, tags, links locais,<br/>alvos de deploy"}
+    merge["Merge em main<br/>(check obrigatório)"]
+    deploy["deploy.yml<br/>publica src/ no GitHub Pages"]
+    live(["rvanguita.github.io/portfolio/"])
+
+    edit --> pr --> ci
+    ci -- falha --> edit
+    ci -- ok --> merge --> deploy --> live
+```
+
 ## Estrutura
+
+```mermaid
+flowchart TD
+    repo["portfolio/"]
+    repo --> src["src/ — é o que o Pages publica"]
+    repo --> gh[".github/"]
+    repo --> guides["CLAUDE.md · README.md"]
+
+    src --> index["index.html — dossiê de página única"]
+    src --> css["style.css — folha única, 4 páginas"]
+    src --> projects["projects/ — estudos de caso"]
+    src --> certificates["certificates/ — 24 PDFs"]
+    src --> assets["assets/ — social-card.png · dossiê.pdf"]
+    src --> statics["icon.png · .nojekyll · robots.txt · sitemap.xml"]
+
+    projects --> cs1["wind-farm/"]
+    projects --> cs2["lake-fastf1/"]
+    projects --> cs3["bank-customer-churn/"]
+
+    gh --> check["check.py — validador (Python puro)"]
+    gh --> flows["workflows/ — ci.yml · deploy.yml"]
+```
+
+Em detalhe:
 
 ```
 src/                             fonte do site — é o que o Pages publica
@@ -22,6 +65,8 @@ src/                             fonte do site — é o que o Pages publica
   assets/dossie-rene-anguita.pdf  snapshot do site inteiro em PDF
   icon.png                       favicon
   .nojekyll                      impede o GitHub Pages de rodar Jekyll
+  robots.txt                     permite rastreio; aponta para o sitemap
+  sitemap.xml                    mapa do site para buscadores
 .github/check.py                 validador do site (Python puro, sem deps)
 .github/workflows/ci.yml         roda o check.py em cada PR para main
 .github/workflows/deploy.yml     publica src/ no GitHub Pages (sem build)
