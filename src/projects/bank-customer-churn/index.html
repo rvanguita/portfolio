@@ -33,6 +33,8 @@
 
   <a class="backlink" href="../../#projetos">← Projetos</a>
 
+  <div class="doc-fig"><span>Fig. 03</span> · Classificação · Risco</div>
+
   <h1>Bank Customer Churn Prediction</h1>
   <hr class="sig" aria-hidden="true">
 
@@ -40,7 +42,7 @@
     <svg class="hero-mark" viewBox="0 0 640 110" role="img" aria-label="Esquema do risco de evasão de um cliente crescendo com o tempo sem engajamento e cruzando um limiar de alerta, ponto em que o modelo sinaliza risco de churn.">
       <path class="hm-frame" d="M44 10 V90 H620" />
       <path class="hm-tick" style="stroke-dasharray:4 4" d="M44 45 H620" />
-      <polyline class="hm-curve" style="stroke-dasharray:900;stroke-dashoffset:900" points="48,85 120,80 200,72 280,60 340,48 380,38 440,26 520,20 600,16" />
+      <polyline class="hm-curve" points="48,85 120,80 200,72 280,60 340,48 380,38 440,26 520,20 600,16" />
       <text class="hm-label" x="4" y="16">risco</text>
       <text class="hm-label" x="50" y="41">limiar de alerta</text>
       <text class="hm-label" x="620" y="106" text-anchor="end">tempo sem engajamento →</text>
@@ -55,36 +57,61 @@
     havia deixado o banco no período coberto pelos dados.
   </p>
 
-  <p>
-    A engenharia de features agrupou <strong>idade</strong> em faixas e
-    <strong>saldo</strong> em categorias, e cruzou as duas variáveis via
-    features polinomiais (idade², saldo², idade×saldo) — a análise exploratória
-    já apontava essa combinação como relevante. Uma decisão deliberada: a
-    coluna de reclamações do cliente foi <strong>excluída</strong> do
-    treinamento, porque no dataset praticamente todo cliente que reclamou
-    também saiu do banco — mantê-la tornaria a previsão artificialmente
-    trivial e escondida atrás de uma variável de vazamento, em vez de um
-    padrão de comportamento real.
-  </p>
+  <section class="doc-sec">
+    <h2>Problema</h2>
+    <p>
+      O banco precisa de uma lista priorizada de contas em risco para direcionar
+      ações de retenção, e de uma leitura do <em>porquê</em> de cada risco — não
+      só um rótulo. O alvo é a probabilidade de evasão por cliente, com os
+      fatores que a explicam.
+    </p>
+  </section>
 
-  <p>
-    Três modelos de árvore em gradient boosting — <strong>CatBoost</strong>,
-    <strong>LightGBM</strong> e <strong>XGBoost</strong> — foram comparados com
-    validação cruzada. O CatBoost teve o melhor ROC AUC, mas com tempo de
-    inferência cerca de <strong>5×</strong> maior que o XGBoost; para um
-    ganho marginal de métrica, XGBoost foi o modelo levado a produção, com
-    <strong>ROC AUC de 93,6%</strong>, acurácia de 90,4% e Coeficiente de
-    Matthews de 0,67 no conjunto de teste.
-  </p>
+  <section class="doc-sec">
+    <h2>Dados</h2>
+    <p>
+      Base pública do Kaggle com cerca de 10 mil clientes e 20,4% de evasão. Uma
+      decisão deliberada: a coluna de reclamações foi <strong>excluída</strong>
+      do treinamento, porque praticamente todo cliente que reclamou também saiu
+      do banco — mantê-la tornaria a previsão artificialmente trivial, escondida
+      atrás de uma variável de vazamento em vez de um padrão de comportamento
+      real.
+    </p>
+  </section>
 
-  <p>
-    A análise <strong>SHAP</strong> aponta idade — sobretudo em faixas mais
-    avançadas — e ter exatamente dois produtos contratados como os fatores de
-    maior impacto na previsão. Vale uma ressalva de rigor: métricas dessa
-    magnitude num problema de churn são incomuns em dados de produção real,
-    o que sugere que o dataset público usado carrega algum viés de geração —
-    um ponto discutido no próprio repositório, não escondido dos resultados.
-  </p>
+  <section class="doc-sec">
+    <h2>Método</h2>
+    <p>
+      A engenharia de features agrupou <strong>idade</strong> em faixas e
+      <strong>saldo</strong> em categorias, e cruzou as duas variáveis via
+      features polinomiais (idade², saldo², idade×saldo) — combinação que a
+      análise exploratória já apontava como relevante.
+    </p>
+    <p>
+      Três modelos de gradient boosting — <strong>CatBoost</strong>,
+      <strong>LightGBM</strong> e <strong>XGBoost</strong> — foram comparados com
+      validação cruzada. O CatBoost teve o melhor ROC AUC, mas com inferência
+      cerca de <strong>5×</strong> mais lenta; para um ganho marginal de métrica,
+      o XGBoost foi o modelo levado a produção.
+    </p>
+  </section>
+
+  <section class="doc-sec">
+    <h2>Resultado</h2>
+    <p>
+      No conjunto de teste, o XGBoost atinge <strong>ROC AUC de 93,6%</strong>,
+      acurácia de 90,4% e Coeficiente de Matthews de 0,67 (≈ 0,868 de ROC AUC em
+      validação cruzada). A análise <strong>SHAP</strong> aponta idade — em
+      faixas mais avançadas — e ter exatamente dois produtos contratados como os
+      fatores de maior impacto.
+    </p>
+    <p>
+      Vale a ressalva: métricas dessa magnitude num problema de churn são
+      incomuns em dados de produção real, o que sugere que o dataset público
+      carrega algum viés de geração — um ponto discutido no próprio repositório,
+      não escondido dos resultados.
+    </p>
+  </section>
 
   <p class="tech">Tecnologias: Python · CatBoost · LightGBM · XGBoost · SHAP · MLflow · Docker</p>
 

@@ -168,93 +168,159 @@
       <h2 id="projetos-h">Projetos</h2>
       <span class="axis-fig">[06]</span>
     </div>
-    <div class="projects">
+    <div class="figs">
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><path d="M3 8 H73 M3 17 H60 M3 26 H47" /></svg>
-          <span class="glyph-cap">camadas do lakehouse</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 01</span>
+          <span class="fig-cat">Lakehouse · MLOps</span>
         </div>
-        <p class="project-cat">Lakehouse &amp; MLOps</p>
-        <h3 class="project-title">FastF1 Data Platform</h3>
-        <p class="project-desc">Transformar dados de corridas em uma plataforma confiável para análise e previsão.</p>
-        <p class="project-tech">FastF1 · Airflow · Delta Lake · PySpark · FastAPI · Streamlit · MLflow · Docker</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">FastF1 Data Platform</h3>
+          <p class="fig-metric"><span class="fig-metric-label">escopo</span>ponta a ponta</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Consolidar resultados históricos de Fórmula 1 numa base confiável — ingestão, curadoria e serving num fluxo único.</dd>
+          <dt>dados</dt>
+          <dd>API FastF1 — sessões de corrida e sprint por temporada; camada Raw em Parquet, Bronze e Silver em Delta Lake, espelho em MySQL.</dd>
+          <dt>método</dt>
+          <dd>Pipeline medalhão orquestrado por uma DAG semanal do Airflow; modelo de campeonato (Random Forest calibrado) versionado no MLflow, servido por FastAPI e explorado no Streamlit.</dd>
+          <dt>resultado</dt>
+          <dd>Plataforma ponta a ponta funcionando; o modelo preditivo segue experimental, ainda sem métrica publicada.</dd>
+        </dl>
+        <p class="fig-stack">FastF1 · Airflow · Delta Lake · PySpark · scikit-learn · MLflow · FastAPI · Streamlit · Docker</p>
+        <p class="fig-links">
           <a href="projects/lake-fastf1/">Estudo de caso →</a>
           <a href="https://github.com/rvanguita/lake-fastf1" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </p>
       </article>
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><polyline points="3,30 20,29 32,22 44,10 58,5 73,5" /></svg>
-          <span class="glyph-cap">curva de potência</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 02</span>
+          <span class="fig-cat">Regressão · Energia</span>
         </div>
-        <p class="project-cat">Regressão &amp; Energia Renovável</p>
-        <h3 class="project-title">Modelagem da Geração de Energia Eólica</h3>
-        <p class="project-desc">Prever a geração de energia de quatro turbinas eólicas ao longo de um ano, com curvas de geração não lineares — XGBRegressor com R² de 81,9%.</p>
-        <p class="project-tech">Python · XGBoost · SHAP · Pandas · Matplotlib</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">Modelagem da Geração de Energia Eólica</h3>
+          <p class="fig-metric"><span class="fig-metric-label">R²</span>0,819</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Prever a geração de turbinas eólicas onshore ao longo de um ano — curva de potência não linear e série sazonal descartam modelo linear e validação cruzada comum.</dd>
+          <dt>dados</dt>
+          <dd>Dataset público do Zenodo — seis turbinas e três mastros meteorológicos, amostras a cada 10 min; modeladas as turbinas onshore WT3–WT4 com cinco variáveis ambientais.</dd>
+          <dt>método</dt>
+          <dd>XGBRegressor; seis esquemas de validação temporal comparados, com a janela expansível escolhida pelo menor viés sazonal entre meses — não só pelo erro.</dd>
+          <dt>resultado</dt>
+          <dd>R² 0,819 · RMSE 12,41 · MAE 8,76; a análise SHAP aponta a velocidade do vento como variável dominante.</dd>
+        </dl>
+        <p class="fig-stack">Python · XGBoost · SHAP · Pandas · Matplotlib</p>
+        <p class="fig-links">
           <a href="projects/wind-farm/">Estudo de caso →</a>
           <a href="https://github.com/rvanguita/wind-farm" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </p>
       </article>
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><polyline points="3,25 34,25 34,9 73,9" /></svg>
-          <span class="glyph-cap">função degrau</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 03</span>
+          <span class="fig-cat">Classificação · Risco</span>
         </div>
-        <p class="project-cat">Classificação &amp; Negócios</p>
-        <h3 class="project-title">Bank Customer Churn Prediction</h3>
-        <p class="project-desc">Identificar clientes com maior risco de evasão antes do cancelamento em uma instituição bancária europeia — XGBoost final com ROC AUC de 93,6%.</p>
-        <p class="project-tech">Python · CatBoost · LightGBM · XGBoost · SHAP · MLflow · Docker</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">Bank Customer Churn Prediction</h3>
+          <p class="fig-metric"><span class="fig-metric-label">ROC AUC</span>0,936</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Antecipar quais clientes de um banco europeu vão encerrar a conta, para agir na retenção antes do cancelamento.</dd>
+          <dt>dados</dt>
+          <dd>Base pública de ~10 mil clientes (Kaggle), 20,4% de evasão no período; a coluna de reclamações foi excluída por ser variável de vazamento.</dd>
+          <dt>método</dt>
+          <dd>CatBoost, LightGBM e XGBoost comparados com validação cruzada; engenharia de features (faixas de idade e saldo, termos polinomiais) e interpretabilidade via SHAP.</dd>
+          <dt>resultado</dt>
+          <dd>XGBoost em produção — ROC AUC 0,936 e acurácia 0,904 no hold-out (≈ 0,868 em validação cruzada); o repositório discute o provável viés do dataset.</dd>
+        </dl>
+        <p class="fig-stack">Python · CatBoost · LightGBM · XGBoost · SHAP · MLflow · Docker</p>
+        <p class="fig-links">
           <a href="projects/bank-customer-churn/">Estudo de caso →</a>
           <a href="https://github.com/rvanguita/bank-customer-churn" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </p>
       </article>
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><polyline points="3,5 12,17 22,24 36,28 52,30 73,31" /></svg>
-          <span class="glyph-cap">curva de convergência</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 04</span>
+          <span class="fig-cat">Pesquisa Operacional</span>
         </div>
-        <p class="project-cat">Pesquisa Operacional (Mestrado &amp; Doutorado)</p>
-        <h3 class="project-title">Otimização de Sistemas de Distribuição Elétrica</h3>
-        <p class="project-desc">Acelerar decisões de planejamento e expansão em redes elétricas de distribuição de grande porte.</p>
-        <p class="project-tech">AMPL · CPLEX · Python · Busca Tabu · Metaheurísticas</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">Otimização de Sistemas de Distribuição Elétrica</h3>
+          <p class="fig-metric"><span class="fig-metric-label">publicação</span>INDUSCON 2025</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Planejar investimento e expansão de redes de distribuição de energia — alimentadores, condutores e subestações — sob múltiplos critérios de decisão.</dd>
+          <dt>dados</dt>
+          <dd>Sistemas-teste de 27 a 138 nós, publicados abertamente para reprodução (topologia, demanda e custos em planilha).</dd>
+          <dt>método</dt>
+          <dd>Planejamento multicritério da expansão com metaheurística de Busca Tabu e métodos de apoio à decisão; modelagem em AMPL/CPLEX.</dd>
+          <dt>resultado</dt>
+          <dd>Artigo <em>Multicriteria-Based Expansion Planning in Distribution Systems</em> (Anguita Jr., Castro, Lavorato) submetido à INDUSCON 2025.</dd>
+        </dl>
+        <p class="fig-stack">AMPL · CPLEX · Python · Busca Tabu · Metaheurísticas</p>
+        <p class="fig-links">
           <a href="https://github.com/rvanguita/induscon_2025" target="_blank" rel="noopener noreferrer">Artigo — INDUSCON 2025 ↗</a>
           <a href="https://github.com/rvanguita/reliability-systems" target="_blank" rel="noopener noreferrer">Reliability Systems ↗</a>
           <a href="https://github.com/rvanguita/DEP-TS-MDM" target="_blank" rel="noopener noreferrer">DEP-TS-MDM ↗</a>
         </p>
       </article>
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><polyline points="3,29 32,29 34,29 35,7 36,29 41,29 73,29" /></svg>
-          <span class="glyph-cap">evento raro</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 05</span>
+          <span class="fig-cat">Detecção de Fraude</span>
         </div>
-        <p class="project-cat">Detecção de Fraude &amp; Risco</p>
-        <h3 class="project-title">Credit Card Fraud Detection</h3>
-        <p class="project-desc">Identificar transações fraudulentas em um dataset real de cartão de crédito fortemente desbalanceado, em que as fraudes são uma fração mínima dos casos.</p>
-        <p class="project-tech">Python · PCA · Machine Learning</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">Credit Card Fraud Detection</h3>
+          <p class="fig-metric"><span class="fig-metric-label">status</span>em desenvolvimento</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Detectar transações fraudulentas de cartão num dataset real fortemente desbalanceado, sem se deixar enganar por métricas infladas.</dd>
+          <dt>dados</dt>
+          <dd>Dataset ULB de transações reais europeias — 284.807 registros, 31 colunas anonimizadas por PCA, com fraudes em ~0,17% dos casos.</dd>
+          <dt>método</dt>
+          <dd>Reamostragem (SMOTE/ADASYN), XGBoost ajustado por Optuna com objetivo voltado a PR-AUC e uma rede LSTM com <em>focal loss</em>.</dd>
+          <dt>resultado</dt>
+          <dd>Em desenvolvimento — pipeline de tratamento do desbalanceamento montado, ainda sem resultado consolidado.</dd>
+        </dl>
+        <p class="fig-stack">Python · XGBoost · Optuna · SMOTE/ADASYN · SHAP · TensorFlow (LSTM)</p>
+        <p class="fig-links">
           <a href="https://github.com/rvanguita/fraud-detection" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </p>
       </article>
 
-      <article class="project">
-        <div class="project-glyph" aria-hidden="true">
-          <svg viewBox="0 0 76 34"><rect class="fill" x="8" y="17" width="13" height="14" /><rect class="fill" x="31" y="9" width="13" height="22" /><rect class="fill" x="54" y="21" width="13" height="10" /></svg>
-          <span class="glyph-cap">classes de sentimento</span>
+      <article class="fig">
+        <div class="fig-rule">
+          <span class="fig-num">Fig. 06</span>
+          <span class="fig-cat">NLP · Classificação</span>
         </div>
-        <p class="project-cat">NLP &amp; Processamento de Linguagem Natural</p>
-        <h3 class="project-title">Sentiment Identification NLP</h3>
-        <p class="project-desc">Classificar o sentimento de um grande volume de avaliações de clientes de um e-commerce brasileiro (dataset Olist) — XGBoost com F1 de 88,5% e ROC AUC de 94,8%.</p>
-        <p class="project-tech">Python · XGBoost · TF-IDF · Optuna</p>
-        <p class="project-links">
+        <div class="fig-head">
+          <h3 class="fig-title">Sentiment Identification NLP</h3>
+          <p class="fig-metric"><span class="fig-metric-label">F1 · binário</span>0,885</p>
+        </div>
+        <dl class="spec">
+          <dt>problema</dt>
+          <dd>Classificar o sentimento de avaliações de um e-commerce brasileiro e medir o custo-benefício de incluir a classe "neutro".</dd>
+          <dt>dados</dt>
+          <dd>Dataset Olist — ~100 mil pedidos (2016–2018); comentários rotulados pela nota, com 62% positivos e 38% negativos no recorte binário.</dd>
+          <dt>método</dt>
+          <dd>Pipeline de texto (regex, stopwords, stemmer RSLP, TF-IDF) + XGBoost ajustado por Optuna com validação cruzada estratificada (100 trials).</dd>
+          <dt>resultado</dt>
+          <dd>Modelo binário (positivo × negativo) — F1 0,885 e ROC AUC 0,948; o modelo multiclasse com "neutro" cai para F1 ≈ 0,62.</dd>
+        </dl>
+        <p class="fig-stack">Python · NLTK/RSLP · TF-IDF · XGBoost · Optuna · SHAP</p>
+        <p class="fig-links">
           <a href="https://github.com/rvanguita/sentiment-identification-nlp" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </p>
       </article>
