@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Modelagem da Geração de Energia Eólica · rvanguita</title>
-  <meta name="description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <meta name="description" content="Estudo de caso: previsão da geração de turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
   <link rel="canonical" href="https://rvanguita.github.io/portfolio/projects/wind-farm/">
   <meta name="theme-color" content="#fbfaf7" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#17150f" media="(prefers-color-scheme: dark)">
@@ -16,11 +16,11 @@
   <meta property="og:site_name" content="rvanguita">
   <meta property="og:url" content="https://rvanguita.github.io/portfolio/projects/wind-farm/">
   <meta property="og:title" content="Modelagem da Geração de Energia Eólica · rvanguita">
-  <meta property="og:description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <meta property="og:description" content="Estudo de caso: previsão da geração de turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
   <meta property="og:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Modelagem da Geração de Energia Eólica · rvanguita">
-  <meta name="twitter:description" content="Estudo de caso: previsão da geração de quatro turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
+  <meta name="twitter:description" content="Estudo de caso: previsão da geração de turbinas eólicas onshore ao longo de um ano com XGBRegressor, validação temporal por janela expansível e interpretabilidade via SHAP. Dataset público do Zenodo; erro de previsão baixo e bom ajuste.">
   <meta name="twitter:image" content="https://rvanguita.github.io/portfolio/assets/social-card.png">
 </head>
 <body>
@@ -33,6 +33,8 @@
 
   <a class="backlink" href="../../#projetos">← Projetos</a>
 
+  <div class="doc-fig"><span>Fig. 02</span> · Regressão · Energia</div>
+
   <h1>Modelagem da Geração de Energia Eólica</h1>
   <hr class="sig" aria-hidden="true">
 
@@ -40,7 +42,7 @@
     <svg class="hero-mark" viewBox="0 0 640 110" role="img" aria-label="Esquema da curva de potência de uma turbina eólica: geração próxima de zero em ventos fracos, subida acentuada e um patamar de potência nominal em ventos fortes.">
       <path class="hm-frame" d="M44 10 V90 H620" />
       <path class="hm-tick" d="M44 90 v5 M140 90 v5 M236 90 v5 M332 90 v5 M428 90 v5 M524 90 v5 M620 90 v5" />
-      <polyline class="hm-curve" style="stroke-dasharray:900;stroke-dashoffset:900" points="48,88 100,87 130,84 155,75 175,60 195,42 215,28 240,20 300,18 400,17 500,17 600,17" />
+      <polyline class="hm-curve" points="48,88 100,87 130,84 155,75 175,60 195,42 215,28 240,20 300,18 400,17 500,17 600,17" />
       <text class="hm-label" x="4" y="16">potência</text>
       <text class="hm-label" x="620" y="106" text-anchor="end">velocidade do vento →</text>
     </svg>
@@ -48,39 +50,57 @@
   </div>
 
   <p class="lead">
-    Prever a geração de energia de quatro turbinas eólicas ao longo de um ano.
+    Prever a geração de energia de turbinas eólicas onshore ao longo de um ano.
     A curva de potência de uma turbina é <strong>não linear</strong>, o que
     descarta modelos lineares; e, por ser uma <strong>série temporal</strong>, a
     validação cruzada tradicional também não se aplica — removeria o viés
     sazonal de alguns meses.
   </p>
 
-  <p>
-    Os dados vêm do repositório público do <strong>Zenodo</strong>: séries
-    amostradas a cada 10 minutos de seis turbinas (WT1–WT6) e três mastros
-    meteorológicos. Foram modeladas as turbinas onshore WT3 e WT4, com cinco
-    variáveis ambientais — velocidade e direção do vento, densidade do ar,
-    intensidade de turbulência e cisalhamento vertical. A análise exploratória
-    (heatmap de correlação, boxplots por mês) mostra relação forte entre
-    potência, velocidade do vento e mês do ano.
-  </p>
+  <section class="doc-sec">
+    <h2>Problema</h2>
+    <p>
+      A geração eólica responde de forma não linear ao vento e varia bastante
+      entre os meses do ano. O objetivo é um modelo que preveja a potência de
+      turbinas onshore ao longo de um ciclo anual completo, respeitando a ordem
+      cronológica dos dados.
+    </p>
+  </section>
 
-  <p>
-    Como a curva de potência é não linear, um modelo baseado em árvores leva
-    vantagem: o <strong>XGBRegressor</strong> constrói árvores em sequência, cada
-    uma corrigindo os resíduos da anterior. A validação usa
-    <strong>janela expansível</strong> (expanding window), preservando a ordem
-    cronológica e o viés sazonal dos meses.
-  </p>
+  <section class="doc-sec">
+    <h2>Dados</h2>
+    <p>
+      Os dados vêm do repositório público do <strong>Zenodo</strong>: séries
+      amostradas a cada 10 minutos de seis turbinas (WT1–WT6) e três mastros
+      meteorológicos. Foram modeladas as turbinas onshore WT3 e WT4, com cinco
+      variáveis ambientais — velocidade e direção do vento, densidade do ar,
+      intensidade de turbulência e cisalhamento vertical. A análise exploratória
+      (heatmap de correlação, boxplots por mês) mostra relação forte entre
+      potência, velocidade do vento e mês do ano.
+    </p>
+  </section>
 
-  <p>
-    A análise <strong>SHAP</strong> quantifica a contribuição de cada variável
-    na previsão — a velocidade do vento é a mais relevante. Entre as técnicas
-    de validação temporal comparadas, a janela expansível não teve o menor
-    erro absoluto, mas foi a que teve o menor viés relativo entre meses —
-    critério de escolha para produção, não só a métrica isolada. Resultado:
-    <strong>R² de 81,9%</strong>, RMSE de 12,41 e MAE de 8,76.
-  </p>
+  <section class="doc-sec">
+    <h2>Método</h2>
+    <p>
+      Como a curva de potência é não linear, um modelo baseado em árvores leva
+      vantagem: o <strong>XGBRegressor</strong> constrói árvores em sequência,
+      cada uma corrigindo os resíduos da anterior. Seis esquemas de validação
+      temporal foram comparados; a <strong>janela expansível</strong> (expanding
+      window) preserva a ordem cronológica e o viés sazonal dos meses.
+    </p>
+  </section>
+
+  <section class="doc-sec">
+    <h2>Resultado</h2>
+    <p>
+      A janela expansível não teve o menor erro absoluto, mas foi a que teve o
+      menor viés relativo entre meses — critério de escolha para produção, não
+      só a métrica isolada. Resultado: <strong>R² de 81,9%</strong>, RMSE de
+      12,41 e MAE de 8,76. A análise <strong>SHAP</strong> quantifica a
+      contribuição de cada variável — a velocidade do vento é a mais relevante.
+    </p>
+  </section>
 
   <p class="tech">Tecnologias: Python · XGBoost · SHAP · Pandas · Matplotlib</p>
 
