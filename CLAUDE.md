@@ -49,8 +49,11 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   section dividers are labelled axes (`.axis` + `.axis-fig`), prose is serif and
   every measurement is monospace. Custom properties at the top: `--paper` `--ink`
   `--ink-soft` `--rule` `--grid` `--grid-bold` `--accent` (copper, text) /
-  `--accent-ink` (copper, graphics), plus `--fs-*` type scale and `--measure`.
-  Classes: `.wrap` / `.intro` + `.hero-mark` (inline-SVG axis/curve device —
+  `--accent-ink` (copper, graphics), plus `--fs-*` type scale and the width
+  measures `--canvas` (page width on wide screens), `--rail` / `--rail-gap`
+  (the section-label gutter + y-axis) and `--measure` (prose reading cap).
+  Classes: `.wrap` / `.intro` + `.intro-mark` (wraps the hero SVG + its caption
+  as one unit, on all 4 pages) + `.hero-mark` (inline-SVG axis/curve device —
   used on the home hero and reused as a content-specific schematic on each
   case-study page) / `.axis` / `.projects` + `.project-*` + `.project-glyph`
   (inline-SVG domain schematic) / `.timeline` + `.tl-*` (CV Gantt on a real
@@ -58,6 +61,15 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   `.tl-track`) / `.skills` (a `<dl>`; `.skill-n` is a plain count, not a
   proficiency meter) / `.cert-bar` + `.cert-legend` / `.certs` (`<details>`) /
   `.site-footer` / `.doc` + `.sig` (case-study prose).
+- **Widescreen (`≥60rem`):** one additive `@media screen and (min-width: 60rem)`
+  block near the end of `style.css` (plus a 2-line `min-width: 74rem` token
+  bump). Below 60rem nothing changes. It widens `.wrap`/`.site-footer` to
+  `--canvas`, turns each `.block` into a `grid` whose `.axis` label is sticky in
+  the left `--rail` gutter, draws the x/y axes on `.block::before`/`::after`, and
+  makes `.projects` / `.skills` / `.certs-inner` multi-column. `screen and` keeps
+  it out of `@media print`, so the PDF/print output is unchanged — don't add
+  print overrides for it. Physical `left:` is used in `.block::before/::after`
+  (matches the file); it'd need logical props if RTL is ever added.
 - Inline SVG only (no asset files). The PR check parses SVG as HTML, so
   **self-close every leaf** (`<path …/>`, `<line …/>`, `<rect …/>`, `<polyline …/>`).
 - **Dark mode:** automatic via `prefers-color-scheme`, plus a manual override —
@@ -74,7 +86,8 @@ unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
   `.cert-bar` span `flex:` value + `.cert-legend` number.
 - **New case study:** a `projects/<slug>/index.html` following the existing
   pattern (head boilerplate, `.doc` prose, a content-specific `.hero-mark`
-  schematic reusing the `hm-*` SVG parts, `.tech`, `.repo`), plus: a
+  schematic reusing the `hm-*` SVG parts — wrapped with its caption in
+  `<div class="intro-mark">` — `.tech`, `.repo`), plus: a
   "Estudo de caso →" link on its `.project` card in `index.html`, its path
   added to `PAGES` in `.github/check.py`, and its footer/`<head>` copied from
   another case-study page.
