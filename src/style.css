@@ -26,7 +26,11 @@
   --fs-lg:   1.35rem;
   --fs-xl:   2rem;
 
-  --measure: 42rem;
+  --canvas:   90rem;    /* largura da página em telas largas                  */
+  --rail:     10.5rem;  /* calha do rótulo de seção + eixo-y (→ 12rem ≥74rem) */
+  --rail-gap: 1.75rem;  /* calha → conteúdo (→ 2rem ≥74rem)                   */
+
+  --measure:  42rem;    /* cap de leitura — prosa e rodapé                    */
 
   color-scheme: light dark;
 }
@@ -223,14 +227,15 @@ section[id] { scroll-margin-top: 2rem; }
   margin: 1.5rem 0 0.4rem;
   overflow: visible;
 }
-.hm-frame { stroke: var(--rule); stroke-width: 1; fill: none; }
-.hm-tick  { stroke: var(--rule); stroke-width: 1; }
+.hm-frame { stroke: var(--rule); stroke-width: 1; fill: none; vector-effect: non-scaling-stroke; }
+.hm-tick  { stroke: var(--rule); stroke-width: 1; vector-effect: non-scaling-stroke; }
 .hm-curve {
   fill: none;
   stroke: var(--accent-ink);
   stroke-width: 2.5;
   stroke-linecap: round;
   stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
 }
 .hm-label { fill: var(--ink-soft); font: 400 11px/1 var(--font-mono); }
 .mark-cap {
@@ -486,6 +491,134 @@ section[id] { scroll-margin-top: 2rem; }
   .timeline, .tl-row { grid-template-columns: 1fr; }
   .timeline { row-gap: 1.5rem; }
   .tl-scale, .tl-track { display: none; }
+}
+
+/* --- largo: a página vira um plano cartesiano rotulado --------------------
+   Aditivo: tudo abaixo de 60rem continua idêntico ao layout estreito.
+   `screen and` mantém a impressão fora deste bloco (Letter/A4 ≈ 50rem),
+   então @media print não precisa desfazer nada. */
+@media screen and (min-width: 60rem) {
+
+  .wrap, .site-footer { max-width: var(--canvas); }
+
+  /* seção = plano cartesiano: rótulo na calha, eixos nas bordas */
+  .block {
+    position: relative;
+    display: grid;
+    grid-template-columns: var(--rail) minmax(0, 1fr);
+    column-gap: var(--rail-gap);
+    align-items: start;          /* obrigatório: dá curso ao sticky do .axis */
+    padding-top: 1.75rem;        /* banda da régua-x, acima do conteúdo      */
+    margin-top: 3rem;
+  }
+  .block > * { grid-column: 2; min-width: 0; }
+
+  .block::before {               /* eixo-y */
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    left: var(--rail);
+    width: 1px;
+    background: var(--rule);
+    pointer-events: none;
+  }
+  .block::after {                /* eixo-x: linha-base + ticks a cada 32px */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: var(--rail);
+    right: 0;
+    height: 5px;
+    background:
+      linear-gradient(var(--rule), var(--rule)) left top / 100% 1px no-repeat,
+      repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 32px)
+        left top / 100% 5px no-repeat;
+    pointer-events: none;
+  }
+
+  .block > .axis {
+    grid-column: 1;
+    grid-row: 1 / span 99;       /* cobre a altura da seção → curso p/ sticky */
+    align-self: start;
+    position: sticky;
+    top: 2.75rem;                /* livra a .mini-nav (~2.2rem)              */
+    z-index: 1;
+    flex-direction: column;
+    align-items: flex-end;       /* rótulo encostado no eixo-y               */
+    justify-content: flex-start;
+    gap: 0.35rem;
+    margin: 0;
+    padding: 0 0.75rem 0 0;
+    border-bottom: 0;
+    text-align: right;
+  }
+  .block > .axis::after { display: none; }   /* régua-x agora vem de .block::after */
+
+  section[id] { scroll-margin-top: 3.5rem; } /* âncora do mini-nav livra régua + rótulo */
+
+  /* intro: narrativa à esquerda (cap --measure), esquema cresce na margem */
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+  .intro > * { grid-column: 1; min-width: 0; }
+  .intro > .intro-mark {
+    grid-column: 2;
+    grid-row: 1 / span 99;
+    align-self: start;
+  }
+  /* esquema encosta no lado direito da folha e acompanha a largura dela */
+  .intro-mark .hero-mark { margin: 0.25rem 0 0 auto; width: min(100%, 34rem); }
+
+  /* estudo de caso: prosa + 1 esquema — não estica até a folha inteira do
+     dossiê; mantém ~76rem (largura em que as case studies foram desenhadas). */
+  .wrap.doc,
+  body:has(.doc) .site-footer { max-width: 76rem; }
+
+  /* estudo de caso: prosa à esquerda, esquema na margem */
+  .doc {
+    display: grid;
+    grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
+    column-gap: 3rem;
+    align-items: start;
+  }
+  .doc > * { grid-column: 1; min-width: 0; }
+  .doc > .intro-mark {
+    grid-column: 2;
+    grid-row: 1 / span 99;
+    align-self: start;
+    justify-self: end;          /* encosta na borda da folha, não à esquerda da col. 1fr */
+    max-width: 32rem;           /* col. 2 é 1fr; limita o esquema */
+  }
+
+  /* seções de dados: multi-coluna */
+  .projects {
+    grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+    gap: 1.5rem;
+  }
+  .skills {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 3rem;
+    row-gap: 1.6rem;
+  }
+  .certs-inner {
+    grid-template-columns: repeat(3, minmax(0, 21rem));
+    justify-content: start;     /* 3 grupos reais (12 / 9 / 3) — não trilhas vazias */
+    gap: 1.75rem 2.5rem;
+    align-items: start;         /* grupos de 12 / 9 / 3 — não esticar */
+  }
+  .cert-bar, .cert-legend { max-width: 38rem; }  /* senão a barra vira um fio de 70rem */
+
+  /* trajetória: eixo de tempo mais largo; o texto da entrada não acompanha */
+  .timeline { --tl-cols: minmax(0, 1fr) minmax(0, 1.15fr); }
+  .timeline, .tl-row { column-gap: 2rem; }       /* column-gap não herda p/ .tl-row */
+  .tl-head { max-width: 34rem; }
+}
+
+@media screen and (min-width: 74rem) {
+  :root { --rail: 12rem; --rail-gap: 2rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

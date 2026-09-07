@@ -69,8 +69,16 @@ HTML. A aparência inteira está em `style.css` (~400 linhas). O conceito é um
 divisores de seção são eixos rotulados, a prosa é serifada e toda medição é
 monoespaçada. Variáveis CSS no topo: `--paper` `--ink` `--ink-soft` `--rule`
 `--grid` `--grid-bold` `--accent` (cobre, texto) / `--accent-ink` (cobre,
-gráficos), mais a escala `--fs-*`. Gráficos são SVG inline — sem arquivos de
-imagem.
+gráficos), mais a escala `--fs-*` e as medidas de largura `--canvas` (largura da
+página em telas largas), `--rail` / `--rail-gap` (a calha do rótulo de seção e o
+eixo-y) e `--measure` (cap de leitura da prosa). Gráficos são SVG inline — sem
+arquivos de imagem.
+
+A partir de `60rem` de viewport a página vira um plano cartesiano largo: um só
+bloco `@media screen and (min-width: 60rem)` (impressão fica de fora), o rótulo
+de cada seção migra para a calha `--rail` fixa à esquerda, e o esquema do hero
+(SVG + legenda, agrupados num `<div class="intro-mark">` nas 4 páginas) vai para
+a margem. Abaixo de `60rem` o layout é idêntico ao de antes.
 
 - **Novo certificado:** coloque o PDF em `certificates/`, adicione um `<li>` na
   seção **Certificações** do `index.html` (troque espaços por `%20` no `href`) e
