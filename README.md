@@ -50,28 +50,9 @@ Todo o texto do site mora em dados estruturados, não no HTML:
 - `src/data/timeline.ts` — as 9 entradas da trajetória, com o eixo de tempo
 - `src/data/skills.ts` — os 4 grupos de competências
 - `src/data/certificates.ts` — as 24 certificações, em 3 grupos (12 / 9 / 3)
-- `src/content/projetos/*.md` — os 9 projetos curados. `kind: full` traz o estudo
-  de caso completo no corpo Markdown; `kind: light` traz só a ficha
-  problema/dados/método/resultado no frontmatter. `repo:` liga o card ao
-  repositório no GitHub.
-
-## Sincronização com o GitHub
-
-O usuário do GitHub vem de `src/data/profile.ts`. Um snapshot versionado
-(`src/data/github-repos.json`, gerado por `npm run sync`) alimenta:
-
-- **cards curados** — `★`, linguagem e "atualizado há X" ao vivo;
-- **seção "Mais no GitHub"** — todo repositório público **sem** card curado
-  aparece sozinho (nome, descrição, linguagem, data, ★).
-
-O build nunca chama a API — lê só o JSON. Um workflow semanal
-(`.github/workflows/sync-github.yml`) relê a API e abre um PR quando algo muda.
-Controle pela UI do GitHub: topic **`portfolio-hide`** esconde um repo,
-**`portfolio-pin`** o destaca. `portfolio`, `rvanguita`, forks e arquivados
-ficam sempre de fora.
-
-> Uma vez: em *Settings → Actions → General → Workflow permissions*, marcar
-> "Allow GitHub Actions to create and approve pull requests".
+- `src/content/projetos/*.md` — os 9 projetos. `kind: full` traz o estudo de
+  caso completo no corpo Markdown; `kind: light` traz só a ficha
+  problema/dados/método/resultado no frontmatter.
 
 ## Rodar localmente
 
@@ -80,7 +61,6 @@ npm install
 npm run dev        # desenvolvimento (rápido)
 npm run build && npm run preview   # confere o site sob /portfolio/
 npm run check      # astro check (tipos)
-npm run sync       # regenera src/data/github-repos.json a partir da API
 ```
 
 Node: `mise.toml` fixa a versão para o desenvolvimento local; o CI usa Node 20.
@@ -92,8 +72,6 @@ publica `dist/` no GitHub Pages. Pull requests para `main` passam por
 `.github/workflows/ci.yml` (`npm ci && npm run build && npm run check`): um link
 interno quebrado, uma violação de schema de conteúdo ou um erro de tipo derruba
 o build. A proteção da branch `main` exige esse check.
-`.github/workflows/sync-github.yml` roda semanalmente e mantém o snapshot dos
-repositórios em dia via PR.
 
 ## Licença
 

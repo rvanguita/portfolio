@@ -1,7 +1,6 @@
 ---
 title: Credit Card Fraud Detection
 order: 5
-repo: fraud-detection
 category: Detecção de Fraude
 kind: light
 trace: imbalance

@@ -2,25 +2,17 @@
 import { getCollection } from "astro:content";
 import Layout from "../../components/Layout.astro";
 import Channels from "../../components/Channels.astro";
-import RepoList from "../../components/RepoList.astro";
-import { pickExtras, publicRepoCount } from "../../data/github";
 import { url } from "../../lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const n = String(projects.length).padStart(2, "0");
-
-const claimed = projects.flatMap((p) =>
-  [p.data.repo, ...p.data.reposGh].filter((x): x is string => !!x),
-);
-const extras = pickExtras(claimed);
-const en = String(extras.length).padStart(2, "0");
 ---
 
 <Layout
   title="Projetos · rvanguita"
-  description={`Projetos de ciência de dados, machine learning e engenharia de dados — cada um com métrica, stack e repositório. ${publicRepoCount} repositórios públicos no total.`}
+  description="Seis projetos de ciência de dados, machine learning e pesquisa operacional — cada um com métrica, stack e repositório."
   current="projetos"
 >
   <div class="page">
@@ -30,16 +22,5 @@ const en = String(extras.length).padStart(2, "0");
       <span class="count">[{n}]</span>
     </div>
     <Channels projects={projects} level={2} />
-
-    {
-      extras.length > 0 && (
-        <>
-          <h2 class="section-rule">
-            Mais no GitHub <span class="count">[{en}]</span>
-          </h2>
-          <RepoList repos={extras} />
-        </>
-      )
-    }
   </div>
 </Layout>
