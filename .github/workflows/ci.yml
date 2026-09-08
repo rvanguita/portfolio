@@ -1,6 +1,5 @@
-# Verificação leve do site estático em Pull Requests para main.
-# Sem npm/build — só confere que as páginas existem, estão bem formadas e
-# que todo link/arquivo referenciado resolve.
+# Validação em Pull Requests para main: o build Astro é o gate (falha em link
+# quebrado de conteúdo, erro de template ou de schema) + type-check.
 name: 🧪 Validação do Portfólio (CI)
 
 on:
@@ -12,11 +11,16 @@ permissions:
   contents: read
 
 jobs:
-  validate:
+  build:
+    # Nome mantido para casar com o status check exigido na proteção da branch main.
     name: 🔍 Lint, Types, Testes & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
-      - name: 🔎 Verificar as páginas e os links
-        run: python3 .github/check.py
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - run: npm run check

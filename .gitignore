@@ -1,6 +1,11 @@
-# Site HTML/CSS puro, sem build. Só artefatos locais e dados pessoais.
-_site/
+# Build Astro
+node_modules/
+dist/
+.astro/
+
+# Locais / dados pessoais
 .claude/
+_site/
 *.swp
 .DS_Store
 Profile.pdf

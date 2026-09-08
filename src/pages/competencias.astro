@@ -1,0 +1,35 @@
+---
+import Layout from "../components/Layout.astro";
+import { skills } from "../data/skills";
+import { url } from "../lib/url";
+---
+
+<Layout
+  title="Competências · rvanguita"
+  description="Competências técnicas de Rene Anguita em quatro frentes: Ciência de Dados & ML, Pesquisa Operacional & Otimização, Visualização & Business Analytics, e Linguagens, Cloud & Ferramentas."
+  current="competencias"
+>
+  <div class="page">
+    <a class="backlink" href={url("/")}>← Painel</a>
+    <div class="mod-head">
+      <h1>Competências</h1>
+      <span class="count">[0{skills.length}]</span>
+    </div>
+
+    <dl class="skills">
+      {
+        skills.map((g) => (
+          <div class="panel skill">
+            <div class="skill-head">
+              <dt>{g.title}</dt>
+              <span class="skill-n" aria-hidden="true">
+                {g.items.length}
+              </span>
+            </div>
+            <dd>{g.items.join(" · ")}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </div>
+</Layout>

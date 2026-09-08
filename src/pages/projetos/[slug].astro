@@ -1,0 +1,80 @@
+---
+import { getCollection, render } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Layout from "../../components/Layout.astro";
+import Readout from "../../components/Readout.astro";
+import Trace from "../../components/Trace.astro";
+import { url } from "../../lib/url";
+
+export const getStaticPaths = (async () => {
+  const entries = await getCollection("projetos");
+  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+}) satisfies GetStaticPaths;
+
+const { entry } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+---
+
+<Layout
+  title={`${data.title} · rvanguita`}
+  description={data.description}
+  ogType="article"
+  current="projetos"
+>
+  <div class="page page--doc">
+    <a class="backlink" href={url("/projetos/")}>← Projetos</a>
+
+    <article class="doc">
+      <div class="doc-top">
+        <div class="doc-head">
+          <p class="doc-cat">{data.category}</p>
+          <h1>{data.title}</h1>
+          <hr class="sig" aria-hidden="true" />
+        </div>
+
+        <Readout
+          class="doc-readout"
+          label={data.metric.label}
+          value={data.metric.value}
+          sub={data.metric.sub}
+        />
+
+        {data.leadHtml && <p class="lead" set:html={data.leadHtml}></p>}
+
+        <div class="doc-trace">
+          <Trace variant={data.trace} />
+        </div>
+      </div>
+
+      {
+        data.kind === "full" ? (
+          <div class="doc-body">
+            <Content />
+          </div>
+        ) : (
+          <dl class="spec">
+            <dt>problema</dt>
+            <dd>{data.spec?.problema}</dd>
+            <dt>dados</dt>
+            <dd>{data.spec?.dados}</dd>
+            <dt>método</dt>
+            <dd>{data.spec?.metodo}</dd>
+            <dt>resultado</dt>
+            <dd set:html={data.spec?.resultado}></dd>
+          </dl>
+        )
+      }
+
+      <p class="tech">Tecnologias: {data.stack}</p>
+
+      <p class="repo">
+        {data.repos.map((r) => (
+          <a href={r.url} target="_blank" rel="noopener noreferrer">
+            {r.label} ↗
+          </a>
+        ))}
+      </p>
+    </article>
+  </div>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import { profile } from "../data/profile";
+import { url } from "../lib/url";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  current?: "home" | "projetos" | "trajetoria" | "competencias" | "certificacoes";
+}
+const { current } = Astro.props;
+
+const nav = [
+  { href: "/", label: "Painel", key: "home" },
+  { href: "/projetos/", label: "Projetos", key: "projetos" },
+  { href: "/trajetoria/", label: "Trajetória", key: "trajetoria" },
+  { href: "/competencias/", label: "Competências", key: "competencias" },
+  { href: "/certificacoes/", label: "Certificações", key: "certificacoes" },
+] as const;
+---
+
+<header class="strip">
+  <span class="strip-id">
+    <span class="strip-dot" aria-hidden="true"></span>
+    <b>{profile.shortName}</b>
+    <span class="role">· {profile.roleShort}</span>
+  </span>
+  <nav class="strip-nav" aria-label="Seções do site">
+    {
+      nav.map((n) => (
+        <a href={url(n.href)} aria-current={current === n.key ? "page" : undefined}>
+          {n.label}
+        </a>
+      ))
+    }
+    <ThemeToggle />
+  </nav>
+</header>

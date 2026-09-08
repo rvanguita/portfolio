@@ -1,0 +1,26 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../components/Layout.astro";
+import Channels from "../../components/Channels.astro";
+import { url } from "../../lib/url";
+
+const projects = (await getCollection("projetos")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+const n = String(projects.length).padStart(2, "0");
+---
+
+<Layout
+  title="Projetos · rvanguita"
+  description="Seis projetos de ciência de dados, machine learning e pesquisa operacional — cada um com métrica, stack e repositório."
+  current="projetos"
+>
+  <div class="page">
+    <a class="backlink" href={url("/")}>← Painel</a>
+    <div class="mod-head">
+      <h1>Projetos</h1>
+      <span class="count">[{n}]</span>
+    </div>
+    <Channels projects={projects} level={2} />
+  </div>
+</Layout>

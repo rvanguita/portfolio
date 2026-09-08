@@ -1,0 +1,68 @@
+/* ==========================================================================
+   Tokens — "Painel de leitura"
+   O site se lê como o painel frontal de um instrumento de precisão: hairlines,
+   raio 0, números reais em mono, acento ciano. Cores só aqui (8 tokens por
+   tema); nada de hex solto no resto do CSS.
+   ========================================================================== */
+
+:root {
+  /* --- ciano técnico, tema claro --- */
+  --paper:         #f7f8f8;
+  --ink:           #16191c;
+  --ink-soft:      #5b6570;
+  --rule:          #cdd4d6;   /* bordas de painel · hairlines · eixos          */
+  --accent:        #0f6f7a;   /* texto/links em cobre-substituto (~5:1)        */
+  --accent-bright: #12a0ad;   /* traço e preenchimento de gráfico              */
+  --well:          color-mix(in srgb, var(--ink) 3%, var(--paper)); /* fundo de leitura */
+
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+               Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular",
+               Menlo, Consolas, monospace;
+
+  --fs-2xs:     0.6875rem;
+  --fs-xs:      0.75rem;
+  --fs-sm:      0.8125rem;
+  --fs-base:    0.9375rem;
+  --fs-md:      1.0625rem;
+  --fs-lg:      1.375rem;
+  --fs-xl:      2rem;
+  --fs-readout: 2.75rem;
+
+  --measure: 40rem;      /* medida de leitura — prosa dos estudos de caso  */
+  --page:    72rem;      /* largura máxima de conteúdo                     */
+  --strip-h: 2.75rem;    /* altura da barra de leitura fixa                */
+
+  color-scheme: light dark;
+}
+
+/* --- tema escuro: automático (SO) + override manual (checkbox, sem JS) ------
+   o mesmo painel, retroiluminado. 4 combinações em cascata pura. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper:         #0e1113;
+    --ink:           #e8ecec;
+    --ink-soft:      #8b969c;
+    --rule:          #2b3236;
+    --accent:        #4fd0dc;
+    --accent-bright: #5ee1ec;
+  }
+}
+:root:has(#theme-toggle:checked) {
+  --paper:         #0e1113;
+  --ink:           #e8ecec;
+  --ink-soft:      #8b969c;
+  --rule:          #2b3236;
+  --accent:        #4fd0dc;
+  --accent-bright: #5ee1ec;
+}
+@media (prefers-color-scheme: dark) {
+  :root:has(#theme-toggle:checked) {
+    --paper:         #f7f8f8;
+    --ink:           #16191c;
+    --ink-soft:      #5b6570;
+    --rule:          #cdd4d6;
+    --accent:        #0f6f7a;
+    --accent-bright: #12a0ad;
+  }
+}
