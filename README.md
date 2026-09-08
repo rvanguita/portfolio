@@ -17,25 +17,39 @@ Tema claro/escuro com alternância em CSS puro, sem JavaScript no cliente.
 
 ## Estrutura
 
-```mermaid
-flowchart TD
-    repo["portfolio/"]
-    repo --> src["src/ — código-fonte Astro"]
-    repo --> pub["public/ — servido verbatim"]
-    repo --> gh[".github/workflows/"]
-
-    src --> pages["pages/ — index · projetos/[slug] · trajetoria · competencias · certificacoes"]
-    src --> content["content/projetos/*.md — 9 projetos (full | light)"]
-    src --> data["data/ — profile · timeline · skills · certificates"]
-    src --> comps["components/ — Layout · ReadoutStrip · Trace · Readout · Timeline · Channels …"]
-    src --> styles["styles/ — tokens.css (8 cores/tema) + global.css"]
-
-    pub --> certs["certificates/ — 24 PDFs"]
-    pub --> assets["assets/ — social-card.png · dossiê.pdf"]
-    pub --> statics["icon.png · robots.txt · .nojekyll"]
-
-    gh --> ci["ci.yml — npm ci && build && check (PR)"]
-    gh --> deploy["deploy.yml — build → GitHub Pages (push em main)"]
+```
+portfolio/
+│
+├─ astro.config.mjs          site + base '/portfolio', sitemap, imagem passthrough
+├─ package.json              scripts: dev · build · preview · check
+├─ mise.toml                 fixa a versão do Node no dev local
+├─ tsconfig.json
+│
+├─ src/
+│  ├─ pages/
+│  │  ├─ index.astro              home — o "painel mestre"
+│  │  ├─ projetos/index.astro     índice de projetos
+│  │  ├─ projetos/[slug].astro    uma página por projeto (da coleção)
+│  │  ├─ trajetoria.astro         Gantt do CV num eixo de tempo real
+│  │  ├─ competencias.astro       4 painéis de competência
+│  │  └─ certificacoes.astro      medidor 12/9/3 + listas agrupadas
+│  ├─ content.config.ts           schema zod da coleção 'projetos'
+│  ├─ content/projetos/*.md       9 projetos — kind: full (corpo Markdown) | light (spec)
+│  ├─ data/                       profile · timeline · skills · certificates (todo o texto)
+│  ├─ components/                  Layout · BaseHead · ReadoutStrip · ThemeToggle ·
+│  │                              Readout · Trace · Timeline · Channels · Footer
+│  ├─ lib/url.ts                   url() — prefixa todo href interno com o base
+│  └─ styles/                      tokens.css (8 cores/tema) + global.css
+│
+├─ public/                        servido verbatim
+│  ├─ icon.svg · icon.png         favicon
+│  ├─ robots.txt · .nojekyll
+│  ├─ assets/                     social-card.png · dossiê.pdf
+│  └─ certificates/               24 PDFs
+│
+└─ .github/workflows/
+   ├─ ci.yml                      PR → npm ci && build && check
+   └─ deploy.yml                  push em main → build → GitHub Pages
 ```
 
 O site é servido sob `/portfolio/`. Todo link interno passa pelo helper
