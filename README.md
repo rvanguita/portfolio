@@ -17,45 +17,37 @@ Tema claro/escuro com alternância em CSS puro, sem JavaScript no cliente.
 
 ## Estrutura
 
-```
-portfolio/
-│
-├─ astro.config.mjs          site + base vindos de src/config.ts, sitemap
-├─ package.json              scripts: dev · build · preview · check · format
-├─ tsconfig.json             aliases de import (@/ @components @data @lib @styles)
-├─ mise.toml                 fixa a versão do Node no dev local
-├─ .prettierrc · .editorconfig · .vscode/   formatação e convenções de editor
-├─ LICENSE                   MIT — só o código; conteúdo reservado
-│
-├─ src/
-│  ├─ config.ts                   SITE (url, base, título) + NAV — o lugar único
-│  ├─ pages/
-│  │  ├─ index.astro              home — o "painel mestre"
-│  │  ├─ projetos/index.astro     índice de projetos
-│  │  ├─ projetos/[slug].astro    uma página por projeto (da coleção)
-│  │  ├─ trajetoria.astro         Gantt do CV num eixo de tempo real
-│  │  ├─ competencias.astro       4 painéis de competência
-│  │  └─ certificacoes.astro      medidor 12/9/3 + listas agrupadas
-│  ├─ content.config.ts           schema zod da coleção 'projetos'
-│  ├─ content/projetos/*.md       9 projetos — kind: full (corpo Markdown) | light (spec)
-│  ├─ data/                       profile · timeline · skills · certificates (todo o texto)
-│  ├─ components/
-│  │  ├─ layout/                  Layout · BaseHead · ReadoutStrip · ThemeToggle · Footer
-│  │  ├─ panels/                  Channels (grade de projetos) · Readout (métrica grande)
-│  │  └─ viz/                     Trace (sinal SVG inline) · Timeline (Gantt)
-│  ├─ lib/url.ts                   url() — prefixa todo href interno com o base
-│  └─ styles/                      tokens.css (8 cores/tema) + global.css
-│
-├─ public/                        servido verbatim
-│  ├─ icon.svg · icon.png         favicon
-│  ├─ robots.txt · .nojekyll
-│  ├─ assets/                     social-card.png · dossiê.pdf
-│  └─ certificates/               24 PDFs
-│
-└─ .github/
-   ├─ workflows/ci.yml            PR → npm ci && format:check && build && check
-   ├─ workflows/deploy.yml        push em main → build → GitHub Pages
-   └─ dependabot.yml · PULL_REQUEST_TEMPLATE.md
+```mermaid
+flowchart LR
+  root["portfolio/"] --> cfg["raiz · astro.config.mjs · tsconfig (aliases) · package.json · mise.toml · .prettierrc · .editorconfig · .vscode/ · LICENSE"]
+  root --> src
+  root --> pub
+  root --> gh
+
+  subgraph src["src/"]
+    s1["config.ts · SITE + NAV"]
+    s2["pages/ · index · projetos/index · projetos/[slug] · trajetoria · competencias · certificacoes"]
+    s3["content.config.ts · schema zod 'projetos'"]
+    s4["content/projetos/*.md · 9 projetos (full · light)"]
+    s5["data/ · profile · timeline · skills · certificates"]
+    s6["components/ · layout · panels · viz"]
+    s7["lib/url.ts · prefixa href com o base"]
+    s8["styles/ · tokens.css + global.css"]
+  end
+
+  subgraph pub["public/ · servido verbatim"]
+    p1["icon.svg · icon.png"]
+    p2["robots.txt · .nojekyll"]
+    p3["assets/ · social-card.png · dossiê.pdf"]
+    p4["certificates/ · 24 PDFs"]
+  end
+
+  subgraph gh[".github/"]
+    g1["workflows/ci.yml · format:check + build + check"]
+    g2["workflows/deploy.yml · build → GitHub Pages"]
+    g3["dependabot.yml"]
+    g4["PULL_REQUEST_TEMPLATE.md"]
+  end
 ```
 
 O site é servido sob `/portfolio/`. Todo link interno passa pelo helper
