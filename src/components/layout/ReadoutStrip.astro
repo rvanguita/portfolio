@@ -1,0 +1,32 @@
+---
+import { NAV, type NavKey } from "@/config";
+import { profile } from "@data/profile";
+import { url } from "@lib/url";
+import ThemeToggle from "./ThemeToggle.astro";
+
+interface Props {
+  current?: NavKey;
+}
+const { current } = Astro.props;
+---
+
+<header class="strip">
+  <span class="strip-id">
+    <span class="strip-dot" aria-hidden="true"></span>
+    <b>{profile.shortName}</b>
+    <span class="role">· {profile.roleShort}</span>
+  </span>
+  <nav class="strip-nav" aria-label="Seções do site">
+    {
+      NAV.map((n) => (
+        <a
+          href={url(n.href)}
+          aria-current={current === n.key ? "page" : undefined}
+        >
+          {n.label}
+        </a>
+      ))
+    }
+    <ThemeToggle />
+  </nav>
+</header>

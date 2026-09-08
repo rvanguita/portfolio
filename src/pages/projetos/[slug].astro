@@ -1,14 +1,17 @@
 ---
 import { getCollection, render } from "astro:content";
 import type { GetStaticPaths } from "astro";
-import Layout from "../../components/Layout.astro";
-import Readout from "../../components/Readout.astro";
-import Trace from "../../components/Trace.astro";
-import { url } from "../../lib/url";
+import Layout from "@components/layout/Layout.astro";
+import Readout from "@components/panels/Readout.astro";
+import Trace from "@components/viz/Trace.astro";
+import { url } from "@lib/url";
 
 export const getStaticPaths = (async () => {
   const entries = await getCollection("projetos");
-  return entries.map((entry) => ({ params: { slug: entry.id }, props: { entry } }));
+  return entries.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
 }) satisfies GetStaticPaths;
 
 const { entry } = Astro.props;
@@ -40,7 +43,7 @@ const { Content } = await render(entry);
           sub={data.metric.sub}
         />
 
-        {data.leadHtml && <p class="lead" set:html={data.leadHtml}></p>}
+        {data.leadHtml && <p class="lead" set:html={data.leadHtml} />}
 
         <div class="doc-trace">
           <Trace variant={data.trace} />
@@ -61,7 +64,7 @@ const { Content } = await render(entry);
             <dt>método</dt>
             <dd>{data.spec?.metodo}</dd>
             <dt>resultado</dt>
-            <dd set:html={data.spec?.resultado}></dd>
+            <dd set:html={data.spec?.resultado} />
           </dl>
         )
       }
@@ -69,11 +72,13 @@ const { Content } = await render(entry);
       <p class="tech">Tecnologias: {data.stack}</p>
 
       <p class="repo">
-        {data.repos.map((r) => (
-          <a href={r.url} target="_blank" rel="noopener noreferrer">
-            {r.label} ↗
-          </a>
-        ))}
+        {
+          data.repos.map((r) => (
+            <a href={r.url} target="_blank" rel="noopener noreferrer">
+              {r.label} ↗
+            </a>
+          ))
+        }
       </p>
     </article>
   </div>

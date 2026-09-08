@@ -29,7 +29,7 @@ description: >-
 ## Problema
 
 O banco precisa de uma lista priorizada de contas em risco para direcionar ações
-de retenção, e de uma leitura do *porquê* de cada risco — não só um rótulo. O
+de retenção, e de uma leitura do _porquê_ de cada risco — não só um rótulo. O
 alvo é a probabilidade de evasão por cliente, com os fatores que a explicam.
 
 ## Dados

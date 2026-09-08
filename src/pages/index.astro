@@ -1,12 +1,12 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../components/Layout.astro";
-import Channels from "../components/Channels.astro";
-import Trace from "../components/Trace.astro";
-import { profile } from "../data/profile";
-import { skills } from "../data/skills";
-import { certTotal } from "../data/certificates";
-import { url, absoluteUrl } from "../lib/url";
+import Layout from "@components/layout/Layout.astro";
+import Channels from "@components/panels/Channels.astro";
+import Trace from "@components/viz/Trace.astro";
+import { profile } from "@data/profile";
+import { skills } from "@data/skills";
+import { certTotal } from "@data/certificates";
+import { url, absoluteUrl } from "@lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -54,16 +54,26 @@ const schema = {
     <header class="hero">
       <h1>{profile.name}</h1>
       <p class="role">{profile.role}</p>
-      <p class="lead" set:html={profile.leadHtml}></p>
+      <p class="lead" set:html={profile.leadHtml} />
 
       <p class="contact">
         <a href={`mailto:${profile.email}`}>{profile.email}</a>
         <span class="sep" aria-hidden="true">·</span>
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
+          >GitHub</a
+        >
         <span class="sep" aria-hidden="true">·</span>
-        <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a
+          href={profile.links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer">LinkedIn</a
+        >
         <span class="sep" aria-hidden="true">·</span>
-        <a href={url(profile.links.dossie)} target="_blank" rel="noopener noreferrer">Dossiê (PDF)</a>
+        <a
+          href={url(profile.links.dossie)}
+          target="_blank"
+          rel="noopener noreferrer">Dossiê (PDF)</a
+        >
         <span class="sep" aria-hidden="true">·</span>
         {profile.location}
       </p>
@@ -88,10 +98,14 @@ const schema = {
         <span class="name">Trajetória</span><span class="count">2012–26</span>
       </a>
       <a class="module-link" href={url("/competencias/")}>
-        <span class="name">Competências</span><span class="count">[0{skills.length}]</span>
+        <span class="name">Competências</span><span class="count"
+          >[0{skills.length}]</span
+        >
       </a>
       <a class="module-link" href={url("/certificacoes/")}>
-        <span class="name">Certificações</span><span class="count">[{certTotal}]</span>
+        <span class="name">Certificações</span><span class="count"
+          >[{certTotal}]</span
+        >
       </a>
     </nav>
   </div>

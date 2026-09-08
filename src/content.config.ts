@@ -18,7 +18,9 @@ const projetos = defineCollection({
       sub: z.string().optional(),
     }),
     stack: z.string(),
-    repos: z.array(z.object({ label: z.string(), url: z.string() })).default([]),
+    repos: z
+      .array(z.object({ label: z.string(), url: z.string() }))
+      .default([]),
     trace: z.enum([
       "convergence",
       "power",

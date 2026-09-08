@@ -1,6 +1,6 @@
 ---
-import { profile } from "../data/profile";
-import { url } from "../lib/url";
+import { profile } from "@data/profile";
+import { url } from "@lib/url";
 ---
 
 <footer class="foot">
@@ -8,10 +8,16 @@ import { url } from "../lib/url";
   <span class="sep" aria-hidden="true">·</span>
   <a href={`mailto:${profile.email}`}>{profile.email}</a>
   <span class="sep" aria-hidden="true">·</span>
-  <a href={profile.links.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+  <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
+    >GitHub</a
+  >
   <span class="sep" aria-hidden="true">·</span>
-  <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+  <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer"
+    >LinkedIn</a
+  >
   <span class="sep" aria-hidden="true">·</span>
-  <a href={url(profile.links.dossie)} target="_blank" rel="noopener noreferrer">Dossiê (PDF)</a>
+  <a href={url(profile.links.dossie)} target="_blank" rel="noopener noreferrer"
+    >Dossiê (PDF)</a
+  >
   <span class="sep" aria-hidden="true">·</span>© 2026
 </footer>

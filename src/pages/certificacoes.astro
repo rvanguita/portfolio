@@ -1,7 +1,7 @@
 ---
-import Layout from "../components/Layout.astro";
-import { certGroups, certTotal } from "../data/certificates";
-import { url } from "../lib/url";
+import Layout from "@components/layout/Layout.astro";
+import { certGroups, certTotal } from "@data/certificates";
+import { url } from "@lib/url";
 
 /** Cada segmento do caminho é codificado separadamente para preservar as "/". */
 const certUrl = (file: string) =>
