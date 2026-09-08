@@ -9,7 +9,9 @@ interface Props {
     | "noise"
     | "threshold"
     | "imbalance"
-    | "sentiment";
+    | "sentiment"
+    | "pipeline"
+    | "propensity";
   caption?: string;
   class?: string;
 }
@@ -28,6 +30,10 @@ const labels: Record<Props["variant"], string> = {
     "Classe de fraude representa cerca de 0,17% das transações — um alvo raro contra uma maioria esmagadora de transações legítimas.",
   sentiment:
     "Distribuição binária das avaliações: 62% positivas contra 38% negativas.",
+  pipeline:
+    "Esteira medalhão: o dado sobe em degraus da camada Raw para Bronze, Silver e Gold, ganhando estrutura a cada passo.",
+  propensity:
+    "Clientes ordenados pelo score de propensão de compra: a curva decresce da esquerda para a direita e um corte define a fila de contato da semana.",
 };
 ---
 
@@ -121,6 +127,38 @@ const labels: Record<Props["variant"], string> = {
         <text class="trace-label" x="4" y="16">avaliações</text>
         <text class="trace-label" x="48" y="80">62% positivas</text>
         <text class="trace-label" x="608" y="80" text-anchor="end">38% negativas</text>
+      </>
+    )
+  }
+  {
+    variant === "pipeline" && (
+      <>
+        <path class="trace-frame" d="M44 10 V96 H620" />
+        <path class="trace-tick" d="M120 96 v5 M260 96 v5 M400 96 v5 M540 96 v5" />
+        <polyline
+          class="trace-curve"
+          points="48,88 190,88 190,68 330,68 330,48 470,48 470,28 620,28"
+        />
+        <text class="trace-label" x="4" y="16">estrutura</text>
+        <text class="trace-label" x="120" y="116" text-anchor="middle">raw</text>
+        <text class="trace-label" x="260" y="116" text-anchor="middle">bronze</text>
+        <text class="trace-label" x="400" y="116" text-anchor="middle">silver</text>
+        <text class="trace-label" x="540" y="116" text-anchor="middle">gold</text>
+      </>
+    )
+  }
+  {
+    variant === "propensity" && (
+      <>
+        <path class="trace-frame" d="M44 10 V96 H620" />
+        <path class="trace-dash" d="M200 10 V96" />
+        <polyline
+          class="trace-curve"
+          points="48,20 120,26 200,38 280,54 360,68 440,80 520,88 600,93"
+        />
+        <text class="trace-label" x="4" y="16">score</text>
+        <text class="trace-label" x="208" y="44">fila da semana</text>
+        <text class="trace-label" x="620" y="116" text-anchor="end">clientes ordenados →</text>
       </>
     )
   }
