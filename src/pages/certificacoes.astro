@@ -1,0 +1,52 @@
+---
+import Layout from "../components/Layout.astro";
+import { certGroups, certTotal } from "../data/certificates";
+import { url } from "../lib/url";
+
+/** Cada segmento do caminho é codificado separadamente para preservar as "/". */
+const certUrl = (file: string) =>
+  url("/certificates/" + file.split("/").map(encodeURIComponent).join("/"));
+---
+
+<Layout
+  title="Certificações · rvanguita"
+  description="24 certificações e especializações concluídas — Data Science e Python, Matemática e Machine Learning, Estatística Empresarial — de Imperial College, University of Michigan, CU Boulder e Rice University."
+  current="certificacoes"
+>
+  <div class="page">
+    <a class="backlink" href={url("/")}>← Painel</a>
+    <div class="mod-head">
+      <h1>Certificações</h1>
+      <span class="count">[{certTotal}]</span>
+    </div>
+
+    <div class="cert-bar" aria-hidden="true">
+      {certGroups.map((g) => <span style={`flex:${g.items.length}`} />)}
+    </div>
+    <p class="cert-legend" aria-hidden="true">
+      {certGroups.map((g) => (
+        <span><b>{g.items.length}</b>{g.short}</span>
+      ))}
+    </p>
+
+    <div class="certs">
+      {
+        certGroups.map((g) => (
+          <section class="certs-group">
+            <h2>{g.title}</h2>
+            <ul>
+              {g.items.map((c) => (
+                <li>
+                  <a href={certUrl(c.file)} target="_blank" rel="noopener noreferrer">
+                    {c.name}
+                  </a>
+                  <span class="issuer"> — {c.issuer}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

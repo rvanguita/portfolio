@@ -1,0 +1,15 @@
+---
+interface Props {
+  label: string;
+  value: string;
+  sub?: string;
+  class?: string;
+}
+const { label, value, sub, class: cls } = Astro.props;
+---
+
+<div class:list={["readout", cls]}>
+  <span class="readout-label">{label}</span>
+  <span class="readout-value">{value}</span>
+  {sub && <span class="readout-sub">{sub}</span>}
+</div>

@@ -4,108 +4,116 @@ Working guidance for coding agents. `README.md` is the human-facing version.
 
 ## What this is
 
-Personal page of Rene Verinaud Anguita Junior. A **hand-written static site — HTML
-+ CSS only**. No framework, no build, no npm, no tests, no config files.
+Personal page of Rene Verinaud Anguita Junior — a **static site built with
+[Astro](https://astro.build)**. Concept: a **"painel de leitura"** (a precision
+measurement-instrument readout) — each page is a panel, every project's headline
+metric is a large numeric readout with units, thin inline-SVG "signal traces"
+echo each result, and a fixed **readout strip** carries the identity + nav.
 
 ```
-src/                             site source — this is what Pages publishes
-  index.html                     home (dossiê): intro · projetos · trajetória ·
-                                 competências · certificações
-  style.css                      one stylesheet, shared by all 4 pages
-  projects/wind-farm/index.html  case study (short prose + repo link)
-  projects/lake-fastf1/index.html  case study
-  projects/bank-customer-churn/index.html  case study
-  certificates/                  24 certificate PDFs
-  assets/social-card.png         Open Graph image
-  assets/dossie-rene-anguita.pdf full-site PDF snapshot, linked from contact/footer
-  icon.png                       favicon
-  .nojekyll                      stops GitHub Pages running Jekyll
-.github/workflows/deploy.yml     publishes src/ to Pages (shell only, no build)
+astro.config.mjs                 site + base: '/portfolio', passthrough image service, sitemap
+package.json / package-lock.json  npm; scripts: dev · build · preview · check
+mise.toml                         pins Node for local dev
+
+src/
+  pages/
+    index.astro                  home — the "master panel" (hero + 6-project grid + module links)
+    projetos/index.astro         project index (the same channel grid)
+    projetos/[slug].astro        one page per project, from the content collection
+    trajetoria.astro             CV Gantt on a real time axis
+    competencias.astro           4 skill panels
+    certificacoes.astro          segmented "level meter" (12/9/3) + grouped lists
+  content.config.ts              zod schema for the 'projetos' collection
+  content/projetos/*.md          6 projects — `kind: full` has a Markdown body
+                                 (migrated case study), `kind: light` has a
+                                 structured `spec` (problema/dados/método/resultado)
+  data/                          profile.ts · timeline.ts · skills.ts · certificates.ts
+                                 (all content, kept verbatim from the old site)
+  components/                    Layout · BaseHead · ReadoutStrip · ThemeToggle ·
+                                 Panel-less (classes) · Readout · Trace · Timeline ·
+                                 Channels · Footer
+  lib/url.ts                     url() — prefixes every internal href with the base
+  styles/                        tokens.css (8 colour tokens per theme, type, sizes)
+                                 + global.css (everything else)
+
+public/                          served verbatim: .nojekyll · icon.png · robots.txt ·
+                                 assets/ (social-card.png, dossiê PDF) · certificates/ (24 PDFs)
+
+.github/workflows/
+  deploy.yml                     push to main → npm ci && npm run build → Pages (./dist)
+  ci.yml                         PR → npm ci && npm run build && npm run check
 ```
 
-Served at `https://rvanguita.github.io/portfolio/`. **All links are relative**
-(nav, `style.css`, `icon.png`, PDFs) so it works locally and under `/portfolio/`
-unchanged. Absolute URLs only in `<meta og:*>` and `<link rel="canonical">`.
+Served at `https://rvanguita.github.io/portfolio/`.
 
 ## Editing
 
-- **Design changes are gated on the `frontend-design` skill.** Before writing
-  or editing CSS in `style.css`, or any structural/visual HTML (new component,
-  new layout, new class — not plain copy edits), invoke the `frontend-design`
-  skill (`.claude/skill/frontend-design/SKILL.md`) first and follow its
-  process. This applies to every session, on any machine, no exceptions. Plain
-  content edits (text, links, a new certificate `<li>`) don't need it. Don't
-  confuse this with the other vendored skill, `.claude/skill/frontend-patterns`
-  — that one is React/Next.js component patterns and doesn't apply to this
-  plain-HTML site. (On the maintainer's machine this is additionally enforced
-  by a local hook in `.claude/settings.json` that blocks edits to `style.css`
-  until the skill has run in the session — that hook is gitignored and won't
-  exist on a fresh clone, so this written rule is the only guarantee elsewhere.)
-- **Content:** edit the text directly in the HTML files. The home page holds all
-  the profile/projects/timeline/skills/certificates content; each case study is
-  self-contained.
-- **Design:** all of it is in `style.css` (~400 lines). Concept: a "caderno em
-  papel milimetrado" — the page sits on a faint CSS grid (`body::before`),
-  section dividers are labelled axes (`.axis` + `.axis-fig`), prose is serif and
-  every measurement is monospace. Custom properties at the top: `--paper` `--ink`
-  `--ink-soft` `--rule` `--grid` `--grid-bold` `--accent` (copper, text) /
-  `--accent-ink` (copper, graphics), plus `--fs-*` type scale and the width
-  measures `--canvas` (page width on wide screens), `--rail` / `--rail-gap`
-  (the section-label gutter + y-axis) and `--measure` (prose reading cap).
-  Classes: `.wrap` / `.intro` + `.intro-mark` (wraps the hero SVG + its caption
-  as one unit, on all 4 pages) + `.hero-mark` (inline-SVG axis/curve device —
-  used on the home hero and reused as a content-specific schematic on each
-  case-study page) / `.axis` / `.projects` + `.project-*` + `.project-glyph`
-  (inline-SVG domain schematic) / `.timeline` + `.tl-*` (CV Gantt on a real
-  time axis; `--t0`/`--t1` on `.timeline`, `--from`/`--to` on each
-  `.tl-track`) / `.skills` (a `<dl>`; `.skill-n` is a plain count, not a
-  proficiency meter) / `.cert-bar` + `.cert-legend` / `.certs` (`<details>`) /
-  `.site-footer` / `.doc` + `.sig` (case-study prose).
-- **Widescreen (`≥60rem`):** one additive `@media screen and (min-width: 60rem)`
-  block near the end of `style.css` (plus a 2-line `min-width: 74rem` token
-  bump). Below 60rem nothing changes. It widens `.wrap`/`.site-footer` to
-  `--canvas`, turns each `.block` into a `grid` whose `.axis` label is sticky in
-  the left `--rail` gutter, draws the x/y axes on `.block::before`/`::after`, and
-  makes `.projects` / `.skills` / `.certs-inner` multi-column. `screen and` keeps
-  it out of `@media print`, so the PDF/print output is unchanged — don't add
-  print overrides for it. Physical `left:` is used in `.block::before/::after`
-  (matches the file); it'd need logical props if RTL is ever added.
-- Inline SVG only (no asset files). The PR check parses SVG as HTML, so
-  **self-close every leaf** (`<path …/>`, `<line …/>`, `<rect …/>`, `<polyline …/>`).
-- **Dark mode:** automatic via `prefers-color-scheme`, plus a manual override —
-  a hidden `#theme-toggle` checkbox + `.theme-toggle-btn` label (fixed circle,
-  bottom-right), matched by `:root:has(#theme-toggle:checked)` in CSS. Zero JS.
-  Every color **must** be one of the 8 tokens (never a bare hex) — the `:root`,
-  `@media (prefers-color-scheme: dark)`, and `:has(#theme-toggle:checked)`
-  blocks at the top of `style.css` are the only place colors are defined. The
-  toggle markup is duplicated across the 4 pages, right after `<body>` (same
-  pattern as the footer/head boilerplate).
-- **New certificate:** drop the PDF in `certificates/`, add an `<li>` in the
-  right `.certs-group` of `index.html` (replace spaces with `%20` in the `href`),
-  bump: the `<summary>` count, the `.axis-fig` `[24]`, and the matching
-  `.cert-bar` span `flex:` value + `.cert-legend` number.
-- **New case study:** a `projects/<slug>/index.html` following the existing
-  pattern (head boilerplate, `.doc` prose, a content-specific `.hero-mark`
-  schematic reusing the `hm-*` SVG parts — wrapped with its caption in
-  `<div class="intro-mark">` — `.tech`, `.repo`), plus: a
-  "Estudo de caso →" link on its `.project` card in `index.html`, its path
-  added to `PAGES` in `.github/check.py`, and its footer/`<head>` copied from
-  another case-study page.
-- **Footer** and the `<head>` boilerplate are duplicated across the 4 pages —
-  change all four when you touch them.
+### The base-path rule (most common source of bugs)
 
-Don't reintroduce a build step, a framework, a package.json, or client JS unless
-the user explicitly asks. The site deliberately has none.
+The site lives under `/portfolio/`. **Every internal link and every reference to
+a file in `public/` must go through `url()` from `src/lib/url.ts`** —
+`href={url('/projetos/wind-farm/')}`, `href={url('/assets/dossie-rene-anguita.pdf')}`.
+Canonical/OG URLs use `new URL(path, Astro.site)` (see `BaseHead.astro`).
+**Always verify with `npm run preview`** (it serves under the real base), not
+just `npm run dev`.
+
+### Design changes are gated on the `frontend-design` skill
+
+Before writing or editing anything in `src/styles/`, or any structural/visual
+`.astro` (new component, new layout, new class — not plain copy), invoke the
+`frontend-design` skill first and follow its process. Plain content edits
+(text in `src/data/*`, a `.md` body, a new certificate entry) don't need it.
+
+### Design system
+
+All of it is `src/styles/tokens.css` + `src/styles/global.css`.
+
+- **Colour: exactly 8 tokens per theme**, defined only in the `:root`,
+  `@media (prefers-color-scheme: dark)`, and `:root:has(#theme-toggle:checked)`
+  blocks of `tokens.css` — `--paper --ink --ink-soft --rule --accent
+  --accent-bright` plus `--well`. Never a bare hex anywhere else (the two
+  exceptions are `@media print` and the `<meta name="theme-color">` in
+  `BaseHead.astro`). Accent is **cyan** (`#0f6f7a` / `#12a0ad` light).
+- **Type:** IBM Plex Sans (structure, UI, panel titles) + IBM Plex Mono (all
+  data, readouts, labels), self-hosted via `@fontsource/*` imported in
+  `Layout.astro`. No web-font CDN.
+- **Signature devices:** `.strip` (the fixed readout bar), `.panel` /
+  `.panel-tab` (hairline module + mono label), `.readout` (label / big value /
+  sub — `Readout.astro`), `.trace` (inline-SVG signal — `Trace.astro`, six
+  named variants; draws once on load, respects reduced-motion), `.channels` /
+  `.skills` (instrument-bank grids: `gap:1px` on a `--rule` background).
+- **Dark mode:** automatic via `prefers-color-scheme` + a manual CSS-only
+  toggle (`#theme-toggle` checkbox + `:has()` — zero JS). `ThemeToggle.astro`
+  sits inside the strip.
+- **Inline SVG only** for graphics (`Trace.astro`); no image files beyond
+  `public/`. Self-close every leaf.
+
+### Content
+
+- **Profile / timeline / skills / certificates:** edit `src/data/*.ts`.
+- **A project:** edit its `src/content/projetos/<slug>.md`. Frontmatter is
+  validated by `src/content.config.ts`. `kind: full` → write the case study as
+  the Markdown body (`## Problema` … `## Resultado`); `kind: light` → fill the
+  `spec` object, no body.
+- **New certificate:** drop the PDF in `public/certificates/…`, add an entry to
+  the right group in `src/data/certificates.ts` (readable path with spaces —
+  the page encodes each segment). The `[NN]` counts and the segmented bar derive
+  from the data; nothing else to bump.
+- **New project page:** a `src/content/projetos/<slug>.md` with valid
+  frontmatter — the route, the home grid, the sitemap and the counts all follow
+  automatically.
+
+Don't remove the build, but also don't add a UI framework, client-side routing,
+or client JS unless asked — the theme toggle is deliberately CSS-only and the
+pages ship no JS.
 
 ## Preview & deploy
 
-- Local: `python3 -m http.server 8000 -d src` in the repo root, or open
-  `src/index.html`.
-- Deploy: push to `main` → `.github/workflows/deploy.yml` publishes the `src/`
-  directory (it is the site, `.nojekyll` included) to GitHub Pages.
-- PR gate: `.github/workflows/ci.yml` runs `python3 .github/check.py` — pages
-  exist, tags balanced, one `<h1>`/`lang`/`<title>` each, every local `href`
-  resolves to a real file, deploy targets present. No npm.
+- Local: `npm run dev` (fast) then always sanity-check `npm run build &&
+  npm run preview` (real `/portfolio/` base). `npm run check` runs `astro check`.
+- Node: `mise.toml` pins it locally; CI uses Node 20.
+- Deploy: push to `main` → `deploy.yml` builds and publishes `dist/` to Pages.
+- PR gate: `ci.yml` runs `npm ci && npm run build && npm run check`. A broken
+  internal content link, a schema violation or a type error fails the build.
 
-Conventional Commit subjects; everything lands via a PR to `main` (branch
-protection requires the `ci.yml` check).
+Conventional Commit subjects; everything lands via a PR to `main`.

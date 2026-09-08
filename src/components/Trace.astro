@@ -1,0 +1,128 @@
+---
+// Traço de sinal — SVG inline. Formas herdadas dos .hero-mark do site anterior,
+// agora como "leitura de sinal" de cada painel. Anima o traçado uma vez na
+// entrada (respeita prefers-reduced-motion via global.css).
+interface Props {
+  variant:
+    | "convergence"
+    | "power"
+    | "noise"
+    | "threshold"
+    | "imbalance"
+    | "sentiment";
+  caption?: string;
+  class?: string;
+}
+const { variant, caption, class: cls } = Astro.props;
+
+const labels: Record<Props["variant"], string> = {
+  convergence:
+    "Curva de convergência: o custo de uma solução cai a cada iteração de uma busca metaheurística e depois estabiliza.",
+  power:
+    "Curva de potência de uma turbina eólica: geração próxima de zero em ventos fracos, subida acentuada e um patamar de potência nominal.",
+  noise:
+    "Ruído decrescente ao longo das camadas do lakehouse: dados brutos e irregulares na camada Raw, estabilizando numa série curada na Silver.",
+  threshold:
+    "Risco de evasão crescendo com o tempo sem engajamento e cruzando um limiar de alerta, ponto em que o modelo sinaliza churn.",
+  imbalance:
+    "Classe de fraude representa cerca de 0,17% das transações — um alvo raro contra uma maioria esmagadora de transações legítimas.",
+  sentiment:
+    "Distribuição binária das avaliações: 62% positivas contra 38% negativas.",
+};
+---
+
+<svg
+  class:list={["trace", cls]}
+  viewBox="0 0 640 120"
+  role="img"
+  aria-label={labels[variant]}
+>
+  {
+    variant === "convergence" && (
+      <>
+        <path class="trace-frame" d="M44 10 V98 H620" />
+        <path
+          class="trace-tick"
+          d="M44 98 v5 M140 98 v5 M236 98 v5 M332 98 v5 M428 98 v5 M524 98 v5 M620 98 v5"
+        />
+        <polyline
+          class="trace-curve"
+          points="48,20 78,44 110,58 138,52 178,70 226,80 288,84 360,88 452,90 556,91 616,91"
+        />
+        <text class="trace-label" x="4" y="16">custo</text>
+        <text class="trace-label" x="620" y="116" text-anchor="end">iterações →</text>
+      </>
+    )
+  }
+  {
+    variant === "power" && (
+      <>
+        <path class="trace-frame" d="M44 10 V96 H620" />
+        <path
+          class="trace-tick"
+          d="M140 96 v5 M236 96 v5 M332 96 v5 M428 96 v5 M524 96 v5"
+        />
+        <polyline
+          class="trace-curve"
+          points="48,92 100,90 130,86 155,76 175,60 195,42 215,28 240,20 300,18 400,17 500,17 600,17"
+        />
+        <text class="trace-label" x="4" y="16">potência</text>
+        <text class="trace-label" x="620" y="116" text-anchor="end">vento →</text>
+      </>
+    )
+  }
+  {
+    variant === "noise" && (
+      <>
+        <path class="trace-frame" d="M44 10 V96 H620" />
+        <path class="trace-tick" d="M232 96 v5 M420 96 v5" />
+        <polyline
+          class="trace-curve"
+          points="48,40 66,72 84,32 102,68 120,36 138,64 156,42 174,60 192,50 230,45 268,54 306,46 344,52 382,48 460,47 540,47 616,47"
+        />
+        <text class="trace-label" x="4" y="16">ruído</text>
+        <text class="trace-label" x="120" y="116" text-anchor="middle">raw</text>
+        <text class="trace-label" x="316" y="116" text-anchor="middle">bronze</text>
+        <text class="trace-label" x="512" y="116" text-anchor="middle">silver</text>
+      </>
+    )
+  }
+  {
+    variant === "threshold" && (
+      <>
+        <path class="trace-frame" d="M44 10 V96 H620" />
+        <path class="trace-dash" d="M44 48 H620" />
+        <polyline
+          class="trace-curve"
+          points="48,90 120,84 200,76 280,62 340,50 380,40 440,28 520,22 600,16"
+        />
+        <text class="trace-label" x="4" y="16">risco</text>
+        <text class="trace-label" x="50" y="44">limiar de alerta</text>
+        <text class="trace-label" x="620" y="116" text-anchor="end">tempo →</text>
+      </>
+    )
+  }
+  {
+    variant === "imbalance" && (
+      <>
+        <rect class="trace-frame" x="48" y="42" width="560" height="18" />
+        <rect class="trace-fill" x="604" y="42" width="4" height="18" />
+        <text class="trace-label" x="4" y="16">transações</text>
+        <text class="trace-label" x="48" y="80">legítimas · 99,83%</text>
+        <text class="trace-label" x="608" y="80" text-anchor="end">fraude · 0,17%</text>
+      </>
+    )
+  }
+  {
+    variant === "sentiment" && (
+      <>
+        <rect class="trace-fill" x="48" y="42" width="345" height="18" />
+        <rect class="trace-frame" x="401" y="42" width="207" height="18" />
+        <text class="trace-label" x="4" y="16">avaliações</text>
+        <text class="trace-label" x="48" y="80">62% positivas</text>
+        <text class="trace-label" x="608" y="80" text-anchor="end">38% negativas</text>
+      </>
+    )
+  }
+</svg>
+{caption && <p class="trace-cap">{caption}</p>}
