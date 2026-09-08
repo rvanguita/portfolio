@@ -19,6 +19,11 @@ const projetos = defineCollection({
     }),
     stack: z.string(),
     repos: z.array(z.object({ label: z.string(), url: z.string() })).default([]),
+    // Nome(s) do repositório no GitHub que este projeto representa — usados para
+    // sobrepor metadados ao vivo (★, data, linguagem) e para removê-los da
+    // seção automática "Mais no GitHub". `repo` é o principal; `reposGh` os demais.
+    repo: z.string().optional(),
+    reposGh: z.array(z.string()).default([]),
     trace: z.enum([
       "convergence",
       "power",

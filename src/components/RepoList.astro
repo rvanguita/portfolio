@@ -1,0 +1,35 @@
+---
+import type { Repo } from "../data/github";
+import { relativeTime, isNew, displayTopics } from "../data/github";
+
+interface Props {
+  repos: Repo[];
+}
+const { repos } = Astro.props;
+---
+
+<ul class="repo-list">
+  {
+    repos.map((r) => (
+      <li class="repo-item">
+        <p class="repo-head">
+          <a class="repo-name" href={r.url} target="_blank" rel="noopener noreferrer">
+            {r.name} ↗
+          </a>
+          {isNew(r) && <span class="tag-new">novo</span>}
+          <span class="repo-when">atualizado {relativeTime(r.pushedAt)}</span>
+        </p>
+
+        {r.description && <p class="repo-desc">{r.description}</p>}
+
+        <p class="repo-chips">
+          {r.language && <span class="chip">{r.language}</span>}
+          {displayTopics(r).map((t) => (
+            <span class="chip chip--topic">{t}</span>
+          ))}
+          {r.stars > 0 && <span class="chip">&#9733; {r.stars}</span>}
+        </p>
+      </li>
+    ))
+  }
+</ul>

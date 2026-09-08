@@ -101,11 +101,37 @@ All of it is `src/styles/tokens.css` + `src/styles/global.css`.
   from the data; nothing else to bump.
 - **New project page:** a `src/content/projetos/<slug>.md` with valid
   frontmatter — the route, the home grid, the sitemap and the counts all follow
-  automatically.
+  automatically. Set `repo: <github-repo-name>` (and `reposGh: [...]` for extras)
+  so the card gets its live `★` / language / "updated N ago" and the repo drops
+  out of the "Mais no GitHub" section.
 
 Don't remove the build, but also don't add a UI framework, client-side routing,
 or client JS unless asked — the theme toggle is deliberately CSS-only and the
 pages ship no JS.
+
+### GitHub sync (repos → site)
+
+The profile's GitHub user (parsed from `src/data/profile.ts`) drives two things:
+live badges on curated cards, and an auto "Mais no GitHub" section for every
+public repo without a curated card.
+
+- **Source of truth:** `src/data/github-repos.json` — a committed snapshot.
+  Regenerate with `npm run sync` (`scripts/sync-github.mjs`, Node-only, no deps;
+  reads `GITHUB_TOKEN` if present, else anonymous). The snapshot only changes
+  its timestamp when the repo list actually changes (idempotent).
+- **The build never calls the API** — it reads the JSON. Helpers in
+  `src/data/github.ts` (`repoMeta`, `relativeTime`, `pickExtras`, `isNew`,
+  `publicRepoCount`, `warnMissing`).
+- **Refresh:** `.github/workflows/sync-github.yml` runs weekly (and on demand),
+  reruns the script and opens/updates a PR (`chore/sync-github`) via
+  `peter-evans/create-pull-request`. Needs repo setting *Actions → General →
+  Workflow permissions → "Allow GitHub Actions to create and approve pull
+  requests"*.
+- **Control from GitHub's UI** (no code change): topic `portfolio-hide` drops a
+  repo from the site; `portfolio-pin` sorts it first in "Mais no GitHub". Always
+  excluded: `portfolio`, `rvanguita`, forks, archived.
+- A build-time `console.warn` fires if a curated `repo:` no longer exists in the
+  snapshot (deleted / made private / renamed → run `npm run sync`).
 
 ## Preview & deploy
 
@@ -115,5 +141,6 @@ pages ship no JS.
 - Deploy: push to `main` → `deploy.yml` builds and publishes `dist/` to Pages.
 - PR gate: `ci.yml` runs `npm ci && npm run build && npm run check`. A broken
   internal content link, a schema violation or a type error fails the build.
+- `sync-github.yml` (weekly cron) refreshes `src/data/github-repos.json` via a PR.
 
 Conventional Commit subjects; everything lands via a PR to `main`.

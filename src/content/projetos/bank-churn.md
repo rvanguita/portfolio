@@ -1,6 +1,7 @@
 ---
 title: Bank Customer Churn Prediction
 order: 3
+repo: bank-customer-churn
 category: Classificação · Risco
 kind: full
 trace: threshold

@@ -1,6 +1,7 @@
 ---
 title: Otimização de Sistemas de Distribuição Elétrica
 order: 4
+reposGh: [induscon_2025, reliability-systems, DEP-TS-MDM]
 category: Pesquisa Operacional
 kind: light
 trace: convergence
