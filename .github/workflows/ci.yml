@@ -12,7 +12,8 @@ permissions:
 
 jobs:
   build:
-    name: 🔍 Build & type-check
+    # Nome mantido para casar com o status check exigido na proteção da branch main.
+    name: 🔍 Lint, Types, Testes & Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
