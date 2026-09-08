@@ -1,16 +1,16 @@
 // @ts-check
-import { defineConfig, passthroughImageService } from 'astro/config';
-import sitemap from '@astrojs/sitemap';
+import { defineConfig, passthroughImageService } from "astro/config";
+import sitemap from "@astrojs/sitemap";
+import { SITE } from "./src/config.ts";
 
-// Servido em https://rvanguita.github.io/portfolio/ — `site` + `base` precisam
-// bater com isso. Todo href interno passa pelo helper `src/lib/url.ts`.
-// Sem transformação de imagem (assets servidos direto de public/) → passthrough,
-// evitando a dependência nativa `sharp`.
+// `site` / `base` vêm de src/config.ts (fonte única). Todo href interno passa
+// pelo helper src/lib/url.ts. Sem transformação de imagem (assets servidos
+// direto de public/) → passthrough, evitando a dependência nativa `sharp`.
 export default defineConfig({
-  site: 'https://rvanguita.github.io',
-  base: '/portfolio',
-  trailingSlash: 'always',
-  build: { format: 'directory' },
+  site: SITE.url,
+  base: SITE.base,
+  trailingSlash: "always",
+  build: { format: "directory" },
   image: { service: passthroughImageService() },
   integrations: [sitemap()],
 });

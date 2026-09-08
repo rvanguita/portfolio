@@ -1,8 +1,8 @@
 ---
 import type { CollectionEntry } from "astro:content";
-import { url } from "../lib/url";
+import { url } from "@lib/url";
 import Readout from "./Readout.astro";
-import Trace from "./Trace.astro";
+import Trace from "@components/viz/Trace.astro";
 
 interface Props {
   projects: CollectionEntry<"projetos">[];

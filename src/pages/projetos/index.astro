@@ -1,8 +1,8 @@
 ---
 import { getCollection } from "astro:content";
-import Layout from "../../components/Layout.astro";
-import Channels from "../../components/Channels.astro";
-import { url } from "../../lib/url";
+import Layout from "@components/layout/Layout.astro";
+import Channels from "@components/panels/Channels.astro";
+import { url } from "@lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,

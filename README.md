@@ -20,12 +20,15 @@ Tema claro/escuro com alternância em CSS puro, sem JavaScript no cliente.
 ```
 portfolio/
 │
-├─ astro.config.mjs          site + base '/portfolio', sitemap, imagem passthrough
-├─ package.json              scripts: dev · build · preview · check
+├─ astro.config.mjs          site + base vindos de src/config.ts, sitemap
+├─ package.json              scripts: dev · build · preview · check · format
+├─ tsconfig.json             aliases de import (@/ @components @data @lib @styles)
 ├─ mise.toml                 fixa a versão do Node no dev local
-├─ tsconfig.json
+├─ .prettierrc · .editorconfig · .vscode/   formatação e convenções de editor
+├─ LICENSE                   MIT — só o código; conteúdo reservado
 │
 ├─ src/
+│  ├─ config.ts                   SITE (url, base, título) + NAV — o lugar único
 │  ├─ pages/
 │  │  ├─ index.astro              home — o "painel mestre"
 │  │  ├─ projetos/index.astro     índice de projetos
@@ -36,8 +39,10 @@ portfolio/
 │  ├─ content.config.ts           schema zod da coleção 'projetos'
 │  ├─ content/projetos/*.md       9 projetos — kind: full (corpo Markdown) | light (spec)
 │  ├─ data/                       profile · timeline · skills · certificates (todo o texto)
-│  ├─ components/                  Layout · BaseHead · ReadoutStrip · ThemeToggle ·
-│  │                              Readout · Trace · Timeline · Channels · Footer
+│  ├─ components/
+│  │  ├─ layout/                  Layout · BaseHead · ReadoutStrip · ThemeToggle · Footer
+│  │  ├─ panels/                  Channels (grade de projetos) · Readout (métrica grande)
+│  │  └─ viz/                     Trace (sinal SVG inline) · Timeline (Gantt)
 │  ├─ lib/url.ts                   url() — prefixa todo href interno com o base
 │  └─ styles/                      tokens.css (8 cores/tema) + global.css
 │
@@ -47,14 +52,16 @@ portfolio/
 │  ├─ assets/                     social-card.png · dossiê.pdf
 │  └─ certificates/               24 PDFs
 │
-└─ .github/workflows/
-   ├─ ci.yml                      PR → npm ci && build && check
-   └─ deploy.yml                  push em main → build → GitHub Pages
+└─ .github/
+   ├─ workflows/ci.yml            PR → npm ci && format:check && build && check
+   ├─ workflows/deploy.yml        push em main → build → GitHub Pages
+   └─ dependabot.yml · PULL_REQUEST_TEMPLATE.md
 ```
 
 O site é servido sob `/portfolio/`. Todo link interno passa pelo helper
 `src/lib/url.ts` para ganhar esse prefixo; URLs absolutas (canonical, Open
-Graph) usam `Astro.site`.
+Graph) usam `Astro.site`. Imports usam aliases (`@components/…`, `@data/…`) —
+sem `../../`.
 
 ## Conteúdo
 
@@ -75,6 +82,7 @@ npm install
 npm run dev        # desenvolvimento (rápido)
 npm run build && npm run preview   # confere o site sob /portfolio/
 npm run check      # astro check (tipos)
+npm run format     # Prettier (--write); `format:check` só verifica
 ```
 
 Node: `mise.toml` fixa a versão para o desenvolvimento local; o CI usa Node 20.
@@ -83,11 +91,13 @@ Node: `mise.toml` fixa a versão para o desenvolvimento local; o CI usa Node 20.
 
 Push em `main` → `.github/workflows/deploy.yml` roda `npm ci && npm run build` e
 publica `dist/` no GitHub Pages. Pull requests para `main` passam por
-`.github/workflows/ci.yml` (`npm ci && npm run build && npm run check`): um link
-interno quebrado, uma violação de schema de conteúdo ou um erro de tipo derruba
-o build. A proteção da branch `main` exige esse check.
+`.github/workflows/ci.yml` (`npm ci && npm run format:check && npm run build &&
+npm run check`): formatação fora do padrão, link interno quebrado, violação de
+schema de conteúdo ou erro de tipo derrubam o check. A proteção da branch `main`
+exige esse check. O `dependabot.yml` abre PRs semanais de atualização de deps.
 
 ## Licença
 
-Portfólio pessoal e materiais profissionais. Para reutilização de conteúdo,
-imagens ou certificados, entre em contato com o autor.
+O **código** está sob a licença MIT (ver `LICENSE`). O **conteúdo** — textos,
+currículo, certificados, imagens e o PDF do dossiê — não está sob essa licença e
+permanece reservado; para reuso, entre em contato com o autor.

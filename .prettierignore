@@ -1,0 +1,20 @@
+# Build / gerado / lockfile
+dist/
+.astro/
+node_modules/
+package-lock.json
+
+# Servido verbatim
+public/
+
+# CSS afinado à mão (alinhamento de colunas, arte em comentário)
+src/styles/
+
+# Entradas numa linha só, de propósito
+src/data/certificates.ts
+
+# Markup sensível a espaço em branco (SVG <text>, <span>{expr}</span>,
+# <b>{n}</b>{texto}) — o Prettier injeta whitespace que muda o render.
+src/components/viz/Trace.astro
+src/components/panels/Channels.astro
+src/pages/certificacoes.astro
