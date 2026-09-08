@@ -534,6 +534,8 @@ code, kbd, samp {
 
 @media (min-width: 48rem) {
   .channels { grid-template-columns: 1fr 1fr; }
+  /* contagem ímpar: o último painel ocupa a linha inteira — sem célula vazia */
+  .channels > .panel:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .modules { grid-template-columns: repeat(3, 1fr); }
   .skills { grid-template-columns: 1fr 1fr; }
 }

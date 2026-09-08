@@ -26,6 +26,8 @@ const projetos = defineCollection({
       "threshold",
       "imbalance",
       "sentiment",
+      "pipeline",
+      "propensity",
     ]),
     spec: z
       .object({

@@ -25,7 +25,7 @@ flowchart TD
     repo --> gh[".github/workflows/"]
 
     src --> pages["pages/ — index · projetos/[slug] · trajetoria · competencias · certificacoes"]
-    src --> content["content/projetos/*.md — 6 projetos (full | light)"]
+    src --> content["content/projetos/*.md — 9 projetos (full | light)"]
     src --> data["data/ — profile · timeline · skills · certificates"]
     src --> comps["components/ — Layout · ReadoutStrip · Trace · Readout · Timeline · Channels …"]
     src --> styles["styles/ — tokens.css (8 cores/tema) + global.css"]
@@ -50,7 +50,7 @@ Todo o texto do site mora em dados estruturados, não no HTML:
 - `src/data/timeline.ts` — as 9 entradas da trajetória, com o eixo de tempo
 - `src/data/skills.ts` — os 4 grupos de competências
 - `src/data/certificates.ts` — as 24 certificações, em 3 grupos (12 / 9 / 3)
-- `src/content/projetos/*.md` — os 6 projetos. `kind: full` traz o estudo de
+- `src/content/projetos/*.md` — os 9 projetos. `kind: full` traz o estudo de
   caso completo no corpo Markdown; `kind: light` traz só a ficha
   problema/dados/método/resultado no frontmatter.
 
