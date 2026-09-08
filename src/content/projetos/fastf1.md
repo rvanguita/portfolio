@@ -1,6 +1,7 @@
 ---
 title: FastF1 Data Platform
 order: 1
+repo: lake-fastf1
 category: Lakehouse · MLOps
 kind: full
 trace: noise

@@ -1,6 +1,7 @@
 ---
 title: Shopping List Intelligence
 order: 7
+repo: personal-shopping-list
 category: Engenharia de Dados · OCR
 kind: light
 trace: pipeline

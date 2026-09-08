@@ -1,6 +1,7 @@
 ---
 import type { CollectionEntry } from "astro:content";
 import { url } from "../lib/url";
+import { repoMeta, relativeTime } from "../data/github";
 import Readout from "./Readout.astro";
 import Trace from "./Trace.astro";
 
@@ -14,42 +15,58 @@ const Title = `h${level}` as "h2" | "h3";
 
 <div class="channels">
   {
-    projects.map((p) => (
-      <article class="panel">
-        <div class="panel-tab">
-          <span>{p.data.category}</span>
-          <span class="ref">{p.data.kind === "full" ? "estudo de caso" : "ficha"}</span>
-        </div>
+    projects.map((p) => {
+      const gh = repoMeta(p.data.repo);
+      const meta =
+        gh &&
+        [
+          gh.language,
+          gh.stars > 0 ? `★ ${gh.stars}` : null,
+          `atualizado ${relativeTime(gh.pushedAt)}`,
+        ]
+          .filter(Boolean)
+          .join(" · ");
+      return (
+        <article class="panel">
+          <div class="panel-tab">
+            <span>{p.data.category}</span>
+            <span class="ref">
+              {p.data.kind === "full" ? "estudo de caso" : "ficha"}
+            </span>
+          </div>
 
-        <div class="channel-head">
-          <Title class="panel-title">
-            <a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a>
-          </Title>
-          <Readout
-            class="channel-metric"
-            label={p.data.metric.label}
-            value={p.data.metric.value}
-            sub={p.data.metric.sub}
-          />
-        </div>
+          {meta && <p class="channel-meta">{meta}</p>}
 
-        <p class="channel-summary">{p.data.summary}</p>
+          <div class="channel-head">
+            <Title class="panel-title">
+              <a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a>
+            </Title>
+            <Readout
+              class="channel-metric"
+              label={p.data.metric.label}
+              value={p.data.metric.value}
+              sub={p.data.metric.sub}
+            />
+          </div>
 
-        <Trace class="channel-trace" variant={p.data.trace} />
+          <p class="channel-summary">{p.data.summary}</p>
 
-        <p class="channel-stack">{p.data.stack}</p>
+          <Trace class="channel-trace" variant={p.data.trace} />
 
-        <p class="channel-links">
-          <a href={url(`/projetos/${p.id}/`)}>
-            {p.data.kind === "full" ? "Estudo de caso →" : "Ficha →"}
-          </a>
-          {p.data.repos.map((r) => (
-            <a href={r.url} target="_blank" rel="noopener noreferrer">
-              {r.label} ↗
+          <p class="channel-stack">{p.data.stack}</p>
+
+          <p class="channel-links">
+            <a href={url(`/projetos/${p.id}/`)}>
+              {p.data.kind === "full" ? "Estudo de caso →" : "Ficha →"}
             </a>
-          ))}
-        </p>
-      </article>
-    ))
+            {p.data.repos.map((r) => (
+              <a href={r.url} target="_blank" rel="noopener noreferrer">
+                {r.label} ↗
+              </a>
+            ))}
+          </p>
+        </article>
+      );
+    })
   }
 </div>

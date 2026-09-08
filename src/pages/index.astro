@@ -2,16 +2,25 @@
 import { getCollection } from "astro:content";
 import Layout from "../components/Layout.astro";
 import Channels from "../components/Channels.astro";
+import RepoList from "../components/RepoList.astro";
 import Trace from "../components/Trace.astro";
 import { profile } from "../data/profile";
 import { skills } from "../data/skills";
 import { certTotal } from "../data/certificates";
+import { pickExtras, warnMissing } from "../data/github";
 import { url, absoluteUrl } from "../lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
 );
 const n = String(projects.length).padStart(2, "0");
+
+const claimed = projects.flatMap((p) =>
+  [p.data.repo, ...p.data.reposGh].filter((x): x is string => !!x),
+);
+warnMissing(claimed);
+const extras = pickExtras(claimed);
+const en = String(extras.length).padStart(2, "0");
 
 const schema = {
   "@context": "https://schema.org",
@@ -94,5 +103,16 @@ const schema = {
         <span class="name">Certificações</span><span class="count">[{certTotal}]</span>
       </a>
     </nav>
+
+    {
+      extras.length > 0 && (
+        <>
+          <h2 class="section-rule">
+            Mais no GitHub <span class="count">[{en}]</span>
+          </h2>
+          <RepoList repos={extras} />
+        </>
+      )
+    }
   </div>
 </Layout>
