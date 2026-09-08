@@ -80,6 +80,7 @@ npm install
 npm run dev        # desenvolvimento (rápido)
 npm run build && npm run preview   # confere o site sob /portfolio/
 npm run check      # astro check (tipos)
+npm test           # testes da lógica de sync (node --test, sem deps)
 npm run sync       # regenera src/data/github-repos.json a partir da API
 ```
 

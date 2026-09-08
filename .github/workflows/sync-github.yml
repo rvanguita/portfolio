@@ -25,6 +25,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Validar o snapshot
+        run: node --test scripts/sync-github.test.mjs
+
       - name: Abrir/atualizar PR
         uses: peter-evans/create-pull-request@v7
         with:

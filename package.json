@@ -8,7 +8,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "sync": "node scripts/sync-github.mjs"
+    "sync": "node scripts/sync-github.mjs",
+    "test": "node --test scripts/sync-github.test.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.2.0",

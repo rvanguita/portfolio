@@ -136,11 +136,15 @@ public repo without a curated card.
 ## Preview & deploy
 
 - Local: `npm run dev` (fast) then always sanity-check `npm run build &&
-  npm run preview` (real `/portfolio/` base). `npm run check` runs `astro check`.
+  npm run preview` (real `/portfolio/` base). `npm run check` runs `astro check`;
+  `npm test` runs the sync-logic unit tests (`scripts/sync-github.test.mjs`,
+  `node --test`, no deps).
 - Node: `mise.toml` pins it locally; CI uses Node 20.
 - Deploy: push to `main` → `deploy.yml` builds and publishes `dist/` to Pages.
-- PR gate: `ci.yml` runs `npm ci && npm run build && npm run check`. A broken
-  internal content link, a schema violation or a type error fails the build.
-- `sync-github.yml` (weekly cron) refreshes `src/data/github-repos.json` via a PR.
+- PR gate: `ci.yml` runs `npm ci && npm test && npm run build && npm run check`.
+  A broken internal content link, a schema violation, a type error or a failing
+  unit test fails the check.
+- `sync-github.yml` (weekly cron) refreshes `src/data/github-repos.json` via a PR
+  (runs the tests against the fresh snapshot before opening it).
 
 Conventional Commit subjects; everything lands via a PR to `main`.
