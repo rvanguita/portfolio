@@ -48,7 +48,7 @@ public/                          served verbatim: .nojekyll · icon.svg/png · r
 .github/
   workflows/deploy.yml           push to main → npm ci && npm run build → Pages (./dist)
   workflows/ci.yml               PR → npm ci && format:check && build && check
-  dependabot.yml · PULL_REQUEST_TEMPLATE.md
+  PULL_REQUEST_TEMPLATE.md
 ```
 
 ### Import aliases (`tsconfig.json`)
