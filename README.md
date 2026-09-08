@@ -45,8 +45,7 @@ flowchart LR
   subgraph gh[".github/"]
     g1["workflows/ci.yml · format:check + build + check"]
     g2["workflows/deploy.yml · build → GitHub Pages"]
-    g3["dependabot.yml"]
-    g4["PULL_REQUEST_TEMPLATE.md"]
+    g3["PULL_REQUEST_TEMPLATE.md"]
   end
 ```
 
@@ -86,7 +85,7 @@ publica `dist/` no GitHub Pages. Pull requests para `main` passam por
 `.github/workflows/ci.yml` (`npm ci && npm run format:check && npm run build &&
 npm run check`): formatação fora do padrão, link interno quebrado, violação de
 schema de conteúdo ou erro de tipo derrubam o check. A proteção da branch `main`
-exige esse check. O `dependabot.yml` abre PRs semanais de atualização de deps.
+exige esse check.
 
 ## Licença
 
