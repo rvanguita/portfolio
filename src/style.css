@@ -1,7 +1,8 @@
 /* ==========================================================================
    Portfólio — Rene Verinaud Anguita Junior
-   "Caderno em papel milimetrado": a página assenta sobre um plano cartesiano;
-   os divisores são eixos com ticks; a prosa é serifada e toda medição é mono.
+   "Relatório técnico limpo": um documento orientado a dados — contagens reais,
+   um eixo de tempo real, métricas reais — sem a pele de papel quadriculado.
+   Serif só no título; sans no corpo; mono reservado a algarismos.
    Site estático escrito à mão — sem framework, sem build, sem JS.
    ========================================================================== */
 
@@ -9,13 +10,13 @@
   --paper:      #fbfaf7;
   --ink:        #17181a;
   --ink-soft:   #6b6b68;
-  --rule:       #d6d3ca;   /* eixos · divisores · borda de card · grid grosso */
-  --grid:       color-mix(in srgb, var(--ink) 4%, transparent);   /* mm fino  */
-  --grid-bold:  color-mix(in srgb, var(--ink) 6.5%, transparent); /* mm 5º    */
+  --rule:       #d6d3ca;   /* divisores · hairlines · borda · eixo do Gantt   */
   --accent:     #8f4a1a;   /* cobre escuro — links e texto (~5:1 no papel)     */
   --accent-ink: #b0632a;   /* cobre vivo — traço e preenchimento de gráfico    */
 
   --font-serif: "Iowan Old Style", "Charter", Georgia, "Noto Serif", serif;
+  --font-sans:  -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                "Helvetica Neue", Arial, "Noto Sans", sans-serif;
   --font-mono:  ui-monospace, "SF Mono", "SFMono-Regular", Menlo, "Cascadia Mono",
                 Consolas, monospace;
 
@@ -27,7 +28,7 @@
   --fs-xl:   2rem;
 
   --canvas:   90rem;    /* largura da página em telas largas                  */
-  --rail:     10.5rem;  /* calha do rótulo de seção + eixo-y (→ 12rem ≥74rem) */
+  --rail:     10.5rem;  /* calha do rótulo de seção (→ 12rem ≥74rem)          */
   --rail-gap: 1.75rem;  /* calha → conteúdo (→ 2rem ≥74rem)                   */
 
   --measure:  42rem;    /* cap de leitura — prosa e rodapé                    */
@@ -36,7 +37,7 @@
 }
 
 /* --- modo escuro: automático (SO) + override manual (checkbox, sem JS) --
-   "o mesmo caderno, à noite" — mesmos tokens, tons invertidos com cuidado;
+   "o mesmo documento, à noite" — mesmos tokens, tons invertidos com cuidado;
    o cobre fica mais claro/saturado pra manter contraste no papel quase-preto.
    4 combinações resolvidas em cascata pura: claro auto, escuro auto,
    claro→forçado-escuro (o checkbox marcado) e escuro→forçado-claro (o
@@ -78,32 +79,18 @@ img, svg { display: block; max-width: 100%; }
 ul, ol { list-style: none; padding: 0; }
 button, input { font: inherit; }
 
-/* --- papel milimetrado (substrato fixo) -------------------------------- */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right,  var(--grid) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid) 1px, transparent 1px),
-    linear-gradient(to right,  var(--grid-bold) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-bold) 1px, transparent 1px);
-  background-size: 13px 13px, 13px 13px, 65px 65px, 65px 65px;
-}
-
 /* --- base ------------------------------------------------------------- */
 html { background: var(--paper); }
 body {
   background: var(--paper);
   color: var(--ink);
-  font: 400 1.05rem/1.65 var(--font-serif);
+  font: 400 var(--fs-base)/1.6 var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 h1, h2, h3 { font-weight: 600; line-height: 1.2; }
+h1, .fig-title, .tl-title { font-family: var(--font-serif); }
 
 a {
   color: var(--accent);
@@ -167,8 +154,8 @@ code {
   outline-offset: 2px;
 }
 
-/* --- mini-nav: navegação + resumo (reaproveita o .axis-fig de cada
-   seção — não é decorativo, é o mesmo dado real mostrado lá embaixo) --- */
+/* --- mini-nav: navegação + resumo (as contagens são o mesmo dado real
+   mostrado lá embaixo em cada seção — não são decorativas) ------------- */
 .mini-nav {
   position: sticky;
   top: 0;
@@ -180,7 +167,7 @@ code {
   padding: 0.7rem 0;
   background: var(--paper);
   border-bottom: 1px solid var(--rule);
-  font: 400 var(--fs-xs)/1 var(--font-mono);
+  font: 400 var(--fs-xs)/1 var(--font-sans);
   white-space: nowrap;
 }
 .mini-nav a {
@@ -191,6 +178,7 @@ code {
 .mini-nav a span {
   color: var(--accent);
   margin-left: 0.4em;
+  font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
 }
 .mini-nav .sep { margin: 0 0.9ch; color: var(--rule); }
@@ -208,23 +196,32 @@ section[id] { scroll-margin-top: 2rem; }
 .intro h1 { font-size: var(--fs-xl); letter-spacing: -0.02em; font-weight: 700; }
 .intro .role {
   margin-top: 0.5rem;
-  font: 400 var(--fs-sm)/1.5 var(--font-mono);
+  font-size: var(--fs-base);
   color: var(--ink-soft);
 }
-.intro .lead { margin-top: 0.4rem; }
+.intro .lead { margin-top: 1.25rem; }
 .intro .lead p + p { margin-top: 0.9rem; }
 .intro .contact {
   margin-top: 1.5rem;
-  font: 400 var(--fs-sm)/1.7 var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.7;
   color: var(--ink-soft);
 }
 .intro .contact .sep { margin: 0 0.5ch; color: var(--rule); }
+.intro .availability {
+  margin-top: 0.4rem;
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
 
-/* marca do hero — esquema plotado (convergência de uma busca) --------- */
+/* marca do hero — esquema plotado, contido (a curva de convergência de
+   uma busca metaheurística: o assunto do doutorado, desenhado à mão) --- */
+.intro-mark { margin: 1.75rem 0 0; }
 .hero-mark {
   width: 100%;
+  max-width: 30rem;
   height: auto;
-  margin: 1.5rem 0 0.4rem;
+  margin: 0 0 0.4rem;
   overflow: visible;
 }
 .hm-frame { stroke: var(--rule); stroke-width: 1; fill: none; vector-effect: non-scaling-stroke; }
@@ -232,14 +229,15 @@ section[id] { scroll-margin-top: 2rem; }
 .hm-curve {
   fill: none;
   stroke: var(--accent-ink);
-  stroke-width: 2.5;
+  stroke-width: 2;
   stroke-linecap: round;
   stroke-linejoin: round;
   vector-effect: non-scaling-stroke;
 }
 .hm-label { fill: var(--ink-soft); font: 400 11px/1 var(--font-mono); }
 .mark-cap {
-  font: 400 var(--fs-xs)/1.2 var(--font-mono);
+  font-size: var(--fs-xs);
+  line-height: 1.4;
   color: var(--ink-soft);
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -251,7 +249,7 @@ section[id] { scroll-margin-top: 2rem; }
 }
 @keyframes hm-draw { to { stroke-dashoffset: 0; } }
 
-/* --- divisor de seção: um eixo rotulado --------------------------- */
+/* --- divisor de seção: rótulo em versalete + a contagem real ------- */
 .block { margin-top: 4rem; }
 .axis {
   display: flex;
@@ -261,20 +259,9 @@ section[id] { scroll-margin-top: 2rem; }
   margin-bottom: 1.75rem;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--rule);
-  position: relative;
-}
-.axis::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -1px;
-  height: 5px;
-  background: repeating-linear-gradient(
-    to right, var(--rule) 0 1px, transparent 1px 32px);
 }
 .axis h2 {
-  font: 600 var(--fs-xs)/1 var(--font-mono);
+  font: 600 var(--fs-xs)/1 var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-soft);
@@ -286,35 +273,18 @@ section[id] { scroll-margin-top: 2rem; }
   font-variant-numeric: tabular-nums;
 }
 
-/* --- projetos: registro de pranchas numeradas sobre o papel --------
-   cada .fig é uma prancha de largura cheia — uma régua "FIG. 0N" com a
-   categoria na outra ponta, o título alinhado pela base com a métrica
-   em cobre, e a ficha problema/dados/método/resultado num <dl> com os
-   rótulos mono na calha. Sem caixa: o papel milimetrado é o fundo. */
-.figs { display: grid; gap: 2.75rem; }
+/* --- projetos: 3 em destaque + lista compacta -----------------------
+   destaque: eyebrow de categoria, título serif alinhado pela base com a
+   métrica em cobre, e a ficha problema/dados/método/resultado num <dl>. */
+.figs { display: grid; gap: 3rem; }
 
-.fig-rule {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  gap: 1rem;
-  padding-bottom: 0.4rem;
-  border-bottom: 1px solid var(--rule);
-}
-.fig-num {
-  font: 400 var(--fs-xs)/1 var(--font-mono);
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--accent);
-  font-variant-numeric: tabular-nums;
-  white-space: nowrap;
-}
 .fig-cat {
-  font: 400 var(--fs-xs)/1.3 var(--font-mono);
+  font: 400 var(--fs-xs)/1.4 var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.14em;
   color: var(--ink-soft);
-  text-align: right;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
 }
 
 .fig-head {
@@ -336,6 +306,7 @@ section[id] { scroll-margin-top: 2rem; }
 }
 .fig-metric-label {
   margin-right: 0.6ch;
+  font-family: var(--font-sans);
   font-size: var(--fs-xs);
   letter-spacing: 0.08em;
   color: var(--ink-soft);
@@ -350,7 +321,7 @@ section[id] { scroll-margin-top: 2rem; }
   margin-top: 1rem;
 }
 .spec dt {
-  font: 400 var(--fs-xs)/1.5 var(--font-mono);
+  font: 400 var(--fs-xs)/1.5 var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--ink-soft);
@@ -364,6 +335,41 @@ section[id] { scroll-margin-top: 2rem; }
 }
 .fig-links {
   margin-top: 0.8rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.4rem;
+  font-size: var(--fs-sm);
+}
+
+/* lista "Mais trabalhos" — projetos sem estudo de caso, em uma linha */
+.more { margin-top: 3rem; }
+.more-h {
+  font: 600 var(--fs-xs)/1 var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-soft);
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 1.5rem;
+}
+.more-work { display: grid; gap: 1.75rem; }
+.mw-top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.2rem 1.25rem;
+}
+.mw-title { flex: 1 1 16rem; font-size: var(--fs-md); font-weight: 600; }
+.mw-metric {
+  margin-left: auto;
+  text-align: right;
+  font: 400 var(--fs-sm)/1.3 var(--font-mono);
+  color: var(--accent);
+  font-variant-numeric: tabular-nums;
+}
+.mw-desc { margin-top: 0.35rem; font-size: var(--fs-sm); color: var(--ink-soft); }
+.mw-links {
+  margin-top: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   gap: 0.4rem 1.4rem;
@@ -422,9 +428,8 @@ section[id] { scroll-margin-top: 2rem; }
 .tl-track {
   position: relative;
   min-height: 2.4rem;
-  /* colunas de 2 em 2 anos — o "papel" atrás das barras */
-  background: repeating-linear-gradient(
-    to right, var(--grid-bold) 0 1px, transparent 1px calc(100% / 7));
+  /* uma linha-base fina: é o eixo de tempo atrás das barras */
+  background: linear-gradient(var(--rule), var(--rule)) left bottom / 100% 1px no-repeat;
 }
 .tl-bar {
   position: absolute;
@@ -454,7 +459,8 @@ section[id] { scroll-margin-top: 2rem; }
 .skill dd {
   grid-column: 1 / -1;
   margin: 0.2rem 0 0;
-  font: 400 var(--fs-sm)/1.6 var(--font-mono);
+  font-size: var(--fs-sm);
+  line-height: 1.6;
   color: var(--ink-soft);
 }
 
@@ -464,7 +470,7 @@ section[id] { scroll-margin-top: 2rem; }
 .cert-bar {
   display: flex;
   margin: 0 0 0.6rem;
-  height: 0.6rem;
+  height: 0.5rem;
 }
 .cert-bar span {
   background: var(--accent-ink);
@@ -483,7 +489,7 @@ section[id] { scroll-margin-top: 2rem; }
 .cert-legend b { color: var(--accent); font-weight: 700; margin-right: 0.35ch; }
 .certs-inner { margin-top: 1.5rem; display: grid; gap: 1.75rem; }
 .certs-group h3 {
-  font: 600 var(--fs-xs)/1 var(--font-mono);
+  font: 600 var(--fs-xs)/1 var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--ink-soft);
@@ -499,27 +505,26 @@ section[id] { scroll-margin-top: 2rem; }
   margin-inline: auto;
   padding: 2.5rem 1.5rem 3.5rem;
   border-top: 1px solid var(--rule);
-  font: 400 var(--fs-xs)/1.8 var(--font-mono);
+  font: 400 var(--fs-xs)/1.8 var(--font-sans);
   color: var(--ink-soft);
 }
 .site-footer .sep { margin: 0 0.5ch; color: var(--rule); }
 
 /* --- estudo de caso -------------------------------------- */
-.doc .backlink { font: 400 var(--fs-sm)/1 var(--font-mono); }
+.doc .backlink { font: 400 var(--fs-sm)/1 var(--font-sans); }
 .doc-fig {
   margin-top: 0.85rem;
-  font: 400 var(--fs-xs)/1.4 var(--font-mono);
+  font: 400 var(--fs-xs)/1.4 var(--font-sans);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.14em;
   color: var(--ink-soft);
 }
-.doc-fig span { color: var(--accent); }
 .doc h1 { font-size: var(--fs-lg); margin: 0.4rem 0 0; letter-spacing: -0.01em; }
 .doc .lead { color: var(--ink-soft); }
 .doc p + p { margin-top: 1rem; }
 .doc-sec { margin-top: 2rem; }
 .doc-sec > h2 {
-  font: 600 var(--fs-xs)/1 var(--font-mono);
+  font: 600 var(--fs-xs)/1 var(--font-sans);
   text-transform: uppercase;
   letter-spacing: 0.14em;
   color: var(--ink-soft);
@@ -534,15 +539,13 @@ section[id] { scroll-margin-top: 2rem; }
 }
 .doc .repo { margin-top: 1.75rem; font-size: var(--fs-sm); }
 
-/* régua-eixo (hero dos estudos de caso) */
+/* traço curto de cobre sob o título do estudo de caso */
 .sig {
-  height: 6px;
+  width: 2.5rem;
+  height: 2px;
   border: 0;
   margin: 1rem 0 1.5rem;
-  background:
-    linear-gradient(var(--accent-ink), var(--accent-ink)) left top / 2.5rem 2px no-repeat,
-    repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 12px)
-      left bottom / 100% 4px no-repeat;
+  background: var(--accent-ink);
 }
 
 /* --- estreito ------------------------------------------- */
@@ -553,12 +556,12 @@ section[id] { scroll-margin-top: 2rem; }
   .timeline, .tl-row { grid-template-columns: 1fr; }
   .timeline { row-gap: 1.5rem; }
   .tl-scale, .tl-track { display: none; }
-  /* a ficha empilha: rótulo mono acima do valor */
+  /* a ficha empilha: rótulo acima do valor */
   .spec { grid-template-columns: 1fr; row-gap: 0.1rem; }
   .spec dt { margin-top: 0.6rem; }
 }
 
-/* --- largo: a página vira um plano cartesiano rotulado --------------------
+/* --- largo: a calha de rótulo migra para a margem esquerda ---------------
    Aditivo: tudo abaixo de 60rem continua idêntico ao layout estreito.
    `screen and` mantém a impressão fora deste bloco (Letter/A4 ≈ 50rem),
    então @media print não precisa desfazer nada. */
@@ -566,40 +569,16 @@ section[id] { scroll-margin-top: 2rem; }
 
   .wrap, .site-footer { max-width: var(--canvas); }
 
-  /* seção = plano cartesiano: rótulo na calha, eixos nas bordas */
+  /* seção = conteúdo + rótulo sticky na calha esquerda */
   .block {
     position: relative;
     display: grid;
     grid-template-columns: var(--rail) minmax(0, 1fr);
     column-gap: var(--rail-gap);
     align-items: start;          /* obrigatório: dá curso ao sticky do .axis */
-    padding-top: 1.75rem;        /* banda da régua-x, acima do conteúdo      */
-    margin-top: 3rem;
+    margin-top: 4.5rem;
   }
   .block > * { grid-column: 2; min-width: 0; }
-
-  .block::before {               /* eixo-y */
-    content: "";
-    position: absolute;
-    inset-block: 0;
-    left: var(--rail);
-    width: 1px;
-    background: var(--rule);
-    pointer-events: none;
-  }
-  .block::after {                /* eixo-x: linha-base + ticks a cada 32px */
-    content: "";
-    position: absolute;
-    top: 0;
-    left: var(--rail);
-    right: 0;
-    height: 5px;
-    background:
-      linear-gradient(var(--rule), var(--rule)) left top / 100% 1px no-repeat,
-      repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px 32px)
-        left top / 100% 5px no-repeat;
-    pointer-events: none;
-  }
 
   .block > .axis {
     grid-column: 1;
@@ -609,17 +588,16 @@ section[id] { scroll-margin-top: 2rem; }
     top: 2.75rem;                /* livra a .mini-nav (~2.2rem)              */
     z-index: 1;
     flex-direction: column;
-    align-items: flex-end;       /* rótulo encostado no eixo-y               */
+    align-items: flex-end;       /* rótulo encostado na coluna de conteúdo   */
     justify-content: flex-start;
     gap: 0.35rem;
     margin: 0;
-    padding: 0 0.75rem 0 0;
+    padding: 0 0.9rem 0 0;
     border-bottom: 0;
     text-align: right;
   }
-  .block > .axis::after { display: none; }   /* régua-x agora vem de .block::after */
 
-  section[id] { scroll-margin-top: 3.5rem; } /* âncora do mini-nav livra régua + rótulo */
+  section[id] { scroll-margin-top: 3.5rem; } /* âncora do mini-nav livra o rótulo */
 
   /* intro: narrativa à esquerda (cap --measure), esquema cresce na margem */
   .intro {
@@ -634,15 +612,13 @@ section[id] { scroll-margin-top: 2rem; }
     grid-row: 1 / span 99;
     align-self: start;
   }
-  /* esquema encosta no lado direito da folha e acompanha a largura dela */
-  .intro-mark .hero-mark { margin: 0.25rem 0 0 auto; width: min(100%, 34rem); }
+  .intro-mark .hero-mark { margin: 0.25rem 0 0.4rem auto; width: min(100%, 28rem); }
 
-  /* estudo de caso: prosa + 1 esquema — não estica até a folha inteira do
-     dossiê; mantém ~76rem (largura em que as case studies foram desenhadas). */
+  /* estudo de caso: prosa + 1 esquema — mantém ~76rem (largura em que as
+     case studies foram desenhadas), não estica até a folha do dossiê. */
   .wrap.doc,
   body:has(.doc) .site-footer { max-width: 76rem; }
 
-  /* estudo de caso: prosa à esquerda, esquema na margem */
   .doc {
     display: grid;
     grid-template-columns: minmax(0, var(--measure)) minmax(0, 1fr);
@@ -654,14 +630,15 @@ section[id] { scroll-margin-top: 2rem; }
     grid-column: 2;
     grid-row: 1 / span 99;
     align-self: start;
-    justify-self: end;          /* encosta na borda da folha, não à esquerda da col. 1fr */
-    max-width: 32rem;           /* col. 2 é 1fr; limita o esquema */
+    justify-self: end;
+    max-width: 26rem;
   }
 
   /* seções de dados: multi-coluna */
-  .figs { gap: 3.25rem; }
+  .figs { gap: 3.5rem; }
   .fig-head, .fig-stack { max-width: 52rem; }
   .spec { grid-template-columns: 7rem 1fr; max-width: 52rem; }
+  .more, .more-work { max-width: 52rem; }
   .skills {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     column-gap: 3rem;
@@ -671,9 +648,9 @@ section[id] { scroll-margin-top: 2rem; }
     grid-template-columns: repeat(3, minmax(0, 21rem));
     justify-content: start;     /* 3 grupos reais (12 / 9 / 3) — não trilhas vazias */
     gap: 1.75rem 2.5rem;
-    align-items: start;         /* grupos de 12 / 9 / 3 — não esticar */
+    align-items: start;
   }
-  .cert-bar, .cert-legend { max-width: 38rem; }  /* senão a barra vira um fio de 70rem */
+  .cert-bar, .cert-legend { max-width: 38rem; }
 
   /* trajetória: eixo de tempo mais largo; o texto da entrada não acompanha */
   .timeline { --tl-cols: minmax(0, 1fr) minmax(0, 1.15fr); }
@@ -696,12 +673,9 @@ section[id] { scroll-margin-top: 2rem; }
     --ink: #000000;
     --ink-soft: #444444;
     --rule: #bbbbbb;
-    --grid: transparent;
-    --grid-bold: transparent;
     --accent: #8f4a1a;
     --accent-ink: #8f4a1a;
   }
-  body::before,
   .theme-toggle, .theme-toggle-btn,
   .mini-nav {
     display: none !important;
@@ -719,7 +693,7 @@ section[id] { scroll-margin-top: 2rem; }
      content-visibility (not display) — override that so it prints. */
   .certs::details-content { content-visibility: visible !important; }
   .certs-inner { display: grid !important; }
-  .fig, .tl-row, .skill, .certs-group {
+  .fig, .tl-row, .skill, .certs-group, .mw {
     break-inside: avoid;
     page-break-inside: avoid;
   }
