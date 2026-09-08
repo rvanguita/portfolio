@@ -1,7 +1,6 @@
 ---
 title: Personal Expenses
 order: 9
-repo: personal-expenses
 category: Engenharia de Dados · Categorização
 kind: light
 trace: pipeline

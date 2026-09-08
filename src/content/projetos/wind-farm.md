@@ -1,7 +1,6 @@
 ---
 title: Modelagem da Geração de Energia Eólica
 order: 2
-repo: wind-farm
 category: Regressão · Energia
 kind: full
 trace: power
