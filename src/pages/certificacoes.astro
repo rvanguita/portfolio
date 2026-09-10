@@ -3,54 +3,48 @@ import Layout from "@components/layout/Layout.astro";
 import { certGroups, certTotal } from "@data/certificates";
 import { url } from "@lib/url";
 
-/** Cada segmento do caminho é codificado separadamente para preservar as "/". */
+/** Preserva barras e pontuação válida no caminho, inclusive na prévia Astro. */
 const certUrl = (file: string) =>
-  url("/certificates/" + file.split("/").map(encodeURIComponent).join("/"));
+  url(
+    "/certificates/" +
+      file
+        .split("/")
+        .map((segment) =>
+          encodeURIComponent(segment).replace(/%3A/g, ":").replace(/%2C/g, ","),
+        )
+        .join("/"),
+  );
 ---
-
 <Layout
-  title="Certificações · rvanguita"
-  description="24 certificações e especializações concluídas — Data Science e Python, Matemática e Machine Learning, Estatística Empresarial — de Imperial College, University of Michigan, CU Boulder e Rice University."
+  title="Certificações · Rene Anguita"
+  description={`${certTotal} certificações e especializações concluídas em Python, ciência de dados, matemática, machine learning e estatística empresarial, com certificados disponíveis.`}
   current="certificacoes"
 >
   <div class="page">
-    <a class="backlink" href={url("/")}>← Painel</a>
+    <a class="backlink" href={url("/")}>← Início</a>
     <div class="mod-head">
-      <h1>Certificações</h1>
-      <span class="count">[{certTotal}]</span>
+      <h1>Certificações</h1><span class="count">{certTotal} certificados</span>
     </div>
     <p class="module-intro">
-      Aprendizado contínuo em Python, estatística, machine learning e análise
-      de negócios — com certificados disponíveis para consulta.
+      Formação complementar em Python, estatística, machine learning e análise
+      de negócios. Consulte os certificados de cada curso e especialização.
     </p>
-
-    <div class="cert-bar" aria-hidden="true">
-      {certGroups.map((g) => <span style={`flex:${g.items.length}`} />)}
-    </div>
-    <p class="cert-legend" aria-hidden="true">
-      {certGroups.map((g) => (
-        <span><b>{g.items.length}</b>{g.short}</span>
-      ))}
-    </p>
-
     <div class="certs">
-      {
-        certGroups.map((g) => (
-          <section class="certs-group">
-            <h2>{g.title}</h2>
-            <ul>
-              {g.items.map((c) => (
-                <li>
-                  <a href={certUrl(c.file)} target="_blank" rel="noopener noreferrer">
-                    {c.name}
-                  </a>
-                  <span class="issuer"> — {c.issuer}</span>
-                </li>
-              ))}
-            </ul>
-          </section>
-        ))
-      }
+      {certGroups.map((group) => (
+        <section class="certs-group">
+          <h2>{group.title}</h2>
+          <ul>
+            {group.items.map((certificate) => (
+              <li>
+                <a href={certUrl(certificate.file)} target="_blank" rel="noopener noreferrer">
+                  {certificate.name} <span class="sr-only"> — certificado em PDF</span>
+                </a>
+                <span class="issuer">{certificate.issuer}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
   </div>
 </Layout>

@@ -1,94 +1,107 @@
 # Portfólio — Rene Verinaud Anguita Junior
 
-Página pessoal de Rene Verinaud Anguita Junior (Cientista de Dados, Ph.D. em
-Engenharia Elétrica). Site estático construído com **[Astro](https://astro.build)**.
+Portfólio profissional de **Engenharia de Dados**, com projetos de pipelines,
+lakehouses, machine learning e otimização. Site estático em **[Astro](https://astro.build)**,
+em português, voltado à apresentação do trabalho a recrutadores.
 
 - **Publicado:** <https://rvanguita.github.io/portfolio/>
 - **GitHub:** <https://github.com/rvanguita> · **LinkedIn:** <https://linkedin.com/in/rvanguita>
 
-## Conceito
+## Design e navegação
 
-Um **painel de leitura** — o site se lê como o painel frontal de um instrumento
-de precisão: cada página é um painel, a métrica-chave de cada projeto aparece
-como uma leitura numérica grande com unidade, traços de sinal (SVG inline)
-ecoam cada resultado, e uma barra fixa no topo carrega a identidade e a
-navegação. Acento ciano, hairlines, tipografia IBM Plex (Sans + Mono).
-Tema claro/escuro com alternância em CSS puro, sem JavaScript no cliente.
+Identidade clara e profissional: fundo cinza frio, superfícies brancas, títulos
+azul-marinho e ações azuis. IBM Plex Sans para leitura e hierarquia; IBM Plex Mono
+para tecnologias e metadados. Fontes locais, sem CDN.
+
+A abertura apresenta a especialidade, os contatos e um diagrama da arquitetura
+documentada do FastF1: ingestão, Raw em Parquet, Bronze/Silver em Delta Lake,
+orquestração semanal no Airflow e consumo via FastAPI/Streamlit.
+FastF1, Rota do Perfume e Personal Expenses aparecem em destaque; o catálogo
+preserva os nove projetos e seus estudos de caso ou fichas.
+
+As páginas de competências, trajetória e certificações complementam a apresentação.
+A trajetória usa uma linha do tempo vertical. As competências priorizam Engenharia
+de Dados e preservam o repertório de ML, visualização e otimização.
+
+O tema acompanha a preferência do sistema e pode ser invertido por um controle
+CSS-only. Não há JavaScript de interação no cliente. A preferência manual vale
+para a página atual; não é persistida entre navegações.
+O layout inclui foco visível, link para pular a navegação, controles de pelo menos
+44 px, estilos de impressão e respeito à preferência por movimento reduzido.
 
 ## Estrutura
 
-```mermaid
-flowchart LR
-  root["portfolio/"] --> cfg["raiz · astro.config.mjs · tsconfig (aliases) · package.json · mise.toml · .prettierrc · .editorconfig · .vscode/ · LICENSE"]
-  root --> src
-  root --> pub
-  root --> gh
+- `src/config.ts`: endereço, prefixo, idioma e navegação.
+- `src/pages/`: início, projetos, nove detalhes, trajetória, competências e certificações.
+- `src/content.config.ts`: schema da coleção de projetos.
+- `src/content/projetos/*.md`: conteúdo e ordenação dos nove projetos.
+- `src/data/`: perfil, contatos, trajetória, competências e certificações.
+- `src/components/layout/`: layout, metadados, navegação, tema e rodapé.
+- `src/components/panels/`: cartões de projetos e resultados.
+- `src/components/viz/`: arquitetura FastF1 e linha do tempo; o componente Trace
+  legado permanece disponível, mas não é renderizado pelo site.
+- `src/styles/`: tokens semânticos e estilos compartilhados.
+- `src/lib/url.ts`: links internos e URLs absolutas.
+- `public/`: ícones, imagem social, dossiê e certificados em PDF.
 
-  subgraph src["src/"]
-    s1["config.ts · SITE + NAV"]
-    s2["pages/ · index · projetos/index · projetos/[slug] · trajetoria · competencias · certificacoes"]
-    s3["content.config.ts · schema zod 'projetos'"]
-    s4["content/projetos/*.md · 9 projetos (full · light)"]
-    s5["data/ · profile · timeline · skills · certificates"]
-    s6["components/ · layout · panels · viz"]
-    s7["lib/url.ts · prefixa href com o base"]
-    s8["styles/ · tokens.css + global.css"]
-  end
-
-  subgraph pub["public/ · servido verbatim"]
-    p1["icon.svg · icon.png"]
-    p2["robots.txt · .nojekyll"]
-    p3["assets/ · social-card.png · dossiê.pdf"]
-    p4["certificates/ · 24 PDFs"]
-  end
-
-  subgraph gh[".github/"]
-    g1["workflows/ci.yml · format:check + build + check"]
-    g2["workflows/deploy.yml · build → GitHub Pages"]
-    g3["PULL_REQUEST_TEMPLATE.md"]
-  end
-```
-
-O site é servido sob `/portfolio/`. Todo link interno passa pelo helper
-`src/lib/url.ts` para ganhar esse prefixo; URLs absolutas (canonical, Open
-Graph) usam `Astro.site`. Imports usam aliases (`@components/…`, `@data/…`) —
-sem `../../`.
+O site é servido sob `/portfolio/`. Todo caminho interno ou de arquivo público
+passa pelo helper `url()`; metadados absolutos usam `Astro.site`.
+Imports entre diretórios usam aliases como `@components/`, `@data/` e `@lib/`.
 
 ## Conteúdo
 
-Todo o texto do site mora em dados estruturados, não no HTML:
-
-- `src/data/profile.ts` — perfil, contato, disponibilidade
-- `src/data/timeline.ts` — as 9 entradas da trajetória, com o eixo de tempo
-- `src/data/skills.ts` — os 4 grupos de competências
-- `src/data/certificates.ts` — as 24 certificações, em 3 grupos (12 / 9 / 3)
-- `src/content/projetos/*.md` — os 9 projetos. `kind: full` traz o estudo de
-  caso completo no corpo Markdown; `kind: light` traz só a ficha
+- O perfil e as tecnologias em destaque ficam em `src/data/profile.ts`.
+- Competências e experiências ficam em `src/data/skills.ts` e `timeline.ts`.
+- Os 24 certificados ficam em `src/data/certificates.ts`, com os PDFs em
+  `public/certificates/`. Os caminhos são codificados por segmento.
+- Projetos `kind: full` usam o corpo Markdown; `kind: light` usam a ficha
   problema/dados/método/resultado no frontmatter.
+- `order` determina a ordem do catálogo; os três primeiros aparecem na página inicial.
+  Novos projetos geram automaticamente a rota e entram no sitemap.
+- Resultados experimentais e projetos em desenvolvimento mantêm suas ressalvas.
+  Métricas, experiência e qualificações devem se apoiar em conteúdo documentado.
 
-## Rodar localmente
+## Rodar e validar
 
 ```bash
-npm install
-npm run dev        # desenvolvimento (rápido)
-npm run build && npm run preview   # confere o site sob /portfolio/
-npm run check      # astro check (tipos)
-npm run format     # Prettier (--write); `format:check` só verifica
+npm ci
+npm run dev
+npm run format:check
+npm run build
+npm run check
+npm run preview
 ```
 
-Node: `mise.toml` fixa a versão para o desenvolvimento local; o CI usa Node 20.
+Sempre conferir também a prévia de produção em `/portfolio/`, incluindo links,
+PDFs, navegação por teclado, temas e layouts de 360, 768 e 1440 px.
+O build e a checagem de tipos não substituem uma verificação dos links ou do layout.
+
+`npm run format` aplica Prettier. Arquivos públicos, relatórios gerados
+`report.*.json` e alguns arquivos com formatação manual são excluídos conforme
+`.prettierignore`. As cores ficam exclusivamente nos tokens, exceto estilos de
+impressão e a cor do navegador nos metadados.
+
+Node 24.20.0 no ambiente local (`mise.toml`) e no CI. Dependências e lockfile são
+mantidos com npm. O site usa Astro 7, com `compressHTML: true` para preservar os
+espaços entre elementos inline.
+
+`npm run check` verifica os componentes com `astro check` e os arquivos TypeScript
+com `tsc --noEmit` (TypeScript 7). Como o verificador do Astro ainda depende da API
+do compilador anterior, `typescript` é um alias de `@typescript/typescript6`, e
+`@typescript/native` instala o compilador TypeScript 7. Essa configuração segue a
+[compatibilidade documentada pela Microsoft](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6-0).
 
 ## Publicar
 
-Push em `main` → `.github/workflows/deploy.yml` roda `npm ci && npm run build` e
-publica `dist/` no GitHub Pages. Pull requests para `main` passam por
-`.github/workflows/ci.yml` (`npm ci && npm run format:check && npm run build &&
-npm run check`): formatação fora do padrão, link interno quebrado, violação de
-schema de conteúdo ou erro de tipo derrubam o check. A proteção da branch `main`
-exige esse check.
+O fluxo existente permanece no GitHub Pages: push em `main` executa
+`.github/workflows/deploy.yml`, que usa `npm ci`, gera `dist/` e publica o site.
+
+Pull requests para `main` executam `.github/workflows/ci.yml`: formatação,
+build e tipos. Use PRs para integrar mudanças; não é necessária outra plataforma
+de hospedagem.
 
 ## Licença
 
-O **código** está sob a licença MIT (ver `LICENSE`). O **conteúdo** — textos,
-currículo, certificados, imagens e o PDF do dossiê — não está sob essa licença e
-permanece reservado; para reuso, entre em contato com o autor.
+O **código** está sob a licença MIT (ver LICENSE). O **conteúdo** — textos,
+currículo, certificados, imagens e PDF do dossiê — permanece reservado e não
+está incluído nessa licença. Para reuso, entre em contato com o autor.

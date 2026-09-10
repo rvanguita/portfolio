@@ -1,5 +1,4 @@
-// Competências — 4 grupos. `skill-n` no site é a contagem real de itens do grupo.
-// Texto preservado do site anterior (#competencias).
+// Competências agrupadas pela aplicação, com Engenharia de Dados em primeiro plano.
 export interface SkillGroup {
   title: string;
   items: string[];
@@ -7,9 +6,21 @@ export interface SkillGroup {
 
 export const skills: SkillGroup[] = [
   {
-    title: "Ciência de Dados & ML",
+    title: "Engenharia de Dados",
     items: [
       "Python",
+      "SQL",
+      "Apache Airflow",
+      "Delta Lake / PySpark",
+      "FastAPI",
+      "Docker",
+      "Git / GitHub Actions",
+      "Linux / Shell",
+    ],
+  },
+  {
+    title: "Ciência de Dados e ML",
+    items: [
       "Pandas",
       "NumPy",
       "Scikit-Learn",
@@ -20,18 +31,7 @@ export const skills: SkillGroup[] = [
     ],
   },
   {
-    title: "Pesquisa Operacional & Otimização",
-    items: [
-      "CPLEX",
-      "AMPL",
-      "Programação Inteira Mista (MILP)",
-      "Modelagem Não-Linear",
-      "Metaheurísticas",
-      "Otimização de Redes Elétricas",
-    ],
-  },
-  {
-    title: "Visualização & Business Analytics",
+    title: "Visualização e Analytics",
     items: [
       "Power BI",
       "Tableau",
@@ -39,19 +39,18 @@ export const skills: SkillGroup[] = [
       "Seaborn",
       "Excel Avançado",
       "Estatística Descritiva & Inferencial",
+      "Streamlit",
     ],
   },
   {
-    title: "Linguagens, Cloud & Ferramentas",
+    title: "Otimização",
     items: [
-      "SQL",
-      "Apache Airflow",
-      "Delta Lake / PySpark",
-      "FastAPI",
-      "Streamlit",
-      "Docker",
-      "Git / GitHub Actions",
-      "Linux / Shell",
+      "CPLEX",
+      "AMPL",
+      "Programação Inteira Mista (MILP)",
+      "Modelagem Não-Linear",
+      "Metaheurísticas",
+      "Otimização de Redes Elétricas",
     ],
   },
 ];

@@ -1,6 +1,6 @@
 ---
 title: Otimização de Sistemas de Distribuição Elétrica
-order: 4
+order: 7
 category: Pesquisa Operacional
 kind: light
 trace: convergence

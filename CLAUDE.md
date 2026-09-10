@@ -1,135 +1,100 @@
 # CLAUDE.md
 
-Working guidance for coding agents. `README.md` is the human-facing version.
+Working guidance for coding agents. README.md is the human-facing version.
 
-## What this is
+## Project
 
-Personal page of Rene Verinaud Anguita Junior — a **static site built with
-[Astro](https://astro.build)**. Concept: a **"painel de leitura"** (a precision
-measurement-instrument readout) — each page is a panel, every project's headline
-metric is a large numeric readout with units, thin inline-SVG "signal traces"
-echo each result, and a fixed **readout strip** carries the identity + nav.
+Portuguese professional portfolio for Rene Verinaud Anguita Junior, presenting
+**Data Engineering** capabilities to recruiters. Static Astro site with 14 pages:
+home, project catalog, nine project details, trajectory, skills, and certificates.
+Published at https://rvanguita.github.io/portfolio/.
 
-```
-astro.config.mjs                 site + base from src/config.ts, passthrough image service, sitemap
-package.json / package-lock.json  npm; scripts: dev · build · preview · check · format
-tsconfig.json                    import aliases (see below)
-mise.toml                        pins Node for local dev
-.prettierrc / .prettierignore    formatting (ignores src/styles/, Trace/Channels/certificacoes — whitespace-sensitive)
-.editorconfig · .vscode/         editor conventions + recommended extensions
-LICENSE                          MIT — code only; content stays reserved
+The visual direction is clear and professional: cool gray background, white
+surfaces, navy headings, blue actions, spacious typography and restrained corners.
+The signature visual is the documented FastF1 architecture, not a decorative chart.
 
-src/
-  config.ts                      SITE (url, base, title, locale) + NAV — the one place
-  pages/
-    index.astro                  home — the "master panel" (hero + project grid + module links)
-    projetos/index.astro         project index (the same channel grid)
-    projetos/[slug].astro        one page per project, from the content collection
-    trajetoria.astro             CV Gantt on a real time axis
-    competencias.astro           4 skill panels
-    certificacoes.astro          segmented "level meter" (12/9/3) + grouped lists
-  content.config.ts              zod schema for the 'projetos' collection
-  content/projetos/*.md          9 projects — `kind: full` has a Markdown body
-                                 (case study), `kind: light` has a structured
-                                 `spec` (problema/dados/método/resultado)
-  data/                          profile.ts · timeline.ts · skills.ts · certificates.ts
-                                 (all the site's text)
-  components/
-    layout/                      Layout · BaseHead · ReadoutStrip · ThemeToggle · Footer
-    panels/                      Channels (project grid) · Readout (big metric)
-    viz/                         Trace (inline-SVG signal) · Timeline (Gantt)
-  lib/url.ts                     url() — prefixes every internal href with the base
-  styles/                        tokens.css (8 colour tokens per theme, type, sizes)
-                                 + global.css (everything else)
+## Architecture and content
 
-public/                          served verbatim: .nojekyll · icon.svg/png · robots.txt ·
-                                 assets/ (social-card.png, dossiê PDF) · certificates/ (24 PDFs)
+- `src/config.ts`: SITE and NAV, shared with astro.config.mjs.
+- `src/data/`: profile, timeline, skills, certificates. Preserve documented facts,
+  contacts, qualifications, dates and the existing PDFs.
+- `src/content/projetos/*.md`: validated content collection. Full entries have a
+  Markdown case study; light entries use the structured spec. Keep both formats.
+- `order` controls the catalog; the first three entries appear on the home page.
+  Current priorities: FastF1, Rota do Perfume, Personal Expenses, Shopping List
+  Intelligence, then the remaining projects.
+- `src/components/layout/`: shared layout, metadata, header, theme and footer.
+- `src/components/panels/`: Channels renders project cards; Readout renders
+  contextual results, including nonnumeric architecture or scope.
+- `src/components/viz/Pipeline.astro`: semantic HTML diagram of FastF1.
+- `src/components/viz/Timeline.astro`: vertical list of existing experiences.
+- The legacy Trace component and trace content field are retained for compatibility
+  but are not rendered. Do not present illustrative traces as measured results.
 
-.github/
-  workflows/deploy.yml           push to main → npm ci && npm run build → Pages (./dist)
-  workflows/ci.yml               PR → npm ci && format:check && build && check
-  PULL_REQUEST_TEMPLATE.md
-```
+All visible interface copy is Portuguese. Keep official technology names, project
+names and certificate titles. Preserve experimental/in-development qualifications;
+do not invent production scale, seniority, business impact or employment.
 
-### Import aliases (`tsconfig.json`)
+## Paths and dependencies
 
-`@/*` → `src/*`, plus `@components/*` `@data/*` `@lib/*` `@styles/*`. Astro
-propagates these to Vite, so they work in `.astro`, `.ts` and CSS imports.
-Same-folder imports stay relative (`./BaseHead.astro`). Use aliases for
-everything else — no `../../`.
+Every internal link and public asset reference must use `url()` from
+`src/lib/url.ts` to preserve the `/portfolio/` base. Canonical and social metadata
+use Astro.site. Preserve the existing social image and PDF resources.
 
-Served at `https://rvanguita.github.io/portfolio/`.
+Use aliases for imports between directories: `@/`, `@components/`, `@data/`,
+`@lib/`, `@styles/`. Same-folder imports may be relative.
 
-## Editing
+Keep Astro, npm, package-lock.json, static rendering and the existing GitHub Pages
+workflow. Do not add a UI framework, client routing or client JavaScript unless
+requested. The only script in production HTML is static JSON-LD.
 
-### The base-path rule (most common source of bugs)
+## Design workflow
 
-The site lives under `/portfolio/`. **Every internal link and every reference to
-a file in `public/` must go through `url()` from `src/lib/url.ts`** —
-`href={url('/projetos/wind-farm/')}`, `href={url('/assets/dossie-rene-anguita.pdf')}`.
-Canonical/OG URLs use `new URL(path, Astro.site)` (see `BaseHead.astro`).
-**Always verify with `npm run preview`** (it serves under the real base), not
-just `npm run dev`.
+Before structural/visual Astro edits or changes in src/styles, read and apply
+`.claude/skills/frontend-design/SKILL.md`. Plain copy edits do not need it.
+The accepted user design direction supersedes earlier measurement-panel styling.
 
-### Design changes are gated on the `frontend-design` skill
+Styles live in tokens.css and global.css:
 
-Before writing or editing anything in `src/styles/`, or any structural/visual
-`.astro` (new component, new layout, new class — not plain copy), invoke the
-`frontend-design` skill first and follow its process. Plain content edits
-(text in `src/data/*`, a `.md` body, a new certificate entry) don't need it.
+- Seven semantic colors: paper, ink, ink-soft, rule, accent, accent-bright, well.
+  Define colors in tokens.css; derive component variations with color-mix.
+  Exceptions: print styles and BaseHead's theme-color metadata.
+- IBM Plex Sans 400/500/600 for display, body and UI. IBM Plex Mono 400/500 for
+  technologies and metadata. Use installed, self-hosted fontsource packages.
+- Body text is at least 16 px, regular controls at least 14 px. Reserve 12–13 px
+  for secondary metadata. Controls have a minimum 44 px target.
+- Theme follows the OS; a checkbox and :has() invert it without JavaScript.
+  The override is intentionally page-local. Test both OS preferences and inversions.
+- Shared styles must account for 360/768/1440 px widths, enlarged text, keyboard
+  focus, skip navigation, print and reduced motion. Never hide page overflow to
+  conceal a layout problem.
+- Keep the architecture diagram faithful to the FastF1 case study. Do not imply
+  that its experimental model has a published performance benchmark.
 
-### Design system
+## Validation and delivery
 
-All of it is `src/styles/tokens.css` + `src/styles/global.css`.
+Use npm run dev while implementing. Then run npm run format:check,
+npm run build and npm run check. Always check npm run preview at the production
+/portfolio/ base. Build/type checks do not detect every broken link or layout issue.
 
-- **Colour: exactly 8 tokens per theme**, defined only in the `:root`,
-  `@media (prefers-color-scheme: dark)`, and `:root:has(#theme-toggle:checked)`
-  blocks of `tokens.css` — `--paper --ink --ink-soft --rule --accent
---accent-bright` plus `--well`. Never a bare hex anywhere else (the two
-  exceptions are `@media print` and the `<meta name="theme-color">` in
-  `BaseHead.astro`). Accent is **cyan** (`#0f6f7a` / `#12a0ad` light).
-- **Type:** IBM Plex Sans (structure, UI, panel titles) + IBM Plex Mono (all
-  data, readouts, labels), self-hosted via `@fontsource/*` imported in
-  `Layout.astro`. No web-font CDN.
-- **Signature devices:** `.strip` (the fixed readout bar), `.panel` /
-  `.panel-tab` (hairline module + mono label), `.readout` (label / big value /
-  sub — `Readout.astro`), `.trace` (inline-SVG signal — `Trace.astro`, six
-  named variants; draws once on load, respects reduced-motion), `.channels` /
-  `.skills` (instrument-bank grids: `gap:1px` on a `--rule` background).
-- **Dark mode:** automatic via `prefers-color-scheme` + a manual CSS-only
-  toggle (`#theme-toggle` checkbox + `:has()` — zero JS). `ThemeToggle.astro`
-  sits inside the strip.
-- **Inline SVG only** for graphics (`Trace.astro`); no image files beyond
-  `public/`. Self-close every leaf.
+Check all generated pages, internal links, certificate/dossier URLs, project order
+and metadata. Preserve all 28 skill items, nine projects and 24 certificate entries.
+Keep generated diagnostic reports out of formatting checks through .prettierignore;
+do not remove user files as cleanup.
 
-### Content
+Node 24.20.0 is pinned in mise.toml and both workflows. Astro 7 uses
+compressHTML: true to preserve inline whitespace. Import Zod from astro/zod;
+tsconfig paths use explicit ./ prefixes without the removed baseUrl option.
 
-- **Profile / timeline / skills / certificates:** edit `src/data/*.ts`.
-- **A project:** edit its `src/content/projetos/<slug>.md`. Frontmatter is
-  validated by `src/content.config.ts`. `kind: full` → write the case study as
-  the Markdown body (`## Problema` … `## Resultado`); `kind: light` → fill the
-  `spec` object, no body.
-- **New certificate:** drop the PDF in `public/certificates/…`, add an entry to
-  the right group in `src/data/certificates.ts` (readable path with spaces —
-  the page encodes each segment). The `[NN]` counts and the segmented bar derive
-  from the data; nothing else to bump.
-- **New project page:** a `src/content/projetos/<slug>.md` with valid
-  frontmatter — the route, the home grid, the sitemap and the counts all follow
-  automatically.
+npm run check runs astro check followed by TypeScript 7's tsc --noEmit.
+Keep the documented Microsoft compatibility aliases: typescript resolves to
+@typescript/typescript6 for Astro's compiler API, while @typescript/native
+resolves to typescript@7 for the tsc executable. Do not replace this with a
+TypeScript 7 API dependency or bypass peer checks with force/legacy-peer-deps.
 
-Don't remove the build, but also don't add a UI framework, client-side routing,
-or client JS unless asked — the theme toggle is deliberately CSS-only and the
-pages ship no JS.
+Source formatting is governed by Prettier, with intentional exclusions recorded
+in .prettierignore.
 
-## Preview & deploy
-
-- Local: `npm run dev` (fast) then always sanity-check `npm run build &&
-npm run preview` (real `/portfolio/` base). `npm run check` runs `astro check`;
-  `npm run format` runs Prettier.
-- Node: `mise.toml` pins it locally; CI uses Node 20.
-- Deploy: push to `main` → `deploy.yml` builds and publishes `dist/` to Pages.
-- PR gate: `ci.yml` runs `npm ci && npm run format:check && npm run build &&
-npm run check`. A formatting drift, a broken internal content link, a schema
-  violation or a type error fails the check.
-
-Conventional Commit subjects; everything lands via a PR to `main`.
+Use Conventional Commit subjects. Changes land via a PR to main. The existing
+deploy.yml builds and publishes dist/ on pushes to main. Publish through the
+existing GitHub Pages workflow when requested; do not create copies elsewhere.

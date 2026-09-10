@@ -1,6 +1,6 @@
 ---
 title: Sentiment Identification NLP
-order: 6
+order: 9
 category: NLP · Classificação
 kind: light
 trace: sentiment

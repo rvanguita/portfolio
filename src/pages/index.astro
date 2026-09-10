@@ -2,17 +2,14 @@
 import { getCollection } from "astro:content";
 import Layout from "@components/layout/Layout.astro";
 import Channels from "@components/panels/Channels.astro";
-import Trace from "@components/viz/Trace.astro";
+import Pipeline from "@components/viz/Pipeline.astro";
 import { profile } from "@data/profile";
-import { skills } from "@data/skills";
 import { certTotal } from "@data/certificates";
 import { url, absoluteUrl } from "@lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
 );
-const n = String(projects.length).padStart(2, "0");
-
 const schema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -20,7 +17,7 @@ const schema = {
   alternateName: "rvanguita",
   url: absoluteUrl(url("/"), Astro.site),
   image: absoluteUrl(url(profile.ogImage), Astro.site),
-  jobTitle: "Cientista de Dados",
+  jobTitle: profile.roleShort,
   email: `mailto:${profile.email}`,
   sameAs: [profile.links.github, profile.links.linkedin],
   alumniOf: {
@@ -34,90 +31,115 @@ const schema = {
     addressCountry: "BR",
   },
   knowsAbout: [
-    "Ciência de Dados",
+    "Engenharia de Dados",
+    ...profile.highlights,
     "Machine Learning",
     "Otimização",
-    "Pesquisa Operacional",
   ],
 };
 ---
 
-<Layout title="rvanguita" current="home">
+<Layout title={`${profile.shortName} · Engenharia de Dados`} current="home">
   <script
     is:inline
     slot="head"
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
   />
-
-  <div class="page">
+  <div class="page page--home">
     <header class="hero">
       <div class="hero-copy">
-        <p class="hero-eyebrow">
-          <span aria-hidden="true">●</span> sinal ativo · disponível para novos desafios
+        <p class="hero-name">{profile.shortName}</p>
+        <h1>{profile.roleShort}<span class="hero-period">.</span></h1>
+        <p class="lead" set:html={profile.leadHtml} />
+        <p class="hero-credential">{profile.credential}</p>
+        <ul class="tech-tags hero-tech" aria-label="Tecnologias principais">
+          {profile.highlights.map((tech) => <li>{tech}</li>)}
+        </ul>
+        <div class="hero-contact">
+          <a class="button button--primary" href="#projetos"
+            >Ver projetos <span aria-hidden="true">↓</span></a
+          >
+          <a
+            class="button button--secondary"
+            href={profile.links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer"
+            >Conversar no LinkedIn <span aria-hidden="true">↗</span></a
+          >
+        </div>
+        <div class="hero-links">
+          <a href={`mailto:${profile.email}`}>Enviar e-mail</a>
+          <a
+            href={profile.links.github}
+            target="_blank"
+            rel="noopener noreferrer">GitHub ↗</a
+          >
+          <a
+            href={url(profile.links.dossie)}
+            target="_blank"
+            rel="noopener noreferrer">Dossiê profissional (PDF) ↓</a
+          >
+        </div>
+        <p class="availability">
+          {profile.location}<br />{profile.availability}
         </p>
-        <h1>{profile.name}</h1>
       </div>
-      <p class="role">{profile.role}</p>
-      <p class="lead" set:html={profile.leadHtml} />
-
-      <div class="hero-contact">
-        <a
-          class="contact-primary"
-          href={profile.links.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          >Conectar no LinkedIn <span aria-hidden="true">↗</span></a
-        >
-        <a href={`mailto:${profile.email}`}>Enviar e-mail</a>
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
-          >Ver GitHub <span aria-hidden="true">↗</span></a
-        >
-        <a
-          href={url(profile.links.dossie)}
-          target="_blank"
-          rel="noopener noreferrer"
-          >Baixar dossiê <span aria-hidden="true">↓</span></a
-        >
-      </div>
-      <p class="availability">
-        <span>{profile.location}</span> · {profile.availability}
-      </p>
-
-      <div class="intro-trace">
-        <Trace
-          variant="convergence"
-          caption="convergência de uma busca metaheurística — custo por iteração"
-        />
-      </div>
-
-      <dl class="hero-signals" aria-label="Resumo do portfólio">
-        <div><dt>projetos publicados</dt><dd>{n}</dd></div>
-        <div><dt>frentes de atuação</dt><dd>{skills.length}</dd></div>
-        <div><dt>certificações</dt><dd>{certTotal}</dd></div>
-      </dl>
+      <Pipeline />
     </header>
-
-    <h2 class="section-rule" id="projetos">
-      Evidências de trabalho <span class="count">[{n} projetos · impacto]</span>
-    </h2>
-    <Channels projects={projects} level={3} />
-
-    <h2 class="section-rule">Mais evidências</h2>
-    <nav class="modules" aria-label="Formação e competências">
-      <a class="module-link" href={url("/trajetoria/")}>
-        <span class="name">Trajetória</span><span class="count">2012–26</span>
-      </a>
-      <a class="module-link" href={url("/competencias/")}>
-        <span class="name">Competências</span><span class="count"
-          >[0{skills.length}]</span
+    <section aria-labelledby="projetos" class="featured-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Projetos selecionados</p>
+          <h2 id="projetos">Engenharia de dados em prática.</h2>
+          <p class="section-intro">
+            Ingestão, organização e disponibilização de dados em projetos
+            completos.
+          </p>
+        </div>
+        <a class="text-link" href={url("/projetos/")}
+          >Ver os {projects.length} projetos <span aria-hidden="true">↗</span
+          ></a
         >
-      </a>
-      <a class="module-link" href={url("/certificacoes/")}>
-        <span class="name">Certificações</span><span class="count"
-          >[{certTotal}]</span
-        >
-      </a>
-    </nav>
+      </div>
+      <Channels projects={projects.slice(0, 3)} level={3} />
+    </section>
+    <section class="background-section" aria-labelledby="base-profissional">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Além dos projetos</p>
+          <h2 id="base-profissional">Pesquisa, método e repertório técnico.</h2>
+        </div>
+      </div>
+      <nav class="modules" aria-label="Formação e competências">
+        <a class="module-link" href={url("/competencias/")}>
+          <span class="module-label"
+            >Competências <span aria-hidden="true">↗</span></span
+          >
+          <span class="module-description"
+            >Engenharia de dados, machine learning, visualização e otimização.</span
+          >
+          <span class="module-meta">Conheça as tecnologias</span>
+        </a>
+        <a class="module-link" href={url("/trajetoria/")}>
+          <span class="module-label"
+            >Trajetória <span aria-hidden="true">↗</span></span
+          >
+          <span class="module-description"
+            >Da Engenharia Elétrica à pesquisa aplicada e aos sistemas de dados.</span
+          >
+          <span class="module-meta">Ph.D. pela UNICAMP</span>
+        </a>
+        <a class="module-link" href={url("/certificacoes/")}>
+          <span class="module-label"
+            >Certificações <span aria-hidden="true">↗</span></span
+          >
+          <span class="module-description"
+            >Formação complementar em Python, estatística e análise de negócios.</span
+          >
+          <span class="module-meta">{certTotal} certificados disponíveis</span>
+        </a>
+      </nav>
+    </section>
   </div>
 </Layout>

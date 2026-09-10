@@ -27,8 +27,9 @@ const { title, description, ogType, current } = Astro.props;
     <slot name="head" />
   </head>
   <body>
+    <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
     <ReadoutStrip current={current} />
-    <main>
+    <main id="conteudo" tabindex="-1">
       <slot />
     </main>
     <Footer />

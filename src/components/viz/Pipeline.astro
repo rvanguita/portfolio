@@ -1,0 +1,49 @@
+---
+import { url } from "@lib/url";
+
+const stages = [
+  { name: "Raw", detail: "Dados brutos particionados", tech: "Parquet" },
+  {
+    name: "Bronze",
+    detail: "Tabelas com versionamento ACID",
+    tech: "Delta Lake",
+  },
+  { name: "Silver", detail: "Dados curados e agregados", tech: "PySpark" },
+];
+---
+
+<figure class="pipeline" aria-labelledby="pipeline-title">
+  <figcaption class="pipeline-heading">
+    <span class="eyebrow">Arquitetura em prática</span>
+    <span class="pipeline-title" id="pipeline-title">FastF1 Data Platform</span>
+    <span class="pipeline-caption">Da telemetria à análise de corridas.</span>
+  </figcaption>
+  <div class="pipeline-source">
+    <span>Ingestão · FastF1</span>
+    <span class="pipeline-source-detail">Corridas, sessões e telemetria</span>
+  </div>
+  <div class="pipeline-flow">
+    <p class="pipeline-orchestrator">Orquestração semanal · Apache Airflow</p>
+    <ol class="pipeline-stages" aria-label="Camadas do lakehouse">
+      {
+        stages.map((stage) => (
+          <li>
+            <span class="pipeline-node" aria-hidden="true" />
+            <div>
+              <strong>{stage.name}</strong>
+              <span class="pipeline-detail">{stage.detail}</span>
+            </div>
+            <span class="pipeline-tech">{stage.tech}</span>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+  <div class="pipeline-destinations" aria-label="Consumo dos dados">
+    <span>API <strong>FastAPI</strong></span>
+    <span>Painel <strong>Streamlit</strong></span>
+  </div>
+  <a class="pipeline-link" href={url("/projetos/fastf1/")}>
+    Explorar o projeto <span aria-hidden="true">↗</span>
+  </a>
+</figure>

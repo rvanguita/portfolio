@@ -4,20 +4,30 @@ import { url } from "@lib/url";
 ---
 
 <footer class="foot">
-  {profile.name} · dados, decisões e sistemas
-  <span class="sep" aria-hidden="true">·</span>
-  <a href={`mailto:${profile.email}`}>{profile.email}</a>
-  <span class="sep" aria-hidden="true">·</span>
-  <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
-    >GitHub</a
-  >
-  <span class="sep" aria-hidden="true">·</span>
-  <a href={profile.links.linkedin} target="_blank" rel="noopener noreferrer"
-    >LinkedIn</a
-  >
-  <span class="sep" aria-hidden="true">·</span>
-  <a href={url(profile.links.dossie)} target="_blank" rel="noopener noreferrer"
-    >Dossiê (PDF)</a
-  >
-  <span class="sep" aria-hidden="true">·</span>© 2026
+  <div class="foot-inner">
+    <div class="foot-main">
+      <div>
+        <p class="foot-name">{profile.shortName}</p>
+        <p class="foot-role">{profile.roleShort} · {profile.location}</p>
+        <a class="text-link" href={`mailto:${profile.email}`}>{profile.email}</a
+        >
+      </div>
+      <nav class="foot-links" aria-label="Contato e perfil profissional">
+        <a
+          href={profile.links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer">LinkedIn ↗</a
+        >
+        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
+          >GitHub ↗</a
+        >
+        <a
+          href={url(profile.links.dossie)}
+          target="_blank"
+          rel="noopener noreferrer">Dossiê profissional (PDF) ↓</a
+        >
+      </nav>
+    </div>
+    <p class="foot-bottom">© {new Date().getFullYear()} {profile.name}</p>
+  </div>
 </footer>

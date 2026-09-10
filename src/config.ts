@@ -1,5 +1,5 @@
 // Constantes do site num lugar só. `SITE.url` / `SITE.base` são a fonte para
-// `astro.config.mjs`; `NAV` alimenta a barra de leitura (ReadoutStrip).
+// `astro.config.mjs`; `NAV` alimenta a navegação compartilhada.
 
 export const SITE = {
   url: "https://rvanguita.github.io",
@@ -12,7 +12,7 @@ export type NavKey =
   "home" | "projetos" | "trajetoria" | "competencias" | "certificacoes";
 
 export const NAV: readonly { href: string; label: string; key: NavKey }[] = [
-  { href: "/", label: "Painel", key: "home" },
+  { href: "/", label: "Início", key: "home" },
   { href: "/projetos/", label: "Projetos", key: "projetos" },
   { href: "/trajetoria/", label: "Trajetória", key: "trajetoria" },
   { href: "/competencias/", label: "Competências", key: "competencias" },
