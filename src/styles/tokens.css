@@ -1,68 +1,61 @@
-/* ==========================================================================
-   Sistema visual — sala de controle de decisões
-   A interface deve parecer uma leitura executiva de dados: calma, precisa e
-   com um único sinal forte para resultados e ações.
-   ========================================================================== */
-
+/* Cores semânticas compartilhadas por todas as páginas. */
 :root {
-  --paper:         #f4f1e8;
-  --ink:           #17252b;
-  --ink-soft:      #58666a;
-  --rule:          #c9d0c8;
-  --accent:        #9f3f20;
-  --accent-bright: #0b7285;
-  --well:          #e7ebe2;
-  color-scheme: light dark;
+  --paper: #f5f7fb;
+  --ink: #15233b;
+  --ink-soft: #53627a;
+  --rule: #d4deeb;
+  --accent: #1d4ed8;
+  --accent-bright: #0369a1;
+  --well: #ffffff;
+  color-scheme: light;
 
-  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
-               Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular",
-               Menlo, Consolas, monospace;
-
-  --fs-2xs:     0.6875rem;
-  --fs-xs:      0.75rem;
-  --fs-sm:      0.875rem;
-  --fs-base:    1rem;
-  --fs-md:      1.125rem;
-  --fs-lg:      1.5rem;
-  --fs-xl:      2.8rem;
-  --fs-readout: 3rem;
-
-  --measure: 42rem;
-  --page:    76rem;
-  --strip-h: 3.5rem;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --fs-xs: .8125rem;
+  --fs-sm: .875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.5rem;
+  --fs-readout: 2rem;
+  --page: 78rem;
+  --measure: 44rem;
+  --radius: .875rem;
+  --strip-h: 5rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper:         #102127;
-    --ink:           #f3f0e7;
-    --ink-soft:      #a7b3ad;
-    --rule:          #33484b;
-    --accent:        #f2a07a;
-    --accent-bright: #72d0d0;
-    --well:          #182f34;
+    --paper: #101b2d;
+    --ink: #e8eef8;
+    --ink-soft: #aebcd1;
+    --rule: #35465f;
+    --accent: #9bbcff;
+    --accent-bright: #84caff;
+    --well: #19273d;
+    color-scheme: dark;
   }
 }
 
 :root:has(#theme-toggle:checked) {
-  --paper:         #102127;
-  --ink:           #f3f0e7;
-  --ink-soft:      #a7b3ad;
-  --rule:          #33484b;
-  --accent:        #f2a07a;
-  --accent-bright: #72d0d0;
-  --well:          #182f34;
+  --paper: #101b2d;
+  --ink: #e8eef8;
+  --ink-soft: #aebcd1;
+  --rule: #35465f;
+  --accent: #9bbcff;
+  --accent-bright: #84caff;
+  --well: #19273d;
+  color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:has(#theme-toggle:checked) {
-    --paper:         #f4f1e8;
-    --ink:           #17252b;
-    --ink-soft:      #58666a;
-    --rule:          #c9d0c8;
-    --accent:        #9f3f20;
-    --accent-bright: #0b7285;
-    --well:          #e7ebe2;
+    --paper: #f5f7fb;
+    --ink: #15233b;
+    --ink-soft: #53627a;
+    --rule: #d4deeb;
+    --accent: #1d4ed8;
+    --accent-bright: #0369a1;
+    --well: #ffffff;
+    color-scheme: light;
   }
 }

@@ -1,6 +1,6 @@
 ---
 title: Shopping List Intelligence
-order: 7
+order: 4
 category: Engenharia de Dados · OCR
 kind: light
 trace: pipeline

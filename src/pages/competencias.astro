@@ -5,35 +5,41 @@ import { url } from "@lib/url";
 ---
 
 <Layout
-  title="Competências · rvanguita"
-  description="Competências técnicas de Rene Anguita em quatro frentes: Ciência de Dados & ML, Pesquisa Operacional & Otimização, Visualização & Business Analytics, e Linguagens, Cloud & Ferramentas."
+  title="Competências · Rene Anguita"
+  description="Competências de Rene Anguita em Engenharia de Dados: Python, SQL, Airflow, Delta Lake e PySpark, com repertório em machine learning, visualização e otimização."
   current="competencias"
 >
   <div class="page">
-    <a class="backlink" href={url("/")}>← Painel</a>
-    <div class="mod-head">
-      <h1>Competências</h1>
-      <span class="count">[0{skills.length}]</span>
-    </div>
+    <a class="backlink" href={url("/")}>← Início</a>
+    <div class="mod-head"><h1>Competências</h1></div>
     <p class="module-intro">
-      Uma stack orientada ao ciclo completo: preparar dados, modelar incerteza,
-      otimizar decisões e comunicar resultados.
+      Engenharia de dados como base. Machine learning, visualização e otimização
+      para conectar a preparação dos dados às perguntas de negócio.
     </p>
-
     <dl class="skills">
       {
         skills.map((g) => (
-          <div class="panel skill">
+          <div class="skill">
             <div class="skill-head">
               <dt>{g.title}</dt>
-              <span class="skill-n" aria-hidden="true">
-                {g.items.length}
-              </span>
             </div>
-            <dd>{g.items.join(" · ")}</dd>
+            <dd>
+              <ul class="tech-tags">
+                {g.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            </dd>
           </div>
         ))
       }
     </dl>
+    <p class="skill-evidence">
+      <a href={url("/projetos/")}
+        >Veja essas competências aplicadas nos projetos <span aria-hidden="true"
+          >→</span
+        ></a
+      >
+    </p>
   </div>
 </Layout>

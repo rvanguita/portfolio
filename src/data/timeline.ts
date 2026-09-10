@@ -1,5 +1,4 @@
-// Trajetória — Gantt do CV num eixo de tempo real. Texto preservado do site
-// anterior (#trajetoria). `from`/`to` alimentam as barras; `t0`/`t1` o eixo.
+// Formação e experiência. Datas numéricas preservadas para reuso dos dados.
 export const timeAxis = { t0: 2012, t1: 2026 };
 
 export const scaleYears = [2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026];
@@ -73,7 +72,7 @@ export const timeline: TimelineEntry[] = [
     years: "2016",
     from: 2016,
     to: 2016,
-    title: "Internship",
+    title: "Estágio",
     org: "Café Arquitetura+Design",
     note: "Projeto eletrônico para construção de uma escola e uma creche, em interação com as áreas de Arquitetura e Engenharia Civil.",
   },

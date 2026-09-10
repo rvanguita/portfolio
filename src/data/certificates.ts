@@ -14,8 +14,8 @@ export interface CertGroup {
 
 export const certGroups: CertGroup[] = [
   {
-    title: "Data Science & Python Avançado",
-    short: "Data Science & Python",
+    title: "Ciência de Dados e Python Avançado",
+    short: "Ciência de Dados e Python",
     items: [
       { name: "Introduction to Data Science in Python", issuer: "Coursera / UMich", file: "Applied Data Science with Python Specialization/Introduction to Data Science in Python/Coursera 6X7MSJM9ZW7S.pdf" },
       { name: "Applied Machine Learning in Python", issuer: "Coursera / UMich", file: "Applied Data Science with Python Specialization/Applied Machine Learning in Python/Coursera 9LT6NMT6QFUF.pdf" },
@@ -32,7 +32,7 @@ export const certGroups: CertGroup[] = [
     ],
   },
   {
-    title: "Matemática, Álgebra Linear & Machine Learning",
+    title: "Matemática, Álgebra Linear e Machine Learning",
     short: "Matemática & ML",
     items: [
       { name: "Mathematics for Machine Learning (Completo)", issuer: "Imperial College", file: "Mathematics for Machine Learning/Coursera AVCUZHDPGLI5.pdf" },
@@ -47,7 +47,7 @@ export const certGroups: CertGroup[] = [
     ],
   },
   {
-    title: "Estatística Empresarial & Business Analytics",
+    title: "Estatística Empresarial e Análise de Negócios",
     short: "Estatística & Negócios",
     items: [
       { name: "Introduction to Data Analysis Using Excel", issuer: "Rice University", file: "Business Statistics and Analysis Specialization/Introduction to Data Analysis Using Excel/Coursera 5BVSFVK7NALP.pdf" },

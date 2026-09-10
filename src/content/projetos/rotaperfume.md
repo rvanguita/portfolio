@@ -1,6 +1,6 @@
 ---
 title: Rota do Perfume
-order: 8
+order: 2
 category: MLOps · Vendas
 kind: full
 trace: propensity

@@ -1,16 +1,17 @@
-// Conteúdo do perfil — texto preservado do site anterior (header .intro).
+// Perfil e contatos compartilhados pelas páginas e pelos metadados.
 export const profile = {
   name: "Rene Verinaud Anguita Junior",
-  shortName: "R. Anguita",
-  role: "Cientista de Dados · Ph.D. em Engenharia Elétrica — UNICAMP",
-  roleShort: "Cientista de dados · PhD Eng. Elétrica",
+  shortName: "Rene Anguita",
+  role: "Engenheiro de Dados · Ph.D. em Engenharia Elétrica — UNICAMP",
+  roleShort: "Engenheiro de Dados",
+  credential: "Ph.D. em Engenharia Elétrica · UNICAMP",
   /** Proposta de valor com <strong>; renderizada via set:html. */
   leadHtml:
-    "Transformo problemas operacionais em <strong>decisões mensuráveis</strong>. " +
-    "Combino <strong>engenharia de dados, machine learning e otimização</strong> " +
-    "com a visão sistêmica de quem tem doutorado em Engenharia Elétrica pela UNICAMP.",
+    "Desenvolvo <strong>pipelines e lakehouses</strong> que organizam dados " +
+    "para análise e machine learning.",
+  highlights: ["Python", "SQL", "PySpark", "Delta Lake", "Airflow"],
   availability:
-    "Aberto a vagas em Ciência de Dados / Machine Learning — remoto, híbrido ou presencial.",
+    "Aberto a oportunidades em Engenharia de Dados — remoto, híbrido ou presencial.",
   location: "Campinas, SP · Brasil",
   email: "renevajr@gmail.com",
   links: {
@@ -20,7 +21,8 @@ export const profile = {
   },
   description:
     "Portfólio profissional de Rene Verinaud Anguita Junior, Ph.D. em Engenharia " +
-    "Elétrica, especialista em Ciência de Dados, Machine Learning e Otimização de Sistemas.",
+    "Elétrica pela UNICAMP. Engenharia de Dados, pipelines e lakehouses, " +
+    "com projetos em Python, SQL, PySpark, Delta Lake e Airflow.",
   ogImage: "/assets/social-card.png",
 };
 

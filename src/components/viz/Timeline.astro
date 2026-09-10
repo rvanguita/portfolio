@@ -1,33 +1,16 @@
 ---
-import { timeline, timeAxis, scaleYears } from "@data/timeline";
+import { timeline } from "@data/timeline";
 ---
 
-<div class="timeline" style={`--t0:${timeAxis.t0};--t1:${timeAxis.t1}`}>
-  <div class="tl-scale" aria-hidden="true">
-    {
-      scaleYears.map((y) => (
-        <span style={`--y:${y}`}>{`’${String(y).slice(2)}`}</span>
-      ))
-    }
-  </div>
-
+<ol class="timeline" aria-label="Formação e experiência">
   {
-    timeline.map((e) => (
-      <div class="tl-row">
-        <div class="tl-head">
-          <p class="tl-years">{e.years}</p>
-          <h2 class="tl-title">{e.title}</h2>
-          <p class="tl-org">{e.org}</p>
-          {e.note && <p class="tl-note">{e.note}</p>}
-        </div>
-        <div
-          class="tl-track"
-          style={`--from:${e.from};--to:${e.to}`}
-          aria-hidden="true"
-        >
-          <span class="tl-bar" />
-        </div>
-      </div>
+    timeline.map((entry) => (
+      <li class="tl-row">
+        <p class="tl-years">{entry.years}</p>
+        <h2 class="tl-title">{entry.title}</h2>
+        <p class="tl-org">{entry.org}</p>
+        {entry.note && <p class="tl-note">{entry.note}</p>}
+      </li>
     ))
   }
-</div>
+</ol>

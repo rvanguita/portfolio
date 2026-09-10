@@ -2,7 +2,6 @@
 import type { CollectionEntry } from "astro:content";
 import { url } from "@lib/url";
 import Readout from "./Readout.astro";
-import Trace from "@components/viz/Trace.astro";
 
 interface Props {
   projects: CollectionEntry<"projetos">[];
@@ -13,43 +12,25 @@ const Title = `h${level}` as "h2" | "h3";
 ---
 
 <div class="channels">
-  {
-    projects.map((p) => (
-      <article class="panel">
-        <div class="panel-tab">
-          <span>{p.data.category}</span>
-          <span class="ref">{p.data.kind === "full" ? "estudo de caso" : "ficha"}</span>
-        </div>
-
-        <div class="channel-head">
-          <Title class="panel-title">
-            <a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a>
-          </Title>
-          <Readout
-            class="channel-metric"
-            label={p.data.metric.label}
-            value={p.data.metric.value}
-            sub={p.data.metric.sub}
-          />
-        </div>
-
-        <p class="channel-summary">{p.data.summary}</p>
-
-        <Trace class="channel-trace" variant={p.data.trace} />
-
-        <p class="channel-stack">{p.data.stack}</p>
-
-        <p class="channel-links">
-          <a href={url(`/projetos/${p.id}/`)}>
-            {p.data.kind === "full" ? "Estudo de caso →" : "Ficha →"}
+  {projects.map((p) => (
+    <article class="project-card">
+      <p class="project-category">{p.data.category}</p>
+      <Title class="project-title"><a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a></Title>
+      <p class="project-summary">{p.data.summary}</p>
+      <Readout class="project-outcome" label={p.data.metric.label} value={p.data.metric.value} sub={p.data.metric.sub} />
+      <ul class="tech-tags project-tech" aria-label={`Tecnologias de ${p.data.title}`}>
+        {p.data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
+      </ul>
+      <div class="project-links">
+        <a class="text-link" href={url(`/projetos/${p.id}/`)}>
+          {p.data.kind === "full" ? "Ver estudo de caso" : "Conhecer o projeto"} <span aria-hidden="true">→</span>
+        </a>
+        {p.data.repos.map((r) => (
+          <a href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.label} — ${p.data.title}`}>
+            {r.label} <span aria-hidden="true">↗</span>
           </a>
-          {p.data.repos.map((r) => (
-            <a href={r.url} target="_blank" rel="noopener noreferrer">
-              {r.label} ↗
-            </a>
-          ))}
-        </p>
-      </article>
-    ))
-  }
+        ))}
+      </div>
+    </article>
+  ))}
 </div>

@@ -11,11 +11,14 @@ const { current } = Astro.props;
 ---
 
 <header class="strip">
-  <span class="strip-id">
-    <span class="strip-dot" aria-hidden="true"></span>
+  <a
+    class="strip-id"
+    href={url("/")}
+    aria-label={`${profile.shortName} — Início`}
+  >
+    <span class="brand-mark" aria-hidden="true">ra<span>.</span></span>
     <b>{profile.shortName}</b>
-    <span class="role">· {profile.roleShort}</span>
-  </span>
+  </a>
   <nav class="strip-nav" aria-label="Seções do site">
     {
       NAV.map((n) => (
@@ -27,6 +30,6 @@ const { current } = Astro.props;
         </a>
       ))
     }
-    <ThemeToggle />
   </nav>
+  <ThemeToggle />
 </header>

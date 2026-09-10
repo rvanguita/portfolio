@@ -1,7 +1,7 @@
 import { defineCollection, z } from "astro:content";
 import { glob } from "astro/loaders";
 
-// Coleção 'projetos' — 6 entradas. `kind: full` traz corpo Markdown (estudo de
+// Coleção 'projetos'. `kind: full` traz corpo Markdown (estudo de
 // caso migrado verbatim); `kind: light` traz só a ficha `spec` estruturada.
 const projetos = defineCollection({
   loader: glob({ pattern: "**/*.md", base: "./src/content/projetos" }),
