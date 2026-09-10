@@ -19,6 +19,10 @@ const certUrl = (file: string) =>
       <h1>Certificações</h1>
       <span class="count">[{certTotal}]</span>
     </div>
+    <p class="module-intro">
+      Aprendizado contínuo em Python, estatística, machine learning e análise
+      de negócios — com certificados disponíveis para consulta.
+    </p>
 
     <div class="cert-bar" aria-hidden="true">
       {certGroups.map((g) => <span style={`flex:${g.items.length}`} />)}
