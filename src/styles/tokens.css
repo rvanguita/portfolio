@@ -1,19 +1,18 @@
 /* ==========================================================================
-   Tokens — "Painel de leitura"
-   O site se lê como o painel frontal de um instrumento de precisão: hairlines,
-   raio 0, números reais em mono, acento ciano. Cores só aqui (8 tokens por
-   tema); nada de hex solto no resto do CSS.
+   Sistema visual — sala de controle de decisões
+   A interface deve parecer uma leitura executiva de dados: calma, precisa e
+   com um único sinal forte para resultados e ações.
    ========================================================================== */
 
 :root {
-  /* --- ciano técnico, tema claro --- */
-  --paper:         #f7f8f8;
-  --ink:           #16191c;
-  --ink-soft:      #5b6570;
-  --rule:          #cdd4d6;   /* bordas de painel · hairlines · eixos          */
-  --accent:        #0f6f7a;   /* texto/links em cobre-substituto (~5:1)        */
-  --accent-bright: #12a0ad;   /* traço e preenchimento de gráfico              */
-  --well:          color-mix(in srgb, var(--ink) 3%, var(--paper)); /* fundo de leitura */
+  --paper:         #f4f1e8;
+  --ink:           #17252b;
+  --ink-soft:      #58666a;
+  --rule:          #c9d0c8;
+  --accent:        #9f3f20;
+  --accent-bright: #0b7285;
+  --well:          #e7ebe2;
+  color-scheme: light dark;
 
   --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
                Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -22,47 +21,48 @@
 
   --fs-2xs:     0.6875rem;
   --fs-xs:      0.75rem;
-  --fs-sm:      0.8125rem;
-  --fs-base:    0.9375rem;
-  --fs-md:      1.0625rem;
-  --fs-lg:      1.375rem;
-  --fs-xl:      2rem;
-  --fs-readout: 2.75rem;
+  --fs-sm:      0.875rem;
+  --fs-base:    1rem;
+  --fs-md:      1.125rem;
+  --fs-lg:      1.5rem;
+  --fs-xl:      2.8rem;
+  --fs-readout: 3rem;
 
-  --measure: 40rem;      /* medida de leitura — prosa dos estudos de caso  */
-  --page:    72rem;      /* largura máxima de conteúdo                     */
-  --strip-h: 2.75rem;    /* altura da barra de leitura fixa                */
-
-  color-scheme: light dark;
+  --measure: 42rem;
+  --page:    76rem;
+  --strip-h: 3.5rem;
 }
 
-/* --- tema escuro: automático (SO) + override manual (checkbox, sem JS) ------
-   o mesmo painel, retroiluminado. 4 combinações em cascata pura. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper:         #0e1113;
-    --ink:           #e8ecec;
-    --ink-soft:      #8b969c;
-    --rule:          #2b3236;
-    --accent:        #4fd0dc;
-    --accent-bright: #5ee1ec;
+    --paper:         #102127;
+    --ink:           #f3f0e7;
+    --ink-soft:      #a7b3ad;
+    --rule:          #33484b;
+    --accent:        #f2a07a;
+    --accent-bright: #72d0d0;
+    --well:          #182f34;
   }
 }
+
 :root:has(#theme-toggle:checked) {
-  --paper:         #0e1113;
-  --ink:           #e8ecec;
-  --ink-soft:      #8b969c;
-  --rule:          #2b3236;
-  --accent:        #4fd0dc;
-  --accent-bright: #5ee1ec;
+  --paper:         #102127;
+  --ink:           #f3f0e7;
+  --ink-soft:      #a7b3ad;
+  --rule:          #33484b;
+  --accent:        #f2a07a;
+  --accent-bright: #72d0d0;
+  --well:          #182f34;
 }
+
 @media (prefers-color-scheme: dark) {
   :root:has(#theme-toggle:checked) {
-    --paper:         #f7f8f8;
-    --ink:           #16191c;
-    --ink-soft:      #5b6570;
-    --rule:          #cdd4d6;
-    --accent:        #0f6f7a;
-    --accent-bright: #12a0ad;
+    --paper:         #f4f1e8;
+    --ink:           #17252b;
+    --ink-soft:      #58666a;
+    --rule:          #c9d0c8;
+    --accent:        #9f3f20;
+    --accent-bright: #0b7285;
+    --well:          #e7ebe2;
   }
 }

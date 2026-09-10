@@ -12,7 +12,7 @@ const n = String(projects.length).padStart(2, "0");
 
 <Layout
   title="Projetos · rvanguita"
-  description="Seis projetos de ciência de dados, machine learning e pesquisa operacional — cada um com métrica, stack e repositório."
+  description="Projetos de ciência de dados, machine learning e pesquisa operacional — cada um com métrica, stack e repositório."
   current="projetos"
 >
   <div class="page">
@@ -21,6 +21,10 @@ const n = String(projects.length).padStart(2, "0");
       <h1>Projetos</h1>
       <span class="count">[{n}]</span>
     </div>
+    <p class="module-intro">
+      Casos em que dados viram uma decisão: da engenharia de pipelines à
+      modelagem preditiva e à otimização de sistemas.
+    </p>
     <Channels projects={projects} level={2} />
   </div>
 </Layout>

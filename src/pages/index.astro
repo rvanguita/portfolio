@@ -52,32 +52,37 @@ const schema = {
 
   <div class="page">
     <header class="hero">
-      <h1>{profile.name}</h1>
+      <div class="hero-copy">
+        <p class="hero-eyebrow">
+          <span aria-hidden="true">●</span> sinal ativo · disponível para novos desafios
+        </p>
+        <h1>{profile.name}</h1>
+      </div>
       <p class="role">{profile.role}</p>
       <p class="lead" set:html={profile.leadHtml} />
 
-      <p class="contact">
-        <a href={`mailto:${profile.email}`}>{profile.email}</a>
-        <span class="sep" aria-hidden="true">·</span>
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
-          >GitHub</a
-        >
-        <span class="sep" aria-hidden="true">·</span>
+      <div class="hero-contact">
         <a
+          class="contact-primary"
           href={profile.links.linkedin}
           target="_blank"
-          rel="noopener noreferrer">LinkedIn</a
+          rel="noopener noreferrer"
+          >Conectar no LinkedIn <span aria-hidden="true">↗</span></a
         >
-        <span class="sep" aria-hidden="true">·</span>
+        <a href={`mailto:${profile.email}`}>Enviar e-mail</a>
+        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
+          >Ver GitHub <span aria-hidden="true">↗</span></a
+        >
         <a
           href={url(profile.links.dossie)}
           target="_blank"
-          rel="noopener noreferrer">Dossiê (PDF)</a
+          rel="noopener noreferrer"
+          >Baixar dossiê <span aria-hidden="true">↓</span></a
         >
-        <span class="sep" aria-hidden="true">·</span>
-        {profile.location}
+      </div>
+      <p class="availability">
+        <span>{profile.location}</span> · {profile.availability}
       </p>
-      <p class="availability">{profile.availability}</p>
 
       <div class="intro-trace">
         <Trace
@@ -85,15 +90,21 @@ const schema = {
           caption="convergência de uma busca metaheurística — custo por iteração"
         />
       </div>
+
+      <dl class="hero-signals" aria-label="Resumo do portfólio">
+        <div><dt>projetos publicados</dt><dd>{n}</dd></div>
+        <div><dt>frentes de atuação</dt><dd>{skills.length}</dd></div>
+        <div><dt>certificações</dt><dd>{certTotal}</dd></div>
+      </dl>
     </header>
 
     <h2 class="section-rule" id="projetos">
-      Projetos <span class="count">[{n}]</span>
+      Evidências de trabalho <span class="count">[{n} projetos · impacto]</span>
     </h2>
     <Channels projects={projects} level={3} />
 
-    <h2 class="section-rule">Registros</h2>
-    <nav class="modules" aria-label="Outras seções">
+    <h2 class="section-rule">Mais evidências</h2>
+    <nav class="modules" aria-label="Formação e competências">
       <a class="module-link" href={url("/trajetoria/")}>
         <span class="name">Trajetória</span><span class="count">2012–26</span>
       </a>
