@@ -81,8 +81,15 @@ O build e a checagem de tipos não substituem uma verificação dos links ou do 
 `.prettierignore`. As cores ficam exclusivamente nos tokens, exceto estilos de
 impressão e a cor do navegador nos metadados.
 
-Node local definido em `mise.toml`; CI usa Node 20. Dependências e lockfile são
-mantidos com npm.
+Node 24.20.0 no ambiente local (`mise.toml`) e no CI. Dependências e lockfile são
+mantidos com npm. O site usa Astro 7, com `compressHTML: true` para preservar os
+espaços entre elementos inline.
+
+`npm run check` verifica os componentes com `astro check` e os arquivos TypeScript
+com `tsc --noEmit` (TypeScript 7). Como o verificador do Astro ainda depende da API
+do compilador anterior, `typescript` é um alias de `@typescript/typescript6`, e
+`@typescript/native` instala o compilador TypeScript 7. Essa configuração segue a
+[compatibilidade documentada pela Microsoft](https://devblogs.microsoft.com/typescript/announcing-typescript-7-0/#running-side-by-side-with-typescript-6-0).
 
 ## Publicar
 

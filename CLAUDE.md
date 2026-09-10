@@ -82,10 +82,19 @@ and metadata. Preserve all 28 skill items, nine projects and 24 certificate entr
 Keep generated diagnostic reports out of formatting checks through .prettierignore;
 do not remove user files as cleanup.
 
-Node is pinned locally by mise.toml; CI uses Node 20. Source formatting is governed
-by Prettier, with intentional exclusions recorded in .prettierignore.
+Node 24.20.0 is pinned in mise.toml and both workflows. Astro 7 uses
+compressHTML: true to preserve inline whitespace. Import Zod from astro/zod;
+tsconfig paths use explicit ./ prefixes without the removed baseUrl option.
+
+npm run check runs astro check followed by TypeScript 7's tsc --noEmit.
+Keep the documented Microsoft compatibility aliases: typescript resolves to
+@typescript/typescript6 for Astro's compiler API, while @typescript/native
+resolves to typescript@7 for the tsc executable. Do not replace this with a
+TypeScript 7 API dependency or bypass peer checks with force/legacy-peer-deps.
+
+Source formatting is governed by Prettier, with intentional exclusions recorded
+in .prettierignore.
 
 Use Conventional Commit subjects. Changes land via a PR to main. The existing
-deploy.yml builds and publishes dist/ on pushes to main. For the current redesign,
-the requested deliverable is repository changes and local preview; do not publish
-a copy elsewhere.
+deploy.yml builds and publishes dist/ on pushes to main. Publish through the
+existing GitHub Pages workflow when requested; do not create copies elsewhere.

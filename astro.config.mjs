@@ -10,6 +10,8 @@ export default defineConfig({
   site: SITE.url,
   base: SITE.base,
   trailingSlash: "always",
+  // Mantém os espaços entre elementos inline após a migração para Astro 7.
+  compressHTML: true,
   build: { format: "directory" },
   image: { service: passthroughImageService() },
   integrations: [sitemap()],
