@@ -4,7 +4,6 @@ order: 5
 category: Engenharia de Dados · OCR
 kind: light
 metricKind: arquitetura
-trace: pipeline
 summary: >-
   Notas fiscais e arquivos CSV viram um histórico estruturado de compras,
   indicadores de preço e uma lista de reposição inteligente.

@@ -9,18 +9,15 @@ Portuguese professional portfolio for Rene Verinaud Anguita Junior, presenting
 home, project catalog, nine project details, trajectory, skills, and certificates.
 Published at https://rvanguita.github.io/portfolio/.
 
-The visual direction is "data contract": a graphite BAND (header, hero, contact)
-against a light document BODY of cards. The band is the darkest surface in both
-themes — in dark mode it drops below the page ground rather than rising above it,
-because a step upward there measured 1.04:1 and was invisible.
+The visual direction is light and sophisticated: pale blue ground, white
+surfaces, navy typography and blue actions. The FastF1 architecture is the
+visual signature, beside the professional identity and direct contact actions.
+Keep the page focused on capabilities and evidence a recruiter can assess.
 
-The signature is the typed measurement (`.metric`): every claim declares whether
-it is `medida`, `arquitetura`, `publicacao` or `desenvolvimento`, and each type
-gets its own typographic treatment — a measured number is set large in the display
-face, a built scope never is. `MetricLegend` publishes that code to the reader.
-This is the portfolio's differentiator, not a workaround for missing metrics: keep
-it honest and keep it visible. The FastF1 architecture diagram is the second
-signature; neither is a decorative chart.
+Contextual results distinguish `medida`, `arquitetura`, `publicacao` and
+`desenvolvimento`. Only measured results receive large numerals. Each card
+retains its type and qualifications; the explanatory legend follows the catalog.
+Do not imply that a submitted article has already been accepted or peer reviewed.
 
 ## Architecture and content
 
@@ -31,19 +28,19 @@ signature; neither is a decorative chart.
   Markdown case study; light entries use the structured spec. Keep both formats.
 - `order` controls the catalog; the first three entries appear on the home page.
   Current priorities: FastF1, Bank Churn, Rota do Perfume, Personal Expenses,
-  Shopping List Intelligence, then the remaining projects. Bank Churn sits at 2
-  deliberately: it is the only measured result above the fold, and without it a
-  recruiter scanning the home page sees three `arquitetura` cards and no number.
+  Shopping List Intelligence, then the remaining projects. FastF1 appears in
+  the hero; Bank Churn and Rota do Perfume appear in the two cards below it.
+  Cards show the first five technologies; detail pages preserve the full stack.
 - `src/components/layout/`: shared layout, metadata, header, theme and footer.
 - `src/components/panels/`: Channels renders project cards; Readout renders
   contextual results, including nonnumeric architecture or scope; MetricLegend
-  publishes the four measurement types; Proof renders the verifiable counts.
+  publishes the four result types at the end of the catalog; Skills renders
+  capability descriptions and links to evidence, with all items on its full page.
+  SkillGroup requires summary and projectIds; invalid references fail the build.
 - `src/lib/metric.ts`: the measurement vocabulary (terms and glosses). Readout and
   MetricLegend both read it so the card and the legend cannot drift apart.
 - `src/components/viz/Pipeline.astro`: semantic HTML diagram of FastF1.
 - `src/components/viz/Timeline.astro`: vertical list of existing experiences.
-- The legacy Trace component and trace content field are retained for compatibility
-  but are not rendered. Do not present illustrative traces as measured results.
 
 All visible interface copy is Portuguese. Keep official technology names, project
 names and certificate titles. Preserve experimental/in-development qualifications;
@@ -70,18 +67,17 @@ The accepted user design direction supersedes earlier measurement-panel styling.
 
 Styles live in tokens.css and global.css:
 
-- Fifteen semantic colors: the body (paper, well, ink, ink-soft, rule,
-  rule-strong, accent, accent-bright), the typed signals (signal, signal-open) and
-  the band (band, band-ink, band-soft, band-rule, band-accent). All four theme
-  blocks need the identical list or the manual inversion breaks.
+- Fourteen semantic colors: paper, well, ink, ink-soft, rule, rule-strong,
+  accent, accent-bright, on-accent, signal, signal-open, layer-raw, layer-bronze
+  and layer-silver. All four theme blocks need the identical list or the manual
+  inversion breaks. The button foreground uses on-accent in both themes.
   Define colors in tokens.css; derive component variations with color-mix.
   Exceptions: print styles and BaseHead's theme-color metadata, which are literal
   copies of --paper and must be updated whenever that token moves.
 - Archivo Variable for display, IBM Plex Sans 400/500 for body and UI, IBM Plex
   Mono 400/500 for technologies and metadata. Self-hosted fontsource packages.
-- Text needs 4.5:1 and control borders 3:1. Adjacent dark surfaces cannot be judged
-  by WCAG ratio — it saturates near 1.0 down there — so separate them by luminance
-  step instead (band → paper → well currently step 2.7x and 2.1x).
+- Text needs 4.5:1 and control borders 3:1. Distinguish dark surfaces through
+  luminance and borders; retain visible keyboard focus in both themes.
 - Body text is at least 16 px, regular controls at least 14 px. Reserve 12–13 px
   for secondary metadata. Controls have a minimum 44 px target.
 - Theme follows the OS; a checkbox and :has() invert it without JavaScript.

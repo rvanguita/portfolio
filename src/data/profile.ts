@@ -8,13 +8,11 @@ type Photo = { src: string; width: number; height: number; alt: string };
 export const profile = {
   name: "Rene Verinaud Anguita Junior",
   shortName: "Rene Anguita",
-  role: "Engenheiro de Dados · Ph.D. em Engenharia Elétrica — UNICAMP",
   roleShort: "Engenheiro de Dados",
   credential: "Ph.D. em Engenharia Elétrica · UNICAMP",
   initials: "RA",
-  /** Retrato do hero. Enquanto for undefined, a abertura usa o monograma no
-   *  mesmo quadro — a composição não muda quando a foto entrar. Para ativar:
-   *  colocar o arquivo em public/assets/ e preencher src/width/height/alt. */
+  /** Retrato opcional, pequeno e ao lado do nome. Sem foto, a abertura se
+   *  apoia na tipografia, sem reservar um quadro vazio ou um monograma. */
   photo: undefined as Photo | undefined,
   /** Proposta de valor com <strong>; renderizada via set:html. */
   leadHtml:
@@ -26,7 +24,6 @@ export const profile = {
   /** Versão curta para a etiqueta de status da abertura. */
   availabilityShort: "Aberto a oportunidades",
   location: "Campinas, SP · Brasil",
-  city: "Campinas, SP",
   email: "renevajr@gmail.com",
   links: {
     github: "https://github.com/rvanguita",

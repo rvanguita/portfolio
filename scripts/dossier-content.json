@@ -1,0 +1,95 @@
+{
+  "meta": {
+    "title": "Dossiê profissional - Rene Anguita",
+    "author": "Rene Verinaud Anguita Junior",
+    "subject": "Engenharia de Dados, pipelines, lakehouses e machine learning",
+    "site": "https://rvanguita.github.io/portfolio/"
+  },
+  "profile": {
+    "name": "Rene Verinaud Anguita Junior",
+    "short_name": "Rene Anguita",
+    "role": "Engenheiro de Dados",
+    "credential": "Ph.D. em Engenharia Elétrica - UNICAMP",
+    "location": "Campinas, SP - Brasil",
+    "availability": "Aberto a oportunidades em Engenharia de Dados - remoto, híbrido ou presencial.",
+    "lead": "Desenvolvo pipelines e lakehouses que organizam dados para análise e machine learning.",
+    "highlights": ["Python", "SQL", "PySpark", "Delta Lake", "Airflow"],
+    "email": "renevajr@gmail.com",
+    "github": "https://github.com/rvanguita",
+    "linkedin": "https://linkedin.com/in/rvanguita",
+    "dossier": "https://rvanguita.github.io/portfolio/assets/dossie-rene-anguita.pdf"
+  },
+  "projects": [
+    {
+      "category": "Lakehouse - MLOps",
+      "title": "FastF1 Data Platform",
+      "summary": "Plataforma ponta a ponta para transformar dados de corridas em uma base confiável para análise e previsão.",
+      "evidence_label": "Arquitetura implementada",
+      "evidence": "Raw -> Bronze -> Silver -> API e painel",
+      "note": "Modelo preditivo experimental; sem métrica de referência publicada.",
+      "stack": "FastF1, Delta Lake, PySpark, Airflow, FastAPI, Streamlit",
+      "url": "https://github.com/rvanguita/lake-fastf1"
+    },
+    {
+      "category": "Engenharia de Dados - MLOps",
+      "title": "Rota do Perfume",
+      "summary": "Lakehouse DuckDB 100% local com propensão de compra, fila semanal e retorno das ligações como dado de treino.",
+      "evidence_label": "Arquitetura implementada",
+      "evidence": "17 tarefas de pipeline - MLflow - write-back",
+      "note": "Execução local, com CI e validação de contratos de dados.",
+      "stack": "Python, DuckDB, MLflow, Streamlit, Docker, GitHub Actions",
+      "url": "https://github.com/rvanguita/rotaperfume"
+    },
+    {
+      "category": "Classificação - Risco",
+      "title": "Bank Customer Churn Prediction",
+      "summary": "Previsão de evasão de clientes com engenharia de features, comparação de modelos e interpretabilidade.",
+      "evidence_label": "Resultado em teste",
+      "evidence": "ROC AUC 0,936",
+      "note": "Acurácia 0,904 - MCC 0,67; dados públicos de teste.",
+      "stack": "Python, CatBoost, LightGBM, XGBoost, SHAP, MLflow",
+      "url": "https://github.com/rvanguita/bank-customer-churn"
+    }
+  ],
+  "additional_evidence": [
+    "Energia eólica: R² 0,819 com validação temporal.",
+    "NLP: F1 0,885 e ROC AUC 0,948 no recorte binário.",
+    "Otimização: artigo submetido à INDUSCON 2025."
+  ],
+  "trajectory": [
+    [
+      "2019-25",
+      "Doutorado em Engenharia Elétrica",
+      "UNICAMP - otimização, pesquisa operacional e heurísticas."
+    ],
+    [
+      "2017-18",
+      "Mestrado em Sistemas de Infraestrutura Urbana",
+      "PUC-Campinas - modelagem de redes e análise de dados."
+    ],
+    [
+      "2012-16",
+      "Bacharelado em Engenharia Elétrica",
+      "PUC-Campinas - pesquisa aplicada em sistemas elétricos."
+    ]
+  ],
+  "skills": [
+    [
+      "Engenharia de Dados",
+      "Python, SQL, Apache Airflow, Delta Lake / PySpark, FastAPI, Docker"
+    ],
+    [
+      "Ciência de Dados e ML",
+      "Pandas, Scikit-Learn, XGBoost / LightGBM, SHAP, feature engineering"
+    ],
+    [
+      "Visualização e Analytics",
+      "Streamlit, Power BI, Tableau, estatística descritiva e inferencial"
+    ],
+    [
+      "Otimização",
+      "CPLEX, AMPL, MILP, metaheurísticas e otimização de redes elétricas"
+    ]
+  ],
+  "credentials": "24 certificados disponíveis no portfólio, em Python, estatística, machine learning, matemática e análise de negócios."
+}

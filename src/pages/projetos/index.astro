@@ -2,6 +2,7 @@
 import { getCollection } from "astro:content";
 import Layout from "@components/layout/Layout.astro";
 import Channels from "@components/panels/Channels.astro";
+import MetricLegend from "@components/panels/MetricLegend.astro";
 import { url } from "@lib/url";
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -24,5 +25,9 @@ const projects = (await getCollection("projetos")).sort(
       técnicas e os resultados de cada projeto — com acesso ao código.
     </p>
     <Channels projects={projects} level={2} />
+    <section class="legend-section" aria-labelledby="sobre-resultados">
+      <h2 id="sobre-resultados">Sobre os resultados</h2>
+      <MetricLegend />
+    </section>
   </div>
 </Layout>

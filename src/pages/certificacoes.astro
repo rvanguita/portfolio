@@ -37,7 +37,8 @@ const certUrl = (file: string) =>
             {group.items.map((certificate) => (
               <li>
                 <a href={certUrl(certificate.file)} target="_blank" rel="noopener noreferrer">
-                  {certificate.name} <span class="sr-only"> — certificado em PDF</span>
+                  <span>{certificate.name}<span class="sr-only"> — certificado em PDF, abre em nova aba</span></span>
+                  <span aria-hidden="true">↗</span>
                 </a>
                 <span class="issuer">{certificate.issuer}</span>
               </li>

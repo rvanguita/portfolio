@@ -4,7 +4,6 @@ order: 6
 category: Regressão · Energia
 kind: full
 metricKind: medida
-trace: power
 summary: >-
   Prever a geração de turbinas eólicas onshore ao longo de um ano — curva de
   potência não linear e série sazonal descartam modelo linear e validação

@@ -17,16 +17,17 @@ export const METRIC_KINDS: readonly MetricKind[] = [
 
 /** O termo que aparece na etiqueta do cartão. */
 export const METRIC_TAG: Record<MetricKind, string> = {
-  medida: "medido",
-  arquitetura: "arquitetura",
-  publicacao: "publicação",
-  desenvolvimento: "em desenvolvimento",
+  medida: "Resultado em teste",
+  arquitetura: "Arquitetura implementada",
+  publicacao: "Publicação",
+  desenvolvimento: "Em desenvolvimento",
 };
 
-/** A glosa de uma linha da legenda. Curta: é um chip, não uma frase. */
+/** Contexto de cada tipo na legenda ao final do catálogo. */
 export const METRIC_GLOSS: Record<MetricKind, string> = {
-  medida: "resultado aferido em dados de teste",
-  arquitetura: "escopo construído, sem número",
-  publicacao: "artigo revisado por pares",
-  desenvolvimento: "declaradamente incompleto",
+  medida:
+    "Métrica calculada em dados de teste; consulte as condições no projeto.",
+  arquitetura: "Componentes e fluxo construídos, com código disponível.",
+  publicacao: "Artigo e referência de pesquisa; consulte o status na ficha.",
+  desenvolvimento: "Projeto em andamento, com entregas ainda incompletas.",
 };

@@ -1,8 +1,4 @@
 // Formação e experiência. Datas numéricas preservadas para reuso dos dados.
-export const timeAxis = { t0: 2012, t1: 2026 };
-
-export const scaleYears = [2012, 2014, 2016, 2018, 2020, 2022, 2024, 2026];
-
 export interface TimelineEntry {
   years: string;
   from: number;

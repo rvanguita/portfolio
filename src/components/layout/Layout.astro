@@ -1,19 +1,23 @@
 ---
-// Três vozes: Archivo (display, com os eixos de peso E largura — o display abre
-// para ~109%, leitura de painel de instrumento), IBM Plex Sans (texto) e IBM
-// Plex Mono (dados). O arquivo latin do Archivo sai de 35 KB para 90 KB com o
-// eixo de largura; é font-display: swap, então não bloqueia o render.
-// Só os subsets latin/latin-ext — o site é em português, e importar os arquivos
-// cheios trazia 28 @font-face (cirílico, grego, vietnamita) para nada.
+// Archivo para títulos, IBM Plex Sans para leitura e IBM Plex Mono para
+// tecnologias e dados técnicos. Fontes locais com font-display: swap.
+//
+// Só o subset latin. O português cabe inteiro em Latin-1 (ã, ç, é, õ…, todos
+// abaixo de U+00FF) e nenhuma das 14 páginas usa um caractere da faixa
+// latin-ext — conferido sobre o HTML gerado. Importante: os arquivos por
+// subset do fontsource declaram @font-face SEM unicode-range, então incluir
+// latin-ext não era gratuito como no Archivo, que traz a faixa e deixa o
+// browser decidir: os quatro arquivos latin-ext eram baixados sempre, ~58 KB
+// por visita, sem fornecer um glifo sequer.
+//
+// Setas e traços (←, →, ↗, ≈) não existem em nenhum dos dois subsets e sempre
+// vieram da fonte do sistema. Conteúdo novo com latin-ext (ł, ș, ř) passaria a
+// cair no fallback — se isso acontecer, reimporte o subset aqui.
 import "@fontsource-variable/archivo/wdth.css";
 import "@fontsource/ibm-plex-sans/latin-400.css";
-import "@fontsource/ibm-plex-sans/latin-ext-400.css";
 import "@fontsource/ibm-plex-sans/latin-500.css";
-import "@fontsource/ibm-plex-sans/latin-ext-500.css";
 import "@fontsource/ibm-plex-mono/latin-400.css";
-import "@fontsource/ibm-plex-mono/latin-ext-400.css";
 import "@fontsource/ibm-plex-mono/latin-500.css";
-import "@fontsource/ibm-plex-mono/latin-ext-500.css";
 import "@styles/global.css";
 
 import type { NavKey } from "@/config";

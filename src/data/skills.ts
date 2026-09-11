@@ -1,12 +1,17 @@
 // Competências agrupadas pela aplicação, com Engenharia de Dados em primeiro plano.
 export interface SkillGroup {
   title: string;
+  summary: string;
+  projectIds: string[];
   items: string[];
 }
 
 export const skills: SkillGroup[] = [
   {
     title: "Engenharia de Dados",
+    summary:
+      "Construção de pipelines e lakehouses, da ingestão à disponibilização de dados, com orquestração e validações reproduzíveis.",
+    projectIds: ["fastf1", "rotaperfume"],
     items: [
       "Python",
       "SQL",
@@ -20,6 +25,9 @@ export const skills: SkillGroup[] = [
   },
   {
     title: "Ciência de Dados e ML",
+    summary:
+      "Preparação de dados, comparação de modelos e análise dos fatores que explicam uma previsão.",
+    projectIds: ["bank-churn"],
     items: [
       "Pandas",
       "NumPy",
@@ -32,6 +40,9 @@ export const skills: SkillGroup[] = [
   },
   {
     title: "Visualização e Analytics",
+    summary:
+      "APIs e painéis para explorar dados e apoiar decisões, conectados às camadas analíticas dos projetos.",
+    projectIds: ["fastf1", "rotaperfume"],
     items: [
       "Power BI",
       "Tableau",
@@ -44,6 +55,9 @@ export const skills: SkillGroup[] = [
   },
   {
     title: "Otimização",
+    summary:
+      "Modelagem matemática e heurísticas para avaliar alternativas e resolver problemas de planejamento de sistemas elétricos.",
+    projectIds: ["otimizacao-eletrica"],
     items: [
       "CPLEX",
       "AMPL",
