@@ -26,7 +26,12 @@ const same = (a: string, b: string) =>
 // A etiqueta já anuncia o tipo. Quando o texto do conteúdo repete essa mesma
 // palavra — `label: publicação`, `sub: "… · em desenvolvimento"` — a repetição
 // sai daqui, na apresentação, sem mexer no arquivo de conteúdo.
-const showLabel = !same(label, tag);
+const showLabel =
+  !same(label, tag) &&
+  !(
+    kind === "arquitetura" &&
+    ["escopo", "arquitetura"].some((term) => same(label, term))
+  );
 const subParts = (sub ?? "").split(" · ").filter((s) => s && !same(s, tag));
 
 // Numa aferição de arquitetura o `sub` costuma ser uma sequência de camadas

@@ -9,34 +9,37 @@ em português, voltado à apresentação do trabalho a recrutadores.
 
 ## Design e navegação
 
-Direção "contrato de dados": uma **faixa** de grafite (cabeçalho, abertura e
-contato) sobre um **corpo** claro de documento, com cartões. Archivo para os
-títulos, IBM Plex Sans para leitura, IBM Plex Mono para tecnologias e metadados.
-Fontes locais, sem CDN.
-
-A assinatura é a **aferição tipada**: cada afirmação declara o que é — resultado
-medido, arquitetura construída, publicação ou algo ainda em desenvolvimento — e
-cada tipo recebe um tratamento tipográfico próprio. Um número aferido aparece
-grande; um escopo construído, nunca. Uma legenda publica esse código para quem lê,
-de modo que a distinção entre "medi" e "construí" seja uma posição declarada.
+Direção clara e sofisticada: fundo azul muito claro, superfícies brancas,
+títulos em azul-marinho e azul para ações. Archivo nos títulos, IBM Plex Sans
+na leitura e IBM Plex Mono em tecnologias e dados técnicos. Fontes locais, sem CDN.
 
 A abertura apresenta a especialidade, a credencial e os contatos ao lado do
-diagrama da arquitetura documentada do FastF1: ingestão, Raw em Parquet,
-Bronze/Silver em Delta Lake, orquestração semanal no Airflow e consumo via
-FastAPI/Streamlit. Logo abaixo, uma barra de prova reúne o que se confere em
-segundos — nove projetos com código aberto, 24 certificados, uma publicação e o
-doutorado. FastF1, Bank Churn e Rota do Perfume aparecem em destaque; o catálogo
-preserva os nove projetos e seus estudos de caso ou fichas.
+FastF1. Seu diagrama documenta a ingestão, Raw em Parquet, Bronze/Silver em
+Delta Lake, orquestração semanal no Airflow e consumo via FastAPI/Streamlit.
+O nome é acompanhado de um retrato pequeno apenas quando há uma foto no perfil;
+nenhum espaço é reservado para uma imagem ausente.
 
-As páginas de competências, trajetória e certificações complementam a apresentação.
-A trajetória usa uma linha do tempo vertical. As competências priorizam Engenharia
-de Dados e preservam o repertório de ML, visualização e otimização.
+Os três primeiros projetos da coleção aparecem na página inicial: FastF1 na
+abertura, Bank Churn e Rota do Perfume nos cartões seguintes. O catálogo mantém
+os nove projetos e sua ordem. Cartões apresentam até cinco tecnologias principais;
+a ficha mantém a lista completa.
+
+Os resultados continuam contextualizados: **Resultado em teste**, **Arquitetura
+implementada**, **Publicação** e **Em desenvolvimento**. Apenas resultados medidos
+recebem números em destaque. A legenda fica ao final do catálogo; métricas e
+ressalvas permanecem junto aos projetos.
+
+A página inicial resume os quatro grupos de competências com links para exemplos
+concretos. A página de competências conserva todos os 28 itens. Formação e
+certificações têm um resumo conjunto na home; trajetória completa e os 24
+certificados continuam em suas páginas próprias.
 
 O tema acompanha a preferência do sistema e pode ser invertido por um controle
 CSS-only. Não há JavaScript de interação no cliente. A preferência manual vale
 para a página atual; não é persistida entre navegações.
 O layout inclui foco visível, link para pular a navegação, controles de pelo menos
 44 px, estilos de impressão e respeito à preferência por movimento reduzido.
+No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura.
 
 ## Estrutura
 
@@ -46,8 +49,8 @@ O layout inclui foco visível, link para pular a navegação, controles de pelo 
 - `src/content/projetos/*.md`: conteúdo e ordenação dos nove projetos.
 - `src/data/`: perfil, contatos, trajetória, competências e certificações.
 - `src/components/layout/`: layout, metadados, navegação, tema e rodapé.
-- `src/components/panels/`: cartões de projetos, aferição tipada, legenda dos
-  tipos e barra de prova.
+- `src/components/panels/`: cartões, resultados contextualizados, legenda e
+  competências com referências aos projetos. O componente Proof legado não é renderizado.
 - `src/lib/metric.ts`: o vocabulário da aferição, compartilhado pelo cartão e pela
   legenda.
 - `src/components/viz/`: arquitetura FastF1 e linha do tempo; o componente Trace
@@ -64,6 +67,8 @@ Imports entre diretórios usam aliases como `@components/`, `@data/` e `@lib/`.
 
 - O perfil e as tecnologias em destaque ficam em `src/data/profile.ts`.
 - Competências e experiências ficam em `src/data/skills.ts` e `timeline.ts`.
+  Cada `SkillGroup` inclui `summary`, `projectIds` e a lista integral `items`.
+  Referências a projetos inexistentes fazem o build falhar.
 - Os 24 certificados ficam em `src/data/certificates.ts`, com os PDFs em
   `public/certificates/`. Os caminhos são codificados por segmento.
 - Projetos `kind: full` usam o corpo Markdown; `kind: light` usam a ficha

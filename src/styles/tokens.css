@@ -1,177 +1,101 @@
-/* ---------------------------------------------------------------------------
-   Tokens — direção "Medalhão".
-
-   Duas texturas: a FAIXA (--band-*) é o instrumento, grafite e constante; o
-   CORPO (--paper/--well) é o documento, claro. A faixa é sempre a superfície
-   mais escura dos dois temas — no escuro ela desce abaixo do papel em vez de
-   subir, porque um passo de luminância para cima ali era imperceptível
-   (medido: 1,04:1, faixa indistinguível do papel). Os três planos do tema
-   escuro sobem em degraus reais: band → paper → well, 2,8× e 2,2×.
-
-   DOIS SISTEMAS DE COR, com funções que nunca se cruzam:
-
-     interação   --accent / --accent-bright      "isto é clicável"
-     camadas     --layer-raw/-bronze/-silver     "isto é camada de armazenamento"
-
-   A rampa de camadas sai do vocabulário do próprio trabalho — a arquitetura
-   medalhão de três projetos e do carro-chefe. Ela vai do terroso não tratado
-   ao cobre fundido e à liga fria acabada. É o único matiz novo da paleta e é
-   onde a direção gasta a ousadia; o resto fica quieto.
-
-   As cores de camada marcam TRILHOS E BORDAS, nunca o texto do rótulo: --raw
-   fica em 4,01:1 sobre o papel, abaixo do piso de 4,5:1 para texto. O nome da
-   camada é sempre escrito em --ink, então a cor reforça e nunca carrega
-   sozinha a informação.
-
-   Cor só existe aqui. Variações de componente saem de color-mix() no
-   global.css. Exceções: @media print e as metas theme-color do BaseHead.
-
-   Os quatro blocos abaixo precisam da MESMA lista de 18 tokens — um token que
-   falte num deles não inverte quando o leitor usa o controle de tema.
-   --------------------------------------------------------------------------- */
+/* Azul-marinho e azul de ação sobre superfícies claras.
+   Cada preferência do sistema e sua inversão definem os mesmos tokens.
+   As cores das camadas identificam armazenamento, nunca nível de domínio. */
 
 :root {
-  /* corpo — documento */
-  --paper:          #efeeeb;
-  --well:           #fbfaf8;
-  --ink:            #14181a;
-  --ink-soft:       #555f63;
-  --rule:           #dcd8d2;
-  --rule-strong:    #767f80;
-  --accent:         #0a5f68;
-  --accent-bright:  #12a0ad;
-
-  --signal:         #3a7149;
-  --signal-open:    #6b6560;
-
-  --band:           #15191b;
-  --band-ink:       #eae9e6;
-  --band-soft:      #9ba3a4;
-  --band-rule:      #2f3537;
-  --band-accent:    #5fb8c2;
-
-  /* rampa medalhão — bruto · cobre · liga fria */
-  --layer-raw:      #7a7466;
-  --layer-bronze:   #96572b;
-  --layer-silver:   #4e6f7a;
-
+  --paper: #F5F7FB;
+  --well: #FFFFFF;
+  --ink: #14263D;
+  --ink-soft: #526277;
+  --rule: #D5DFEC;
+  --rule-strong: #7A899E;
+  --accent: #1F4DCD;
+  --accent-bright: #153BA6;
+  --on-accent: #FFFFFF;
+  --signal: #286443;
+  --signal-open: #626074;
+  --layer-raw: #7A899E;
+  --layer-bronze: #A46A38;
+  --layer-silver: #527CAC;
   color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper:          #121a1c;
-    --well:           #1e292c;
-    --ink:            #e7eae9;
-    --ink-soft:       #a9b3b2;
-    --rule:           #2e3739;
-    --rule-strong:    #6d7877;
-    --accent:         #63c3ce;
-    --accent-bright:  #7ad4de;
-
-    --signal:         #7dbe8c;
-    --signal-open:    #a9a096;
-
-    --band:           #080c0d;
-    --band-ink:       #eae9e6;
-    --band-soft:      #9ba3a4;
-    --band-rule:      #212a2c;
-    --band-accent:    #63c3ce;
-
-    --layer-raw:      #a8a191;
-    --layer-bronze:   #cf8d55;
-    --layer-silver:   #82aebd;
-
-    color-scheme: dark;
-  }
+  --paper: #101B2B;
+  --well: #1B2B42;
+  --ink: #EAF0F8;
+  --ink-soft: #B0BED1;
+  --rule: #364A64;
+  --rule-strong: #8295B0;
+  --accent: #9ABEFF;
+  --accent-bright: #C2D7FF;
+  --on-accent: #101B2B;
+  --signal: #97D4B1;
+  --signal-open: #C2BDD4;
+  --layer-raw: #9BAAC0;
+  --layer-bronze: #D7A06D;
+  --layer-silver: #85B5E6;
+  color-scheme: dark;
+}
 }
 
-/* O controle não é "modo escuro": ele INVERTE o que o sistema operacional diz.
-   Marcado + SO claro = escuro; marcado + SO escuro = claro. Sem JS, sem
-   persistência entre páginas (decisão documentada no CLAUDE.md). */
 :root:has(#theme-toggle:checked) {
-  --paper:          #121a1c;
-  --well:           #1e292c;
-  --ink:            #e7eae9;
-  --ink-soft:       #a9b3b2;
-  --rule:           #2e3739;
-  --rule-strong:    #6d7877;
-  --accent:         #63c3ce;
-  --accent-bright:  #7ad4de;
-
-  --signal:         #7dbe8c;
-  --signal-open:    #a9a096;
-
-  --band:           #080c0d;
-  --band-ink:       #eae9e6;
-  --band-soft:      #9ba3a4;
-  --band-rule:      #212a2c;
-  --band-accent:    #63c3ce;
-
-  --layer-raw:      #a8a191;
-  --layer-bronze:   #cf8d55;
-  --layer-silver:   #82aebd;
-
+  --paper: #101B2B;
+  --well: #1B2B42;
+  --ink: #EAF0F8;
+  --ink-soft: #B0BED1;
+  --rule: #364A64;
+  --rule-strong: #8295B0;
+  --accent: #9ABEFF;
+  --accent-bright: #C2D7FF;
+  --on-accent: #101B2B;
+  --signal: #97D4B1;
+  --signal-open: #C2BDD4;
+  --layer-raw: #9BAAC0;
+  --layer-bronze: #D7A06D;
+  --layer-silver: #85B5E6;
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:has(#theme-toggle:checked) {
-    --paper:          #efeeeb;
-    --well:           #fbfaf8;
-    --ink:            #14181a;
-    --ink-soft:       #555f63;
-    --rule:           #dcd8d2;
-    --rule-strong:    #767f80;
-    --accent:         #0a5f68;
-    --accent-bright:  #12a0ad;
-
-    --signal:         #3a7149;
-    --signal-open:    #6b6560;
-
-    --band:           #15191b;
-    --band-ink:       #eae9e6;
-    --band-soft:      #9ba3a4;
-    --band-rule:      #2f3537;
-    --band-accent:    #5fb8c2;
-
-    --layer-raw:      #7a7466;
-    --layer-bronze:   #96572b;
-    --layer-silver:   #4e6f7a;
-
-    color-scheme: light;
-  }
+  --paper: #F5F7FB;
+  --well: #FFFFFF;
+  --ink: #14263D;
+  --ink-soft: #526277;
+  --rule: #D5DFEC;
+  --rule-strong: #7A899E;
+  --accent: #1F4DCD;
+  --accent-bright: #153BA6;
+  --on-accent: #FFFFFF;
+  --signal: #286443;
+  --signal-open: #626074;
+  --layer-raw: #7A899E;
+  --layer-bronze: #A46A38;
+  --layer-silver: #527CAC;
+  color-scheme: light;
+}
 }
 
-/* --------------------------------------------------------------------------
-   Tipografia, espaço e medidas — iguais nos dois temas.
-   -------------------------------------------------------------------------- */
-
 :root {
-  /* três vozes: display / texto / dados */
   --font-display: "Archivo Variable", "Archivo", var(--font-sans);
-  --font-sans:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --wdth-display: 100%;
+  --wdth-data: 100%;
 
-  /* Eixo de largura do Archivo (62–125%). O display abre um pouco: leitura de
-     painel de instrumento, que a largura padrão não tem. O número aferido
-     volta a 100% — ele é dado, não letreiro, e a largura padrão tabula melhor. */
-  --wdth-display:  109%;
-  --wdth-data:     100%;
+  --fs-2xs: .75rem;
+  --fs-xs: .8125rem;
+  --fs-sm: .875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: clamp(1.8rem, 3vw, 2.5rem);
+  --fs-hero: clamp(2.8rem, 5.2vw, 4.75rem);
+  --fs-figure: 2.25rem;
 
-  /* escala de tipo — 12px só para metadado secundário; 14px é o piso de controle */
-  --fs-2xs:    .75rem;
-  --fs-xs:     .8125rem;
-  --fs-sm:     .875rem;
-  --fs-base:   1rem;
-  --fs-md:     1.125rem;
-  --fs-lg:     1.375rem;
-  --fs-xl:     1.75rem;
-  --fs-2xl:    min(clamp(1.75rem, 3.2vw, 2.375rem), 9vw);
-  --fs-hero:   min(clamp(2.75rem, 5.6vw, 5rem), 12vw);
-  --fs-figure: clamp(2rem, 4.5vw, 2.75rem);
-
-  /* escala de espaço */
   --s-1: .25rem;
   --s-2: .5rem;
   --s-3: .75rem;
@@ -181,16 +105,12 @@
   --s-7: 3rem;
   --s-8: 4.5rem;
   --s-9: 6rem;
-
-  /* medidas */
-  --page:     78rem;
-  --measure:  44rem;
-  /* O piso do clamp é em rem e dobra com texto ampliado: numa tela de 320px a
-     200% ele sozinho comeria 80px. O min(..7vw) devolve o espaço quando ele
-     fica escasso, sem mudar nada nos tamanhos normais. */
-  --gutter:   min(clamp(1.25rem, 4vw, 3rem), 7vw);
-  --radius:   .75rem;
-  --radius-sm:.375rem;
-  --rail:     3px;
-  --strip-h:  4rem;
+  --page: 78rem;
+  --measure: 44rem;
+  --gutter: min(clamp(1.25rem, 4vw, 3rem), 7vw);
+  --radius: 1.25rem;
+  --radius-sm: .5rem;
+  --rail: 3px;
+  --strip-h: 5rem;
+  --shadow: 0 12px 40px -22px color-mix(in srgb, var(--ink) 24%, transparent);
 }

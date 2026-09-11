@@ -2,69 +2,33 @@
 import type { CollectionEntry } from "astro:content";
 import { url } from "@lib/url";
 import Readout from "./Readout.astro";
-import Pipeline from "@components/viz/Pipeline.astro";
 
-// `featured` promove a primeira entrada a cartão de largura inteira. Antes os
-// três cartões da home tinham o mesmo peso e nada dizia por onde começar.
-//
-// O diagrama só entra quando a entrada em destaque é o FastF1: ele documenta
-// AQUELA arquitetura, não "um projeto de destaque" qualquer. Se a ordem do
-// catálogo mudar, o cartão continua de pé — sem diagrama, sem mentira.
 interface Props {
   projects: CollectionEntry<"projetos">[];
   level?: 2 | 3;
-  featured?: boolean;
+  columns?: 2 | 3;
 }
-const { projects, level = 3, featured = false } = Astro.props;
+const { projects, level = 3, columns = 3 } = Astro.props;
 const Title = `h${level}` as "h2" | "h3";
-
-const [first, ...rest] = projects;
-const lead = featured ? first : undefined;
-const grid = featured ? rest : projects;
 ---
 
-{lead && (
-  <article class="project-card project-card--featured">
-    <div class="project-body">
-      <p class="project-category">{lead.data.category}</p>
-      <Title class="project-title"><a href={url(`/projetos/${lead.id}/`)}>{lead.data.title}</a></Title>
-      <Readout class="project-outcome" kind={lead.data.metricKind} label={lead.data.metric.label} value={lead.data.metric.value} sub={lead.data.metric.sub} />
-      <p class="project-summary">{lead.data.summary}</p>
-      <ul class="tech-tags project-tech" aria-label={`Tecnologias de ${lead.data.title}`}>
-        {lead.data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
-      </ul>
-      <div class="project-links">
-        <a class="text-link" href={url(`/projetos/${lead.id}/`)}>
-          {lead.data.kind === "full" ? "Ver estudo de caso" : "Conhecer o projeto"} <span aria-hidden="true">→</span>
-        </a>
-        {lead.data.repos.map((r) => (
-          <a href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.label} — ${lead.data.title}`}>
-            {r.label} <span aria-hidden="true">↗</span>
-          </a>
-        ))}
-      </div>
-    </div>
-    {lead.id === "fastf1" && <Pipeline class="project-figure" headingId="pipeline-destaque" />}
-  </article>
-)}
-
-<div class:list={["channels", featured && "featured-row"]}>
-  {grid.map((p) => (
+<div class:list={["channels", columns === 2 && "channels--pair"]}>
+  {projects.map((project) => (
     <article class="project-card">
-      <p class="project-category">{p.data.category}</p>
-      <Title class="project-title"><a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a></Title>
-      <Readout class="project-outcome" kind={p.data.metricKind} label={p.data.metric.label} value={p.data.metric.value} sub={p.data.metric.sub} />
-      <p class="project-summary">{p.data.summary}</p>
-      <ul class="tech-tags project-tech" aria-label={`Tecnologias de ${p.data.title}`}>
-        {p.data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
+      <p class="project-category">{project.data.category}</p>
+      <Title class="project-title"><a href={url(`/projetos/${project.id}/`)}>{project.data.title}</a></Title>
+      <p class="project-summary">{project.data.summary}</p>
+      <Readout class="project-outcome" kind={project.data.metricKind} label={project.data.metric.label} value={project.data.metric.value} sub={project.data.metric.sub} />
+      <ul class="tech-tags project-tech" aria-label={`Principais tecnologias de ${project.data.title}`}>
+        {project.data.stack.split(" · ").slice(0, 5).map((tech) => <li>{tech}</li>)}
       </ul>
       <div class="project-links">
-        <a class="text-link" href={url(`/projetos/${p.id}/`)}>
-          {p.data.kind === "full" ? "Ver estudo de caso" : "Conhecer o projeto"} <span aria-hidden="true">→</span>
+        <a href={url(`/projetos/${project.id}/`)}>
+          {project.data.kind === "full" ? "Ver estudo de caso" : "Conhecer o projeto"} <span aria-hidden="true">→</span>
         </a>
-        {p.data.repos.map((r) => (
-          <a href={r.url} target="_blank" rel="noopener noreferrer" aria-label={`${r.label} — ${p.data.title}`}>
-            {r.label} <span aria-hidden="true">↗</span>
+        {project.data.repos.map((repo) => (
+          <a href={repo.url} target="_blank" rel="noopener noreferrer" aria-label={`${repo.label} — ${project.data.title}`}>
+            {repo.label} <span aria-hidden="true">↗</span>
           </a>
         ))}
       </div>

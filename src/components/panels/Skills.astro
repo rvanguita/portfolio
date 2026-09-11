@@ -1,0 +1,54 @@
+---
+import { getCollection } from "astro:content";
+import { skills } from "@data/skills";
+import { url } from "@lib/url";
+
+interface Props {
+  compact?: boolean;
+}
+const { compact = false } = Astro.props;
+const projects = await getCollection("projetos");
+const groups = skills.map((group) => ({
+  ...group,
+  projects: group.projectIds.map((id) => {
+    const project = projects.find((entry) => entry.id === id);
+    if (!project)
+      throw new Error(`Projeto não encontrado nas competências: ${id}`);
+    return project;
+  }),
+}));
+---
+
+<div class:list={["skills", compact && "skills--compact"]}>
+  {
+    groups.map((group) => (
+      <section class="skill">
+        <div class="skill-head">
+          {compact ? <h3>{group.title}</h3> : <h2>{group.title}</h2>}
+        </div>
+        <div class="skill-body">
+          <p class="skill-summary">{group.summary}</p>
+          {!compact && (
+            <ul
+              class="tech-tags"
+              aria-label={`Tecnologias e métodos de ${group.title}`}
+            >
+              {group.items.map((item) => (
+                <li>{item}</li>
+              ))}
+            </ul>
+          )}
+          <ul class="skill-evidence" aria-label={`Projetos de ${group.title}`}>
+            {group.projects.map((project) => (
+              <li>
+                <a href={url(`/projetos/${project.id}/`)}>
+                  {project.data.title} <span aria-hidden="true">↗</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    ))
+  }
+</div>
