@@ -93,6 +93,12 @@ Sempre conferir também a prévia de produção em `/portfolio/`, incluindo link
 PDFs, navegação por teclado, temas e layouts de 360, 768 e 1440 px.
 O build e a checagem de tipos não substituem uma verificação dos links ou do layout.
 
+O dossiê profissional é gerado de forma reproduzível a partir de
+`scripts/dossier-content.json`. Para regenerar e validar o PDF, instale as
+dependências listadas em `requirements-pdf.txt` e execute `npm run dossier:generate`
+seguido de `npm run dossier:check`. O arquivo publicado permanece em
+`public/assets/dossie-rene-anguita.pdf`.
+
 `npm run format` aplica Prettier. Arquivos públicos, relatórios gerados
 `report.*.json` e alguns arquivos com formatação manual são excluídos conforme
 `.prettierignore`. As cores ficam exclusivamente nos tokens, exceto estilos de

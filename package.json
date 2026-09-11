@@ -7,6 +7,8 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
+    "dossier:generate": "uv run --with-requirements requirements-pdf.txt scripts/generate_dossier.py",
+    "dossier:check": "uv run --with-requirements requirements-pdf.txt scripts/check_dossier.py",
     "check": "astro check && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check ."

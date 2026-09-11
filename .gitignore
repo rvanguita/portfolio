@@ -1,5 +1,6 @@
 # Build Astro
 node_modules/
+.venv-pdf/
 dist/
 .astro/
 
