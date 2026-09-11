@@ -191,7 +191,7 @@ pre { overflow-x: auto; }
 .certs-group h2 { font-size: var(--fs-xl); }
 .certs-group > ul { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .75rem var(--s-6); margin-top: var(--s-5); }
 .certs-group li { border-top: 1px solid var(--rule); padding-top: .35rem; }
-.certs-group li a { display: flex; align-items: center; min-height: 44px; text-decoration: none; }
+.certs-group li a { display: flex; align-items: center; gap: .4rem; min-height: 44px; text-decoration: none; }
 .certs-group li a:hover { text-decoration: underline; }
 .issuer { display: block; padding-bottom: .5rem; color: var(--ink-soft); font-size: var(--fs-xs); }
 

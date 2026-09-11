@@ -80,3 +80,24 @@ diziam. A alteração foi revertida.
   preferência do sistema.
 - Os três links que saíram do hero (Dossiê, LinkedIn, GitHub) seguem no rodapé
   de todas as páginas, ao lado do e-mail.
+
+## Auditoria posterior: dois defeitos encontrados
+
+Depois de fechar as lacunas dos docs, uma varredura sobre o HTML gerado das 14
+páginas encontrou dois problemas reais. Títulos, descrições e hierarquia de
+headings estavam corretos, e o contraste passa em 4.5:1 nos dois temas — as duas
+correções abaixo foram os únicos achados.
+
+**Links de certificado sem sinal visível.** Os 24 links da página de
+certificações abrem em nova aba, mas eram os únicos do site sem o `↗` que todos
+os outros links externos usam — o aviso existia só para leitor de tela. Ganharam
+o mesmo indicador, e o texto oculto agora diz também que abre em nova aba.
+
+**58 KB de fonte baixados sem necessidade.** Os arquivos por subset do fontsource
+declaram `@font-face` **sem `unicode-range`**, ao contrário do Archivo. Com isso
+os quatro arquivos latin-ext do IBM Plex eram baixados em toda visita mesmo sem
+fornecer um glifo: o português inteiro cabe em Latin-1, e nenhuma das 14 páginas
+usa um caractere da faixa latin-ext. Removidos os quatro imports, a página
+inicial caiu de **275 KB em 13 requisições para 216 KB em 9** — 21% menos, sem
+mudança tipográfica (as setas `←→↗≈` nunca estiveram em nenhum dos subsets e
+seguem vindo da fonte do sistema).
