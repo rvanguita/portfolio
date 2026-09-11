@@ -4,7 +4,6 @@ order: 4
 category: Engenharia de Dados · Categorização
 kind: light
 metricKind: arquitetura
-trace: pipeline
 summary: >-
   Faturas de cartão de crédito viram dados organizados, categorias revisáveis e
   painéis de tendências, recorrências e projeção de parcelas.

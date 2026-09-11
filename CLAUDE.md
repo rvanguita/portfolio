@@ -37,13 +37,10 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   publishes the four result types at the end of the catalog; Skills renders
   capability descriptions and links to evidence, with all items on its full page.
   SkillGroup requires summary and projectIds; invalid references fail the build.
-  Proof is a retained legacy component and is not rendered.
 - `src/lib/metric.ts`: the measurement vocabulary (terms and glosses). Readout and
   MetricLegend both read it so the card and the legend cannot drift apart.
 - `src/components/viz/Pipeline.astro`: semantic HTML diagram of FastF1.
 - `src/components/viz/Timeline.astro`: vertical list of existing experiences.
-- The legacy Trace component and trace content field are retained for compatibility
-  but are not rendered. Do not present illustrative traces as measured results.
 
 All visible interface copy is Portuguese. Keep official technology names, project
 names and certificate titles. Preserve experimental/in-development qualifications;

@@ -4,7 +4,6 @@ order: 3
 category: MLOps · Vendas
 kind: full
 metricKind: arquitetura
-trace: propensity
 summary: >-
   Lakehouse DuckDB 100% local com modelo de propensão de compra, fila semanal de
   contatos, previsão de faturamento e um loop de feedback comercial.

@@ -8,7 +8,6 @@ type Photo = { src: string; width: number; height: number; alt: string };
 export const profile = {
   name: "Rene Verinaud Anguita Junior",
   shortName: "Rene Anguita",
-  role: "Engenheiro de Dados · Ph.D. em Engenharia Elétrica — UNICAMP",
   roleShort: "Engenheiro de Dados",
   credential: "Ph.D. em Engenharia Elétrica · UNICAMP",
   initials: "RA",
@@ -25,7 +24,6 @@ export const profile = {
   /** Versão curta para a etiqueta de status da abertura. */
   availabilityShort: "Aberto a oportunidades",
   location: "Campinas, SP · Brasil",
-  city: "Campinas, SP",
   email: "renevajr@gmail.com",
   links: {
     github: "https://github.com/rvanguita",

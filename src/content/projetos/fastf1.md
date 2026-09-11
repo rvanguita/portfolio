@@ -4,7 +4,6 @@ order: 1
 category: Lakehouse · MLOps
 kind: full
 metricKind: arquitetura
-trace: noise
 summary: >-
   Consolidar resultados históricos de Fórmula 1 numa base confiável — ingestão,
   curadoria e serving num fluxo único.

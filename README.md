@@ -50,11 +50,10 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
 - `src/data/`: perfil, contatos, trajetória, competências e certificações.
 - `src/components/layout/`: layout, metadados, navegação, tema e rodapé.
 - `src/components/panels/`: cartões, resultados contextualizados, legenda e
-  competências com referências aos projetos. O componente Proof legado não é renderizado.
+  competências com referências aos projetos.
 - `src/lib/metric.ts`: o vocabulário da aferição, compartilhado pelo cartão e pela
   legenda.
-- `src/components/viz/`: arquitetura FastF1 e linha do tempo; o componente Trace
-  legado permanece disponível, mas não é renderizado pelo site.
+- `src/components/viz/`: arquitetura FastF1 e linha do tempo.
 - `src/styles/`: tokens semânticos e estilos compartilhados.
 - `src/lib/url.ts`: links internos e URLs absolutas.
 - `public/`: ícones, imagem social, dossiê e certificados em PDF.

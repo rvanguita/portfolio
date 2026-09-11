@@ -83,7 +83,6 @@
   --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --wdth-display: 100%;
-  --wdth-data: 100%;
 
   --fs-2xs: .75rem;
   --fs-xs: .8125rem;
@@ -110,7 +109,6 @@
   --gutter: min(clamp(1.25rem, 4vw, 3rem), 7vw);
   --radius: 1.25rem;
   --radius-sm: .5rem;
-  --rail: 3px;
   --strip-h: 5rem;
   --shadow: 0 12px 40px -22px color-mix(in srgb, var(--ink) 24%, transparent);
 }

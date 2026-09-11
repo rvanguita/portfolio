@@ -7,6 +7,7 @@ import Pipeline from "@components/viz/Pipeline.astro";
 import { profile } from "@data/profile";
 import { certGroups, certTotal } from "@data/certificates";
 import { url, absoluteUrl } from "@lib/url";
+import { METRIC_TAG } from "@lib/metric";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
@@ -14,6 +15,14 @@ const projects = (await getCollection("projetos")).sort(
 const featured = projects.slice(0, 3);
 const spotlight = featured.find((project) => project.id === "fastf1");
 const supporting = featured.filter((project) => project !== spotlight);
+
+// O tipo de resultado e a ressalva vêm do próprio projeto: a abertura repete
+// exatamente o que o cartão e a legenda do catálogo dizem sobre o FastF1.
+const spotlightNote = spotlight
+  ? [METRIC_TAG[spotlight.data.metricKind], spotlight.data.metric.sub]
+      .filter(Boolean)
+      .join(" · ") + "."
+  : "";
 
 const schema = {
   "@context": "https://schema.org",
@@ -86,42 +95,20 @@ const schema = {
           >Entrar em contato <span aria-hidden="true">↗</span></a
         >
       </div>
-      <div class="hero-links">
-        <a
-          href={url(profile.links.dossie)}
-          target="_blank"
-          rel="noopener noreferrer"
-          >Dossiê profissional (PDF) <span aria-hidden="true">↗</span></a
-        >
-        <a
-          href={profile.links.linkedin}
-          target="_blank"
-          rel="noopener noreferrer"
-          >LinkedIn <span aria-hidden="true">↗</span></a
-        >
-        <a href={profile.links.github} target="_blank" rel="noopener noreferrer"
-          >GitHub <span aria-hidden="true">↗</span></a
-        >
-      </div>
     </header>
 
     {
       spotlight && (
         <article class="spotlight" aria-labelledby="projeto-destaque">
-          <p class="eyebrow">Projeto em destaque · Lakehouse</p>
+          <p class="eyebrow">Projeto em destaque · {spotlight.data.category}</p>
           <h2 id="projeto-destaque">
             <a href={url(`/projetos/${spotlight.id}/`)}>
               {spotlight.data.title}
             </a>
           </h2>
-          <p class="spotlight-summary">
-            Um fluxo de dados de Fórmula 1: da ingestão à API e ao painel de
-            análise.
-          </p>
+          <p class="spotlight-summary">{spotlight.data.summary}</p>
           <Pipeline headingId="pipeline-abertura" />
-          <p class="spotlight-note">
-            Arquitetura implementada · modelo preditivo experimental.
-          </p>
+          <p class="spotlight-note">{spotlightNote}</p>
           <div class="spotlight-links">
             <a class="text-link" href={url(`/projetos/${spotlight.id}/`)}>
               Ver estudo de caso <span aria-hidden="true">→</span>

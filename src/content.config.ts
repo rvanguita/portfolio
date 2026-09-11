@@ -31,16 +31,6 @@ const projetos = defineCollection({
     repos: z
       .array(z.object({ label: z.string(), url: z.string() }))
       .default([]),
-    trace: z.enum([
-      "convergence",
-      "power",
-      "noise",
-      "threshold",
-      "imbalance",
-      "sentiment",
-      "pipeline",
-      "propensity",
-    ]),
     spec: z
       .object({
         problema: z.string(),

@@ -14,8 +14,7 @@ src/styles/
 # Entradas numa linha só, de propósito
 src/data/certificates.ts
 
-# Markup sensível a espaço em branco (SVG <text>, <span>{expr}</span>,
-# <b>{n}</b>{texto}) — o Prettier injeta whitespace que muda o render.
-src/components/viz/Trace.astro
+# Markup sensível a espaço em branco (<span>{expr}</span>, <b>{n}</b>{texto})
+# — o Prettier injeta whitespace que muda o render.
 src/components/panels/Channels.astro
 src/pages/certificacoes.astro

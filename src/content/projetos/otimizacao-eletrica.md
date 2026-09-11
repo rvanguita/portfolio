@@ -4,7 +4,6 @@ order: 7
 category: Pesquisa Operacional
 kind: light
 metricKind: publicacao
-trace: convergence
 summary: >-
   Planejar investimento e expansão de redes de distribuição de energia —
   alimentadores, condutores e subestações — sob múltiplos critérios de decisão.
