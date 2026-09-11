@@ -14,15 +14,19 @@ const span = `${Math.min(...timeline.map((e) => e.from))}–${Math.max(...timeli
 >
   <div class="page">
     <a class="backlink" href={url("/")}>← Início</a>
-    <div class="mod-head">
-      <h1>Trajetória</h1>
-      <p class="count">{span} · {timeline.length} entradas</p>
+    <div class="section--split">
+      <div class="section-head">
+        <div class="mod-head">
+          <h1>Trajetória</h1>
+          <p class="count">{span} · {timeline.length} entradas</p>
+        </div>
+        <p class="module-intro">
+          Uma formação em Engenharia Elétrica e pesquisa aplicada que sustenta
+          meu trabalho com dados: modelar problemas, avaliar soluções e
+          construir processos reproduzíveis.
+        </p>
+      </div>
+      <Timeline />
     </div>
-    <p class="module-intro">
-      Uma formação em Engenharia Elétrica e pesquisa aplicada que sustenta meu
-      trabalho com dados: modelar problemas, avaliar soluções e construir
-      processos reproduzíveis.
-    </p>
-    <Timeline />
   </div>
 </Layout>

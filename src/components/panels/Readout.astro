@@ -34,6 +34,14 @@ const subParts = (sub ?? "").split(" · ").filter((s) => s && !same(s, tag));
 // um só, continua sendo uma linha de texto.
 const asChain = kind === "arquitetura" && subParts.length > 1;
 const subText = subParts.join(" · ");
+
+// A rampa medalhão só colore o elo que É uma camada medalhão — casamos o
+// termo, nunca a posição. "Raw · Bronze · Silver" sai colorido; uma cadeia de
+// etapas de negócio ("propensão · previsão · write-back") fica neutra, porque
+// ali a cor não significaria nada.
+const LAYERS = ["raw", "bronze", "silver", "gold"] as const;
+const layerOf = (step: string) =>
+  LAYERS.find((l) => new RegExp(`^${l}\\b`, "i").test(step.trim()));
 ---
 
 <div class:list={["metric", `metric--${kind}`, cls]}>
@@ -43,9 +51,10 @@ const subText = subParts.join(" · ");
   {
     asChain ? (
       <ul class="metric-chain">
-        {subParts.map((step) => (
-          <li>{step}</li>
-        ))}
+        {subParts.map((step) => {
+          const layer = layerOf(step);
+          return <li class:list={layer && `chain--${layer}`}>{step}</li>;
+        })}
       </ul>
     ) : (
       subText && <span class="metric-sub">{subText}</span>

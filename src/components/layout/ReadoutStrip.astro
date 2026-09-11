@@ -16,7 +16,7 @@ const { current } = Astro.props;
     href={url("/")}
     aria-label={`${profile.shortName} — Início`}
   >
-    <span class="brand-mark" aria-hidden="true">ra<span>.</span></span>
+    <span class="brand-mark" aria-hidden="true">{profile.initials}</span>
     <b>{profile.shortName}</b>
   </a>
   <nav class="strip-nav" aria-label="Seções do site">

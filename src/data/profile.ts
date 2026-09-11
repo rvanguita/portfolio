@@ -1,10 +1,21 @@
 // Perfil e contatos compartilhados pelas páginas e pelos metadados.
+
+/** Retrato da abertura. Sem integração de imagem no Astro (passthrough), o
+ *  arquivo é servido direto de public/ — daí as dimensões explícitas, que
+ *  evitam salto de layout. */
+type Photo = { src: string; width: number; height: number; alt: string };
+
 export const profile = {
   name: "Rene Verinaud Anguita Junior",
   shortName: "Rene Anguita",
   role: "Engenheiro de Dados · Ph.D. em Engenharia Elétrica — UNICAMP",
   roleShort: "Engenheiro de Dados",
   credential: "Ph.D. em Engenharia Elétrica · UNICAMP",
+  initials: "RA",
+  /** Retrato do hero. Enquanto for undefined, a abertura usa o monograma no
+   *  mesmo quadro — a composição não muda quando a foto entrar. Para ativar:
+   *  colocar o arquivo em public/assets/ e preencher src/width/height/alt. */
+  photo: undefined as Photo | undefined,
   /** Proposta de valor com <strong>; renderizada via set:html. */
   leadHtml:
     "Desenvolvo <strong>pipelines e lakehouses</strong> que organizam dados " +
@@ -12,7 +23,10 @@ export const profile = {
   highlights: ["Python", "SQL", "PySpark", "Delta Lake", "Airflow"],
   availability:
     "Aberto a oportunidades em Engenharia de Dados — remoto, híbrido ou presencial.",
+  /** Versão curta para a etiqueta de status da abertura. */
+  availabilityShort: "Aberto a oportunidades",
   location: "Campinas, SP · Brasil",
+  city: "Campinas, SP",
   email: "renevajr@gmail.com",
   links: {
     github: "https://github.com/rvanguita",

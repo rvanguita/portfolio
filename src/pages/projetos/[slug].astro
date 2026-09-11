@@ -3,17 +3,20 @@ import { getCollection, render } from "astro:content";
 import type { GetStaticPaths } from "astro";
 import Layout from "@components/layout/Layout.astro";
 import Readout from "@components/panels/Readout.astro";
+import Pipeline from "@components/viz/Pipeline.astro";
 import { url } from "@lib/url";
 
 export const getStaticPaths = (async () => {
-  const entries = await getCollection("projetos");
-  return entries.map((entry) => ({
+  const entries = (await getCollection("projetos")).sort(
+    (a, b) => a.data.order - b.data.order,
+  );
+  return entries.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry },
+    props: { entry, prev: entries[i - 1], next: entries[i + 1] },
   }));
 }) satisfies GetStaticPaths;
 
-const { entry } = Astro.props;
+const { entry, prev, next } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
 ---
@@ -52,13 +55,7 @@ const { Content } = await render(entry);
           }
         </div>
       </header>
-      <Readout
-        class="doc-readout"
-        kind={data.metricKind}
-        label={data.metric.label}
-        value={data.metric.value}
-        sub={data.metric.sub}
-      />
+
       {
         data.kind === "full" ? (
           <div class="doc-body">
@@ -85,15 +82,69 @@ const { Content } = await render(entry);
           </dl>
         )
       }
-      <div class="tech">
-        <p>Tecnologias utilizadas</p>
-        <ul class="tech-tags">
-          {data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
-        </ul>
-      </div>
+
+      {
+        /* Trilho lateral: a aferição e as tecnologias ficam conferíveis sem
+          precisar descer a prosa inteira. */
+      }
+      <aside class="doc-rail" aria-label="Ficha técnica">
+        <div class="doc-rail-block">
+          <h2>Aferição</h2>
+          <Readout
+            kind={data.metricKind}
+            label={data.metric.label}
+            value={data.metric.value}
+            sub={data.metric.sub}
+          />
+        </div>
+        <div class="doc-rail-block">
+          <h2>Tecnologias</h2>
+          <ul class="tech-tags">
+            {data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
+          </ul>
+        </div>
+      </aside>
+
+      {
+        /* O diagrama documenta a arquitetura do FastF1; o estudo de caso
+           descrevia Raw/Bronze/Silver sem mostrar nada. */
+        entry.id === "fastf1" && (
+          <Pipeline
+            variant="full"
+            class="doc-figure"
+            headingId="pipeline-ficha"
+          />
+        )
+      }
     </article>
-    <a class="text-link" href={url("/projetos/")}
-      >Explorar outros projetos <span aria-hidden="true">→</span></a
-    >
+
+    <nav class="doc-nav" aria-label="Outros projetos">
+      {
+        prev ? (
+          <a href={url(`/projetos/${prev.id}/`)}>
+            <span>← Projeto anterior</span>
+            <b>{prev.data.title}</b>
+          </a>
+        ) : (
+          <a href={url("/projetos/")}>
+            <span>← Catálogo</span>
+            <b>Todos os projetos</b>
+          </a>
+        )
+      }
+      {
+        next ? (
+          <a href={url(`/projetos/${next.id}/`)}>
+            <span>Próximo projeto →</span>
+            <b>{next.data.title}</b>
+          </a>
+        ) : (
+          <a href={url("/projetos/")}>
+            <span>Catálogo →</span>
+            <b>Todos os projetos</b>
+          </a>
+        )
+      }
+    </nav>
   </div>
 </Layout>

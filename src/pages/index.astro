@@ -4,7 +4,6 @@ import Layout from "@components/layout/Layout.astro";
 import Channels from "@components/panels/Channels.astro";
 import MetricLegend from "@components/panels/MetricLegend.astro";
 import Proof from "@components/panels/Proof.astro";
-import Pipeline from "@components/viz/Pipeline.astro";
 import Timeline from "@components/viz/Timeline.astro";
 import { profile } from "@data/profile";
 import { skills } from "@data/skills";
@@ -24,6 +23,7 @@ const publication = published
   ? {
       venue: published.data.metric.value,
       year: published.data.metric.sub?.match(/\b(19|20)\d{2}\b/)?.[0] ?? "",
+      slug: published.id,
     }
   : undefined;
 
@@ -69,14 +69,36 @@ const schema = {
 
   <div class="band">
     <header class="band-inner hero">
+      <div class="hero-portrait">
+        {
+          profile.photo ? (
+            <img
+              src={url(profile.photo.src)}
+              width={profile.photo.width}
+              height={profile.photo.height}
+              alt={profile.photo.alt}
+              fetchpriority="high"
+            />
+          ) : (
+            <span class="hero-monogram" aria-hidden="true">
+              {profile.initials}
+            </span>
+          )
+        }
+      </div>
       <div class="hero-copy">
+        <p class="hero-status">
+          {profile.availabilityShort} · {profile.city}
+        </p>
         <p class="hero-name">{profile.shortName}</p>
         <h1>{profile.roleShort}<span class="hero-period">.</span></h1>
         <p class="lead" set:html={profile.leadHtml} />
-        <p class="hero-credential">{profile.credential}</p>
+        <p class="hero-credential"><b>{profile.credential}</b></p>
         <ul class="tech-tags hero-tech" aria-label="Tecnologias principais">
           {profile.highlights.map((tech) => <li>{tech}</li>)}
         </ul>
+      </div>
+      <div class="hero-actions">
         <div class="hero-contact">
           <a class="button button--primary" href="#projetos">
             Ver projetos <span aria-hidden="true">↓</span>
@@ -103,14 +125,7 @@ const schema = {
             rel="noopener noreferrer">GitHub ↗</a
           >
         </div>
-        <p class="availability">
-          <span>
-            <b>{profile.location}</b>
-            {profile.availability}
-          </span>
-        </p>
       </div>
-      <Pipeline />
     </header>
     <div class="proof-strip">
       <Proof
@@ -140,7 +155,7 @@ const schema = {
         </a>
       </div>
       <MetricLegend />
-      <Channels projects={featured} level={3} />
+      <Channels projects={featured} level={3} featured />
     </section>
 
     <section class="section" aria-labelledby="competencias">
@@ -180,7 +195,7 @@ const schema = {
       </dl>
     </section>
 
-    <section class="section" aria-labelledby="percurso">
+    <section class="section section--split" aria-labelledby="percurso">
       <div class="section-head">
         <div>
           <p class="eyebrow">Percurso · <b>formação e pesquisa</b></p>
@@ -206,20 +221,21 @@ const schema = {
           </p>
           <h2 id="certificacoes">Formação complementar, com o PDF junto.</h2>
           <p class="section-intro">
-            {certGroups.map((g) => g.short).join(" · ")}. Cada certificado abre
-            direto no arquivo.
+            Cada certificado abre direto no arquivo, sem cadastro nem
+            intermediário.
           </p>
         </div>
         <a class="text-link" href={url("/certificacoes/")}>
           Ver os {certTotal} certificados <span aria-hidden="true">↗</span>
         </a>
       </div>
-      <ul class="certs-home">
+      <ul class="cert-strip">
         {
           certGroups.map((group) => (
             <li>
+              <span class="count">{group.items.length}</span>
               <b>{group.short}</b>
-              <span>{group.items.length} certificados</span>
+              <span>certificados</span>
             </li>
           ))
         }
