@@ -1,8 +1,9 @@
 ---
 title: Bank Customer Churn Prediction
-order: 6
+order: 2
 category: Classificação · Risco
 kind: full
+metricKind: medida
 trace: threshold
 summary: >-
   Antecipar quais clientes de um banco europeu vão encerrar a conta, para agir

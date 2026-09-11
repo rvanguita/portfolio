@@ -9,9 +9,18 @@ Portuguese professional portfolio for Rene Verinaud Anguita Junior, presenting
 home, project catalog, nine project details, trajectory, skills, and certificates.
 Published at https://rvanguita.github.io/portfolio/.
 
-The visual direction is clear and professional: cool gray background, white
-surfaces, navy headings, blue actions, spacious typography and restrained corners.
-The signature visual is the documented FastF1 architecture, not a decorative chart.
+The visual direction is "data contract": a graphite BAND (header, hero, contact)
+against a light document BODY of cards. The band is the darkest surface in both
+themes — in dark mode it drops below the page ground rather than rising above it,
+because a step upward there measured 1.04:1 and was invisible.
+
+The signature is the typed measurement (`.metric`): every claim declares whether
+it is `medida`, `arquitetura`, `publicacao` or `desenvolvimento`, and each type
+gets its own typographic treatment — a measured number is set large in the display
+face, a built scope never is. `MetricLegend` publishes that code to the reader.
+This is the portfolio's differentiator, not a workaround for missing metrics: keep
+it honest and keep it visible. The FastF1 architecture diagram is the second
+signature; neither is a decorative chart.
 
 ## Architecture and content
 
@@ -21,11 +30,16 @@ The signature visual is the documented FastF1 architecture, not a decorative cha
 - `src/content/projetos/*.md`: validated content collection. Full entries have a
   Markdown case study; light entries use the structured spec. Keep both formats.
 - `order` controls the catalog; the first three entries appear on the home page.
-  Current priorities: FastF1, Rota do Perfume, Personal Expenses, Shopping List
-  Intelligence, then the remaining projects.
+  Current priorities: FastF1, Bank Churn, Rota do Perfume, Personal Expenses,
+  Shopping List Intelligence, then the remaining projects. Bank Churn sits at 2
+  deliberately: it is the only measured result above the fold, and without it a
+  recruiter scanning the home page sees three `arquitetura` cards and no number.
 - `src/components/layout/`: shared layout, metadata, header, theme and footer.
 - `src/components/panels/`: Channels renders project cards; Readout renders
-  contextual results, including nonnumeric architecture or scope.
+  contextual results, including nonnumeric architecture or scope; MetricLegend
+  publishes the four measurement types; Proof renders the verifiable counts.
+- `src/lib/metric.ts`: the measurement vocabulary (terms and glosses). Readout and
+  MetricLegend both read it so the card and the legend cannot drift apart.
 - `src/components/viz/Pipeline.astro`: semantic HTML diagram of FastF1.
 - `src/components/viz/Timeline.astro`: vertical list of existing experiences.
 - The legacy Trace component and trace content field are retained for compatibility
@@ -56,11 +70,18 @@ The accepted user design direction supersedes earlier measurement-panel styling.
 
 Styles live in tokens.css and global.css:
 
-- Seven semantic colors: paper, ink, ink-soft, rule, accent, accent-bright, well.
+- Fifteen semantic colors: the body (paper, well, ink, ink-soft, rule,
+  rule-strong, accent, accent-bright), the typed signals (signal, signal-open) and
+  the band (band, band-ink, band-soft, band-rule, band-accent). All four theme
+  blocks need the identical list or the manual inversion breaks.
   Define colors in tokens.css; derive component variations with color-mix.
-  Exceptions: print styles and BaseHead's theme-color metadata.
-- IBM Plex Sans 400/500/600 for display, body and UI. IBM Plex Mono 400/500 for
-  technologies and metadata. Use installed, self-hosted fontsource packages.
+  Exceptions: print styles and BaseHead's theme-color metadata, which are literal
+  copies of --paper and must be updated whenever that token moves.
+- Archivo Variable for display, IBM Plex Sans 400/500 for body and UI, IBM Plex
+  Mono 400/500 for technologies and metadata. Self-hosted fontsource packages.
+- Text needs 4.5:1 and control borders 3:1. Adjacent dark surfaces cannot be judged
+  by WCAG ratio — it saturates near 1.0 down there — so separate them by luminance
+  step instead (band → paper → well currently step 2.7x and 2.1x).
 - Body text is at least 16 px, regular controls at least 14 px. Reserve 12–13 px
   for secondary metadata. Controls have a minimum 44 px target.
 - Theme follows the OS; a checkbox and :has() invert it without JavaScript.

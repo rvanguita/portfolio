@@ -1,0 +1,20 @@
+---
+// Legenda da aferição tipada.
+//
+// Os cartões de projeto já distinguem o que foi medido do que foi construído,
+// mas sem esta chave o leitor vê quatro tratamentos e não percebe que são um
+// código. Declarar o código transforma a honestidade em posição — e é o que
+// um gestor técnico lembra depois.
+import { METRIC_KINDS, METRIC_TAG, METRIC_GLOSS } from "@lib/metric";
+---
+
+<dl class="legend" aria-label="Como ler a aferição de cada projeto">
+  {
+    METRIC_KINDS.map((kind) => (
+      <div class:list={["legend-item", `legend-item--${kind}`]}>
+        <dt class="legend-term">{METRIC_TAG[kind]}</dt>
+        <dd class="legend-gloss">{METRIC_GLOSS[kind]}</dd>
+      </div>
+    ))
+  }
+</dl>

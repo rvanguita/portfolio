@@ -1,7 +1,10 @@
 ---
 import Layout from "@components/layout/Layout.astro";
 import Timeline from "@components/viz/Timeline.astro";
+import { timeline } from "@data/timeline";
 import { url } from "@lib/url";
+
+const span = `${Math.min(...timeline.map((e) => e.from))}–${Math.max(...timeline.map((e) => e.to))}`;
 ---
 
 <Layout
@@ -11,7 +14,10 @@ import { url } from "@lib/url";
 >
   <div class="page">
     <a class="backlink" href={url("/")}>← Início</a>
-    <div class="mod-head"><h1>Trajetória</h1></div>
+    <div class="mod-head">
+      <h1>Trajetória</h1>
+      <p class="count">{span} · {timeline.length} entradas</p>
+    </div>
     <p class="module-intro">
       Uma formação em Engenharia Elétrica e pesquisa aplicada que sustenta meu
       trabalho com dados: modelar problemas, avaliar soluções e construir

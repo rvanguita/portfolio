@@ -18,6 +18,15 @@ const projetos = defineCollection({
       value: z.string(),
       sub: z.string().optional(),
     }),
+    // O que `metric` de fato é. Obrigatório e sem valor padrão de propósito:
+    // só 3 dos 9 projetos têm métrica aferida, e um padrão silencioso faria
+    // escopo, arquitetura e propriedade de dataset passarem por resultado.
+    metricKind: z.enum([
+      "medida",
+      "arquitetura",
+      "publicacao",
+      "desenvolvimento",
+    ]),
     stack: z.string(),
     repos: z
       .array(z.object({ label: z.string(), url: z.string() }))

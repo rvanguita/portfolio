@@ -26,14 +26,18 @@ const ogImage = absoluteUrl(url(profile.ogImage), Astro.site);
 <link rel="icon" type="image/svg+xml" href={url("/icon.svg")} />
 <link rel="icon" type="image/png" href={url("/icon.png")} />
 <link rel="apple-touch-icon" href={url("/icon.png")} />
+{
+  /* Cópias fixas de --paper: meta não lê custom property. Ao mexer no token,
+    mexer aqui também. Não acompanham a inversão manual do tema. */
+}
 <meta
   name="theme-color"
-  content="#f5f7fb"
+  content="#eef1f0"
   media="(prefers-color-scheme: light)"
 />
 <meta
   name="theme-color"
-  content="#101b2d"
+  content="#111b1f"
   media="(prefers-color-scheme: dark)"
 />
 <meta name="generator" content={Astro.generator} />

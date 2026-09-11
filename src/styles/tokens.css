@@ -1,61 +1,155 @@
-/* Cores semânticas compartilhadas por todas as páginas. */
-:root {
-  --paper: #f5f7fb;
-  --ink: #15233b;
-  --ink-soft: #53627a;
-  --rule: #d4deeb;
-  --accent: #1d4ed8;
-  --accent-bright: #0369a1;
-  --well: #ffffff;
-  color-scheme: light;
+/* ---------------------------------------------------------------------------
+   Tokens — direção "Contrato de dados".
 
-  --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
-  --fs-xs: .8125rem;
-  --fs-sm: .875rem;
-  --fs-base: 1rem;
-  --fs-md: 1.125rem;
-  --fs-lg: 1.5rem;
-  --fs-readout: 2rem;
-  --page: 78rem;
-  --measure: 44rem;
-  --radius: .875rem;
-  --strip-h: 5rem;
+   Duas texturas: a FAIXA (--band-*) é o instrumento, grafite e constante; o
+   CORPO (--paper/--well) é o documento, claro. A faixa é sempre a superfície
+   mais escura dos dois temas — no escuro ela desce abaixo do papel em vez de
+   subir, porque um passo de luminância para cima ali era imperceptível
+   (medido: 1,04:1, faixa indistinguível do papel). Agora os três planos do
+   tema escuro sobem em degraus reais: band → paper → well, 2,7× e 2,1×.
+
+   Cor só existe aqui. Variações de componente saem de color-mix() no
+   global.css. Exceções: @media print e as metas theme-color do BaseHead.
+
+   Os quatro blocos abaixo precisam da MESMA lista de tokens — um token que
+   falte num deles não inverte quando o leitor usa o controle de tema.
+   --------------------------------------------------------------------------- */
+
+:root {
+  /* corpo — documento */
+  --paper:          #eef1f0;
+  --well:           #ffffff;
+  --ink:            #101619;
+  --ink-soft:       #55636a;
+  --rule:           #d2dad9;
+  --rule-strong:    #74838a;
+  --accent:         #0a5f68;
+  --accent-bright:  #12a0ad;
+
+  --signal:         #3a7149;
+  --signal-open:    #8a5a0f;
+
+  --band:           #151d21;
+  --band-ink:       #e9eeee;
+  --band-soft:      #9aaaae;
+  --band-rule:      #313c40;
+  --band-accent:    #5fb8c2;
+
+  color-scheme: light;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --paper: #101b2d;
-    --ink: #e8eef8;
-    --ink-soft: #aebcd1;
-    --rule: #35465f;
-    --accent: #9bbcff;
-    --accent-bright: #84caff;
-    --well: #19273d;
+    --paper:          #111b1f;
+    --well:           #1d2a30;
+    --ink:            #e6ecec;
+    --ink-soft:       #aab7bb;
+    --rule:           #2f3b40;
+    --rule-strong:    #6b7a7e;
+    --accent:         #63c3ce;
+    --accent-bright:  #7ad4de;
+
+    --signal:         #7dbe8c;
+    --signal-open:    #dcaa55;
+
+    --band:           #070d0f;
+    --band-ink:       #e9eeee;
+    --band-soft:      #9aaaae;
+    --band-rule:      #212b2e;
+    --band-accent:    #63c3ce;
+
     color-scheme: dark;
   }
 }
 
+/* O controle não é "modo escuro": ele INVERTE o que o sistema operacional diz.
+   Marcado + SO claro = escuro; marcado + SO escuro = claro. Sem JS, sem
+   persistência entre páginas (decisão documentada no CLAUDE.md). */
 :root:has(#theme-toggle:checked) {
-  --paper: #101b2d;
-  --ink: #e8eef8;
-  --ink-soft: #aebcd1;
-  --rule: #35465f;
-  --accent: #9bbcff;
-  --accent-bright: #84caff;
-  --well: #19273d;
+  --paper:          #111b1f;
+  --well:           #1d2a30;
+  --ink:            #e6ecec;
+  --ink-soft:       #aab7bb;
+  --rule:           #2f3b40;
+  --rule-strong:    #6b7a7e;
+  --accent:         #63c3ce;
+  --accent-bright:  #7ad4de;
+
+  --signal:         #7dbe8c;
+  --signal-open:    #dcaa55;
+
+  --band:           #070d0f;
+  --band-ink:       #e9eeee;
+  --band-soft:      #9aaaae;
+  --band-rule:      #212b2e;
+  --band-accent:    #63c3ce;
+
   color-scheme: dark;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:has(#theme-toggle:checked) {
-    --paper: #f5f7fb;
-    --ink: #15233b;
-    --ink-soft: #53627a;
-    --rule: #d4deeb;
-    --accent: #1d4ed8;
-    --accent-bright: #0369a1;
-    --well: #ffffff;
+    --paper:          #eef1f0;
+    --well:           #ffffff;
+    --ink:            #101619;
+    --ink-soft:       #55636a;
+    --rule:           #d2dad9;
+    --rule-strong:    #74838a;
+    --accent:         #0a5f68;
+    --accent-bright:  #12a0ad;
+
+    --signal:         #3a7149;
+    --signal-open:    #8a5a0f;
+
+    --band:           #151d21;
+    --band-ink:       #e9eeee;
+    --band-soft:      #9aaaae;
+    --band-rule:      #313c40;
+    --band-accent:    #5fb8c2;
+
     color-scheme: light;
   }
+}
+
+/* --------------------------------------------------------------------------
+   Tipografia, espaço e medidas — iguais nos dois temas.
+   -------------------------------------------------------------------------- */
+
+:root {
+  /* três vozes: display / texto / dados */
+  --font-display: "Archivo Variable", "Archivo", var(--font-sans);
+  --font-sans:    "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "IBM Plex Mono", ui-monospace, "SF Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+
+  /* escala de tipo — 12px só para metadado secundário; 14px é o piso de controle */
+  --fs-2xs:    .75rem;
+  --fs-xs:     .8125rem;
+  --fs-sm:     .875rem;
+  --fs-base:   1rem;
+  --fs-md:     1.125rem;
+  --fs-lg:     1.375rem;
+  --fs-xl:     1.75rem;
+  --fs-figure: clamp(2rem, 4.5vw, 2.75rem);
+
+  /* escala de espaço — substitui os valores rem avulsos do CSS anterior */
+  --s-1: .25rem;
+  --s-2: .5rem;
+  --s-3: .75rem;
+  --s-4: 1rem;
+  --s-5: 1.5rem;
+  --s-6: 2rem;
+  --s-7: 3rem;
+  --s-8: 4.5rem;
+  --s-9: 6rem;
+
+  /* medidas */
+  --page:     78rem;
+  --measure:  44rem;
+  /* O piso do clamp é em rem e dobra com texto ampliado: numa tela de 320px a
+     200% ele sozinho comeria 80px. O min(..7vw) devolve o espaço quando ele
+     fica escasso, sem mudar nada nos tamanhos normais. */
+  --gutter:   min(clamp(1.25rem, 4vw, 3rem), 7vw);
+  --radius:   .75rem;
+  --radius-sm:.375rem;
+  --strip-h:  4.5rem;
 }

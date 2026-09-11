@@ -54,6 +54,7 @@ const { Content } = await render(entry);
       </header>
       <Readout
         class="doc-readout"
+        kind={data.metricKind}
         label={data.metric.label}
         value={data.metric.value}
         sub={data.metric.sub}

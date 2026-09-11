@@ -3,6 +3,7 @@ title: Otimização de Sistemas de Distribuição Elétrica
 order: 7
 category: Pesquisa Operacional
 kind: light
+metricKind: publicacao
 trace: convergence
 summary: >-
   Planejar investimento e expansão de redes de distribuição de energia —

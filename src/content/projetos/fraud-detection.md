@@ -3,6 +3,7 @@ title: Credit Card Fraud Detection
 order: 8
 category: Detecção de Fraude
 kind: light
+metricKind: desenvolvimento
 trace: imbalance
 summary: >-
   Detectar transações fraudulentas de cartão num dataset real fortemente

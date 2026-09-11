@@ -1,0 +1,40 @@
+---
+// Barra de prova — o que se confere em segundos.
+//
+// Cada item sai de dado que já existe no repositório: a contagem da coleção de
+// projetos, o total de certificados, a entrada de publicação e a credencial do
+// perfil. Nenhuma afirmação nova entra aqui; nada de escala de produção,
+// senioridade ou impacto de negócio.
+interface Props {
+  projectCount: number;
+  certCount: number;
+  publication?: { venue: string; year: string };
+  credential: string;
+}
+const { projectCount, certCount, publication, credential } = Astro.props;
+
+const items: { value: string; label: string }[] = [
+  { value: String(projectCount), label: "projetos · código aberto em todos" },
+  { value: String(certCount), label: "certificados, com o PDF junto" },
+];
+
+if (publication) {
+  items.push({
+    value: "1",
+    label: `publicação · ${publication.venue} ${publication.year}`,
+  });
+}
+
+items.push({ value: "Ph.D.", label: credential });
+---
+
+<dl class="proof" aria-label="Resumo verificável">
+  {
+    items.map((item) => (
+      <div class="proof-item">
+        <dt class="proof-value">{item.value}</dt>
+        <dd class="proof-label">{item.label}</dd>
+      </div>
+    ))
+  }
+</dl>
