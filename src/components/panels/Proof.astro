@@ -5,36 +5,56 @@
 // projetos, o total de certificados, a entrada de publicação e a credencial do
 // perfil. Nenhuma afirmação nova entra aqui; nada de escala de produção,
 // senioridade ou impacto de negócio.
+//
+// Cada prova aponta para a página onde ela se verifica: prova que não se
+// confere é só mais um número numa página de portfólio.
+import { url } from "@lib/url";
+
 interface Props {
   projectCount: number;
   certCount: number;
-  publication?: { venue: string; year: string };
+  publication?: { venue: string; year: string; slug: string };
   credential: string;
 }
 const { projectCount, certCount, publication, credential } = Astro.props;
 
-const items: { value: string; label: string }[] = [
-  { value: String(projectCount), label: "projetos · código aberto em todos" },
-  { value: String(certCount), label: "certificados, com o PDF junto" },
+const items: { value: string; label: string; href: string }[] = [
+  {
+    value: String(projectCount),
+    label: "projetos · código aberto em todos",
+    href: url("/projetos/"),
+  },
+  {
+    value: String(certCount),
+    label: "certificados, com o PDF junto",
+    href: url("/certificacoes/"),
+  },
 ];
 
 if (publication) {
   items.push({
     value: "1",
     label: `publicação · ${publication.venue} ${publication.year}`,
+    href: url(`/projetos/${publication.slug}/`),
   });
 }
 
-items.push({ value: "Ph.D.", label: credential });
+items.push({
+  value: "Ph.D.",
+  label: credential,
+  href: url("/trajetoria/"),
+});
 ---
 
-<dl class="proof" aria-label="Resumo verificável">
+<ul class="proof" aria-label="Resumo verificável">
   {
     items.map((item) => (
-      <div class="proof-item">
-        <dt class="proof-value">{item.value}</dt>
-        <dd class="proof-label">{item.label}</dd>
-      </div>
+      <li class="proof-item">
+        <a href={item.href}>
+          <span class="proof-value">{item.value}</span>
+          <span class="proof-label">{item.label}</span>
+        </a>
+      </li>
     ))
   }
-</dl>
+</ul>

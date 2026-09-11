@@ -1,51 +1,102 @@
 ---
-import { url } from "@lib/url";
-
 // Diagrama fiel ao estudo de caso do FastF1: ingestão pela biblioteca FastF1,
 // Raw particionado em Parquet, Bronze/Silver em Delta Lake, orquestração
 // semanal no Airflow e consumo por FastAPI e Streamlit. O modelo preditivo do
 // projeto é experimental e não tem métrica de referência publicada — nada aqui
 // deve sugerir o contrário.
+//
+// Os nós são uma <ol>: a ordem das camadas é informação, não estilo. Os
+// conectores são desenhados no CSS (::before/::after de cada nó), então o
+// fluxo é um fluxo de verdade e não uma pilha de retângulos.
+//
+// `variant` decide a direção: `compact` desce na vertical e cabe na coluna do
+// cartão em destaque; `full` corre na horizontal a partir de 60rem, na ficha
+// do projeto.
+//
+// A figura não repete o nome do projeto nem o link para a ficha: os dois
+// lugares onde ela aparece já dizem as duas coisas, e repetir só engordava o
+// diagrama. O nome acessível vem do rótulo "Arquitetura em prática".
+
+interface Props {
+  variant?: "compact" | "full";
+  headingId?: string;
+  class?: string;
+}
+const {
+  variant = "compact",
+  headingId = "pipeline-title",
+  class: cls,
+} = Astro.props;
+
 const stages = [
-  { name: "Raw", detail: "Dados brutos particionados", tech: "Parquet" },
   {
+    layer: "source",
+    name: "Ingestão",
+    detail: "Corridas, sessões e telemetria",
+    tech: "FastF1",
+  },
+  {
+    layer: "raw",
+    name: "Raw",
+    detail: "Dados brutos particionados",
+    tech: "Parquet",
+  },
+  {
+    layer: "bronze",
     name: "Bronze",
     detail: "Tabelas com versionamento ACID",
     tech: "Delta Lake",
   },
-  { name: "Silver", detail: "Dados curados e agregados", tech: "PySpark" },
+  {
+    layer: "silver",
+    name: "Silver",
+    detail: "Dados curados e agregados",
+    tech: "PySpark",
+  },
+];
+
+const outputs = [
+  { role: "API", tech: "FastAPI" },
+  { role: "Painel", tech: "Streamlit" },
 ];
 ---
 
-<figure class="pipeline" aria-labelledby="pipeline-title">
+<figure
+  class:list={["pipeline", `pipeline--${variant}`, cls]}
+  aria-labelledby={headingId}
+>
   <figcaption class="pipeline-heading">
-    <span class="eyebrow">Arquitetura em prática</span>
-    <span class="pipeline-title" id="pipeline-title">FastF1 Data Platform</span>
-    <span class="pipeline-caption">Da telemetria à análise de corridas.</span>
+    <span class="eyebrow" id={headingId}>Arquitetura em prática</span>
+    <span class="pipeline-caption">
+      Da telemetria à análise de corridas — o fluxo completo do FastF1.
+    </span>
   </figcaption>
-  <div class="pipeline-source">
-    <span>Ingestão · FastF1</span>
-    <span class="pipeline-source-detail">Corridas, sessões e telemetria</span>
-  </div>
-  <div class="pipeline-flow">
-    <p class="pipeline-orchestrator">Orquestração semanal · Apache Airflow</p>
-    <ol class="pipeline-stages" aria-label="Camadas do lakehouse">
-      {
-        stages.map((stage) => (
-          <li class="pipeline-node">
-            <b>{stage.name}</b>
-            <span class="pipeline-detail">{stage.detail}</span>
-            <span class="pipeline-tech">{stage.tech}</span>
-          </li>
-        ))
-      }
-    </ol>
-  </div>
-  <div class="pipeline-destinations" aria-label="Consumo dos dados">
-    <span>API <b>FastAPI</b></span>
-    <span>Painel <b>Streamlit</b></span>
-  </div>
-  <a class="pipeline-link" href={url("/projetos/fastf1/")}>
-    Explorar o projeto <span aria-hidden="true">↗</span>
-  </a>
+
+  <p class="pipeline-orchestrator">Orquestração semanal · Apache Airflow</p>
+
+  <ol
+    class="pipeline-stages"
+    aria-label="Fluxo da ingestão às camadas do lakehouse"
+  >
+    {
+      stages.map((stage) => (
+        <li class:list={["pipeline-node", `pipeline-node--${stage.layer}`]}>
+          <b>{stage.name}</b>
+          <span class="pipeline-tech">{stage.tech}</span>
+          <span class="pipeline-detail">{stage.detail}</span>
+        </li>
+      ))
+    }
+  </ol>
+
+  <ul class="pipeline-outputs" aria-label="Consumo dos dados">
+    {
+      outputs.map((out) => (
+        <li>
+          <span>{out.role}</span>
+          <b>{out.tech}</b>
+        </li>
+      ))
+    }
+  </ul>
 </figure>
