@@ -16,8 +16,8 @@ const Title = `h${level}` as "h2" | "h3";
     <article class="project-card">
       <p class="project-category">{p.data.category}</p>
       <Title class="project-title"><a href={url(`/projetos/${p.id}/`)}>{p.data.title}</a></Title>
+      <Readout class="project-outcome" kind={p.data.metricKind} label={p.data.metric.label} value={p.data.metric.value} sub={p.data.metric.sub} />
       <p class="project-summary">{p.data.summary}</p>
-      <Readout class="project-outcome" label={p.data.metric.label} value={p.data.metric.value} sub={p.data.metric.sub} />
       <ul class="tech-tags project-tech" aria-label={`Tecnologias de ${p.data.title}`}>
         {p.data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
       </ul>

@@ -1,15 +1,54 @@
 ---
+// Aferição tipada. `kind` diz o que o número (ou a ausência dele) significa,
+// para que arquitetura e propriedade de dataset não se disfarcem de resultado:
+//
+//   medida          resultado aferido em dados de teste — o número é o assunto
+//   arquitetura     escopo construído — sem número; `sub` vira cadeia de camadas
+//   publicacao      referência bibliográfica
+//   desenvolvimento declaradamente incompleto — traço interrompido, tom abafado
+//
+// Os termos vivem em @lib/metric para que o cartão e a legenda não divirjam.
+import { METRIC_TAG, type MetricKind } from "@lib/metric";
+
 interface Props {
+  kind: MetricKind;
   label: string;
   value: string;
   sub?: string;
   class?: string;
 }
-const { label, value, sub, class: cls } = Astro.props;
+const { kind, label, value, sub, class: cls } = Astro.props;
+
+const tag = METRIC_TAG[kind];
+const same = (a: string, b: string) =>
+  a.trim().toLowerCase() === b.trim().toLowerCase();
+
+// A etiqueta já anuncia o tipo. Quando o texto do conteúdo repete essa mesma
+// palavra — `label: publicação`, `sub: "… · em desenvolvimento"` — a repetição
+// sai daqui, na apresentação, sem mexer no arquivo de conteúdo.
+const showLabel = !same(label, tag);
+const subParts = (sub ?? "").split(" · ").filter((s) => s && !same(s, tag));
+
+// Numa aferição de arquitetura o `sub` costuma ser uma sequência de camadas
+// ("Raw · Bronze · Silver"). Com dois ou mais elos ela vira cadeia ligada; com
+// um só, continua sendo uma linha de texto.
+const asChain = kind === "arquitetura" && subParts.length > 1;
+const subText = subParts.join(" · ");
 ---
 
-<div class:list={["readout", cls]}>
-  <span class="readout-label">{label}</span>
-  <span class="readout-value">{value}</span>
-  {sub && <span class="readout-sub">{sub}</span>}
+<div class:list={["metric", `metric--${kind}`, cls]}>
+  <span class="metric-tag">{tag}</span>
+  {showLabel && <span class="metric-label">{label}</span>}
+  <span class="metric-value">{value}</span>
+  {
+    asChain ? (
+      <ul class="metric-chain">
+        {subParts.map((step) => (
+          <li>{step}</li>
+        ))}
+      </ul>
+    ) : (
+      subText && <span class="metric-sub">{subText}</span>
+    )
+  }
 </div>

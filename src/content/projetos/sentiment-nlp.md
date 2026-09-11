@@ -3,6 +3,7 @@ title: Sentiment Identification NLP
 order: 9
 category: NLP · Classificação
 kind: light
+metricKind: medida
 trace: sentiment
 summary: >-
   Classificar o sentimento de avaliações de um e-commerce brasileiro e medir o

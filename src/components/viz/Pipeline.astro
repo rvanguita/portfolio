@@ -1,6 +1,11 @@
 ---
 import { url } from "@lib/url";
 
+// Diagrama fiel ao estudo de caso do FastF1: ingestão pela biblioteca FastF1,
+// Raw particionado em Parquet, Bronze/Silver em Delta Lake, orquestração
+// semanal no Airflow e consumo por FastAPI e Streamlit. O modelo preditivo do
+// projeto é experimental e não tem métrica de referência publicada — nada aqui
+// deve sugerir o contrário.
 const stages = [
   { name: "Raw", detail: "Dados brutos particionados", tech: "Parquet" },
   {
@@ -27,12 +32,9 @@ const stages = [
     <ol class="pipeline-stages" aria-label="Camadas do lakehouse">
       {
         stages.map((stage) => (
-          <li>
-            <span class="pipeline-node" aria-hidden="true" />
-            <div>
-              <strong>{stage.name}</strong>
-              <span class="pipeline-detail">{stage.detail}</span>
-            </div>
+          <li class="pipeline-node">
+            <b>{stage.name}</b>
+            <span class="pipeline-detail">{stage.detail}</span>
             <span class="pipeline-tech">{stage.tech}</span>
           </li>
         ))
@@ -40,8 +42,8 @@ const stages = [
     </ol>
   </div>
   <div class="pipeline-destinations" aria-label="Consumo dos dados">
-    <span>API <strong>FastAPI</strong></span>
-    <span>Painel <strong>Streamlit</strong></span>
+    <span>API <b>FastAPI</b></span>
+    <span>Painel <b>Streamlit</b></span>
   </div>
   <a class="pipeline-link" href={url("/projetos/fastf1/")}>
     Explorar o projeto <span aria-hidden="true">↗</span>

@@ -9,14 +9,23 @@ em português, voltado à apresentação do trabalho a recrutadores.
 
 ## Design e navegação
 
-Identidade clara e profissional: fundo cinza frio, superfícies brancas, títulos
-azul-marinho e ações azuis. IBM Plex Sans para leitura e hierarquia; IBM Plex Mono
-para tecnologias e metadados. Fontes locais, sem CDN.
+Direção "contrato de dados": uma **faixa** de grafite (cabeçalho, abertura e
+contato) sobre um **corpo** claro de documento, com cartões. Archivo para os
+títulos, IBM Plex Sans para leitura, IBM Plex Mono para tecnologias e metadados.
+Fontes locais, sem CDN.
 
-A abertura apresenta a especialidade, os contatos e um diagrama da arquitetura
-documentada do FastF1: ingestão, Raw em Parquet, Bronze/Silver em Delta Lake,
-orquestração semanal no Airflow e consumo via FastAPI/Streamlit.
-FastF1, Rota do Perfume e Personal Expenses aparecem em destaque; o catálogo
+A assinatura é a **aferição tipada**: cada afirmação declara o que é — resultado
+medido, arquitetura construída, publicação ou algo ainda em desenvolvimento — e
+cada tipo recebe um tratamento tipográfico próprio. Um número aferido aparece
+grande; um escopo construído, nunca. Uma legenda publica esse código para quem lê,
+de modo que a distinção entre "medi" e "construí" seja uma posição declarada.
+
+A abertura apresenta a especialidade, a credencial e os contatos ao lado do
+diagrama da arquitetura documentada do FastF1: ingestão, Raw em Parquet,
+Bronze/Silver em Delta Lake, orquestração semanal no Airflow e consumo via
+FastAPI/Streamlit. Logo abaixo, uma barra de prova reúne o que se confere em
+segundos — nove projetos com código aberto, 24 certificados, uma publicação e o
+doutorado. FastF1, Bank Churn e Rota do Perfume aparecem em destaque; o catálogo
 preserva os nove projetos e seus estudos de caso ou fichas.
 
 As páginas de competências, trajetória e certificações complementam a apresentação.
@@ -37,7 +46,10 @@ O layout inclui foco visível, link para pular a navegação, controles de pelo 
 - `src/content/projetos/*.md`: conteúdo e ordenação dos nove projetos.
 - `src/data/`: perfil, contatos, trajetória, competências e certificações.
 - `src/components/layout/`: layout, metadados, navegação, tema e rodapé.
-- `src/components/panels/`: cartões de projetos e resultados.
+- `src/components/panels/`: cartões de projetos, aferição tipada, legenda dos
+  tipos e barra de prova.
+- `src/lib/metric.ts`: o vocabulário da aferição, compartilhado pelo cartão e pela
+  legenda.
 - `src/components/viz/`: arquitetura FastF1 e linha do tempo; o componente Trace
   legado permanece disponível, mas não é renderizado pelo site.
 - `src/styles/`: tokens semânticos e estilos compartilhados.

@@ -1,8 +1,9 @@
 ---
 title: Personal Expenses
-order: 3
+order: 4
 category: Engenharia de Dados · Categorização
 kind: light
+metricKind: arquitetura
 trace: pipeline
 summary: >-
   Faturas de cartão de crédito viram dados organizados, categorias revisáveis e

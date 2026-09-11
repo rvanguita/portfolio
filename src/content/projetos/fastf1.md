@@ -3,6 +3,7 @@ title: FastF1 Data Platform
 order: 1
 category: Lakehouse · MLOps
 kind: full
+metricKind: arquitetura
 trace: noise
 summary: >-
   Consolidar resultados históricos de Fórmula 1 numa base confiável — ingestão,

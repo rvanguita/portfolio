@@ -1,8 +1,9 @@
 ---
 title: Modelagem da Geração de Energia Eólica
-order: 5
+order: 6
 category: Regressão · Energia
 kind: full
+metricKind: medida
 trace: power
 summary: >-
   Prever a geração de turbinas eólicas onshore ao longo de um ano — curva de

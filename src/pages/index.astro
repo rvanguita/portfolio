@@ -2,14 +2,34 @@
 import { getCollection } from "astro:content";
 import Layout from "@components/layout/Layout.astro";
 import Channels from "@components/panels/Channels.astro";
+import MetricLegend from "@components/panels/MetricLegend.astro";
+import Proof from "@components/panels/Proof.astro";
 import Pipeline from "@components/viz/Pipeline.astro";
+import Timeline from "@components/viz/Timeline.astro";
 import { profile } from "@data/profile";
-import { certTotal } from "@data/certificates";
+import { skills } from "@data/skills";
+import { certGroups, certTotal } from "@data/certificates";
 import { url, absoluteUrl } from "@lib/url";
 
 const projects = (await getCollection("projetos")).sort(
   (a, b) => a.data.order - b.data.order,
 );
+const featured = projects.slice(0, 3);
+const skillTotal = skills.reduce((n, g) => n + g.items.length, 0);
+
+// A publicação da barra de prova sai da própria coleção, não de uma constante
+// solta: se a entrada sair do site, o item some junto em vez de mentir.
+const published = projects.find((p) => p.data.metricKind === "publicacao");
+const publication = published
+  ? {
+      venue: published.data.metric.value,
+      year: published.data.metric.sub?.match(/\b(19|20)\d{2}\b/)?.[0] ?? "",
+    }
+  : undefined;
+
+// O valor do item já diz "Ph.D."; o rótulo não precisa repetir.
+const credentialDetail = profile.credential.replace(/^Ph\.D\.\s*(em\s+)?/, "");
+
 const schema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -46,8 +66,9 @@ const schema = {
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
   />
-  <div class="page page--home">
-    <header class="hero">
+
+  <div class="band">
+    <header class="band-inner hero">
       <div class="hero-copy">
         <p class="hero-name">{profile.shortName}</p>
         <h1>{profile.roleShort}<span class="hero-period">.</span></h1>
@@ -57,89 +78,183 @@ const schema = {
           {profile.highlights.map((tech) => <li>{tech}</li>)}
         </ul>
         <div class="hero-contact">
-          <a class="button button--primary" href="#projetos"
-            >Ver projetos <span aria-hidden="true">↓</span></a
-          >
+          <a class="button button--primary" href="#projetos">
+            Ver projetos <span aria-hidden="true">↓</span>
+          </a>
           <a
             class="button button--secondary"
-            href={profile.links.linkedin}
+            href={url(profile.links.dossie)}
             target="_blank"
             rel="noopener noreferrer"
-            >Conversar no LinkedIn <span aria-hidden="true">↗</span></a
           >
+            Dossiê profissional (PDF) <span aria-hidden="true">↓</span>
+          </a>
         </div>
         <div class="hero-links">
           <a href={`mailto:${profile.email}`}>Enviar e-mail</a>
+          <a
+            href={profile.links.linkedin}
+            target="_blank"
+            rel="noopener noreferrer">LinkedIn ↗</a
+          >
           <a
             href={profile.links.github}
             target="_blank"
             rel="noopener noreferrer">GitHub ↗</a
           >
-          <a
-            href={url(profile.links.dossie)}
-            target="_blank"
-            rel="noopener noreferrer">Dossiê profissional (PDF) ↓</a
-          >
         </div>
         <p class="availability">
-          {profile.location}<br />{profile.availability}
+          <span>
+            <b>{profile.location}</b>
+            {profile.availability}
+          </span>
         </p>
       </div>
       <Pipeline />
     </header>
-    <section aria-labelledby="projetos" class="featured-section">
-      <div class="section-heading">
+    <div class="proof-strip">
+      <Proof
+        projectCount={projects.length}
+        certCount={certTotal}
+        publication={publication}
+        credential={credentialDetail}
+      />
+    </div>
+  </div>
+
+  <div class="page">
+    <section class="section" aria-labelledby="projetos">
+      <div class="section-head">
         <div>
-          <p class="eyebrow">Projetos selecionados</p>
+          <p class="eyebrow">
+            Projetos · <b>{featured.length} de {projects.length}</b> selecionados
+          </p>
           <h2 id="projetos">Engenharia de dados em prática.</h2>
           <p class="section-intro">
-            Ingestão, organização e disponibilização de dados em projetos
-            completos.
+            Ingestão, organização e disponibilização de dados — cada ficha com o
+            código aberto no GitHub.
           </p>
         </div>
-        <a class="text-link" href={url("/projetos/")}
-          >Ver os {projects.length} projetos <span aria-hidden="true">↗</span
-          ></a
-        >
+        <a class="text-link" href={url("/projetos/")}>
+          Ver os {projects.length} projetos <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <Channels projects={projects.slice(0, 3)} level={3} />
+      <MetricLegend />
+      <Channels projects={featured} level={3} />
     </section>
-    <section class="background-section" aria-labelledby="base-profissional">
-      <div class="section-heading">
+
+    <section class="section" aria-labelledby="competencias">
+      <div class="section-head">
         <div>
-          <p class="eyebrow">Além dos projetos</p>
-          <h2 id="base-profissional">Pesquisa, método e repertório técnico.</h2>
+          <p class="eyebrow">
+            Competências · <b>{skillTotal} itens</b> em {skills.length} grupos
+          </p>
+          <h2 id="competencias">Da ingestão à pergunta de negócio.</h2>
+          <p class="section-intro">
+            Engenharia de dados como base; machine learning, visualização e
+            otimização para fechar a análise.
+          </p>
         </div>
+        <a class="text-link" href={url("/competencias/")}>
+          Ver as competências <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <nav class="modules" aria-label="Formação e competências">
-        <a class="module-link" href={url("/competencias/")}>
-          <span class="module-label"
-            >Competências <span aria-hidden="true">↗</span></span
-          >
-          <span class="module-description"
-            >Engenharia de dados, machine learning, visualização e otimização.</span
-          >
-          <span class="module-meta">Conheça as tecnologias</span>
+      <dl class="skills">
+        {
+          skills.map((group) => (
+            <div class="skill">
+              <div class="skill-head">
+                <dt>{group.title}</dt>
+                <p class="skill-count">{group.items.length} itens</p>
+              </div>
+              <dd>
+                <ul class="tech-tags" aria-label={group.title}>
+                  {group.items.map((item) => (
+                    <li>{item}</li>
+                  ))}
+                </ul>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <section class="section" aria-labelledby="percurso">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">Percurso · <b>formação e pesquisa</b></p>
+          <h2 id="percurso">Doutorado em otimização, aplicado a dados.</h2>
+          <p class="section-intro">
+            Engenharia Elétrica, pesquisa em planejamento de sistemas de
+            distribuição e métodos de decisão — o método que sustenta o trabalho
+            com dados.
+          </p>
+        </div>
+        <a class="text-link" href={url("/trajetoria/")}>
+          Ver a trajetória completa <span aria-hidden="true">↗</span>
         </a>
-        <a class="module-link" href={url("/trajetoria/")}>
-          <span class="module-label"
-            >Trajetória <span aria-hidden="true">↗</span></span
-          >
-          <span class="module-description"
-            >Da Engenharia Elétrica à pesquisa aplicada e aos sistemas de dados.</span
-          >
-          <span class="module-meta">Ph.D. pela UNICAMP</span>
+      </div>
+      <Timeline limit={4} level={3} label="Formação e pesquisa mais recentes" />
+    </section>
+
+    <section class="section" aria-labelledby="certificacoes">
+      <div class="section-head">
+        <div>
+          <p class="eyebrow">
+            Certificações · <b>{certTotal} documentos</b>
+          </p>
+          <h2 id="certificacoes">Formação complementar, com o PDF junto.</h2>
+          <p class="section-intro">
+            {certGroups.map((g) => g.short).join(" · ")}. Cada certificado abre
+            direto no arquivo.
+          </p>
+        </div>
+        <a class="text-link" href={url("/certificacoes/")}>
+          Ver os {certTotal} certificados <span aria-hidden="true">↗</span>
         </a>
-        <a class="module-link" href={url("/certificacoes/")}>
-          <span class="module-label"
-            >Certificações <span aria-hidden="true">↗</span></span
-          >
-          <span class="module-description"
-            >Formação complementar em Python, estatística e análise de negócios.</span
-          >
-          <span class="module-meta">{certTotal} certificados disponíveis</span>
+      </div>
+      <ul class="certs-home">
+        {
+          certGroups.map((group) => (
+            <li>
+              <b>{group.short}</b>
+              <span>{group.items.length} certificados</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <div class="band">
+    <section class="band-inner contact" aria-labelledby="contato">
+      <div>
+        <p class="eyebrow">Contato</p>
+        <h2 id="contato">{profile.availability}</h2>
+        <p>{profile.location}. Respondo por e-mail e pelo LinkedIn.</p>
+      </div>
+      <div class="contact-actions">
+        <a class="button button--primary" href={`mailto:${profile.email}`}>
+          {profile.email}
         </a>
-      </nav>
+        <a
+          class="button button--secondary"
+          href={profile.links.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          LinkedIn <span aria-hidden="true">↗</span>
+        </a>
+        <a
+          class="button button--secondary"
+          href={url(profile.links.dossie)}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Dossiê (PDF) <span aria-hidden="true">↓</span>
+        </a>
+      </div>
     </section>
   </div>
 </Layout>
