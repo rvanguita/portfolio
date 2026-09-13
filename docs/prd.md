@@ -1,0 +1,161 @@
+# PRD — Portfólio de Engenharia de Dados
+
+> **Sobre os documentos desta pasta.** Este PRD e o [SDD](./sdd.md) descrevem o
+> produto **como ele é hoje**. Os arquivos `future-simple-portfolio-*.md` são um
+> plano de simplificação **que não foi executado**, e
+> `simplificacao-relatorio.md` é o relatório de uma rodada anterior. Onde o plano
+> futuro divergir do que está aqui, **vale o estado atual**.
+
+## Contexto
+
+Portfólio profissional de Rene Verinaud Anguita Junior, Ph.D. em Engenharia
+Elétrica pela UNICAMP, publicado em <https://rvanguita.github.io/portfolio/>.
+
+O produto tem um leitor específico: alguém que recruta para Engenharia de Dados e
+decide em segundos se vale abrir conversa. Não é um blog, não é um currículo
+narrativo e não tenta ser um site institucional.
+
+A trajetória documentada é acadêmica e de engenharia elétrica — **não há emprego
+formal em dados**. O produto assume isso na abertura em vez de silenciar, porque
+silêncio vira objeção, e usa nove projetos públicos com código aberto como
+evidência.
+
+## Problema
+
+Um recrutador precisa responder três perguntas nos primeiros dez segundos:
+
+1. qual é a especialidade;
+2. o que existe de evidência concreta;
+3. como contratar — disponibilidade, modelo, alcance, idiomas.
+
+Um portfólio que exige rolagem e navegação para responder qualquer uma das três
+perde o leitor antes de provar competência.
+
+## Objetivo do produto
+
+Apresentar capacidade em Engenharia de Dados de forma verificável: cada
+afirmação técnica aponta para um projeto, cada projeto aponta para o código, e
+cada resultado declara o que ele é — medido, construído, publicado ou em
+andamento.
+
+## Público
+
+- recrutadores e headhunters de dados;
+- gestores e líderes técnicos de Engenharia de Dados;
+- pares técnicos avaliando o trabalho;
+- quem procura exemplos aplicados de pipeline, lakehouse e MLOps.
+
+## Escopo atual
+
+O site tem **14 rotas estáticas**:
+
+| Rota                | Conteúdo                                                                 |
+| ------------------- | ------------------------------------------------------------------------ |
+| `/`                 | abertura, projeto em destaque, projetos, competências, formação, contato |
+| `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
+| `/projetos/<slug>/` | 9 fichas de projeto                                                      |
+| `/trajetoria/`      | formação e experiência, 9 entradas                                       |
+| `/competencias/`    | 4 grupos de capacidade, 28 itens, ligados a projetos                     |
+| `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
+
+Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
+gerado a partir de manifesto versionado; `sitemap-index.xml`; `robots.txt`;
+JSON-LD `Person` na abertura.
+
+### Fora do escopo
+
+- backend, CMS, autenticação ou área administrativa;
+- versão em outro idioma (rotas `/en/` ou equivalentes);
+- blog, comentários ou qualquer conteúdo periódico;
+- JavaScript de cliente para o que HTML e CSS resolvem;
+- framework de UI, roteamento no cliente ou integração externa nova;
+- alteração das URLs públicas existentes.
+
+## Requisitos funcionais
+
+1. A abertura exibe nome, cargo, credencial, localização, os dois filtros mais
+   duros (idioma e modelo de contratação) e três ações: ver projetos, contato e
+   currículo em PDF.
+2. A abertura destaca um projeto com resumo, diagrama de arquitetura, tipo de
+   resultado e links para ficha e código.
+3. A página inicial mostra dois projetos de apoio, as quatro capacidades e um
+   bloco de formação com acesso às certificações.
+4. O bloco de contato publica a **ficha de triagem** — cargos-alvo, modelo de
+   contratação, alcance geográfico e idiomas — além do e-mail e do LinkedIn.
+5. O catálogo lista os 9 projetos com categoria, resumo, resultado tipado, até
+   cinco tecnologias e links para ficha e repositório.
+6. Cada ficha de projeto traz problema, dados, método e resultado; o trilho
+   lateral repete o resultado e a stack completa.
+7. Projetos que têm arquitetura em camadas real exibem um diagrama fiel ao
+   próprio estudo de caso. Os que não têm, não exibem diagrama nenhum.
+8. Cada grupo de competência tem um resumo, os itens e link para os projetos que
+   o comprovam. Referência inválida quebra o build.
+9. O catálogo publica a legenda dos quatro tipos de resultado, para o leitor
+   entender o código visual em vez de adivinhá-lo.
+10. O tema segue a preferência do sistema, com inversão manual disponível.
+
+## Requisitos não funcionais
+
+- geração estática com Astro, sem renderização em servidor;
+- nenhum JavaScript de cliente; o único script no HTML de produção é o JSON-LD;
+- responsividade sem overflow horizontal em 360, 768 e 1440 px;
+- texto a 4,5:1 e bordas de controle a 3:1, nos dois temas e nas duas inversões;
+- foco de teclado visível, navegação por atalho de conteúdo, alvos de 44 px;
+- cor nunca é o único portador de significado;
+- `prefers-reduced-motion` respeitado — não há animação a desativar;
+- fontes auto-hospedadas, sem requisição a terceiros;
+- estilos de impressão com fundo branco;
+- todas as rotas sob o prefixo `/portfolio/`.
+
+## Regras de conteúdo e honestidade
+
+Esta seção é a mais importante de preservar. Ela é o diferencial do produto, e
+já orientou decisões concretas de implementação.
+
+**Aferição tipada.** Toda afirmação declara o que ela é, através de quatro tipos:
+`medida` (métrica calculada em dados de teste), `arquitetura` (componentes e
+fluxo construídos, com código disponível), `publicacao` (artigo e referência de
+pesquisa) e `desenvolvimento` (entregas ainda incompletas). **Só resultado
+medido recebe numeral grande.** A legenda publica o código ao final do catálogo.
+
+**Nada de invenção.** O produto não afirma escala de produção, senioridade,
+impacto de negócio ou vínculo empregatício que não existam. "Engenheiro de Dados
+pleno" aparece apenas como **cargo procurado** ("Busco posições de…"), nunca como
+cargo exercido ou tempo de casa.
+
+**Ressalvas preservadas literalmente.** O modelo do FastF1 segue `experimental` e
+sem métrica de referência publicada; o artigo da INDUSCON 2025 está `submetido`,
+nunca aceito ou revisado por pares; o fraud-detection está `em desenvolvimento`;
+a ficha do bank-churn mantém a ressalva de que métricas daquela magnitude são
+incomuns em dados reais e sugerem viés do dataset público.
+
+**Idioma.** Toda a interface é em português. Nomes oficiais de tecnologia,
+projeto e certificado ficam como são. Termos de busca em inglês existem apenas
+nos metadados — `title`, `description` e JSON-LD — nunca no texto visível.
+
+**Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
+do projeto não descreve.
+
+## Métricas de sucesso
+
+- especialidade, evidência e forma de contratar identificáveis sem rolagem;
+- currículo em PDF alcançável na primeira tela;
+- os quatro tipos de resultado legíveis sem consultar a legenda duas vezes;
+- `npm run format:check`, `npm run build` e `npm run check` sem erro;
+- nenhuma rota, âncora ou asset público quebrado;
+- revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
+- termos que um headhunter pesquisa presentes nos metadados, em pt e en.
+
+## Estado atual
+
+Entregue e publicado: as 14 rotas, os 9 projetos (4 com estudo de caso em
+Markdown e 5 com ficha estruturada), 28 itens de competência, 24 certificados, 4
+diagramas de arquitetura, a ficha de triagem, o dossiê em PDF e o deploy
+automático em cada push para `main`.
+
+## Onde este documento envelhece
+
+Os números — 14 rotas, 9 projetos, 28 itens, 24 certificados — mudam se o
+conteúdo mudar. O código é a fonte da verdade; este PRD registra a intenção e as
+regras. Ao acrescentar projeto, rota ou grupo de competência, reconfira as
+contagens aqui e no [SDD](./sdd.md).
