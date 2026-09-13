@@ -21,7 +21,13 @@ jobs:
         with:
           node-version: 24.20.0
           cache: npm
+      # uv roda os scripts do dossiê sem venv. Sem tag major flutuante: versão fixa.
+      - uses: astral-sh/setup-uv@v10.1.0
       - run: npm ci
       - run: npm run format:check
       - run: npm run build
       - run: npm run check
+      # O dossiê é gerado à mão e commitado. Sem este passo, um PDF regenerado
+      # fora do padrão — ou não regenerado depois de mexer no gerador — passa
+      # despercebido até alguém abrir o arquivo.
+      - run: npm run dossier:check
