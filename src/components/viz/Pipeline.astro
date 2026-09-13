@@ -17,6 +17,11 @@
 // A figura não repete o nome do projeto nem o link para a ficha: os dois
 // lugares onde ela aparece já identificam o projeto. O nome acessível vem
 // do rótulo "Fluxo de dados".
+//
+// Os rótulos fixos da figura são genéricos de propósito. Dois dos quatro
+// projetos são medalhão em MySQL e não têm lakehouse: nomear a arquitetura
+// aqui afirmaria, para quem usa leitor de tela, uma camada que o estudo de
+// caso não descreve. O que é por projeto vem todo de `architecture`.
 
 interface Stage {
   layer: "source" | "raw" | "bronze" | "silver" | "gold";
@@ -58,10 +63,7 @@ const { caption, orchestrator, stages, outputs } = architecture;
 
   {orchestrator && <p class="pipeline-orchestrator">{orchestrator}</p>}
 
-  <ol
-    class="pipeline-stages"
-    aria-label="Fluxo da ingestão às camadas do lakehouse"
-  >
+  <ol class="pipeline-stages" aria-label="Fluxo da ingestão às camadas">
     {
       stages.map((stage) => (
         <li class:list={["pipeline-node", `pipeline-node--${stage.layer}`]}>
