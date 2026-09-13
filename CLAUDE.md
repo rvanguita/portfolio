@@ -48,8 +48,12 @@ Do not imply that a submitted article has already been accepted or peer reviewed
 - `src/components/viz/Timeline.astro`: vertical list of existing experiences.
 
 All visible interface copy is Portuguese. Keep official technology names, project
-names and certificate titles. Preserve experimental/in-development qualifications;
-do not invent production scale, seniority, business impact or employment.
+names and certificate titles, and keep the loanwords already current in technical
+Portuguese — machine learning, pipeline, lakehouse, dataset, dashboard. What the
+rule forbids is writing the interface in English, or planting a search term in
+visible copy purely to be indexed; those belong in title, description and JSON-LD.
+Preserve experimental/in-development qualifications; do not invent production
+scale, seniority, business impact or employment.
 
 ## Paths and dependencies
 

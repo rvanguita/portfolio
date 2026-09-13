@@ -16,8 +16,6 @@ na leitura e IBM Plex Mono em tecnologias e dados técnicos. Fontes locais, sem 
 A abertura apresenta a especialidade, a credencial e os contatos ao lado do
 FastF1. Seu diagrama documenta a ingestão, Raw em Parquet, Bronze/Silver em
 Delta Lake, orquestração semanal no Airflow e consumo via FastAPI/Streamlit.
-O nome é acompanhado de um retrato pequeno apenas quando há uma foto no perfil;
-nenhum espaço é reservado para uma imagem ausente.
 
 Os três primeiros projetos da coleção aparecem na página inicial: FastF1 na
 abertura, Bank Churn e Rota do Perfume nos cartões seguintes. O catálogo mantém
@@ -53,7 +51,8 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
   competências com referências aos projetos.
 - `src/lib/metric.ts`: o vocabulário da aferição, compartilhado pelo cartão e pela
   legenda.
-- `src/components/viz/`: arquitetura FastF1 e linha do tempo.
+- `src/components/viz/`: diagrama de camadas e linha do tempo. O diagrama lê a
+  arquitetura do frontmatter do projeto; quatro dos nove a declaram.
 - `src/styles/`: tokens semânticos e estilos compartilhados.
 - `src/lib/url.ts`: links internos e URLs absolutas.
 - `public/`: ícones, imagem social, dossiê e certificados em PDF.

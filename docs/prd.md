@@ -135,8 +135,12 @@ a ficha do bank-churn mantém a ressalva de que métricas daquela magnitude são
 incomuns em dados reais e sugerem viés do dataset público.
 
 **Idioma.** Toda a interface é em português. Nomes oficiais de tecnologia,
-projeto e certificado ficam como são. Termos de busca em inglês existem apenas
-nos metadados — `title`, `description` e JSON-LD — nunca no texto visível.
+projeto e certificado ficam como são, e o mesmo vale para os empréstimos já
+correntes no português técnico — machine learning, pipeline, lakehouse, dataset,
+dashboard —, que permanecem como são porque traduzi-los soaria pior e afastaria o
+termo que o leitor procura. O que a regra proíbe é outra coisa: escrever a
+interface em inglês, ou plantar na copy visível termo de busca que só existe para
+ser indexado. Esses ficam nos metadados — `title`, `description` e JSON-LD.
 
 **Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
 do projeto não descreve.
@@ -146,7 +150,11 @@ do projeto não descreve.
 - especialidade e evidência identificáveis sem rolagem;
 - os dois filtros mais duros — idioma e modelo de contratação — na abertura;
   cargos-alvo e alcance na ficha do bloco de contato;
-- currículo em PDF alcançável na primeira tela;
+- identidade, filtros de contratação, declaração de evidência e as três ações
+  da abertura inteiramente visíveis na primeira tela: viewports de 360×800,
+  768×800 e 1440×800 px, com texto no tamanho padrão. Com texto ampliado, a
+  leitura pode exigir rolagem vertical, preservando acesso e sem overflow
+  horizontal;
 - `npm run format:check`, `npm run build` e `npm run check` sem erro;
 - nenhuma rota, âncora ou asset público quebrado;
 - revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
