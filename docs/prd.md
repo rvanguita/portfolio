@@ -1,10 +1,11 @@
 # PRD — Portfólio de Engenharia de Dados
 
-> **Sobre os documentos desta pasta.** Este PRD e o [SDD](./sdd.md) descrevem o
-> produto **como ele é hoje**. Os arquivos `future-simple-portfolio-*.md` são um
-> plano de simplificação **que não foi executado**, e
-> `simplificacao-relatorio.md` é o relatório de uma rodada anterior. Onde o plano
-> futuro divergir do que está aqui, **vale o estado atual**.
+> **Sobre os documentos desta pasta.** Este PRD e o [SDD](./sdd.md) são os
+> documentos vigentes e descrevem o produto **como ele é hoje**.
+> [`historico/`](./historico/) guarda o plano de simplificação
+> (`future-simple-portfolio-*.md`) e o relatório da rodada que o precedeu. Esse
+> plano foi **avaliado cláusula por cláusula e está atendido** pelo estado atual;
+> onde a letra dele divergir do que está aqui, **vale o estado atual**.
 
 ## Contexto
 

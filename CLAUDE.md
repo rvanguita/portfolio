@@ -84,8 +84,12 @@ Styles live in tokens.css and global.css:
   and a chain link that is not a layer stays deliberately uncoloured. The button
   foreground uses on-accent in both themes.
   Define colors in tokens.css; derive component variations with color-mix.
-  Exceptions: print styles and BaseHead's theme-color metadata, which are literal
-  copies of --paper and must be updated whenever that token moves.
+  Exceptions: the `@media print` block in global.css redefines the whole palette
+  for paper, and BaseHead's theme-color metadata is a literal copy of --paper.
+  So a color token has **five** places, not four: the four theme blocks plus the
+  print block. Adding or moving one means updating all five — a token missing
+  from print silently keeps its screen value on paper (this is how --layer-gold
+  was left out when it was introduced). theme-color must track --paper too.
 - Archivo Variable for display, IBM Plex Sans 400/500 for body and UI, IBM Plex
   Mono 400/500 for technologies and metadata. Self-hosted fontsource packages.
 - Text needs 4.5:1 and control borders 3:1. Distinguish dark surfaces through

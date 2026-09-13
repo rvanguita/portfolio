@@ -341,7 +341,7 @@ pre { overflow-x: auto; }
     --rule: #bbb; --rule-strong: #777; --accent: #183c8b;
     --accent-bright: #183c8b; --on-accent: #fff; --signal: #28533b;
     --signal-open: #555; --layer-raw: #777; --layer-bronze: #82532c;
-    --layer-silver: #426a91; --shadow: none;
+    --layer-silver: #426a91; --layer-gold: #5f4e0e; --shadow: none;
     color-scheme: light;
   }
   .strip, .skip-link, .hero-contact, .contact-actions, .doc-nav, .foot-links { display: none !important; }
