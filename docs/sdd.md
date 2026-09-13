@@ -1,9 +1,9 @@
 # SDD — Implementação do portfólio
 
-> **Sobre os documentos desta pasta.** Este SDD e o [PRD](./prd.md) descrevem a
-> implementação **como ela é hoje**. Os arquivos `future-simple-portfolio-*.md`
-> são um plano de simplificação **que não foi executado**. Onde divergirem,
-> **vale o estado atual**.
+> **Sobre os documentos desta pasta.** Este SDD e o [PRD](./prd.md) são os
+> documentos vigentes e descrevem a implementação **como ela é hoje**.
+> [`historico/`](./historico/) guarda o plano de simplificação, avaliado e
+> atendido. Onde a letra dele divergir do que está aqui, **vale o estado atual**.
 
 ## Decisão técnica
 
