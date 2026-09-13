@@ -1,10 +1,5 @@
 // Perfil e contatos compartilhados pelas páginas e pelos metadados.
 
-/** Retrato da abertura. Sem integração de imagem no Astro (passthrough), o
- *  arquivo é servido direto de public/ — daí as dimensões explícitas, que
- *  evitam salto de layout. */
-type Photo = { src: string; width: number; height: number; alt: string };
-
 /** Um campo da ficha de triagem. */
 type ScreeningFact = { term: string; value: string };
 
@@ -14,9 +9,6 @@ export const profile = {
   roleShort: "Engenheiro de Dados",
   credential: "Ph.D. em Engenharia Elétrica · UNICAMP",
   initials: "RA",
-  /** Retrato opcional, pequeno e ao lado do nome. Sem foto, a abertura se
-   *  apoia na tipografia, sem reservar um quadro vazio ou um monograma. */
-  photo: undefined as Photo | undefined,
   /** Proposta de valor com <strong>; renderizada via set:html. */
   leadHtml:
     "Ph.D. em Engenharia Elétrica aplicando modelagem e rigor experimental a " +
@@ -57,5 +49,3 @@ export const profile = {
     "Pipelines, lakehouses e MLOps em Python, SQL, PySpark, Delta Lake e Airflow.",
   ogImage: "/assets/social-card.png",
 };
-
-export type Profile = typeof profile;
