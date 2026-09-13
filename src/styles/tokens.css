@@ -88,7 +88,6 @@
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
   --wdth-display: 100%;
 
-  --fs-2xs: .75rem;
   --fs-xs: .8125rem;
   --fs-sm: .875rem;
   --fs-base: 1rem;
@@ -99,7 +98,6 @@
   --fs-hero: clamp(2.8rem, 5.2vw, 4.75rem);
   --fs-figure: 2.25rem;
 
-  --s-1: .25rem;
   --s-2: .5rem;
   --s-3: .75rem;
   --s-4: 1rem;
