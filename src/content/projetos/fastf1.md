@@ -15,6 +15,31 @@ metric:
   label: escopo
   value: ponta a ponta
   sub: modelo preditivo experimental
+architecture:
+  caption: Da telemetria à análise de corridas — o fluxo completo do FastF1.
+  orchestrator: Orquestração semanal · Apache Airflow
+  stages:
+    - layer: source
+      name: Ingestão
+      detail: Corridas, sessões e telemetria
+      tech: FastF1
+    - layer: raw
+      name: Raw
+      detail: Dados brutos particionados
+      tech: Parquet
+    - layer: bronze
+      name: Bronze
+      detail: Tabelas com versionamento ACID
+      tech: Delta Lake
+    - layer: silver
+      name: Silver
+      detail: Dados curados e agregados
+      tech: PySpark
+  outputs:
+    - role: API
+      tech: FastAPI
+    - role: Painel
+      tech: Streamlit
 stack: FastF1 · Delta Lake · PySpark · Apache Airflow · Scikit-Learn · MLflow · FastAPI · Streamlit · Docker · AWS S3
 repos:
   - label: GitHub

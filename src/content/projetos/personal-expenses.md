@@ -12,6 +12,28 @@ metric:
   label: arquitetura
   value: "medalhão MySQL"
   sub: Raw · Bronze · Silver
+architecture:
+  caption: De faturas CSV a histórico categorizado — medalhão em três bancos MySQL independentes.
+  stages:
+    - layer: source
+      name: Faturas
+      detail: CSV de cartão, cabeçalho em pt ou en
+      tech: CSV
+    - layer: raw
+      name: Raw
+      detail: Registro cru, sem tratamento
+      tech: MySQL
+    - layer: bronze
+      name: Bronze
+      detail: Datas, valores e parcelas tipados
+      tech: MySQL
+    - layer: silver
+      name: Silver
+      detail: Categoria e origem da classificação
+      tech: MySQL
+  outputs:
+    - role: App
+      tech: Streamlit
 stack: Python · Streamlit · MySQL · Google Gemini · Plotly · Docker · pytest
 repos:
   - label: GitHub

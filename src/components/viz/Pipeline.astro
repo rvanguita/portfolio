@@ -1,9 +1,9 @@
 ---
-// Diagrama fiel ao estudo de caso do FastF1: ingestão pela biblioteca FastF1,
-// Raw particionado em Parquet, Bronze/Silver em Delta Lake, orquestração
-// semanal no Airflow e consumo por FastAPI e Streamlit. O modelo preditivo do
-// projeto é experimental e não tem métrica de referência publicada — nada aqui
-// deve sugerir o contrário.
+// Diagrama de arquitetura em camadas, fiel ao estudo de caso que o alimenta.
+// Os dados vêm do frontmatter do projeto (`architecture`), não do componente:
+// cada projeto desenha a SUA arquitetura, e nenhum diagrama pode afirmar uma
+// camada que o texto do caso não descreve — o Rota do Perfume, por exemplo,
+// vai de bronze a gold e não tem camada raw.
 //
 // Os nós são uma <ol>: a ordem das camadas é informação, não estilo. Os
 // conectores são desenhados no CSS (::before/::after de cada nó), então o
@@ -11,71 +11,52 @@
 //
 // `compact` desce na vertical na abertura; `full` corre na horizontal a
 // partir de 70rem na ficha. Em telas menores, ambas as variantes empilham.
+// A grade horizontal segue a contagem real de estágios e saídas, via
+// --stage-count / --output-count — sem número mágico no CSS.
 //
 // A figura não repete o nome do projeto nem o link para a ficha: os dois
 // lugares onde ela aparece já identificam o projeto. O nome acessível vem
 // do rótulo "Fluxo de dados".
 
+interface Stage {
+  layer: "source" | "raw" | "bronze" | "silver" | "gold";
+  name: string;
+  detail: string;
+  tech: string;
+}
+interface Architecture {
+  caption: string;
+  orchestrator?: string;
+  stages: Stage[];
+  outputs: { role: string; tech: string }[];
+}
 interface Props {
+  architecture: Architecture;
   variant?: "compact" | "full";
   headingId?: string;
   class?: string;
 }
 const {
+  architecture,
   variant = "compact",
   headingId = "pipeline-title",
   class: cls,
 } = Astro.props;
 
-const stages = [
-  {
-    layer: "source",
-    name: "Ingestão",
-    detail: "Corridas, sessões e telemetria",
-    tech: "FastF1",
-  },
-  {
-    layer: "raw",
-    name: "Raw",
-    detail: "Dados brutos particionados",
-    tech: "Parquet",
-  },
-  {
-    layer: "bronze",
-    name: "Bronze",
-    detail: "Tabelas com versionamento ACID",
-    tech: "Delta Lake",
-  },
-  {
-    layer: "silver",
-    name: "Silver",
-    detail: "Dados curados e agregados",
-    tech: "PySpark",
-  },
-];
-
-const outputs = [
-  { role: "API", tech: "FastAPI" },
-  { role: "Painel", tech: "Streamlit" },
-];
+const { caption, orchestrator, stages, outputs } = architecture;
 ---
 
 <figure
   class:list={["pipeline", `pipeline--${variant}`, cls]}
   aria-labelledby={headingId}
+  style={`--stage-count:${stages.length};--output-count:${outputs.length}`}
 >
   <figcaption class="pipeline-heading">
     <span class="eyebrow" id={headingId}>Fluxo de dados</span>
-    {
-      variant === "full" && (
-        <span class="pipeline-caption">
-          Da telemetria à análise de corridas — o fluxo completo do FastF1.
-        </span>
-      )
-    }
+    {variant === "full" && <span class="pipeline-caption">{caption}</span>}
   </figcaption>
 
-  <p class="pipeline-orchestrator">Orquestração semanal · Apache Airflow</p>
+  {orchestrator && <p class="pipeline-orchestrator">{orchestrator}</p>}
 
   <ol
     class="pipeline-stages"
@@ -92,14 +73,16 @@ const outputs = [
     }
   </ol>
 
-  <ul class="pipeline-outputs" aria-label="Consumo dos dados">
-    {
-      outputs.map((out) => (
-        <li>
-          <span>{out.role}</span>
-          <b>{out.tech}</b>
-        </li>
-      ))
-    }
-  </ul>
+  {
+    outputs.length > 0 && (
+      <ul class="pipeline-outputs" aria-label="Consumo dos dados">
+        {outputs.map((out) => (
+          <li>
+            <span>{out.role}</span>
+            <b>{out.tech}</b>
+          </li>
+        ))}
+      </ul>
+    )
+  }
 </figure>

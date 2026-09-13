@@ -11,6 +11,28 @@ metric:
   label: arquitetura
   value: "medalhão + OCR"
   sub: Raw · Bronze · Silver em MySQL
+architecture:
+  caption: Da nota fiscal ao histórico consultável — medalhão em três bancos MySQL.
+  stages:
+    - layer: source
+      name: Nota fiscal
+      detail: NFC-e por OCR ou importação CSV
+      tech: Gemini
+    - layer: raw
+      name: Raw
+      detail: Registro cru preservado
+      tech: MySQL
+    - layer: bronze
+      name: Bronze
+      detail: Tipagem e normalização por raw_id
+      tech: MySQL
+    - layer: silver
+      name: Silver
+      detail: Estatísticas por produto, mercado e mês
+      tech: MySQL
+  outputs:
+    - role: Painel
+      tech: Streamlit
 stack: Python · Streamlit · Google Gemini (OCR) · MySQL · SQL · Docker
 repos:
   - label: GitHub

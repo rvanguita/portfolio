@@ -111,9 +111,10 @@ pre { overflow-x: auto; }
 .pipeline-node--raw { border-left-color: var(--layer-raw); }
 .pipeline-node--bronze { border-left-color: var(--layer-bronze); }
 .pipeline-node--silver { border-left-color: var(--layer-silver); }
+.pipeline-node--gold { border-left-color: var(--layer-gold); }
 .pipeline-stages > * + *::before, .pipeline-outputs::before { content: ""; position: absolute; left: 1.2rem; top: calc(var(--node-gap) * -1); height: var(--node-gap); border-left: 1px solid var(--rule-strong); }
 .pipeline-stages > * + *::after { content: ""; position: absolute; left: calc(1.2rem - 2px); top: -5px; width: 5px; height: 5px; border-right: 1px solid var(--rule-strong); border-bottom: 1px solid var(--rule-strong); rotate: 45deg; }
-.pipeline-outputs { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-3); margin-top: var(--node-gap); }
+.pipeline-outputs { position: relative; display: grid; grid-template-columns: repeat(var(--output-count, 2), minmax(0, 1fr)); gap: var(--s-3); margin-top: var(--node-gap); }
 .pipeline-outputs li { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .25rem .5rem; padding: .6rem .9rem; border: 1px solid var(--rule); border-radius: .4rem; color: var(--ink-soft); font-size: var(--fs-xs); }
 .pipeline-outputs b { font-family: var(--font-mono); font-weight: 500; color: var(--ink); }
 
@@ -147,8 +148,20 @@ pre { overflow-x: auto; }
 .metric--publicacao { border-left-color: var(--layer-bronze); }
 .metric--desenvolvimento { border-left-style: dashed; border-left-color: var(--signal-open); }
 .metric--desenvolvimento .metric-tag { color: var(--signal-open); }
-.metric-chain { display: flex; flex-wrap: wrap; gap: .25rem .5rem; color: var(--ink-soft); font-size: var(--fs-sm); }
-.metric-chain li + li::before { content: "→"; margin-right: .5rem; }
+.metric-chain { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem .5rem; color: var(--ink-soft); font-size: var(--fs-sm); }
+.metric-chain li:not(:last-child)::after { content: "→"; margin-left: .5rem; }
+/* A rampa medalhão. Mesma régua semântica à esquerda que .metric e
+   .pipeline-node já usam. A cor reforça um nome que o elo escreve por extenso
+   ("Raw", "Bronze"), nunca carrega o significado sozinha — por isso um elo que
+   não é camada ("propensão") fica de propósito sem régua. */
+/* Largura e estilo aqui, cor só nas regras de camada: o atalho `border-left`
+   tem especificidade maior que `.chain--raw` e venceria com currentColor,
+   apagando a rampa inteira. */
+.metric-chain li[class*="chain--"] { padding-left: .5rem; border-left-width: 3px; border-left-style: solid; }
+.chain--raw { border-left-color: var(--layer-raw); }
+.chain--bronze { border-left-color: var(--layer-bronze); }
+.chain--silver { border-left-color: var(--layer-silver); }
+.chain--gold { border-left-color: var(--layer-gold); }
 .legend-section { margin-top: var(--s-7); padding-top: var(--s-6); border-top: 1px solid var(--rule); }
 .legend-section h2 { font-size: var(--fs-md); margin-bottom: var(--s-4); }
 .legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); }
@@ -252,14 +265,21 @@ pre { overflow-x: auto; }
 
 /* A versão completa só fica horizontal quando há espaço para todas as camadas. */
 @media (min-width: 70rem) {
+  /* A ficha de triagem passa a duas colunas de fatos. Em coluna única sobram
+     ~420px de vazio entre ela e as ações de contato, e o bloco fica alto à
+     toa. */
+  .screening { max-width: none; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--s-6); }
   .pipeline--full { --node-gap: 1.25rem; grid-template-columns: minmax(0, 1fr) minmax(0, 10rem); column-gap: var(--node-gap); padding: var(--s-6); }
   .pipeline--full > .pipeline-heading, .pipeline--full > .pipeline-orchestrator { grid-column: 1 / -1; }
-  .pipeline--full .pipeline-stages { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pipeline--full .pipeline-stages { grid-template-columns: repeat(var(--stage-count, 4), minmax(0, 1fr)); }
   .pipeline--full .pipeline-node { grid-template-columns: minmax(0, 1fr); align-content: center; }
   .pipeline--full .pipeline-tech { text-align: left; }
   .pipeline--full .pipeline-stages > * + *::before { left: calc(var(--node-gap) * -1); top: 50%; height: 0; width: var(--node-gap); border-left: 0; border-top: 1px solid var(--rule-strong); }
   .pipeline--full .pipeline-stages > * + *::after { left: -6px; top: calc(50% - 2px); rotate: -45deg; }
-  .pipeline--full .pipeline-outputs { grid-column: 2; grid-row: 3; grid-template-columns: minmax(0, 1fr); }
+  /* Sem `grid-row` fixo: a linha 3 só era a certa quando havia orquestrador.
+     Com coluna definida e linha automática, as saídas caem na mesma linha dos
+     estágios tenha o projeto agendador ou não. */
+  .pipeline--full .pipeline-outputs { grid-column: 2; grid-template-columns: minmax(0, 1fr); align-content: center; }
   .pipeline--full .pipeline-outputs::before { left: calc(var(--node-gap) * -1); top: 50%; height: 0; width: var(--node-gap); border-left: 0; border-top: 1px solid var(--rule-strong); }
 }
 @media (max-width: 67rem) {
