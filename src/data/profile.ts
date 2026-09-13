@@ -11,10 +11,8 @@ export const profile = {
   initials: "RA",
   /** Proposta de valor com <strong>; renderizada via set:html. */
   leadHtml:
-    "Ph.D. em Engenharia Elétrica aplicando modelagem e rigor experimental a " +
-    "<strong>pipelines e lakehouses</strong> — da ingestão bruta à camada que " +
-    "sustenta análise e machine learning. Nove projetos públicos, com código " +
-    "aberto e resultados declarados sem inflar.",
+    "Rigor de pesquisa aplicado a <strong>pipelines e lakehouses</strong>. " +
+    "Nove projetos públicos com código aberto.",
   highlights: ["Python", "SQL", "PySpark", "Delta Lake", "Airflow"],
   availability:
     "Busco posições de Engenheiro de Dados pleno, Cientista de Dados ou ML Engineer.",
