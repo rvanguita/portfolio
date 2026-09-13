@@ -28,6 +28,30 @@ const projetos = defineCollection({
       "desenvolvimento",
     ]),
     stack: z.string(),
+    // Arquitetura em camadas, quando o projeto tem uma de verdade. Opcional de
+    // propósito: só 4 dos 9 projetos têm fluxo medalhão, e um diagrama genérico
+    // nos outros inventaria um pipeline que o estudo de caso não descreve.
+    // Cada diagrama tem de ser fiel ao seu próprio caso — o Rota do Perfume,
+    // por exemplo, vai de bronze a gold e não tem camada raw.
+    architecture: z
+      .object({
+        caption: z.string(),
+        orchestrator: z.string().optional(),
+        stages: z
+          .array(
+            z.object({
+              layer: z.enum(["source", "raw", "bronze", "silver", "gold"]),
+              name: z.string(),
+              detail: z.string(),
+              tech: z.string(),
+            }),
+          )
+          .min(2),
+        outputs: z
+          .array(z.object({ role: z.string(), tech: z.string() }))
+          .default([]),
+      })
+      .optional(),
     repos: z
       .array(z.object({ label: z.string(), url: z.string() }))
       .default([]),

@@ -17,6 +17,7 @@
   --layer-raw: #7A899E;
   --layer-bronze: #A46A38;
   --layer-silver: #527CAC;
+  --layer-gold: #7E6410;
   color-scheme: light;
 }
 
@@ -36,6 +37,7 @@
   --layer-raw: #9BAAC0;
   --layer-bronze: #D7A06D;
   --layer-silver: #85B5E6;
+  --layer-gold: #F0CE7A;
   color-scheme: dark;
 }
 }
@@ -55,6 +57,7 @@
   --layer-raw: #9BAAC0;
   --layer-bronze: #D7A06D;
   --layer-silver: #85B5E6;
+  --layer-gold: #F0CE7A;
   color-scheme: dark;
 }
 
@@ -74,6 +77,7 @@
   --layer-raw: #7A899E;
   --layer-bronze: #A46A38;
   --layer-silver: #527CAC;
+  --layer-gold: #7E6410;
   color-scheme: light;
 }
 }

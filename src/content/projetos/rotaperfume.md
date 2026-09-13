@@ -17,6 +17,31 @@ metric:
   label: escopo
   value: "lakehouse local"
   sub: propensão · previsão · write-back
+architecture:
+  caption: Dos CSVs de CRM e ERP ao lakehouse local — bronze, silver e gold em DuckDB.
+  orchestrator: rota pipeline · 17 tarefas
+  stages:
+    - layer: source
+      name: Origem
+      detail: Fixtures CSV de CRM e ERP
+      tech: CSV
+    - layer: bronze
+      name: Bronze
+      detail: Preserva a origem
+      tech: DuckDB
+    - layer: silver
+      name: Silver
+      detail: Contratos de dados aplicados
+      tech: DuckDB
+    - layer: gold
+      name: Gold
+      detail: Dimensões, fato_vendas e marts
+      tech: DuckDB
+  outputs:
+    - role: Modelo
+      tech: MLflow
+    - role: Painel
+      tech: Streamlit
 stack: Python 3.12 · DuckDB · MLflow · Streamlit · uv · ruff · pytest · Docker · Ollama (opcional) · GitHub Actions
 repos:
   - label: GitHub

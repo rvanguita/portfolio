@@ -106,10 +106,12 @@ const { Content } = await render(entry);
       </aside>
 
       {
-        /* O diagrama documenta a arquitetura do FastF1; o estudo de caso
-           descrevia Raw/Bronze/Silver sem mostrar nada. */
-        entry.id === "fastf1" && (
+        /* O diagrama sai do frontmatter do próprio projeto: quatro dos nove
+           têm arquitetura em camadas de verdade e passam a mostrá-la, em vez
+           de descrever Raw/Bronze/Silver só em prosa. */
+        data.architecture && (
           <Pipeline
+            architecture={data.architecture}
             variant="full"
             class="doc-figure"
             headingId="pipeline-ficha"

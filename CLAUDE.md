@@ -39,7 +39,12 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   SkillGroup requires summary and projectIds; invalid references fail the build.
 - `src/lib/metric.ts`: the measurement vocabulary (terms and glosses). Readout and
   MetricLegend both read it so the card and the legend cannot drift apart.
-- `src/components/viz/Pipeline.astro`: semantic HTML diagram of FastF1.
+- `src/components/viz/Pipeline.astro`: semantic HTML layer diagram, driven by
+  the optional `architecture` field in a project's frontmatter — never by
+  constants in the component. Four of the nine projects have a real layered
+  flow and declare it; the other five must not, because a generic diagram
+  would invent a pipeline their case study never describes. The grid follows
+  the declared stage and output counts through --stage-count/--output-count.
 - `src/components/viz/Timeline.astro`: vertical list of existing experiences.
 
 All visible interface copy is Portuguese. Keep official technology names, project
@@ -67,10 +72,14 @@ The accepted user design direction supersedes earlier measurement-panel styling.
 
 Styles live in tokens.css and global.css:
 
-- Fourteen semantic colors: paper, well, ink, ink-soft, rule, rule-strong,
-  accent, accent-bright, on-accent, signal, signal-open, layer-raw, layer-bronze
-  and layer-silver. All four theme blocks need the identical list or the manual
-  inversion breaks. The button foreground uses on-accent in both themes.
+- Fifteen semantic colors: paper, well, ink, ink-soft, rule, rule-strong,
+  accent, accent-bright, on-accent, signal, signal-open, layer-raw, layer-bronze,
+  layer-silver and layer-gold. All four theme blocks need the identical list or
+  the manual inversion breaks. The four layer colors name storage layers and are
+  used in two places that must agree: the diagram nodes and the medallion ramp
+  in Readout's chain. Colour there only ever reinforces a layer name the element
+  already spells out, so it is never the sole carrier of meaning — and a chain
+  link that is not a layer stays deliberately uncoloured. The button foreground uses on-accent in both themes.
   Define colors in tokens.css; derive component variations with color-mix.
   Exceptions: print styles and BaseHead's theme-color metadata, which are literal
   copies of --paper and must be updated whenever that token moves.
@@ -85,7 +94,10 @@ Styles live in tokens.css and global.css:
 - Shared styles must account for 360/768/1440 px widths, enlarged text, keyboard
   focus, skip navigation, print and reduced motion. Never hide page overflow to
   conceal a layout problem.
-- Keep the architecture diagram faithful to the FastF1 case study. Do not imply
+- Keep every architecture diagram faithful to its own case study: no diagram may
+  show a layer the project's text does not describe. Rota do Perfume runs
+  bronze/silver/gold and has no raw layer; Personal Expenses and Shopping List
+  have no scheduler, so they declare no orchestrator. Do not imply
   that its experimental model has a published performance benchmark.
 
 ## Validation and delivery

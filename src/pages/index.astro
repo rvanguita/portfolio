@@ -140,7 +140,12 @@ const schema = {
             </a>
           </h2>
           <p class="spotlight-summary">{spotlight.data.summary}</p>
-          <Pipeline headingId="pipeline-abertura" />
+          {spotlight.data.architecture && (
+            <Pipeline
+              architecture={spotlight.data.architecture}
+              headingId="pipeline-abertura"
+            />
+          )}
           <p class="spotlight-note">{spotlightNote}</p>
           <div class="spotlight-links">
             <a class="text-link" href={url(`/projetos/${spotlight.id}/`)}>
