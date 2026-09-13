@@ -101,7 +101,10 @@ falha o build. `certTotal` é derivado, nunca escrito à mão. `timeline` guarda
 Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 
 - `kind`: `full` (corpo Markdown com os quatro beats) ou `light` (objeto `spec`
-  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos coexistem;
+  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos coexistem, e
+  um `superRefine` amarra os dois campos: `spec` continua opcional no objeto,
+  porque `full` não a usa, mas falta dela num `light` é erro de schema. Sem isso
+  um `light` sem ficha publicaria quatro `<dd>` vazios e passaria no build;
 - `metricKind`: **obrigatório e sem valor padrão**, de propósito. Só 3 dos 9
   projetos têm métrica aferida, e um padrão silencioso faria escopo e arquitetura
   passarem por resultado medido;
@@ -261,6 +264,10 @@ versões antigas. `profile.lead` é renderizado em 24 pt, então precisa ser cur
 O manifesto duplica parte da copy do perfil de propósito, mas **isso deriva**:
 mudar o site sem regenerar o PDF desalinha o currículo que a abertura promove.
 
+Na página de projetos do dossiê, os cartões têm 64 mm de altura. Cada link para
+o GitHub começa 2 mm abaixo do fim calculado do parágrafo de tecnologias; não
+usa uma posição independente que possa sobrepor o texto.
+
 ## CI/CD
 
 | Workflow     | Gatilho                  | Papel                                |
@@ -268,9 +275,13 @@ mudar o site sem regenerar o PDF desalinha o currículo que a abertura promove.
 | `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build` |
 | `deploy.yml` | `push` em `main`, manual | build e publicação em Pages          |
 
+O `ci.yml` roda `format:check`, `build`, `check` e `dossier:check` — este último
+precisa do `uv`, instalado no job por `astral-sh/setup-uv`.
+
 A proteção da `main` exige um status check com o **nome exato** do job
 (`🔍 Lint, Types, Testes & Build`). GitHub casa por `name:`, então renomear o job
-deixa a PR bloqueada para sempre mesmo com CI verde.
+deixa a PR bloqueada para sempre mesmo com CI verde. Acrescentar passo ao job é
+seguro; mexer no `name:` não.
 
 Pages está em `build_type=workflow`: quem publica é o `deploy.yml`, não o builder
 legado por branch.
@@ -291,12 +302,22 @@ isso, conferir também:
 - `dist/` servido na base `/portfolio/` — asset fora do `url()` só falha aqui;
 - ausência de overflow em 360, 768 e 1440 px. **Medir dentro de um iframe da
   largura exata**: `--window-size` do headless não entrega o viewport pedido;
+- primeira tela da home em 360×800, 768×800 e 1440×800 px: identidade,
+  filtros de contratação, declaração de evidência e as três ações da abertura
+  inteiramente visíveis no tamanho padrão de texto. Com texto ampliado, aceitar
+  rolagem vertical e verificar acesso e ausência de overflow horizontal;
 - contraste nos dois temas. Duas armadilhas produzem pilhas de falso positivo: o
   fundo é pintado em `html`, não em `body`, e `getComputedStyle` devolve
   `color-mix()` como `color(srgb …)` em floats de 0 a 1, não 0 a 255;
+- contraste de bordas após o fim das transições do tema, incluindo os links de
+  projeto anterior/próximo; alvos da navegação com pelo menos 44×44 px;
 - contagens preservadas: 9 projetos, 28 itens, 24 certificados, 14 páginas, 4
   diagramas, ordem do catálogo;
-- `npm run dossier:check` quando o manifesto ou o gerador mudarem.
+- `npm run dossier:check` quando o manifesto ou o gerador mudarem. O `ci.yml`
+  também o roda (via `astral-sh/setup-uv`, fixado numa versão exata porque a
+  action não publica tag major flutuante), então um PDF não regenerado reprova a
+  PR. Mas o check é textual e estrutural: **não afere geometria nem sobreposição**.
+  Depois de mexer no gerador, conferir as 3 páginas à vista.
 
 ### Formatação
 

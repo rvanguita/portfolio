@@ -10,7 +10,9 @@ export default defineConfig({
   site: SITE.url,
   base: SITE.base,
   trailingSlash: "always",
-  // Mantém os espaços entre elementos inline após a migração para Astro 7.
+  // Colapsa o HTML gerado. O whitespace entre elementos inline é significativo,
+  // e é por isso que os arquivos sensíveis a ele ficam fora do Prettier
+  // (ver .prettierignore): o formatador injetaria espaço que muda o render.
   compressHTML: true,
   build: { format: "directory" },
   image: { service: passthroughImageService() },

@@ -195,8 +195,8 @@ def draw_project_card(canvas: Canvas, project: dict[str, Any], x: float, top: fl
     y -= 19 * mm
     y = para(canvas, project["note"], styles["card_note"], inner_x, y, inner_w)
     y -= 2 * mm
-    para(canvas, project["stack"], ParagraphStyle("stack", parent=styles["small"], fontName="Courier", textColor=MUTED), inner_x, y, inner_w)
-    para(canvas, link_text("Ver projeto no GitHub", project["url"]) , styles["small"], inner_x, top - height + 5 * mm, inner_w)
+    y = para(canvas, project["stack"], ParagraphStyle("stack", parent=styles["small"], fontName="Courier", textColor=MUTED), inner_x, y, inner_w)
+    para(canvas, link_text("Ver projeto no GitHub", project["url"]) , styles["small"], inner_x, y - 2 * mm, inner_w)
 
 
 def draw_page_two(canvas: Canvas, content: dict[str, Any], styles: dict[str, ParagraphStyle]) -> None:
@@ -204,7 +204,7 @@ def draw_page_two(canvas: Canvas, content: dict[str, Any], styles: dict[str, Par
     y = para(canvas, "Projetos que demonstram a prática", styles["section"], MARGIN, y, CONTENT_W)
     y = para(canvas, "Uma seleção de problemas, decisões técnicas e resultados que mostram como trabalho com dados no ciclo completo.", styles["body_muted"], MARGIN, y - 5 * mm, CONTENT_W)
     y -= 9 * mm
-    card_h = 58 * mm
+    card_h = 64 * mm
     for project in content["projects"]:
         draw_project_card(canvas, project, MARGIN, y, CONTENT_W, card_h, styles)
         y -= card_h + 5 * mm
