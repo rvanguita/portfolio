@@ -5,7 +5,6 @@ export const SITE = {
   url: "https://rvanguita.github.io",
   base: "/portfolio",
   title: "rvanguita",
-  locale: "pt-BR",
 } as const;
 
 export type NavKey =

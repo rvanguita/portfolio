@@ -75,11 +75,14 @@ Styles live in tokens.css and global.css:
 - Fifteen semantic colors: paper, well, ink, ink-soft, rule, rule-strong,
   accent, accent-bright, on-accent, signal, signal-open, layer-raw, layer-bronze,
   layer-silver and layer-gold. All four theme blocks need the identical list or
-  the manual inversion breaks. The four layer colors name storage layers and are
-  used in two places that must agree: the diagram nodes and the medallion ramp
-  in Readout's chain. Colour there only ever reinforces a layer name the element
-  already spells out, so it is never the sole carrier of meaning — and a chain
-  link that is not a layer stays deliberately uncoloured. The button foreground uses on-accent in both themes.
+  the manual inversion breaks. The four layer colors name storage layers. The
+  diagram nodes use all four; Readout's medallion ramp covers raw/bronze/silver
+  only, because no project's `metric.sub` has a gold link — so `LAYERS` in
+  Readout and the `.chain--*` rules in global.css must stay in step, or a link
+  renders classed and unstyled. Colour there only ever reinforces a layer name
+  the element already spells out, so it is never the sole carrier of meaning —
+  and a chain link that is not a layer stays deliberately uncoloured. The button
+  foreground uses on-accent in both themes.
   Define colors in tokens.css; derive component variations with color-mix.
   Exceptions: print styles and BaseHead's theme-color metadata, which are literal
   copies of --paper and must be updated whenever that token moves.

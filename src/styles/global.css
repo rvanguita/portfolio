@@ -64,8 +64,7 @@ pre { overflow-x: auto; }
 .hero-copy { min-width: 0; }
 .hero-status { display: flex; align-items: center; gap: .6rem; color: var(--signal); font-size: var(--fs-sm); }
 .hero-status::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; background: currentColor; flex: none; }
-.hero-name { display: flex; align-items: center; gap: var(--s-3); margin-top: var(--s-6); font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; letter-spacing: -.025em; }
-.hero-photo { width: 48px; height: 48px; object-fit: cover; border-radius: 50%; }
+.hero-name { margin-top: var(--s-6); font-family: var(--font-display); font-size: 1.4rem; font-weight: 500; letter-spacing: -.025em; }
 .hero h1 { margin-top: var(--s-3); max-width: 12ch; font-size: var(--fs-hero); font-weight: 650; line-height: 1.04; letter-spacing: -.055em; }
 .hero h1 span { color: var(--accent); }
 .hero .lead { margin-top: var(--s-5); font-size: 1.2rem; line-height: 1.65; color: var(--ink-soft); max-width: 42ch; }
@@ -153,7 +152,9 @@ pre { overflow-x: auto; }
 /* A rampa medalhão. Mesma régua semântica à esquerda que .metric e
    .pipeline-node já usam. A cor reforça um nome que o elo escreve por extenso
    ("Raw", "Bronze"), nunca carrega o significado sozinha — por isso um elo que
-   não é camada ("propensão") fica de propósito sem régua. */
+   não é camada ("propensão") fica de propósito sem régua.
+   O vocabulário da cadeia é raw/bronze/silver, o que o conteúdo de fato usa;
+   gold existe só no diagrama, via .pipeline-node--gold. */
 /* Largura e estilo aqui, cor só nas regras de camada: o atalho `border-left`
    tem especificidade maior que `.chain--raw` e venceria com currentColor,
    apagando a rampa inteira. */
@@ -161,7 +162,6 @@ pre { overflow-x: auto; }
 .chain--raw { border-left-color: var(--layer-raw); }
 .chain--bronze { border-left-color: var(--layer-bronze); }
 .chain--silver { border-left-color: var(--layer-silver); }
-.chain--gold { border-left-color: var(--layer-gold); }
 .legend-section { margin-top: var(--s-7); padding-top: var(--s-6); border-top: 1px solid var(--rule); }
 .legend-section h2 { font-size: var(--fs-md); margin-bottom: var(--s-4); }
 .legend { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--s-5); }

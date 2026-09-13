@@ -90,21 +90,7 @@ const schema = {
   <div class="hero">
     <header class="hero-copy">
       <p class="hero-status">{profile.availabilityShort}</p>
-      <p class="hero-name">
-        {
-          profile.photo && (
-            <img
-              class="hero-photo"
-              src={url(profile.photo.src)}
-              width={profile.photo.width}
-              height={profile.photo.height}
-              alt={profile.photo.alt}
-              fetchpriority="high"
-            />
-          )
-        }
-        {profile.shortName}
-      </p>
+      <p class="hero-name">{profile.shortName}</p>
       <h1>{profile.roleShort}<span aria-hidden="true">.</span></h1>
       <p class="lead" set:html={profile.leadHtml} />
       <p class="hero-credential">

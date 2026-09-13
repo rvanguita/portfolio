@@ -44,7 +44,12 @@ const subText = subParts.join(" · ");
 // termo, nunca a posição. "Raw · Bronze · Silver" sai colorido; uma cadeia de
 // etapas de negócio ("propensão · previsão · write-back") fica neutra, porque
 // ali a cor não significaria nada.
-const LAYERS = ["raw", "bronze", "silver", "gold"] as const;
+//
+// A lista para em silver porque é onde o CSS para: cada termo aqui precisa ter
+// uma regra `.chain--<termo>` em global.css, senão o elo sai classificado e sem
+// estilo. Gold só existe no diagrama (.pipeline-node--gold); nenhum `sub` de
+// projeto usa camada gold. Ao acrescentar um termo, acrescente a regra também.
+const LAYERS = ["raw", "bronze", "silver"] as const;
 const layerOf = (step: string) =>
   LAYERS.find((l) => new RegExp(`^${l}\\b`, "i").test(step.trim()));
 ---
