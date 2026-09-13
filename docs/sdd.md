@@ -54,7 +54,9 @@ src/
                          competencias, certificacoes
   styles/                tokens.css, global.css
 scripts/                 generate_dossier.py, check_dossier.py, dossier-content.json
-public/                  assets, certificates (24 PDFs), icons, robots.txt, .nojekyll
+                         (as dependências vêm de requirements-pdf.txt, na raiz)
+public/                  assets, certificates (24 PDFs), icon.svg, icon.png,
+                         robots.txt, .nojekyll
 ```
 
 ## Referência de arquivos
@@ -166,9 +168,12 @@ casando o termo e nunca a posição. Duas invariantes, ambas já quebradas uma v
 
 ## Diagrama de arquitetura orientado a dados
 
-`Pipeline.astro` não tem constante de conteúdo. Ele lê o objeto `architecture` do
-frontmatter: `caption`, `orchestrator?`, `stages[]` (`layer`, `name`, `detail`,
-`tech`) e `outputs[]` (`role`, `tech`).
+`Pipeline.astro` não tem constante de conteúdo **por projeto**. Ele lê o objeto
+`architecture` do frontmatter: `caption`, `orchestrator?`, `stages[]` (`layer`,
+`name`, `detail`, `tech`) e `outputs[]` (`role`, `tech`). As três strings fixas
+do componente são rótulos de chrome — "Fluxo de dados", e os dois `aria-label`
+das listas — e são genéricas de propósito: nomear a arquitetura ali afirmaria,
+para quem usa leitor de tela, uma camada que dois dos quatro casos não têm.
 
 Regras que o componente e o CSS assumem:
 
@@ -177,10 +182,11 @@ Regras que o componente e o CSS assumem:
   raw**; Personal Expenses e Shopping List **não têm orquestrador** e por isso
   omitem o campo;
 - **nenhum número mágico**: as grades seguem a contagem real, via `--stage-count`
-  e `--output-count` definidos inline pelo componente. `--output-count` está na
-  regra base de `.pipeline-outputs` e vale em todas as larguras;
-  `--stage-count` só é usado na variante horizontal, dentro de
-  `@media (min-width: 70rem)`;
+  e `--output-count` definidos inline pelo componente. Cada variável governa o
+  layout a que pertence, e nenhuma alcança o outro: `--output-count` está na
+  regra base de `.pipeline-outputs`, mas a variante `full` sobrescreve
+  `grid-template-columns` dentro de `@media (min-width: 70rem)`, e ali ele deixa
+  de valer; `--stage-count` só é usado nessa mesma variante horizontal;
 - as saídas não fixam `grid-row`. Coluna definida e linha automática fazem elas
   caírem na mesma linha dos estágios, tenha o projeto orquestrador ou não;
 - `outputs` vazio não renderiza a lista, para não deixar conector solto.
@@ -243,7 +249,11 @@ por preferência de tema.
 
 A abertura injeta um JSON-LD `Person` — `jobTitle` em pt e en, `knowsLanguage`,
 `seeks`, `knowsAbout`, `alumniOf`, `address`. **É o único script no HTML de
-produção**, e é estático. O schema só declara o que a página realmente mostra.
+produção**, e é estático. A regra do `knowsAbout`: só entra capacidade que o
+site evidencia. O sinônimo em inglês do que já aparece em português é aceito —
+`Data Engineering` ao lado de "Engenharia de Dados", `Apache Spark` ao lado de
+`PySpark` —, porque é assim que o leitor procura. Capacidade sem lastro no texto
+visível, não: `ETL` e `Pipelines de Dados` saíram por isso.
 
 ## Dossiê em PDF
 
