@@ -15,7 +15,7 @@ export const timeline: TimelineEntry[] = [
     to: 2025,
     title: "Doutorado em Engenharia Elétrica (Ph.D.)",
     org: "Universidade Estadual de Campinas (UNICAMP)",
-    note: "Foco em Otimização de Sistemas Elétricos, Pesquisa Operacional e Heurísticas de Alta Eficiência.",
+    note: "Otimização de sistemas elétricos, pesquisa operacional e heurísticas de alta eficiência — modelar problemas grandes, avaliar alternativas e defender a escolha sob restrição computacional.",
   },
   {
     years: "2019–23",
@@ -23,7 +23,7 @@ export const timeline: TimelineEntry[] = [
     to: 2023,
     title: "Aluno Pesquisador de Doutorado",
     org: "CAPES — Coordenação de Aperfeiçoamento de Pessoal de Nível Superior",
-    note: "Planejamento de expansão de sistemas de distribuição de energia elétrica com metaheurística de Busca Tabu e métodos de apoio à decisão, desenvolvidos em Python.",
+    note: "Planejamento de expansão de sistemas de distribuição de energia elétrica com metaheurística de Busca Tabu e métodos de apoio à decisão, desenvolvidos em Python — com os sistemas-teste publicados abertamente para reprodução.",
   },
   {
     years: "2017–18",
@@ -31,7 +31,7 @@ export const timeline: TimelineEntry[] = [
     to: 2018,
     title: "Mestrado em Sistemas de Infraestrutura Urbana (M.S.)",
     org: "Pontifícia Universidade Católica de Campinas (PUC-Campinas)",
-    note: "Modelagem de redes de infraestrutura e análise de dados espaciais e operacionais.",
+    note: "Modelagem de redes de infraestrutura e análise de dados espaciais e operacionais — dados geográficos, séries de demanda e custo tratados como base de decisão.",
   },
   {
     years: "2017–18",
@@ -39,7 +39,7 @@ export const timeline: TimelineEntry[] = [
     to: 2018,
     title: "Aluno Pesquisador de Pós-Graduação (Mestrado)",
     org: "CAPES — Coordenação de Aperfeiçoamento de Pessoal de Nível Superior",
-    note: "Metodologia heurística para sistemas de distribuição de energia elétrica, com resultados equivalentes ao método Cônico clássico e tempo computacional 10x menor; apoio à docência em Instalações Elétricas e Sistemas de Proteção.",
+    note: "Metodologia heurística para sistemas de distribuição de energia elétrica: resultado equivalente ao método Cônico clássico em tempo computacional 10x menor. Apoio à docência em Instalações Elétricas e Sistemas de Proteção.",
   },
   {
     years: "2017",

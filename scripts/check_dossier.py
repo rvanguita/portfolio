@@ -18,9 +18,11 @@ for index, page in enumerate(reader.pages, 1):
     assert abs(height - 841.89) < 1, f"page {index} is not A4 tall"
 
 text = "\n".join(page.extract_text() or "" for page in reader.pages)
-for required in ["Engenheiro de Dados", "FastF1 Data Platform", "Rota do Perfume", "Bank Customer Churn Prediction", "ROC AUC 0,936", "24 certificados"]:
+for required in ["Engenheiro de Dados", "FastF1 Data Platform", "Rota do Perfume", "Bank Customer Churn Prediction", "ROC AUC 0,936", "24 certificados", "CLT ou PJ", "Inglês avançado (C1)"]:
     assert required in text, f"missing required text: {required}"
-for forbidden in ["Cientista de Dados", "camadas do lakehouse", "[06]", "[04]", "[24]"]:
+# "Cientista de Dados" saiu da lista proibida: agora é um cargo-alvo declarado,
+# no site e no dossiê. O resto continua sendo resíduo de versões antigas.
+for forbidden in ["camadas do lakehouse", "[06]", "[04]", "[24]"]:
     assert forbidden not in text, f"stale text remains: {forbidden}"
 
 annotations = [annotation for page in reader.pages for annotation in (page.get("/Annots") or [])]

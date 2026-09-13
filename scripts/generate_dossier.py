@@ -168,7 +168,7 @@ def draw_page_one(canvas: Canvas, content: dict[str, Any], styles: dict[str, Par
     canvas.roundRect(MARGIN, contact_y - 18 * mm, CONTENT_W, 18 * mm, 2.5 * mm, fill=1, stroke=0)
     contact = f'{link_text(profile["email"], "mailto:" + profile["email"])}  |  {link_text("GitHub", profile["github"])}  |  {link_text("LinkedIn", profile["linkedin"])}'
     para(canvas, contact, styles["body"], MARGIN + 6 * mm, contact_y - 6 * mm, CONTENT_W - 12 * mm)
-    para(canvas, "O código e os estudos de caso estão disponíveis no portfólio.", styles["small"], MARGIN + 6 * mm, contact_y - 13 * mm, CONTENT_W - 12 * mm)
+    para(canvas, profile["screening"], styles["small"], MARGIN + 6 * mm, contact_y - 13 * mm, CONTENT_W - 12 * mm)
     footer(canvas, 1, content, styles)
 
 

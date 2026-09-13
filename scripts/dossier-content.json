@@ -11,13 +11,14 @@
     "role": "Engenheiro de Dados",
     "credential": "Ph.D. em Engenharia Elétrica - UNICAMP",
     "location": "Campinas, SP - Brasil",
-    "availability": "Aberto a oportunidades em Engenharia de Dados - remoto, híbrido ou presencial.",
-    "lead": "Desenvolvo pipelines e lakehouses que organizam dados para análise e machine learning.",
+    "availability": "Busco: Engenheiro de Dados pleno, Cientista de Dados ou ML Engineer - CLT ou PJ",
+    "lead": "Pipelines e lakehouses, da ingestão bruta à camada que sustenta análise e machine learning.",
     "highlights": ["Python", "SQL", "PySpark", "Delta Lake", "Airflow"],
     "email": "renevajr@gmail.com",
     "github": "https://github.com/rvanguita",
     "linkedin": "https://linkedin.com/in/rvanguita",
-    "dossier": "https://rvanguita.github.io/portfolio/assets/dossie-rene-anguita.pdf"
+    "dossier": "https://rvanguita.github.io/portfolio/assets/dossie-rene-anguita.pdf",
+    "screening": "Remoto em todo o Brasil - híbrido ou presencial em Campinas e Grande SP  |  Inglês avançado (C1)"
   },
   "projects": [
     {

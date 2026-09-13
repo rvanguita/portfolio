@@ -232,6 +232,13 @@ pre { overflow-x: auto; }
 .contact h2 { margin-top: var(--s-2); max-width: 22ch; font-size: var(--fs-2xl); }
 .contact p:not(.eyebrow) { margin-top: var(--s-4); color: var(--ink-soft); max-width: 52ch; }
 .contact-actions { display: flex; flex-direction: column; align-items: start; gap: var(--s-3); }
+/* Ficha de triagem: os campos que um recrutador filtra antes de abrir conversa.
+   Mesma gramática da .spec de um projeto — rótulo em mono, valor em tinta
+   cheia, regra fina entre as linhas. A candidatura lida como uma ficha técnica. */
+.screening { max-width: 60ch; margin-top: var(--s-5); border-top: 1px solid var(--rule); }
+.screening-row { display: grid; grid-template-columns: minmax(0, 6.5rem) minmax(0, 1fr); gap: var(--s-3); padding: .55rem 0; border-bottom: 1px solid var(--rule); }
+.screening dt { font-family: var(--font-mono); font-size: var(--fs-xs); line-height: 1.5; color: var(--ink-soft); }
+.screening dd { margin: 0; font-size: var(--fs-sm); color: var(--ink); }
 .foot { border-top: 1px solid var(--rule); }
 .foot-inner { max-width: var(--page); margin-inline: auto; padding: var(--s-6) var(--gutter); }
 .foot-main { display: flex; flex-wrap: wrap; align-items: start; justify-content: space-between; gap: var(--s-5); }
@@ -301,6 +308,7 @@ pre { overflow-x: auto; }
   .skills--compact { gap: 0; }
   .spec { grid-template-columns: minmax(0, 1fr); gap: var(--s-2); }
   .spec dd { margin-bottom: var(--s-4); }
+  .screening-row { grid-template-columns: minmax(0, 1fr); gap: .15rem; }
   .doc-nav a:last-child { text-align: left; }
   .foot-main { flex-direction: column; }
 }

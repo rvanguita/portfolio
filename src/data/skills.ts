@@ -10,7 +10,7 @@ export const skills: SkillGroup[] = [
   {
     title: "Engenharia de Dados",
     summary:
-      "Construção de pipelines e lakehouses, da ingestão à disponibilização de dados, com orquestração e validações reproduzíveis.",
+      "Ingestão, modelagem em camadas e disponibilização: arquitetura medalhão em Delta Lake e DuckDB, orquestração no Airflow, contratos de dados que barram carga suja e CI que roda o pipeline inteiro a cada PR.",
     projectIds: ["fastf1", "rotaperfume"],
     items: [
       "Python",
@@ -26,7 +26,7 @@ export const skills: SkillGroup[] = [
   {
     title: "Ciência de Dados e ML",
     summary:
-      "Preparação de dados, comparação de modelos e análise dos fatores que explicam uma previsão.",
+      "Preparação de dados, comparação de modelos sob validação cruzada e leitura dos fatores que explicam cada previsão — incluindo trocar ganho de métrica por latência de inferência quando o custo não compensa.",
     projectIds: ["bank-churn"],
     items: [
       "Pandas",
@@ -41,7 +41,7 @@ export const skills: SkillGroup[] = [
   {
     title: "Visualização e Analytics",
     summary:
-      "APIs e painéis para explorar dados e apoiar decisões, conectados às camadas analíticas dos projetos.",
+      "A camada em que o dado vira decisão: APIs de baixa latência, painéis e relatórios ligados direto às tabelas curadas de cada projeto.",
     projectIds: ["fastf1", "rotaperfume"],
     items: [
       "Power BI",
@@ -56,7 +56,7 @@ export const skills: SkillGroup[] = [
   {
     title: "Otimização",
     summary:
-      "Modelagem matemática e heurísticas para avaliar alternativas e resolver problemas de planejamento de sistemas elétricos.",
+      "Modelagem matemática e metaheurísticas para decidir entre alternativas caras: programação inteira mista em AMPL/CPLEX e Busca Tabu aplicadas ao planejamento de sistemas elétricos.",
     projectIds: ["otimizacao-eletrica"],
     items: [
       "CPLEX",
