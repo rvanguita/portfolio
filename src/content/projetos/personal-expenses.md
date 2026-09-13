@@ -5,8 +5,9 @@ category: Engenharia de Dados · Categorização
 kind: light
 metricKind: arquitetura
 summary: >-
-  Faturas de cartão de crédito viram dados organizados, categorias revisáveis e
-  painéis de tendências, recorrências e projeção de parcelas.
+  Pipeline medalhão em MySQL que vira histórico categorizado de faturas de
+  cartão — deduplicação entre cargas, categorização em cascata e projeção de
+  parcelas.
 metric:
   label: arquitetura
   value: "medalhão MySQL"

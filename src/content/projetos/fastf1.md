@@ -5,8 +5,8 @@ category: Lakehouse · MLOps
 kind: full
 metricKind: arquitetura
 summary: >-
-  Consolidar resultados históricos de Fórmula 1 numa base confiável — ingestão,
-  curadoria e serving num fluxo único.
+  Lakehouse medalhão em Delta Lake com DAG semanal no Airflow, API FastAPI e
+  painel: ingestão, curadoria e serving de dados de Fórmula 1 num fluxo único.
 leadHtml: >-
   Transformar dados de corridas de Fórmula 1 numa base confiável para análise e
   previsão. A plataforma combina um <strong>Data Lakehouse</strong>, práticas de

@@ -5,8 +5,8 @@ category: Engenharia de Dados · OCR
 kind: light
 metricKind: arquitetura
 summary: >-
-  Notas fiscais e arquivos CSV viram um histórico estruturado de compras,
-  indicadores de preço e uma lista de reposição inteligente.
+  OCR de nota fiscal e importação CSV num pipeline medalhão MySQL, com
+  normalização incremental e estatísticas de preço recalculadas a cada carga.
 metric:
   label: arquitetura
   value: "medalhão + OCR"

@@ -5,8 +5,8 @@ category: Classificação · Risco
 kind: full
 metricKind: medida
 summary: >-
-  Antecipar quais clientes de um banco europeu vão encerrar a conta, para agir
-  na retenção antes do cancelamento.
+  Antecipar quais clientes de um banco europeu vão encerrar a conta: três
+  modelos de gradient boosting comparados, com SHAP explicando cada risco.
 leadHtml: >-
   Identificar, antes do cancelamento, quais clientes de um banco europeu têm
   maior propensão a encerrar a conta. Reter um cliente custa bem menos do que
