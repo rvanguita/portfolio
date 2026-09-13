@@ -20,7 +20,7 @@ competência e projeto **falha o build** em vez de renderizar vazio.
 
 | Item       | Versão / decisão                                                                                                         |
 | ---------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Astro      | `^7.3.1`, `output` estático, `compressHTML: true`                                                                        |
+| Astro      | `^7.3.1`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                           |
 | Node       | `24.20.0`, fixado em `mise.toml` e nos dois workflows                                                                    |
 | TypeScript | `astro check` seguido de `tsc --noEmit`                                                                                  |
 | Imagens    | `passthroughImageService()` — assets servidos direto de `public/`, sem `sharp`                                           |
@@ -173,8 +173,11 @@ Regras que o componente e o CSS assumem:
   não descreve. Rota do Perfume vai de `bronze` a `gold` e **não tem camada
   raw**; Personal Expenses e Shopping List **não têm orquestrador** e por isso
   omitem o campo;
-- **nenhum número mágico**: a grade horizontal segue a contagem real, via
-  `--stage-count` e `--output-count` definidos inline pelo componente;
+- **nenhum número mágico**: as grades seguem a contagem real, via `--stage-count`
+  e `--output-count` definidos inline pelo componente. `--output-count` está na
+  regra base de `.pipeline-outputs` e vale em todas as larguras;
+  `--stage-count` só é usado na variante horizontal, dentro de
+  `@media (min-width: 70rem)`;
 - as saídas não fixam `grid-row`. Coluna definida e linha automática fazem elas
   caírem na mesma linha dos estágios, tenha o projeto orquestrador ou não;
 - `outputs` vazio não renderiza a lista, para não deixar conector solto.
@@ -297,11 +300,13 @@ isso, conferir também:
 
 ### Formatação
 
-Prettier governa o código-fonte. As exclusões em `.prettierignore` são
-intencionais: `src/styles/` (alinhamento de coluna feito à mão),
-`src/data/certificates.ts` (entradas de uma linha), `Channels.astro` e
-`certificacoes.astro` (markup sensível a espaço, onde o Prettier injetaria
-whitespace que muda o render) e `report.*.json` (relatórios de diagnóstico).
+Prettier governa o código-fonte. O `.prettierignore` tem dez entradas. Cinco são
+as previsíveis — `dist/`, `.astro/`, `node_modules/`, `package-lock.json` e
+`public/`. As outras cinco carregam decisão: `src/styles/` (alinhamento de coluna
+feito à mão), `src/data/certificates.ts` (entradas de uma linha de propósito),
+`src/components/panels/Channels.astro` e `src/pages/certificacoes.astro` (markup
+sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
+`report.*.json` (relatórios de diagnóstico gerados).
 
 **`docs/` não está excluído** — este arquivo entra no `format:check`.
 
@@ -309,7 +314,7 @@ whitespace que muda o render) e `report.*.json` (relatórios de diagnóstico).
 
 | Risco                                           | Controle                                                              |
 | ----------------------------------------------- | --------------------------------------------------------------------- |
-| Link ou asset sem `url()`                       | conferir em `dist/` servido na base `/portfolio/`, nunca só em dev    |
+| Link ou asset sem `url()`                       | `astro check` e `tsc` não pegam — abrir `dist/` servido na base       |
 | Divergência entre cartão e legenda de resultado | ambos leem `src/lib/metric.ts`                                        |
 | Termo em `LAYERS` sem regra `.chain--*`         | tratar os dois como uma mudança só                                    |
 | Lista de cores divergente entre blocos de tema  | testar as duas preferências de SO e as duas inversões                 |

@@ -16,9 +16,11 @@ decide em segundos se vale abrir conversa. Não é um blog, não é um currícul
 narrativo e não tenta ser um site institucional.
 
 A trajetória documentada é acadêmica e de engenharia elétrica — **não há emprego
-formal em dados**. O produto assume isso na abertura em vez de silenciar, porque
-silêncio vira objeção, e usa nove projetos públicos com código aberto como
-evidência.
+formal em dados**. A abertura não declara essa ausência em palavras; ela enquadra
+o Ph.D. como método aplicado a pipelines e lakehouses e lidera pela evidência dos
+nove projetos públicos, todos com repositório aberto. O posicionamento escolhido
+foi assumir a transição de carreira em vez de silenciar sobre ela, e o texto a
+sustenta por enquadramento, não por declaração.
 
 ## Problema
 
@@ -102,7 +104,9 @@ JSON-LD `Person` na abertura.
 - texto a 4,5:1 e bordas de controle a 3:1, nos dois temas e nas duas inversões;
 - foco de teclado visível, navegação por atalho de conteúdo, alvos de 44 px;
 - cor nunca é o único portador de significado;
-- `prefers-reduced-motion` respeitado — não há animação a desativar;
+- movimento restrito a transições de borda e sombra (0,16 s) em links, botão de
+  tema e cartões, declaradas dentro de `prefers-reduced-motion: no-preference` —
+  quem pede menos movimento não as recebe;
 - fontes auto-hospedadas, sem requisição a terceiros;
 - estilos de impressão com fundo branco;
 - todas as rotas sob o prefixo `/portfolio/`.
@@ -138,9 +142,10 @@ do projeto não descreve.
 
 ## Métricas de sucesso
 
-- especialidade, evidência e forma de contratar identificáveis sem rolagem;
+- especialidade e evidência identificáveis sem rolagem;
+- os dois filtros mais duros — idioma e modelo de contratação — na abertura;
+  cargos-alvo e alcance na ficha do bloco de contato;
 - currículo em PDF alcançável na primeira tela;
-- os quatro tipos de resultado legíveis sem consultar a legenda duas vezes;
 - `npm run format:check`, `npm run build` e `npm run check` sem erro;
 - nenhuma rota, âncora ou asset público quebrado;
 - revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
