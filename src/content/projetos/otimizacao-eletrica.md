@@ -10,10 +10,10 @@ summary: >-
 metric:
   label: publicação
   value: INDUSCON
-  sub: 2025 · Anguita Jr., Castro, Lavorato
+  sub: submetido · 2025 · Anguita Jr., Castro, Lavorato
 stack: AMPL · CPLEX · Python · Busca Tabu · Metaheurísticas
 repos:
-  - label: Artigo — INDUSCON 2025
+  - label: Artigo submetido — INDUSCON 2025
     url: https://github.com/rvanguita/induscon_2025
   - label: Reliability Systems
     url: https://github.com/rvanguita/reliability-systems
@@ -35,5 +35,5 @@ spec:
 description: >-
   Pesquisa operacional do mestrado e do doutorado: planejamento multicritério da
   expansão de sistemas de distribuição de energia com metaheurística de Busca
-  Tabu, apoio à decisão e modelagem em AMPL/CPLEX. Artigo na INDUSCON 2025.
+  Tabu, apoio à decisão e modelagem em AMPL/CPLEX. Artigo submetido à INDUSCON 2025.
 ---
