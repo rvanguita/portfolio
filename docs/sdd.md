@@ -354,6 +354,137 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 | Renomear o job de CI                            | o nome é o contexto exigido pela proteção da `main`                   |
 | PR empilhada sobre PR aberta                    | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor` |
 
+## Evolução técnica proposta
+
+**Nada nesta seção está implementado.** As seções anteriores descrevem o que existe;
+aqui ficam as mudanças técnicas propostas, com o critério que diz quando cada uma está
+pronta. Medições de 14/09/2026.
+
+### 1. Transformar os invariantes documentados em teste
+
+O job de CI se chama `🔍 Lint, Types, Testes & Build` e **não há um teste sequer** no
+repositório: nenhum `scripts.test`, nenhum arquivo de teste, nenhum runner. O nome
+promete o que o pipeline não faz.
+
+O custo disso está no próprio histórico. Todo invariante que este documento descreve e
+que já quebrou foi pego por auditoria manual, nunca pelo CI:
+
+| Quebra                                     | Commit     | Guardado hoje     |
+| ------------------------------------------ | ---------- | ----------------- |
+| `--layer-gold` fora do bloco de impressão  | `d38dc296` | não               |
+| Primeira tela estourando a dobra           | `c87a24ec` | não               |
+| PDF publicado desatualizado                | `02e2b138` | sim, via `ci.yml` |
+| INDUSCON sem "submetido" em 3 de 4 lugares | `6dda2346` | não               |
+| `knowsAbout` com 4 termos sem lastro       | `f63ff188` | não               |
+
+O Node 24.20.0 já traz `node:test` e `fs.globSync`, então isso cabe **sem dependência
+nova** — o que preserva a disciplina atual de 5 de produção e 5 de desenvolvimento.
+
+Candidatos, todos sobre `dist/` e os fontes, nenhum precisando de navegador:
+
+1. cada token de cor presente nos cinco lugares (os 4 blocos de tema mais o de impressão);
+2. `LAYERS` do `Readout` cobrindo exatamente os mesmos termos que as regras `.chain--*`;
+3. cada `metricKind` com a sua regra `.metric--<kind>`;
+4. cada termo de `knowsAbout` presente no texto visível, salvo a lista declarada de
+   sinônimos em inglês;
+5. exatamente um `<script>` no HTML de produção, e é o JSON-LD;
+6. as contagens: 14 páginas, 9 projetos, 28 itens, 24 certificados, 4 diagramas;
+7. todo link interno sob `/portfolio/` e resolvendo para arquivo real — **com
+   URL-decode antes de testar**, ou os 24 PDFs de certificado dão 24 falsos positivos;
+8. um `<h1>` por página, sem pular nível de heading;
+9. nenhum diagrama declarando camada que o texto do próprio projeto não menciona.
+
+A primeira tela (360×800, 768×800, 1440×800) precisa de navegador e fica como script
+separado, fora do CI. A técnica é a documentada em "Validação": medir **dentro de um
+iframe da largura exata**, porque `--window-size` do headless não entrega o viewport
+pedido.
+
+_Aceite:_ `npm test` existe, roda no `ci.yml` e falha quando qualquer invariante acima é
+violado — conferido quebrando um de propósito. O `name:` do job **não muda**: é o status
+check exigido pela proteção da `main`.
+
+### 2. Pagar só pelo eixo de fonte que o desenho usa
+
+`Layout.astro` importa `@fontsource-variable/archivo/wdth.css` — o eixo de largura. O
+subset latino dessa variante tem **87 KB**, mais da metade dos ~162 KB de fonte que a
+abertura transfere. Mas o eixo nunca varia: `font-stretch: var(--wdth-display)` usa
+`--wdth-display: 100%`, definido uma vez em `tokens.css` e **nunca sobrescrito** — 100%
+é o valor neutro.
+
+O mesmo subset no eixo de peso (`wght.css`) tem **34 KB**. São 53 KB a menos, sem
+mudança visual.
+
+_Aceite:_ a troca vem acompanhada da remoção do `font-stretch` e do token
+`--wdth-display`, que deixam de ter função — e a revisão visual confirma que nenhum
+título mudou de largura. Mexer em `src/styles/` continua exigindo a skill de design.
+
+### 3. JSON-LD por ficha e `lastmod` no sitemap
+
+As nove fichas de projeto não publicam dado estruturado nenhum; só a abertura publica.
+Um `SoftwareSourceCode` por ficha sai inteiro do frontmatter que já existe, é estático e
+não acrescenta script de cliente. O `sitemap-0.xml` também sai sem `lastmod`, que
+`@astrojs/sitemap` sabe emitir.
+
+_Aceite:_ o teste do item 1.5 continua valendo — um script por página, sempre JSON-LD.
+O schema da ficha só declara o que a ficha mostra, pela mesma regra do `knowsAbout`.
+
+### 4. Os links externos não têm vigilância
+
+Os 11 links de projeto respondem 200 hoje — conferidos um a um em 14/09/2026. Mas nada os
+verifica de forma contínua: renomear um repositório, torná-lo privado ou arquivá-lo
+quebra em silêncio a promessa central do produto, "cada projeto aponta para o código".
+O `build` não enxerga link externo, e o teste de link do item 1.7 cobre apenas link
+interno.
+
+_Aceite:_ uma verificação agendada — fora do caminho da PR, que não deve depender da rede
+de terceiros para mergear — falhando ou avisando quando um dos 11 links deixa de
+responder.
+
+### 5. O PDF pode divergir do manifesto sem ninguém notar
+
+`check_dossier.py` lê **só o PDF**; nunca abre `scripts/dossier-content.json`. Por
+construção, então, não consegue detectar divergência entre os dois. Mudar a copy no
+manifesto sem rodar `dossier:generate` passa no CI, porque as asserções de texto conferem
+termos fixos (`ROC AUC 0,936`, `24 certificados`, `CLT ou PJ`) que não mudam.
+
+Vale dizer com todas as letras: **a guarda acrescentada ao `ci.yml` não fecha o buraco que
+motivou a sua criação.** Ela pega um PDF estruturalmente quebrado, não um PDF
+desatualizado — que foi exatamente o defeito corrigido à mão quando o gerador mudou e o
+arquivo publicado ficou para trás.
+
+_Aceite:_ o CI regenera o dossiê e falha se o resultado diferir do arquivo commitado,
+tornando impossível mergear manifesto e PDF fora de sincronia. Atenção à
+reprodutibilidade: se o ReportLab gravar data de criação, comparar o texto e a geometria
+extraídos, não o byte.
+
+### 6. As Actions estão fixadas por tag mutável
+
+As seis — `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v6`,
+`actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5` e
+`astral-sh/setup-uv@v10.1.0` — usam tag, não SHA. Tag é ponteiro móvel: quem controla o
+repositório da action pode reapontá-la, e o `deploy.yml` roda com `contents: read`,
+`pages: write` e `id-token: write`. Não há Dependabot nem Renovate configurado, então
+atualizar dependência é trabalho manual e invisível.
+
+_Aceite:_ Actions fixadas por SHA, com atualização automatizada configurada — fixar não
+pode virar congelar. O `name:` do job de CI continua intocável: é o status check exigido
+pela proteção da `main`.
+
+### 7. A fonte crítica não tem preload
+
+A abertura não emite nenhum `rel="preload"`. A Archivo do título — 87 KB no subset
+latino, o maior arquivo da página — só é descoberta depois que o CSS é baixado e
+parseado, o que adia o maior elemento de texto da primeira tela, justamente o `<h1>` que
+a métrica de primeira tela protege.
+
+Este é um item para medir antes de agir, não para aplicar por reputação da técnica. Com o
+`font-display` que o fontsource define, o texto já pinta na fonte de fallback: o ganho
+esperado é de LCP e de estabilidade, não de conteúdo visível. E se o item 2 entrar antes,
+o arquivo cai para 34 KB e a conta muda.
+
+_Aceite:_ a decisão é registrada com número medido antes e depois, nos três viewports da
+métrica de primeira tela.
+
 ## Onde esta documentação envelhece
 
 Primeiro nas contagens (14 rotas, 9 projetos, 28 itens, 24 certificados, 15
