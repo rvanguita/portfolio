@@ -6,7 +6,15 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { globSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ROOT, DIST, read, pages, routes, visibleText } from "./helpers.mjs";
+import {
+  ROOT,
+  DIST,
+  read,
+  pages,
+  routes,
+  visibleText,
+  TOKENS,
+} from "./helpers.mjs";
 
 const projectFiles = globSync("src/content/projetos/*.md", { cwd: ROOT }).map(
   (rel) => [rel, readFileSync(join(ROOT, rel), "utf8")],
@@ -15,23 +23,62 @@ const projectFiles = globSync("src/content/projetos/*.md", { cwd: ROOT }).map(
 /** Sinônimos de busca aceitos no schema: o site mostra o equivalente, não o termo. */
 const SEARCH_SYNONYMS = new Set(["Data Engineering", "Apache Spark"]);
 
+/**
+ * Números por extenso que a prosa dos documentos usa, em pt e en. Só os que
+ * aparecem: uma tabela maior daria a impressão de cobertura que ela não tem.
+ */
+const POR_EXTENSO = {
+  três: 3,
+  tres: 3,
+  quatro: 4,
+  cinco: 5,
+  nove: 9,
+  dez: 10,
+  quinze: 15,
+  three: 3,
+  four: 4,
+  five: 5,
+  nine: 9,
+  ten: 10,
+  fifteen: 15,
+};
+
+/** O grupo de captura das contagens: numeral ou número por extenso. */
+const N = [String.raw`\d+`, ...Object.keys(POR_EXTENSO)].join("|");
+
+const valor = (bruto) => POR_EXTENSO[bruto.toLowerCase()] ?? Number(bruto);
+
+// Derivadas uma vez e usadas nos dois testes: o de código afirma o número que os
+// documentos publicam hoje, o de prosa confronta os documentos com o real. Se as
+// duas pontas lessem fontes diferentes, elas poderiam divergir em silêncio — que
+// é justamente a falha que estes testes existem para pegar.
+// Cada item é `{ name, projectIds }`: contar `name:` é imune tanto à lista de
+// evidências aninhada quanto a um regex não-guloso parar no `]` errado.
+const itens = (read("src/data/skills.ts").match(/name:\s*"/g) ?? []).length;
+const grupos = [...read("src/data/skills.ts").matchAll(/items:\s*\[/g)].length;
+const certificados = (
+  read("src/data/certificates.ts").match(/file:\s*"/g) ?? []
+).length;
+// `years: "` e não `years:`, senão a declaração da interface (`years: string;`)
+// entra na conta — a mesma armadilha que o teste dos certificados evita.
+const entradas = (read("src/data/timeline.ts").match(/years:\s*"/g) ?? [])
+  .length;
+const comArquitetura = projectFiles.filter(([, md]) =>
+  /^architecture:/m.test(md),
+).length;
+
 test("as contagens publicadas continuam de pé", () => {
   assert.equal(routes().length, 14, "14 rotas");
   assert.equal(projectFiles.length, 9, "9 projetos");
 
-  const skills = read("src/data/skills.ts");
-  const groups = [...skills.matchAll(/items:\s*\[/g)];
-  // Cada item é um objeto `{ name, projectIds }`: contar `name:` é imune tanto à
-  // lista de evidências aninhada quanto a um regex não-guloso parar no `]` errado.
-  const items = (skills.match(/name:\s*"/g) ?? []).length;
-  assert.equal(groups.length, 4, "4 grupos de competência");
-  assert.equal(items, 29, "29 itens de competência");
-
-  const certs = read("src/data/certificates.ts");
-  assert.equal((certs.match(/file:\s*"/g) ?? []).length, 24, "24 certificados");
-
-  const withArch = projectFiles.filter(([, md]) => /^architecture:/m.test(md));
-  assert.equal(withArch.length, 4, "4 projetos declaram arquitetura");
+  assert.equal(grupos, 4, "4 grupos de competência");
+  assert.equal(itens, 29, "29 itens de competência");
+  assert.equal(certificados, 24, "24 certificados");
+  assert.equal(comArquitetura, 4, "4 projetos declaram arquitetura");
+  assert.equal(entradas, 9, "9 entradas de trajetória");
+  // A lista canônica vive em helpers.mjs; styles.test.mjs confere que cada cor
+  // existe nos cinco lugares, e aqui só a contagem que os documentos publicam.
+  assert.equal(TOKENS.length, 15, "15 cores semânticas");
 });
 
 test("cada certificado referenciado existe em public/", () => {
@@ -136,27 +183,64 @@ test("as contagens que os documentos publicam batem com o código", () => {
   // menos uma ocorrência.
   //
   // Os padrões são específicos porque "N projetos" e "N itens" também aparecem
-  // como recorte legítimo — "só os 4 projetos que declaram arquitetura", ou
-  // "3 grupos, 24 itens" falando de certificados.
-  // Mesmo motivo do teste de contagens: cada item é `{ name, projectIds }`.
-  const itens = (read("src/data/skills.ts").match(/name:\s*"/g) ?? []).length;
-  const certificados = (
-    read("src/data/certificates.ts").match(/file:\s*"/g) ?? []
-  ).length;
-
-  // O CLAUDE.md publica as mesmas contagens em inglês, e ficou de fora na primeira
-  // versão deste teste — que é como a drift voltaria justamente pelo arquivo que
-  // orienta quem trabalha aqui.
+  // como recorte legítimo — "só os 4 projetos que declaram arquitetura", "as
+  // outras cinco rotas sem lastmod", ou "3 grupos, 24 itens" falando de
+  // certificados. Os lookbehinds são a lista dos marcadores que abrem um
+  // recorte: "só os", "dos", "outros", "outras".
+  //
+  // A terceira armadilha é a prosa escrever o número por extenso. "Quinze cores
+  // semânticas" no SDD e "nove projetos" no README passavam em silêncio por um
+  // padrão que só casa `\d+`, e obrigar a prosa a virar numeral seria dobrar o
+  // texto ao regex — o certo é a guarda ler o que os documentos já escrevem.
   const checagens = [
-    [/(\d+) rotas/g, routes().length, "rotas"],
-    [/(\d+) skill items/g, itens, "skill items"],
-    [/(\d+) certificate entries/g, certificados, "certificate entries"],
+    [`(?<!outras )(${N}) rotas`, "gi", routes().length, "rotas"],
+    [`(${N}) skill items`, "gi", itens, "skill items"],
+    [`(${N}) certificate entries`, "gi", certificados, "certificate entries"],
     // Todo "N itens" conta competência, menos a linha dos certificados, que usa
     // a mesma palavra para outra coisa ("3 grupos, 24 itens").
-    [/(?<!3 grupos, )(?<!\d)(\d+) itens/g, itens, "itens de competência"],
-    [/(\d+) certificados/g, certificados, "certificados"],
-    [/(?<!só os )(?<!dos )(\d+) projetos/gi, projectFiles.length, "projetos"],
-  ];
+    [
+      `(?<!3 grupos, )(?<!\\d)(${N}) itens`,
+      "gi",
+      itens,
+      "itens de competência",
+    ],
+    [`(${N}) certificados`, "gi", certificados, "certificados"],
+    [
+      `(?<!só os )(?<!dos )(?<!outros )(${N}) projetos`,
+      "gi",
+      projectFiles.length,
+      "projetos",
+    ],
+    // O CLAUDE.md publica as mesmas contagens em inglês, e ficou de fora na
+    // primeira versão deste teste — que é como a drift voltaria justamente pelo
+    // arquivo que orienta quem trabalha aqui.
+    [`(${N}) projects`, "gi", projectFiles.length, "projects"],
+    // Os quatro abaixo eram a lacuna seguinte: são exatamente os números que o
+    // SDD nomeia como os primeiros a envelhecer, e nenhum tinha guarda.
+    //
+    // Os substantivos vão qualificados porque a palavra solta pertence a outra
+    // contagem no mesmo parágrafo: "3 grupos" são os dos certificados, e
+    // "dez entradas" são as do .prettierignore.
+    [`(${N}) cores`, "gi", TOKENS.length, "cores semânticas"],
+    [`(${N}) semantic colors`, "gi", TOKENS.length, "semantic colors"],
+    [
+      `(${N}) grupos de (?:capacidade|compet[êe]ncias?)`,
+      "gi",
+      grupos,
+      "grupos de competência",
+    ],
+    [`(${N}) entradas de trajetória`, "gi", entradas, "entradas de trajetória"],
+    [
+      `(${N}) diagramas de arquitetura`,
+      "gi",
+      comArquitetura,
+      "diagramas de arquitetura",
+    ],
+  ].map(([fonte, flags, esperado, rotulo]) => [
+    new RegExp(fonte, flags),
+    esperado,
+    rotulo,
+  ]);
 
   const vistos = new Map(checagens.map(([, , rotulo]) => [rotulo, 0]));
   for (const arquivo of [
@@ -171,7 +255,7 @@ test("as contagens que os documentos publicam batem com o código", () => {
       for (const [trecho, numero] of texto.matchAll(padrao)) {
         vistos.set(rotulo, vistos.get(rotulo) + 1);
         assert.equal(
-          Number(numero),
+          valor(numero),
           esperado,
           `${arquivo}: "${trecho.trim()}" não bate com o código (${esperado} ${rotulo})`,
         );

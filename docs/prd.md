@@ -57,7 +57,7 @@ O site tem **14 rotas navegáveis**, mais uma página de erro:
 | `/`                 | abertura, projeto em destaque, projetos, competências, formação, contato |
 | `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
 | `/projetos/<slug>/` | 9 fichas de projeto                                                      |
-| `/trajetoria/`      | formação e experiência, 9 entradas                                       |
+| `/trajetoria/`      | formação e experiência, 9 entradas de trajetória                         |
 | `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
 | `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
 | `/404.html`         | endereço inexistente, com caminho de volta — não entra no sitemap        |
@@ -190,7 +190,62 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Cartão social das fichas: decidido, não pendente
+### 1. Datas que não envelhecem
+
+Cada projeto publica `periodo` e `atualizadoEm`, e a regra é que ambos venham da data
+real do repositório pela API do GitHub, nunca de estimativa. A regra vale na hora de
+escrever e nunca mais: nada relê o repositório depois. Um projeto que recebeu commit no
+mês passado continua anunciando a data do dia em que a ficha foi escrita — e a ficha fica
+mentindo devagar, sem que ninguém perceba.
+
+O sitemap carrega esse mesmo campo como `lastmod`. Data velha ali não é só imprecisão de
+leitura: é sinal errado para o robô.
+
+**Pronto quando** uma divergência plantada à mão vira issue aberta, uma árvore em dia não
+abre nada, e a verificação fica fora do caminho da PR — mergear não pode depender de rede
+de terceiros, pelo mesmo motivo que já tira `links.yml` de lá.
+
+### 2. Índice reverso por tecnologia
+
+A competência aponta para o projeto, mas o caminho inverso não existe. Um item como
+Python aponta para 7 dos 9 projetos e o elo leva a um só — o de maior prioridade. Os
+outros seis ficam invisíveis: a evidência existe, o leitor não chega nela.
+
+E quem procura "Airflow" não tem onde cair. A tecnologia aparece em cartão e em ficha,
+sempre como etiqueta, nunca como página.
+
+Agrupar os projetos por tecnologia em rota própria resolve as duas coisas com o mesmo
+material — sem afirmar nada novo, só recortando a evidência publicada por outro eixo.
+
+**Custo honesto:** exige vocabulário canônico de tecnologia, que hoje não existe — a
+stack de cada projeto é texto livre e diverge do nome usado nas competências. E a
+contagem de 14 rotas muda nos quatro documentos, com a guarda cobrando cada um.
+
+**Pronto quando** nenhuma página de tecnologia tem menos de dois projetos (com um só, ela
+repete a ficha e não acrescenta caminho), o elo de competência passa a apontar para lá, e
+as contagens seguem batendo.
+
+### 3. Trilha de navegação nas fichas
+
+A ficha de projeto está a dois níveis da abertura e não diz isso em lugar nenhum. A
+navegação que ela oferece é anterior/próximo — útil para percorrer o catálogo, inútil
+para subir. O leitor que chega por busca direto numa ficha não tem como saber que existe
+um catálogo atrás dela.
+
+Uma trilha "Início › Projetos › ‹nome›" resolve, e o dado estruturado correspondente sai
+do mesmo lugar — espelhando a trilha visível, que é a regra que este documento já aplica
+a todo metadado.
+
+**Pronto quando** o dado estruturado descreve exatamente a trilha que a página mostra, a
+navegação é rotulada para leitor de tela, e os alvos respeitam os 44 px.
+
+## Decisões fechadas
+
+O que foi avaliado e recusado, com o motivo ao lado. Fica registrado porque "não fizemos"
+sem a razão convida a refazer a discussão daqui a seis meses — e porque as três abaixo
+parecem, de fora, esquecimento.
+
+### Cartão social por ficha
 
 Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
 problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso
@@ -201,14 +256,31 @@ Gerar imagem por projeto no build não é opção barata: o site usa
 `passthroughImageService()` e não tem `sharp`. Nove peças versionadas seriam trabalho de
 design, não de código.
 
-**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige.
-Fica registrado aqui para não ser reaberto como esquecimento — se um dia houver
-direção de design para cartões por projeto, o caminho é `public/` mais uma prop de
-imagem no `BaseHead`.
+**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige. Se
+um dia houver direção de design para cartões por projeto, o caminho é `public/` mais uma
+prop de imagem no `BaseHead`.
+
+### Versão em inglês
+
+O leitor estrangeiro já é alcançado: `title`, `description` e o `knowsAbout` do JSON-LD
+levam os termos em inglês, e é assim que a busca chega ao site. Uma árvore `/en/`
+duplicaria toda a copy — nove estudos de caso, 29 itens de competência, as ressalvas de
+honestidade literais — e cada correção passaria a ter dois lugares para envelhecer.
+
+**Decisão: manter a interface só em português.** O alcance que a tradução traria já vem
+pelos metadados; o custo dela é permanente.
+
+### Preload da fonte crítica
+
+Medido e descartado, com os números no [SDD](./sdd.md#preload-da-fonte-crítica--medido-e-descartado).
 
 ## Onde este documento envelhece
 
-Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o
-conteúdo mudar. O código é a fonte da verdade; este PRD registra a intenção e as
-regras. Ao acrescentar projeto, rota ou grupo de competência, reconfira as
-contagens aqui e no [SDD](./sdd.md).
+Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
+e desde a suíte de invariantes eles avisam sozinhos: a guarda cruza cada contagem escrita
+aqui, no [SDD](./sdd.md), no README e no CLAUDE.md com o dado que ela descreve, e reprova
+a PR quando uma fica para trás. Vale para número por extenso também.
+
+O que continua sendo disciplina são as regras. O código é a fonte da verdade sobre o que
+o site tem; este PRD registra a intenção e o critério de honestidade — e nenhum teste
+percebe quando a intenção muda e o texto não acompanha.

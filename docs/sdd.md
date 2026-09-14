@@ -20,7 +20,7 @@ competência e projeto **falha o build** em vez de renderizar vazio.
 
 | Item       | Versão / decisão                                                                                                                             |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Astro      | `^7.3.1`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                                               |
+| Astro      | `^7.3.2`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                                               |
 | Node       | `24.20.0`, fixado em `mise.toml` e nos dois workflows                                                                                        |
 | TypeScript | `astro check` seguido de `tsc --noEmit`                                                                                                      |
 | Imagens    | `passthroughImageService()` — assets servidos direto de `public/`, sem `sharp`                                                               |
@@ -53,7 +53,8 @@ src/
   pages/                 index, projetos/index, projetos/[slug], trajetoria,
                          competencias, certificacoes, 404
   styles/                tokens.css, global.css
-tests/                   suíte de invariantes (node:test), lida contra dist/
+tests/                   suíte de invariantes (node:test), lida contra dist/;
+                         helpers.mjs guarda a lista canônica de cores
 scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
                          dossier-content.json
                          (as dependências vêm de requirements-pdf.txt, na raiz)
@@ -92,8 +93,8 @@ possam divergir.
 | Arquivo           | Exporta                     | Contrato                                                                                   |
 | ----------------- | --------------------------- | ------------------------------------------------------------------------------------------ |
 | `profile.ts`      | `profile`                   | identidade, contatos, `screening` (ficha de triagem), `leadHtml`, `description`, `ogImage` |
-| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items: SkillItem[]` — 4 grupos, 29 itens                |
-| `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas                                |
+| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items: SkillItem[]` — 4 grupos de competência, 29 itens |
+| `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas de trajetória                  |
 | `certificates.ts` | `certGroups`, `certTotal`   | 3 grupos, 24 itens; `file` é o caminho sob `public/certificates/`                          |
 
 `SkillGroup.projectIds` e `SkillItem.projectIds` são validados em `Skills.astro`: id
@@ -213,8 +214,8 @@ Regras que o componente e o CSS assumem:
   caírem na mesma linha dos estágios, tenha o projeto orquestrador ou não;
 - `outputs` vazio não renderiza a lista, para não deixar conector solto.
 
-Os cinco projetos sem fluxo em camadas **não** têm diagrama, e isso é decisão de
-produto: inventar pipeline onde não há contraria a regra de fidelidade.
+Os outros cinco projetos, sem fluxo em camadas, **não** têm diagrama, e isso é
+decisão de produto: inventar pipeline onde não há contraria a regra de fidelidade.
 
 ## Sistema de estilos
 
@@ -370,7 +371,7 @@ Durante o trabalho, `npm run dev`. Antes de entregar:
 
 ```
 npm run format:check
-npm run build          # deve gerar 14 páginas
+npm run build          # 15 páginas: 14 rotas navegáveis + dist/404.html
 npm run check          # astro check + tsc --noEmit
 npm test               # invariantes, lidos contra dist/
 ```
@@ -385,17 +386,25 @@ JSON-LD é serializado e os links já carregam o prefixo da base. Por isso roda 
 Ela existe porque todo invariante deste documento que já quebrou foi pego por auditoria
 humana, nunca pelo pipeline. Cobre hoje:
 
-| Arquivo            | O que guarda                                                                                                                                                                                                |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard        |
-| `content.test.mjs` | as contagens publicadas; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
-| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; um único `<script>`, e só na abertura; um `<h1>` por página sem pular nível; canonical e título próprio por página           |
+| Arquivo            | O que guarda                                                                                                                                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard                                                                      |
+| `content.test.mjs` | as contagens publicadas e as que a prosa dos documentos repete, inclusive por extenso; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
+| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; todo `<script>` é `application/ld+json`, nenhum executável; um `<h1>` por página sem pular nível; canonical e título próprio por página                                                    |
 
-Três detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são varridos
-**contando chaves**, porque dois deles ficam aninhados no `@media` escuro e expressão
-regular não alcança; o Markdown quebra linha no meio das frases, então as ressalvas são
-casadas com o espaço normalizado; e os links passam por `decodeURIComponent` antes do
-teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos.
+Quatro detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são
+varridos **contando chaves**, porque dois deles ficam aninhados no `@media` escuro e
+expressão regular não alcança; o Markdown quebra linha no meio das frases, então as
+ressalvas são casadas com o espaço normalizado; os links passam por `decodeURIComponent`
+antes do teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos; e
+a guarda de contagens lê número por extenso, porque a prosa escreve "Quinze cores
+semânticas" e "nove projetos" — dobrar o texto ao regex seria a troca errada.
+
+A contrapartida do número por extenso é que um recorte legítimo passa a casar. "Só os 4
+projetos que declaram arquitetura" e "as outras cinco rotas" são subconjuntos, não a
+contagem total, e a guarda os distingue por uma lista de marcadores — "só os", "dos",
+"outros", "outras". Um recorte novo escrito sem marcador reprova a PR, e a correção é
+escrever o marcador, não afrouxar o padrão.
 
 Quando um invariante novo entrar aqui, **quebre-o de propósito uma vez** e confirme que o
 teste reprova. Um teste que nunca viu vermelho não é uma guarda.
@@ -437,25 +446,73 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 Os riscos com **teste** ao lado deixaram de depender de alguém lembrar: reprovam a PR
 sozinhos. Os demais continuam sendo disciplina.
 
-| Risco                                           | Controle                                                                        |
-| ----------------------------------------------- | ------------------------------------------------------------------------------- |
-| Link ou asset sem `url()`                       | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
-| Divergência entre cartão e legenda de resultado | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
-| Termo em `LAYERS` sem regra `.chain--*`         | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
-| Lista de cores divergente entre blocos de tema  | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
-| Diagrama afirmar camada inexistente             | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
-| Metadado afirmando o que a página não mostra    | **teste** confere `knowsAbout` contra o texto visível                           |
-| Ressalva de honestidade removida sem querer     | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
-| PDF desalinhado do manifesto                    | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
-| Repositório de projeto renomeado ou privado     | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
-| Action com tag reapontada                       | fixadas por SHA; Dependabot reabre para não congelar                            |
-| Renomear o job de CI                            | o nome é o contexto exigido pela proteção da `main`                             |
-| PR empilhada sobre PR aberta                    | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
+| Risco                                               | Controle                                                                        |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Link ou asset sem `url()`                           | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
+| Divergência entre cartão e legenda de resultado     | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
+| Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
+| Lista de cores divergente entre blocos de tema      | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
+| Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado     |
+| `atualizadoEm` envelhecido sem ninguém notar        | hoje: disciplina. Proposta em "Evolução técnica" — nada relê o repositório      |
+| Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
+| Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                           |
+| Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
+| PDF desalinhado do manifesto                        | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
+| Repositório de projeto renomeado ou privado         | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
+| Action com tag reapontada                           | fixadas por SHA; Dependabot reabre para não congelar                            |
+| Renomear o job de CI                                | o nome é o contexto exigido pela proteção da `main`                             |
+| PR empilhada sobre PR aberta                        | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
 
 ## Evolução técnica proposta
 
-Nada pendente aqui. O último item foi medido e recusado — o registro fica abaixo, porque
-"não fizemos" sem o número convida a refazer a discussão daqui a seis meses.
+As três propostas abaixo **não estão implementadas**. Cada uma existe porque o PRD
+aponta um buraco de produto; aqui fica a forma técnica que ela teria e o que custa.
+
+### 1. Verificação semanal de `atualizadoEm`
+
+O campo vem da API do GitHub na hora de escrever a ficha e nunca mais é conferido.
+Proposta: um `datas.yml` no molde do `links.yml` — semanal e manual, **fora** do caminho
+da PR, porque mergear não pode depender de rede de terceiros. Ele lê `pushed_at` de cada
+repositório declarado em `repos`, compara com o frontmatter e abre **uma** issue com as
+divergências; projeto com mais de um repositório usa o `pushed_at` mais recente entre
+eles, que é a mesma regra que o `periodo` já segue.
+
+A diferença para o `links.yml` é o que cada um vigia. Aquele pega repositório renomeado,
+arquivado ou privado — ruptura. Este pega deriva silenciosa: tudo responde 200, e a data
+é que está velha.
+
+### 2. Rotas por tecnologia (`/projetos/stack/<slug>/`)
+
+`getStaticPaths` agrupando os projetos por tecnologia, no mesmo molde de
+`projetos/[slug].astro`. O elo de `Skills.astro`, que hoje aponta para o primeiro
+`projectIds`, passa a apontar para a página da tecnologia.
+
+O trabalho real não é a rota, é o vocabulário. Hoje `stack` é `z.string()` — uma linha só,
+que três lugares fatiam por `" · "` (`Channels.astro`, a ficha e o `programmingLanguage`
+do JSON-LD). Nada valida os pedaços: o schema aceita qualquer grafia, e o nome diverge do
+usado em `skills.ts`, onde "Delta Lake / PySpark" é um item e nos projetos são duas
+entradas. Virar rota exige promover esses pedaços a vocabulário fechado, com o build
+falhando em termo desconhecido — senão `PySpark` e `pyspark` nascem como duas páginas.
+
+Consequência a não esquecer: a contagem de 14 rotas muda em quatro documentos, e a guarda
+de contagens reprova cada um que ficar para trás. Isso é a guarda funcionando, não
+obstáculo.
+
+### 3. `BreadcrumbList` nas fichas
+
+Trilha visível em `projetos/[slug].astro` mais o dado estruturado pelo mesmo
+`slot="head"` que já carrega o `SoftwareSourceCode`. Cabe porque o invariante de script é
+de **tipo** e não de contagem: um segundo `application/ld+json` por ficha passa, um
+script executável não.
+
+A regra de metadado com lastro vale igual aqui — o `BreadcrumbList` só pode descrever a
+trilha que a página mostra. Trilha estruturada sem trilha visível é exatamente a classe de
+afirmação que a suíte já reprova em `knowsAbout`.
+
+## Decisões fechadas
+
+Medido e recusado. O registro fica porque "não fizemos" sem o número convida a refazer a
+discussão daqui a seis meses.
 
 ### Preload da fonte crítica — medido e descartado
 
@@ -484,11 +541,24 @@ sustenta é que, com o site nesta forma, a otimização não se paga. Se a medi�
 refeita sob latência real e o quadro mudar, o caminho é um `<link rel="preload">` na
 `BaseHead` apontando para o arquivo que o bundle emite.
 
+### Imagem social por ficha e versão em inglês
+
+Decisões de produto, com o motivo no [PRD](./prd.md#decisões-fechadas). Ambas têm
+consequência técnica registrada ali: a primeira exigiria `sharp` ou peças versionadas em
+`public/`; a segunda, uma segunda árvore de rotas.
+
 ## Onde esta documentação envelhece
 
-Primeiro nas contagens (14 rotas, 9 projetos, 29 itens, 24 certificados, 15
-cores) e nas versões da tabela de stack. Depois no inventário de componentes, se
-algum for criado ou removido.
+As contagens deixaram de ser o ponto frágil: a suíte cruza cada número deste documento,
+do PRD, do README e do CLAUDE.md com o dado que ele descreve, e reprova a PR quando um
+fica para trás.
+
+O que envelhece sem ninguém ser avisado é o resto. **A tabela de versões da stack** é a
+primeira — ela já derivou uma vez, publicando Astro `^7.3.1` enquanto o `package.json`
+estava em `^7.3.2`, porque o Dependabot mexe no manifesto e não no documento. Depois o
+inventário de componentes, se algum for criado ou removido, e as descrições de invariante
+na tabela da suíte — a linha do `html.test.mjs` descreveu por um tempo "um único script,
+e só na abertura" depois de o teste já ter virado uma checagem de tipo.
 
 **O código é a fonte da verdade.** Este documento registra decisão, contrato e
 invariante — o que não se lê olhando um arquivo isolado. Ao mexer em schema,
