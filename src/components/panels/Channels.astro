@@ -15,7 +15,7 @@ const Title = `h${level}` as "h2" | "h3";
 <div class:list={["channels", columns === 2 && "channels--pair"]}>
   {projects.map((project) => (
     <article class="project-card">
-      <p class="project-category">{project.data.category}</p>
+      <p class="project-category">{project.data.category} · {project.data.periodo}</p>
       <Title class="project-title"><a href={url(`/projetos/${project.id}/`)}>{project.data.title}</a></Title>
       <p class="project-summary">{project.data.summary}</p>
       <Readout class="project-outcome" kind={project.data.metricKind} label={project.data.metric.label} value={project.data.metric.value} sub={project.data.metric.sub} />

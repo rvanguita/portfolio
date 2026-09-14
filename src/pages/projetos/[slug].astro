@@ -57,7 +57,7 @@ const schema = {
     <a class="backlink" href={url("/projetos/")}>← Todos os projetos</a>
     <article class="doc">
       <header class="doc-head">
-        <p class="doc-cat">{data.category}</p>
+        <p class="doc-cat">{data.category} · {data.periodo}</p>
         <h1>{data.title}</h1>
         {
           data.leadHtml ? (

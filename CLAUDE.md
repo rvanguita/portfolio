@@ -118,7 +118,7 @@ npm run build and npm run check. Always check npm run preview at the production
 /portfolio/ base. Build/type checks do not detect every broken link or layout issue.
 
 Check all generated pages, internal links, certificate/dossier URLs, project order
-and metadata. Preserve all 28 skill items, nine projects and 24 certificate entries.
+and metadata. Preserve all 29 skill items, nine projects and 24 certificate entries.
 Keep generated diagnostic reports out of formatting checks through .prettierignore;
 do not remove user files as cleanup.
 

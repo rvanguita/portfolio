@@ -2,6 +2,8 @@
 title: Sentiment Identification NLP
 order: 9
 category: NLP · Classificação
+periodo: "2025"
+atualizadoEm: "2025-04-23"
 kind: light
 metricKind: medida
 summary: >-
@@ -13,6 +15,8 @@ metric:
   sub: ROC AUC 0,948 · multiclasse ≈ 0,62
 stack: Python · NLTK/RSLP · TF-IDF · XGBoost · Optuna · SHAP
 repos:
+  - label: Notebook que produz a métrica
+    url: https://github.com/rvanguita/sentiment-identification-nlp/blob/main/main.ipynb
   - label: GitHub
     url: https://github.com/rvanguita/sentiment-identification-nlp
 spec:

@@ -28,7 +28,7 @@ recebem números em destaque. A legenda fica ao final do catálogo; métricas e
 ressalvas permanecem junto aos projetos.
 
 A página inicial resume os quatro grupos de competências com links para exemplos
-concretos. A página de competências conserva todos os 28 itens. Formação e
+concretos. A página de competências conserva todos os 29 itens. Formação e
 certificações têm um resumo conjunto na home; trajetória completa e os 24
 certificados continuam em suas páginas próprias.
 

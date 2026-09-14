@@ -58,7 +58,7 @@ O site tem **14 rotas estáticas**:
 | `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
 | `/projetos/<slug>/` | 9 fichas de projeto                                                      |
 | `/trajetoria/`      | formação e experiência, 9 entradas                                       |
-| `/competencias/`    | 4 grupos de capacidade, 28 itens, ligados a projetos                     |
+| `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
 | `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
 
 Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
@@ -163,7 +163,7 @@ do projeto não descreve.
 ## Estado atual
 
 Entregue e publicado: as 14 rotas, os 9 projetos (4 com estudo de caso em
-Markdown e 5 com ficha estruturada), 28 itens de competência, 24 certificados, 4
+Markdown e 5 com ficha estruturada), 29 itens de competência, 24 certificados, 4
 diagramas de arquitetura, a ficha de triagem, o dossiê em PDF e o deploy
 automático em cada push para `main`.
 
@@ -175,39 +175,7 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Fechar a corrente entre a métrica e o código
-
-Hoje a corrente para uma casa antes do fim. Os 11 links de projeto apontam todos para a
-raiz do repositório, e nada mais fundo: quem lê "ROC AUC 0,936" não tem como conferir o
-número sem garimpar o repositório inteiro. Os três projetos com métrica aferida —
-bank-churn, wind-farm e sentiment-nlp — têm um `main.ipynb` na raiz, que é exatamente o
-arquivo onde o número nasce.
-
-_Aceite:_ todo projeto cujo resultado é do tipo `medida` publica, além do link do
-repositório, um link para o arquivo que produz a métrica. Nenhum número aferido fica a
-mais de um clique da sua origem.
-
-### 2. Publicar a data de cada projeto
-
-Nenhum dos 9 projetos declara data, e o schema não tem o campo. Um recrutador não
-distingue trabalho deste mês de trabalho de dois anos atrás — e a diferença é material
-para quem contrata.
-
-A data não precisa ser inventada: a API do GitHub devolve a dos nove. Medido, por
-criação: rotaperfume, personal-expenses e shopping-list em 09/2026; fastf1 em 07/2026;
-otimizacao-eletrica em 08/2025; fraud-detection e sentiment-nlp em 04/2025; bank-churn
-em 08/2024; wind-farm em 05/2024.
-
-O dado expõe uma tensão que vale decidir com ele à vista: **os quatro projetos de
-engenharia em Python são os mais recentes**, e os de notebook são de 2024–25 — mas a
-abertura promove Bank Churn (notebook, 2024) ao segundo lugar, à frente de três projetos
-de 2026. Publicar a data e revisar a ordem do catálogo são decisões separadas; a ordem
-atual está fixada de propósito. A primeira torna a segunda discutível com fato.
-
-_Aceite:_ cada ficha e cada cartão mostram o período do projeto, com a data vindo de
-fonte verificável — nunca estimada.
-
-### 3. Terminar as cinco fichas que param na metade
+### 1. Terminar as cinco fichas que param na metade
 
 Quatro projetos têm estudo de caso (200–280 palavras, com problema, dados, método e
 resultado); cinco têm só a ficha estruturada. E a matéria-prima é desigual:
@@ -222,7 +190,7 @@ inventa escala e impacto — exatamente o que a seção de honestidade proíbe.
 _Aceite:_ nenhuma ficha nova afirma o que o repositório não sustenta; as ressalvas
 existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literais.
 
-### 4. Ligar cada competência a um projeto que a comprove
+### 2. Ligar cada competência a um projeto que a comprove
 
 As competências apontam para projetos por grupo, não por item: os 28 itens são cobertos
 por 4 referências, e cinco dos nove projetos — wind-farm, fraud-detection,
@@ -233,7 +201,7 @@ rejeita.
 _Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
 lista. Referência inválida continua quebrando o build.
 
-### 5. Cartão social das fichas: decidido, não pendente
+### 3. Cartão social das fichas: decidido, não pendente
 
 Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
 problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso
@@ -249,24 +217,9 @@ Fica registrado aqui para não ser reaberto como esquecimento — se um dia houv
 direção de design para cartões por projeto, o caminho é `public/` mais uma prop de
 imagem no `BaseHead`.
 
-### 6. Teste não aparece nas competências
-
-Os 28 itens são **ferramentas** — Python, SQL, Apache Airflow, Delta Lake, Docker,
-Git/GitHub Actions. Prática de engenharia aparece só no resumo do grupo "Engenharia de
-Dados", que cita contratos de dados e CI a cada PR. **Teste não aparece em item nenhum.**
-
-E a evidência existe: dos nove repositórios, os quatro disponíveis para inspeção
-(`lake-fastf1`, `rotaperfume`, `personal-expenses`, `personal-shopping-list`) **todos têm
-testes**, e três têm workflow de CI. Para quem contrata engenheiro de dados, teste é
-sinal de triagem primeiro: é parte do que separa quem entrega pipeline de quem entrega
-notebook. O site tem a evidência e não a reivindica.
-
-_Aceite:_ a competência de teste entra na lista apontando para os projetos que a
-comprovam, pela mesma regra do item 4 — nada reivindicado sem repositório atrás.
-
 ## Onde este documento envelhece
 
-Os números — 14 rotas, 9 projetos, 28 itens, 24 certificados — mudam se o
+Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o
 conteúdo mudar. O código é a fonte da verdade; este PRD registra a intenção e as
 regras. Ao acrescentar projeto, rota ou grupo de competência, reconfira as
 contagens aqui e no [SDD](./sdd.md).

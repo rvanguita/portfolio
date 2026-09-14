@@ -26,7 +26,7 @@ test("as contagens publicadas continuam de pé", () => {
     0,
   );
   assert.equal(groups.length, 4, "4 grupos de competência");
-  assert.equal(items, 28, "28 itens de competência");
+  assert.equal(items, 29, "29 itens de competência");
 
   const certs = read("src/data/certificates.ts");
   assert.equal((certs.match(/file:\s*"/g) ?? []).length, 24, "24 certificados");

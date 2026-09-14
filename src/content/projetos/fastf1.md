@@ -2,6 +2,8 @@
 title: FastF1 Data Platform
 order: 1
 category: Lakehouse · MLOps
+periodo: "2026"
+atualizadoEm: "2026-09-07"
 kind: full
 metricKind: arquitetura
 summary: >-

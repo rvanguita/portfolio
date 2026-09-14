@@ -2,6 +2,8 @@
 title: Personal Expenses
 order: 4
 category: Engenharia de Dados · Categorização
+periodo: "2026"
+atualizadoEm: "2026-09-08"
 kind: light
 metricKind: arquitetura
 summary: >-

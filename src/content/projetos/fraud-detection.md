@@ -2,6 +2,8 @@
 title: Credit Card Fraud Detection
 order: 8
 category: Detecção de Fraude
+periodo: "2025"
+atualizadoEm: "2025-05-08"
 kind: light
 metricKind: desenvolvimento
 summary: >-

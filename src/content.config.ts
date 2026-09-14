@@ -11,6 +11,12 @@ const projetos = defineCollection({
       title: z.string(),
       order: z.number(),
       category: z.string(),
+      // Período do trabalho, para o leitor situar recência. Vem da data real dos
+      // repositórios do projeto (criação → último push), nunca de estimativa.
+      periodo: z.string(),
+      // Data do último trabalho no projeto, em ISO. Alimenta o `lastmod` do
+      // sitemap, que precisa de timestamp — `periodo` é intervalo de exibição.
+      atualizadoEm: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
       kind: z.enum(["full", "light"]),
       summary: z.string(),
       leadHtml: z.string().optional(),

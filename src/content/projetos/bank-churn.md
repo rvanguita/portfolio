@@ -2,6 +2,8 @@
 title: Bank Customer Churn Prediction
 order: 2
 category: Classificação · Risco
+periodo: "2024–25"
+atualizadoEm: "2025-05-06"
 kind: full
 metricKind: medida
 summary: >-
@@ -18,6 +20,8 @@ metric:
   sub: acurácia 0,904 · MCC 0,67
 stack: Python · CatBoost · LightGBM · XGBoost · SHAP · MLflow · Docker
 repos:
+  - label: Notebook que produz a métrica
+    url: https://github.com/rvanguita/bank-customer-churn/blob/main/main.ipynb
   - label: GitHub
     url: https://github.com/rvanguita/bank-customer-churn
 description: >-

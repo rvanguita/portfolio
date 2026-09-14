@@ -92,7 +92,7 @@ possam divergir.
 | Arquivo           | Exporta                     | Contrato                                                                                   |
 | ----------------- | --------------------------- | ------------------------------------------------------------------------------------------ |
 | `profile.ts`      | `profile`                   | identidade, contatos, `screening` (ficha de triagem), `leadHtml`, `description`, `ogImage` |
-| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items` — 4 grupos, 28 itens                             |
+| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items` — 4 grupos, 29 itens                             |
 | `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas                                |
 | `certificates.ts` | `certGroups`, `certTotal`   | 3 grupos, 24 itens; `file` é o caminho sob `public/certificates/`                          |
 
@@ -244,6 +244,12 @@ regras de variação por especificidade.
 - nunca hide de overflow para esconder problema de layout.
 
 ## Metadados e SEO
+
+O sitemap emite `lastmod` **por ficha de projeto**, com a data real do repositório
+(`atualizadoEm` no frontmatter). As outras cinco rotas não levam `lastmod`: não há
+fonte honesta para elas, e uma data de build serviria para todas ao mesmo tempo — o
+que diria ao robô que tudo mudou quando só uma página mudou. O `serialize` lê o
+frontmatter direto do disco, porque o sitemap é montado fora da camada de conteúdo.
 
 `BaseHead` monta canonical com `new URL(Astro.url.pathname, Astro.site)`, Open
 Graph com imagem absoluta e dimensões declaradas, Twitter card e `theme-color`
@@ -439,24 +445,7 @@ _Aceite:_ a troca vem acompanhada da remoção do `font-stretch` e do token
 `--wdth-display`, que deixam de ter função — e a revisão visual confirma que nenhum
 título mudou de largura. Mexer em `src/styles/` continua exigindo a skill de design.
 
-### 2. `lastmod` no sitemap — depende da data por projeto
-
-O JSON-LD por ficha saiu daqui: está implementado, e "Metadados e SEO" descreve o que
-ele declara.
-
-O `lastmod` ficou, e não por esquecimento. `@astrojs/sitemap` aceita `lastmod?: Date`,
-mas isso aplica **uma data a todas as 14 URLs** — dizer ao robô que tudo mudou quando só
-uma página mudou é sinal falso, e sinal falso é pior que sinal ausente. Por página daria
-via `serialize`, mas precisa de uma fonte de data: a via git exigiria `fetch-depth: 0` no
-`checkout` (hoje é raso) e ainda entregaria data de commit, não do trabalho.
-
-O item 1 do PRD traz a data real de cada projeto para dentro do frontmatter. Com ela lá,
-o `serialize` monta `lastmod` por página sem tocar no CI.
-
-_Aceite:_ entra junto com a data por projeto, nunca antes — e cada `lastmod` reflete a
-data daquela página, não a do build.
-
-### 3. A fonte crítica não tem preload
+### 2. A fonte crítica não tem preload
 
 A abertura não emite nenhum `rel="preload"`. A Archivo do título — 87 KB no subset
 latino, o maior arquivo da página — só é descoberta depois que o CSS é baixado e
@@ -473,7 +462,7 @@ métrica de primeira tela.
 
 ## Onde esta documentação envelhece
 
-Primeiro nas contagens (14 rotas, 9 projetos, 28 itens, 24 certificados, 15
+Primeiro nas contagens (14 rotas, 9 projetos, 29 itens, 24 certificados, 15
 cores) e nas versões da tabela de stack. Depois no inventário de componentes, se
 algum for criado ou removido.
 

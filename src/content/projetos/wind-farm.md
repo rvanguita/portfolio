@@ -2,6 +2,8 @@
 title: Modelagem da Geração de Energia Eólica
 order: 6
 category: Regressão · Energia
+periodo: "2024"
+atualizadoEm: "2024-08-06"
 kind: full
 metricKind: medida
 summary: >-
@@ -20,6 +22,8 @@ metric:
   sub: RMSE 12,41 · MAE 8,76
 stack: Python · XGBoost · SHAP · Pandas · Matplotlib
 repos:
+  - label: Notebook que produz a métrica
+    url: https://github.com/rvanguita/wind-farm/blob/main/main.ipynb
   - label: GitHub
     url: https://github.com/rvanguita/wind-farm
 description: >-
