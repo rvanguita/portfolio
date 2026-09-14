@@ -251,7 +251,10 @@ def generate() -> None:
     content = load_content()
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     styles = make_styles()
-    canvas = Canvas(str(OUTPUT), pagesize=A4, pageCompression=1)
+    # invariant=1 congela data de criacao e IDs internos. Sem isso o PDF muda a
+    # cada execucao e o CI nao consegue distinguir 'manifesto alterado sem
+    # regenerar' de 'gerado de novo agora'.
+    canvas = Canvas(str(OUTPUT), pagesize=A4, pageCompression=1, invariant=1)
     canvas.setTitle(content["meta"]["title"])
     canvas.setAuthor(content["meta"]["author"])
     canvas.setSubject(content["meta"]["subject"])

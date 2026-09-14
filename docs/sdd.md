@@ -53,7 +53,9 @@ src/
   pages/                 index, projetos/index, projetos/[slug], trajetoria,
                          competencias, certificacoes
   styles/                tokens.css, global.css
-scripts/                 generate_dossier.py, check_dossier.py, dossier-content.json
+tests/                   suíte de invariantes (node:test), lida contra dist/
+scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
+                         dossier-content.json
                          (as dependências vêm de requirements-pdf.txt, na raiz)
 public/                  assets, certificates (24 PDFs), icon.svg, icon.png,
                          robots.txt, .nojekyll
@@ -266,6 +268,11 @@ npm run dossier:generate
 npm run dossier:check
 ```
 
+O `Canvas` recebe `invariant=1`, que congela data de criação e IDs internos: duas
+gerações seguidas do mesmo manifesto saem **byte a byte idênticas**. É o que permite ao
+CI regenerar e exigir árvore limpa — sem isso, o PDF mudaria a cada execução e não
+haveria como distinguir "manifesto alterado sem regenerar" de "gerado agora".
+
 O check é estrutural e assertivo: **3 páginas A4**, pelo menos 7 anotações de
 link, todas `/URI`, presença de termos obrigatórios e ausência de resíduo de
 versões antigas. `profile.lead` é renderizado em 24 pt, então precisa ser curto —
@@ -280,13 +287,30 @@ usa uma posição independente que possa sobrepor o texto.
 
 ## CI/CD
 
-| Workflow     | Gatilho                  | Papel                                |
-| ------------ | ------------------------ | ------------------------------------ |
-| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build` |
-| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages          |
+| Workflow     | Gatilho                  | Papel                                  |
+| ------------ | ------------------------ | -------------------------------------- |
+| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`   |
+| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages            |
+| `links.yml`  | semanal, manual          | confere os links externos dos projetos |
 
-O `ci.yml` roda `format:check`, `build`, `check` e `dossier:check` — este último
-precisa do `uv`, instalado no job por `astral-sh/setup-uv`.
+O `ci.yml` roda, nesta ordem: `format:check`, `build`, `check`, `test`,
+`dossier:check` e `dossier:generate` seguido de `git diff --exit-code`. A suíte vem
+depois do `build` porque lê `dist/`. O `uv` é instalado no job por `astral-sh/setup-uv`,
+para os scripts do dossiê.
+
+Os dois últimos passos se complementam: o `dossier:check` pega um PDF estruturalmente
+quebrado, mas **não compara o PDF com o manifesto** — ele nunca abre o JSON. Quem pega
+copy alterada sem regenerar é o `git diff` depois do `dossier:generate`, possível porque
+o gerador é determinístico.
+
+O `links.yml` fica **fora do caminho da PR** de propósito: mergear não pode depender da
+rede de terceiros. A quebra que ele vigia não vem de commit — vem de alguém renomear,
+arquivar ou tornar privado um repositório.
+
+Todas as Actions são fixadas por **SHA**, com a versão em comentário ao lado. Tag é
+ponteiro móvel, e o `deploy.yml` roda com `pages: write` e `id-token: write`. Para que
+fixar não vire congelar, o `.github/dependabot.yml` acompanha `github-actions` e `npm`
+mensalmente, agrupando os cinco pacotes de fonte numa PR só.
 
 A proteção da `main` exige um status check com o **nome exato** do job
 (`🔍 Lint, Types, Testes & Build`). GitHub casa por `name:`, então renomear o job
@@ -304,10 +328,36 @@ Durante o trabalho, `npm run dev`. Antes de entregar:
 npm run format:check
 npm run build          # deve gerar 14 páginas
 npm run check          # astro check + tsc --noEmit
+npm test               # invariantes, lidos contra dist/
 ```
 
-Build e type check **não** detectam link quebrado nem problema de layout. Por
-isso, conferir também:
+### A suíte de invariantes
+
+`tests/*.test.mjs`, com o runner nativo do Node — **sem dependência nova**. Lê `dist/`,
+não os fontes, porque vários invariantes só existem depois do build: o CSS é um bundle, o
+JSON-LD é serializado e os links já carregam o prefixo da base. Por isso roda depois do
+`build`, e por isso `npm run build` é pré-requisito.
+
+Ela existe porque todo invariante deste documento que já quebrou foi pego por auditoria
+humana, nunca pelo pipeline. Cobre hoje:
+
+| Arquivo            | O que guarda                                                                                                                                                                                                |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard        |
+| `content.test.mjs` | as contagens publicadas; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
+| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; um único `<script>`, e só na abertura; um `<h1>` por página sem pular nível; canonical e título próprio por página           |
+
+Três detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são varridos
+**contando chaves**, porque dois deles ficam aninhados no `@media` escuro e expressão
+regular não alcança; o Markdown quebra linha no meio das frases, então as ressalvas são
+casadas com o espaço normalizado; e os links passam por `decodeURIComponent` antes do
+teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos.
+
+Quando um invariante novo entrar aqui, **quebre-o de propósito uma vez** e confirme que o
+teste reprova. Um teste que nunca viu vermelho não é uma guarda.
+
+Build, type check e a suíte **não** detectam problema de layout nem link externo morto.
+Por isso, conferir também:
 
 - `dist/` servido na base `/portfolio/` — asset fora do `url()` só falha aqui;
 - ausência de overflow em 360, 768 e 1440 px. **Medir dentro de um iframe da
@@ -321,13 +371,10 @@ isso, conferir também:
   `color-mix()` como `color(srgb …)` em floats de 0 a 1, não 0 a 255;
 - contraste de bordas após o fim das transições do tema, incluindo os links de
   projeto anterior/próximo; alvos da navegação com pelo menos 44×44 px;
-- contagens preservadas: 9 projetos, 28 itens, 24 certificados, 14 páginas, 4
-  diagramas, ordem do catálogo;
-- `npm run dossier:check` quando o manifesto ou o gerador mudarem. O `ci.yml`
-  também o roda (via `astral-sh/setup-uv`, fixado numa versão exata porque a
-  action não publica tag major flutuante), então um PDF não regenerado reprova a
-  PR. Mas o check é textual e estrutural: **não afere geometria nem sobreposição**.
-  Depois de mexer no gerador, conferir as 3 páginas à vista.
+- a ordem do catálogo — as contagens já são responsabilidade da suíte;
+- a geometria do dossiê. O `dossier:check` é textual e estrutural e o CI ainda pega
+  divergência com o manifesto, mas **nenhum dos dois afere sobreposição**: depois de
+  mexer no gerador, conferir as 3 páginas à vista.
 
 ### Formatação
 
@@ -343,16 +390,23 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 
 ## Riscos e controles
 
-| Risco                                           | Controle                                                              |
-| ----------------------------------------------- | --------------------------------------------------------------------- |
-| Link ou asset sem `url()`                       | `astro check` e `tsc` não pegam — abrir `dist/` servido na base       |
-| Divergência entre cartão e legenda de resultado | ambos leem `src/lib/metric.ts`                                        |
-| Termo em `LAYERS` sem regra `.chain--*`         | tratar os dois como uma mudança só                                    |
-| Lista de cores divergente entre blocos de tema  | testar as duas preferências de SO e as duas inversões                 |
-| Diagrama afirmar camada inexistente             | confrontar cada diagrama com o texto do próprio caso                  |
-| PDF desalinhado do site                         | regenerar e rodar `dossier:check` ao mexer na copy do perfil          |
-| Renomear o job de CI                            | o nome é o contexto exigido pela proteção da `main`                   |
-| PR empilhada sobre PR aberta                    | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor` |
+Os riscos com **teste** ao lado deixaram de depender de alguém lembrar: reprovam a PR
+sozinhos. Os demais continuam sendo disciplina.
+
+| Risco                                           | Controle                                                                        |
+| ----------------------------------------------- | ------------------------------------------------------------------------------- |
+| Link ou asset sem `url()`                       | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
+| Divergência entre cartão e legenda de resultado | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
+| Termo em `LAYERS` sem regra `.chain--*`         | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
+| Lista de cores divergente entre blocos de tema  | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
+| Diagrama afirmar camada inexistente             | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
+| Metadado afirmando o que a página não mostra    | **teste** confere `knowsAbout` contra o texto visível                           |
+| Ressalva de honestidade removida sem querer     | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
+| PDF desalinhado do manifesto                    | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
+| Repositório de projeto renomeado ou privado     | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
+| Action com tag reapontada                       | fixadas por SHA; Dependabot reabre para não congelar                            |
+| Renomear o job de CI                            | o nome é o contexto exigido pela proteção da `main`                             |
+| PR empilhada sobre PR aberta                    | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
 
 ## Evolução técnica proposta
 
@@ -360,50 +414,11 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 aqui ficam as mudanças técnicas propostas, com o critério que diz quando cada uma está
 pronta. Medições de 14/09/2026.
 
-### 1. Transformar os invariantes documentados em teste
+Quatro itens saíram daqui por terem sido implementados — a suíte de invariantes, a
+vigilância dos links externos, o dossiê determinístico e as Actions fixadas por SHA. O
+que eles fazem hoje está descrito em "Validação" e em "CI/CD".
 
-O job de CI se chama `🔍 Lint, Types, Testes & Build` e **não há um teste sequer** no
-repositório: nenhum `scripts.test`, nenhum arquivo de teste, nenhum runner. O nome
-promete o que o pipeline não faz.
-
-O custo disso está no próprio histórico. Todo invariante que este documento descreve e
-que já quebrou foi pego por auditoria manual, nunca pelo CI:
-
-| Quebra                                     | Commit     | Guardado hoje     |
-| ------------------------------------------ | ---------- | ----------------- |
-| `--layer-gold` fora do bloco de impressão  | `d38dc296` | não               |
-| Primeira tela estourando a dobra           | `c87a24ec` | não               |
-| PDF publicado desatualizado                | `02e2b138` | sim, via `ci.yml` |
-| INDUSCON sem "submetido" em 3 de 4 lugares | `6dda2346` | não               |
-| `knowsAbout` com 4 termos sem lastro       | `f63ff188` | não               |
-
-O Node 24.20.0 já traz `node:test` e `fs.globSync`, então isso cabe **sem dependência
-nova** — o que preserva a disciplina atual de 5 de produção e 5 de desenvolvimento.
-
-Candidatos, todos sobre `dist/` e os fontes, nenhum precisando de navegador:
-
-1. cada token de cor presente nos cinco lugares (os 4 blocos de tema mais o de impressão);
-2. `LAYERS` do `Readout` cobrindo exatamente os mesmos termos que as regras `.chain--*`;
-3. cada `metricKind` com a sua regra `.metric--<kind>`;
-4. cada termo de `knowsAbout` presente no texto visível, salvo a lista declarada de
-   sinônimos em inglês;
-5. exatamente um `<script>` no HTML de produção, e é o JSON-LD;
-6. as contagens: 14 páginas, 9 projetos, 28 itens, 24 certificados, 4 diagramas;
-7. todo link interno sob `/portfolio/` e resolvendo para arquivo real — **com
-   URL-decode antes de testar**, ou os 24 PDFs de certificado dão 24 falsos positivos;
-8. um `<h1>` por página, sem pular nível de heading;
-9. nenhum diagrama declarando camada que o texto do próprio projeto não menciona.
-
-A primeira tela (360×800, 768×800, 1440×800) precisa de navegador e fica como script
-separado, fora do CI. A técnica é a documentada em "Validação": medir **dentro de um
-iframe da largura exata**, porque `--window-size` do headless não entrega o viewport
-pedido.
-
-_Aceite:_ `npm test` existe, roda no `ci.yml` e falha quando qualquer invariante acima é
-violado — conferido quebrando um de propósito. O `name:` do job **não muda**: é o status
-check exigido pela proteção da `main`.
-
-### 2. Pagar só pelo eixo de fonte que o desenho usa
+### 1. Pagar só pelo eixo de fonte que o desenho usa
 
 `Layout.astro` importa `@fontsource-variable/archivo/wdth.css` — o eixo de largura. O
 subset latino dessa variante tem **87 KB**, mais da metade dos ~162 KB de fonte que a
@@ -418,7 +433,7 @@ _Aceite:_ a troca vem acompanhada da remoção do `font-stretch` e do token
 `--wdth-display`, que deixam de ter função — e a revisão visual confirma que nenhum
 título mudou de largura. Mexer em `src/styles/` continua exigindo a skill de design.
 
-### 3. JSON-LD por ficha e `lastmod` no sitemap
+### 2. JSON-LD por ficha e `lastmod` no sitemap
 
 As nove fichas de projeto não publicam dado estruturado nenhum; só a abertura publica.
 Um `SoftwareSourceCode` por ficha sai inteiro do frontmatter que já existe, é estático e
@@ -428,49 +443,7 @@ não acrescenta script de cliente. O `sitemap-0.xml` também sai sem `lastmod`, 
 _Aceite:_ o teste do item 1.5 continua valendo — um script por página, sempre JSON-LD.
 O schema da ficha só declara o que a ficha mostra, pela mesma regra do `knowsAbout`.
 
-### 4. Os links externos não têm vigilância
-
-Os 11 links de projeto respondem 200 hoje — conferidos um a um em 14/09/2026. Mas nada os
-verifica de forma contínua: renomear um repositório, torná-lo privado ou arquivá-lo
-quebra em silêncio a promessa central do produto, "cada projeto aponta para o código".
-O `build` não enxerga link externo, e o teste de link do item 1.7 cobre apenas link
-interno.
-
-_Aceite:_ uma verificação agendada — fora do caminho da PR, que não deve depender da rede
-de terceiros para mergear — falhando ou avisando quando um dos 11 links deixa de
-responder.
-
-### 5. O PDF pode divergir do manifesto sem ninguém notar
-
-`check_dossier.py` lê **só o PDF**; nunca abre `scripts/dossier-content.json`. Por
-construção, então, não consegue detectar divergência entre os dois. Mudar a copy no
-manifesto sem rodar `dossier:generate` passa no CI, porque as asserções de texto conferem
-termos fixos (`ROC AUC 0,936`, `24 certificados`, `CLT ou PJ`) que não mudam.
-
-Vale dizer com todas as letras: **a guarda acrescentada ao `ci.yml` não fecha o buraco que
-motivou a sua criação.** Ela pega um PDF estruturalmente quebrado, não um PDF
-desatualizado — que foi exatamente o defeito corrigido à mão quando o gerador mudou e o
-arquivo publicado ficou para trás.
-
-_Aceite:_ o CI regenera o dossiê e falha se o resultado diferir do arquivo commitado,
-tornando impossível mergear manifesto e PDF fora de sincronia. Atenção à
-reprodutibilidade: se o ReportLab gravar data de criação, comparar o texto e a geometria
-extraídos, não o byte.
-
-### 6. As Actions estão fixadas por tag mutável
-
-As seis — `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v6`,
-`actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5` e
-`astral-sh/setup-uv@v10.1.0` — usam tag, não SHA. Tag é ponteiro móvel: quem controla o
-repositório da action pode reapontá-la, e o `deploy.yml` roda com `contents: read`,
-`pages: write` e `id-token: write`. Não há Dependabot nem Renovate configurado, então
-atualizar dependência é trabalho manual e invisível.
-
-_Aceite:_ Actions fixadas por SHA, com atualização automatizada configurada — fixar não
-pode virar congelar. O `name:` do job de CI continua intocável: é o status check exigido
-pela proteção da `main`.
-
-### 7. A fonte crítica não tem preload
+### 3. A fonte crítica não tem preload
 
 A abertura não emite nenhum `rel="preload"`. A Archivo do título — 87 KB no subset
 latino, o maior arquivo da página — só é descoberta depois que o CSS é baixado e
