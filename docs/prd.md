@@ -86,8 +86,9 @@ JSON-LD `Person` na abertura.
    bloco de formação com acesso às certificações.
 4. O bloco de contato publica a **ficha de triagem** — cargos-alvo, modelo de
    contratação, alcance geográfico e idiomas — além do e-mail e do LinkedIn.
-5. O catálogo lista os 9 projetos com categoria, resumo, resultado tipado, até
-   cinco tecnologias e links para ficha e repositório.
+5. O catálogo lista os 9 projetos com categoria, período, resumo, resultado
+   tipado, até cinco tecnologias e links para ficha e repositório. Quando o
+   resultado é medido, um dos links aponta para o arquivo que produz a métrica.
 6. Cada ficha de projeto traz problema, dados, método e resultado; o trilho
    lateral repete o resultado e a stack completa.
 7. Projetos que têm arquitetura em camadas real exibem um diagrama fiel ao
@@ -101,7 +102,8 @@ JSON-LD `Person` na abertura.
 ## Requisitos não funcionais
 
 - geração estática com Astro, sem renderização em servidor;
-- nenhum JavaScript de cliente; o único script no HTML de produção é o JSON-LD;
+- nenhum JavaScript de cliente: **todo** `<script>` do HTML de produção é JSON-LD
+  estático — um na abertura e um em cada ficha de projeto;
 - responsividade sem overflow horizontal em 360, 768 e 1440 px;
 - texto a 4,5:1 e bordas de controle a 3:1, nos dois temas e nas duas inversões;
 - foco de teclado visível, navegação por atalho de conteúdo, alvos de 44 px;

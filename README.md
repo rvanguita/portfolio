@@ -17,6 +17,11 @@ A abertura apresenta a especialidade, a credencial e os contatos ao lado do
 FastF1. Seu diagrama documenta a ingestão, Raw em Parquet, Bronze/Silver em
 Delta Lake, orquestração semanal no Airflow e consumo via FastAPI/Streamlit.
 
+Cada projeto publica o período em que foi trabalhado, vindo da data real dos seus
+repositórios. Quando o resultado é medido, o cartão traz também o link para o arquivo
+que produz a métrica — o número fica a um clique da origem. Endereço inexistente cai
+numa página de erro própria, em português e com caminho de volta.
+
 Os três primeiros projetos da coleção aparecem na página inicial: FastF1 na
 abertura, Bank Churn e Rota do Perfume nos cartões seguintes. O catálogo mantém
 os nove projetos e sua ordem. Cartões apresentam até cinco tecnologias principais;
@@ -42,7 +47,9 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
 ## Estrutura
 
 - `src/config.ts`: endereço, prefixo, idioma e navegação.
-- `src/pages/`: início, projetos, nove detalhes, trajetória, competências e certificações.
+- `src/pages/`: início, projetos, nove detalhes, trajetória, competências,
+  certificações e a página de erro.
+- `tests/`: a suíte de invariantes, lida contra `dist/`.
 - `src/content.config.ts`: schema da coleção de projetos.
 - `src/content/projetos/*.md`: conteúdo e ordenação dos nove projetos.
 - `src/data/`: perfil, contatos, trajetória, competências e certificações.
@@ -56,6 +63,10 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
 - `src/styles/`: tokens semânticos e estilos compartilhados.
 - `src/lib/url.ts`: links internos e URLs absolutas.
 - `public/`: ícones, imagem social, dossiê e certificados em PDF.
+
+A abertura publica um `Person` em JSON-LD e cada ficha de projeto publica o seu
+`SoftwareSourceCode`, montados só com o que a página mostra. O sitemap leva `lastmod`
+por ficha, com a data real do projeto.
 
 O site é servido sob `/portfolio/`. Todo caminho interno ou de arquivo público
 passa pelo helper `url()`; metadados absolutos usam `Astro.site`.
@@ -84,8 +95,15 @@ npm run dev
 npm run format:check
 npm run build
 npm run check
+npm test
 npm run preview
 ```
+
+`npm test` é a suíte de invariantes, com o runner do próprio Node e sem dependência
+nova. Ela lê `dist/`, então roda depois do build, e guarda as regras que o PRD e o SDD
+definem: as cores nos cinco lugares, a rampa medalhão, os tipos de resultado, o schema
+com lastro no texto visível, as ressalvas de honestidade, os links internos, a
+hierarquia de heading e as contagens que os documentos publicam.
 
 Sempre conferir também a prévia de produção em `/portfolio/`, incluindo links,
 PDFs, navegação por teclado, temas e layouts de 360, 768 e 1440 px.
