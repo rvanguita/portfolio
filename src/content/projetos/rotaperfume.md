@@ -2,6 +2,8 @@
 title: Rota do Perfume
 order: 3
 category: MLOps · Vendas
+periodo: "2026"
+atualizadoEm: "2026-09-08"
 kind: full
 metricKind: arquitetura
 summary: >-

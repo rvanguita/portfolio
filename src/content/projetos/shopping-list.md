@@ -2,6 +2,8 @@
 title: Shopping List Intelligence
 order: 5
 category: Engenharia de Dados · OCR
+periodo: "2026"
+atualizadoEm: "2026-09-08"
 kind: light
 metricKind: arquitetura
 summary: >-

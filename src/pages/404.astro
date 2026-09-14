@@ -1,0 +1,28 @@
+---
+// Sem esta rota, quem erra o endereço cai no 404 do GitHub Pages: em inglês, sem
+// a identidade do site e sem caminho de volta. Astro trata /404 como caso
+// especial e emite dist/404.html na raiz mesmo com build.format "directory",
+// que é exatamente o arquivo que o Pages usa.
+import Layout from "@components/layout/Layout.astro";
+import { url } from "@lib/url";
+---
+
+<Layout
+  title="Página não encontrada · Rene Anguita"
+  description="A página procurada não existe neste portfólio. Volte ao início ou veja o catálogo de projetos."
+>
+  <div class="page">
+    <div class="mod-head"><h1>Esta página não existe</h1></div>
+    <p class="module-intro">
+      O endereço pode ter mudado, ou o link que trouxe você até aqui pode estar
+      desatualizado. O conteúdo continua todo no lugar — é só escolher por onde
+      seguir.
+    </p>
+    <div class="hero-contact">
+      <a class="button button--primary" href={url("/")}>Ir para o início</a>
+      <a class="button button--secondary" href={url("/projetos/")}>
+        Ver os projetos
+      </a>
+    </div>
+  </div>
+</Layout>

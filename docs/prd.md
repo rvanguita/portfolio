@@ -50,7 +50,7 @@ andamento.
 
 ## Escopo atual
 
-O site tem **14 rotas estáticas**:
+O site tem **14 rotas navegáveis**, mais uma página de erro:
 
 | Rota                | Conteúdo                                                                 |
 | ------------------- | ------------------------------------------------------------------------ |
@@ -58,8 +58,9 @@ O site tem **14 rotas estáticas**:
 | `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
 | `/projetos/<slug>/` | 9 fichas de projeto                                                      |
 | `/trajetoria/`      | formação e experiência, 9 entradas                                       |
-| `/competencias/`    | 4 grupos de capacidade, 28 itens, ligados a projetos                     |
+| `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
 | `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
+| `/404.html`         | endereço inexistente, com caminho de volta — não entra no sitemap        |
 
 Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
 gerado a partir de manifesto versionado; `sitemap-index.xml`; `robots.txt`;
@@ -85,8 +86,9 @@ JSON-LD `Person` na abertura.
    bloco de formação com acesso às certificações.
 4. O bloco de contato publica a **ficha de triagem** — cargos-alvo, modelo de
    contratação, alcance geográfico e idiomas — além do e-mail e do LinkedIn.
-5. O catálogo lista os 9 projetos com categoria, resumo, resultado tipado, até
-   cinco tecnologias e links para ficha e repositório.
+5. O catálogo lista os 9 projetos com categoria, período, resumo, resultado
+   tipado, até cinco tecnologias e links para ficha e repositório. Quando o
+   resultado é medido, um dos links aponta para o arquivo que produz a métrica.
 6. Cada ficha de projeto traz problema, dados, método e resultado; o trilho
    lateral repete o resultado e a stack completa.
 7. Projetos que têm arquitetura em camadas real exibem um diagrama fiel ao
@@ -100,7 +102,8 @@ JSON-LD `Person` na abertura.
 ## Requisitos não funcionais
 
 - geração estática com Astro, sem renderização em servidor;
-- nenhum JavaScript de cliente; o único script no HTML de produção é o JSON-LD;
+- nenhum JavaScript de cliente: **todo** `<script>` do HTML de produção é JSON-LD
+  estático — um na abertura e um em cada ficha de projeto;
 - responsividade sem overflow horizontal em 360, 768 e 1440 px;
 - texto a 4,5:1 e bordas de controle a 3:1, nos dois temas e nas duas inversões;
 - foco de teclado visível, navegação por atalho de conteúdo, alvos de 44 px;
@@ -162,10 +165,16 @@ do projeto não descreve.
 
 ## Estado atual
 
-Entregue e publicado: as 14 rotas, os 9 projetos (4 com estudo de caso em
-Markdown e 5 com ficha estruturada), 28 itens de competência, 24 certificados, 4
-diagramas de arquitetura, a ficha de triagem, o dossiê em PDF e o deploy
-automático em cada push para `main`.
+Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
+(4 com estudo de caso em Markdown e 5 com ficha estruturada), 29 itens de
+competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
+dossiê em PDF e o deploy automático em cada push para `main`.
+
+Cada projeto publica o período em que foi trabalhado e, quando o resultado é
+medido, o link para o arquivo que produz a métrica. Cada ficha injeta o próprio
+dado estruturado, e o sitemap leva `lastmod` por ficha. Uma suíte de invariantes
+guarda no CI as regras que este documento define — contagens, ressalvas literais,
+schema com lastro e ausência de JavaScript de cliente.
 
 ## Melhorias propostas
 
@@ -175,39 +184,7 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Fechar a corrente entre a métrica e o código
-
-Hoje a corrente para uma casa antes do fim. Os 11 links de projeto apontam todos para a
-raiz do repositório, e nada mais fundo: quem lê "ROC AUC 0,936" não tem como conferir o
-número sem garimpar o repositório inteiro. Os três projetos com métrica aferida —
-bank-churn, wind-farm e sentiment-nlp — têm um `main.ipynb` na raiz, que é exatamente o
-arquivo onde o número nasce.
-
-_Aceite:_ todo projeto cujo resultado é do tipo `medida` publica, além do link do
-repositório, um link para o arquivo que produz a métrica. Nenhum número aferido fica a
-mais de um clique da sua origem.
-
-### 2. Publicar a data de cada projeto
-
-Nenhum dos 9 projetos declara data, e o schema não tem o campo. Um recrutador não
-distingue trabalho deste mês de trabalho de dois anos atrás — e a diferença é material
-para quem contrata.
-
-A data não precisa ser inventada: a API do GitHub devolve a dos nove. Medido, por
-criação: rotaperfume, personal-expenses e shopping-list em 09/2026; fastf1 em 07/2026;
-otimizacao-eletrica em 08/2025; fraud-detection e sentiment-nlp em 04/2025; bank-churn
-em 08/2024; wind-farm em 05/2024.
-
-O dado expõe uma tensão que vale decidir com ele à vista: **os quatro projetos de
-engenharia em Python são os mais recentes**, e os de notebook são de 2024–25 — mas a
-abertura promove Bank Churn (notebook, 2024) ao segundo lugar, à frente de três projetos
-de 2026. Publicar a data e revisar a ordem do catálogo são decisões separadas; a ordem
-atual está fixada de propósito. A primeira torna a segunda discutível com fato.
-
-_Aceite:_ cada ficha e cada cartão mostram o período do projeto, com a data vindo de
-fonte verificável — nunca estimada.
-
-### 3. Terminar as cinco fichas que param na metade
+### 1. Terminar as cinco fichas que param na metade
 
 Quatro projetos têm estudo de caso (200–280 palavras, com problema, dados, método e
 resultado); cinco têm só a ficha estruturada. E a matéria-prima é desigual:
@@ -222,72 +199,44 @@ inventa escala e impacto — exatamente o que a seção de honestidade proíbe.
 _Aceite:_ nenhuma ficha nova afirma o que o repositório não sustenta; as ressalvas
 existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literais.
 
-### 4. Ligar cada competência a um projeto que a comprove
+### 2. Ligar cada competência a um projeto que a comprove
 
-As competências apontam para projetos por grupo, não por item: os 28 itens são cobertos
+As competências apontam para projetos por grupo, não por item: os 29 itens são cobertos
 por 4 referências, e cinco dos nove projetos — wind-farm, fraud-detection,
 personal-expenses, shopping-list e sentiment-nlp — não comprovam competência nenhuma.
 Um item sem projeto atrás é exatamente o tipo de afirmação que o objetivo deste produto
 rejeita.
 
+**Este item precisa de uma decisão antes de ser implementado.** Medindo, **12 dos 29
+itens não são mencionados por nenhum projeto** — Power BI, Tableau, Excel Avançado,
+Seaborn, NumPy, Statsmodels, Linux/Shell, Feature Engineering e três de otimização.
+Aplicar o critério ao pé da letra apagaria 41% da lista, o que muda o que o portfólio
+afirma profissionalmente. As saídas são três: afrouxar o critério para evidência por
+grupo, que é como está hoje; manter os itens aceitando que alguns não têm projeto atrás;
+ou enxugar a lista de verdade. Nenhuma delas é chamada de implementação.
+
 _Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
 lista. Referência inválida continua quebrando o build.
 
-### 5. Dados estruturados nas fichas de projeto
+### 3. Cartão social das fichas: decidido, não pendente
 
-Só a abertura publica JSON-LD. As nove fichas — as páginas que descrevem trabalho
-concreto — não publicam nenhum. Um `SoftwareSourceCode` por ficha, montado do frontmatter
-que já existe (título, resumo, stack, repositório, tipo de resultado), é estático e não
-acrescenta script de cliente.
+Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
+problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso
+— a prévia de um link de projeto identifica o projeto pelo texto, que é o que mais pesa
+na leitura de quem recebe.
 
-_Aceite:_ vale a mesma regra do `knowsAbout` — o schema da ficha só declara o que a
-ficha mostra. E segue um só script por página: JSON-LD, nunca JavaScript de cliente.
+Gerar imagem por projeto no build não é opção barata: o site usa
+`passthroughImageService()` e não tem `sharp`. Nove peças versionadas seriam trabalho de
+design, não de código.
 
-### 6. Não existe página 404
-
-Não há `src/pages/404.astro`, nem `public/404.html`, nem `dist/404.html`. Quem erra a
-URL, segue um link velho ou chega por um endereço que mudou cai no 404 genérico do
-GitHub — uma página que não é o portfólio, não tem a identidade e **não oferece caminho
-de volta**. Num produto cuja premissa é que o leitor decide em segundos, é o pior lugar
-possível para perdê-lo.
-
-_Aceite:_ uma rota 404 estática, no idioma e na identidade do site, com link para a
-abertura e para o catálogo. Sem JavaScript de cliente, como todo o resto.
-
-### 7. As nove fichas compartilham o mesmo cartão social
-
-Todas as fichas de projeto declaram o mesmo `og:image`, `assets/social-card.png`.
-Compartilhar a ficha do FastF1 mostra o cartão genérico do portfólio, não o projeto — e é
-justamente por link compartilhado que um recrutador costuma chegar a um projeto
-específico.
-
-Há uma restrição a respeitar: o build usa `passthroughImageService()` e não tem `sharp`,
-então gerar imagem por projeto durante o build não sai de graça. Os caminhos honestos são
-uma imagem por projeto versionada em `public/`, ou manter o `og:image` genérico e
-diferenciar `og:title` e `og:description` por ficha — que já existem e são o que mais
-pesa na prévia.
-
-_Aceite:_ a prévia de um link de projeto identifica o projeto, não o portfólio. Nenhuma
-dependência nova de processamento de imagem entra sem justificativa registrada.
-
-### 8. Teste não aparece nas competências
-
-Os 28 itens são **ferramentas** — Python, SQL, Apache Airflow, Delta Lake, Docker,
-Git/GitHub Actions. Prática de engenharia aparece só no resumo do grupo "Engenharia de
-Dados", que cita contratos de dados e CI a cada PR. **Teste não aparece em item nenhum.**
-
-E a evidência existe: dos nove repositórios, os quatro disponíveis para inspeção
-(`lake-fastf1`, `rotaperfume`, `personal-expenses`, `personal-shopping-list`) **todos têm
-testes**, e três têm workflow de CI. Para quem contrata engenheiro de dados, teste é
-sinal de triagem primeiro: é parte do que separa quem entrega pipeline de quem entrega
-notebook. O site tem a evidência e não a reivindica.
-
-_Aceite:_ a competência de teste entra na lista apontando para os projetos que a
-comprovam, pela mesma regra do item 4 — nada reivindicado sem repositório atrás.
+**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige.
+Fica registrado aqui para não ser reaberto como esquecimento — se um dia houver
+direção de design para cartões por projeto, o caminho é `public/` mais uma prop de
+imagem no `BaseHead`.
 
 ## Onde este documento envelhece
 
-Os números — 14 rotas, 9 projetos, 28 itens, 24 certificados — mudam se o
+Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o
 conteúdo mudar. O código é a fonte da verdade; este PRD registra a intenção e as
 regras. Ao acrescentar projeto, rota ou grupo de competência, reconfira as
 contagens aqui e no [SDD](./sdd.md).

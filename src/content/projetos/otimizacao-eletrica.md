@@ -2,6 +2,8 @@
 title: Otimização de Sistemas de Distribuição Elétrica
 order: 7
 category: Pesquisa Operacional
+periodo: "2025–26"
+atualizadoEm: "2026-06-29"
 kind: light
 metricKind: publicacao
 summary: >-

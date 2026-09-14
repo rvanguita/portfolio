@@ -20,6 +20,7 @@ export const skills: SkillGroup[] = [
       "FastAPI",
       "Docker",
       "Git / GitHub Actions",
+      "Pytest / testes automatizados",
       "Linux / Shell",
     ],
   },

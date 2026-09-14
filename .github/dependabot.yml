@@ -1,0 +1,23 @@
+# Fixar as Actions por SHA protege contra tag reapontada, mas sem atualização
+# automática fixar vira congelar. O Dependabot reabre o SHA quando sai versão
+# nova, mantendo o comentário da versão ao lado.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore"
+
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore"
+    groups:
+      # Os cinco pacotes de fonte andam juntos; agrupar evita cinco PRs por mês.
+      fontsource:
+        patterns:
+          - "@fontsource*"

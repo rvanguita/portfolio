@@ -31,6 +31,13 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   Shopping List Intelligence, then the remaining projects. FastF1 appears in
   the hero; Bank Churn and Rota do Perfume appear in the two cards below it.
   Cards show the first five technologies; detail pages preserve the full stack.
+- Every project declares `periodo` (display span) and `atualizadoEm` (ISO date, feeds
+  the sitemap's per-page lastmod). Both come from the real repository dates via the
+  GitHub API — never estimate them. Projects with several repositories use the span
+  covering all of them.
+- `src/pages/404.astro`: Astro treats /404 as a status-code page and emits
+  dist/404.html at the root, not a directory — that is the file GitHub Pages serves.
+  It is why the build reports 15 pages for 14 navigable routes.
 - `src/components/layout/`: shared layout, metadata, header, theme and footer.
 - `src/components/panels/`: Channels renders project cards; Readout renders
   contextual results, including nonnumeric architecture or scope; MetricLegend
@@ -114,16 +121,27 @@ Styles live in tokens.css and global.css:
 ## Validation and delivery
 
 Use npm run dev while implementing. Then run npm run format:check,
-npm run build and npm run check. Always check npm run preview at the production
-/portfolio/ base. Build/type checks do not detect every broken link or layout issue.
+npm run build, npm run check and npm test. Always check npm run preview at the
+production /portfolio/ base. Build/type checks do not detect every broken link or
+layout issue.
+
+npm test is the invariant suite (tests/, Node's own runner, no new dependency). It
+reads dist/, so it runs after the build. It guards what this file and the SDD claim:
+the colour tokens in all five places, LAYERS against the .chain--* rules, each
+metricKind against its rule, knowsAbout against the visible text, the honesty
+caveats, every internal link, one h1 per page, and the counts published in the docs.
+When you add an invariant, break it once on purpose and confirm the suite fails — a
+test that has never gone red is not a guard.
 
 Check all generated pages, internal links, certificate/dossier URLs, project order
-and metadata. Preserve all 28 skill items, nine projects and 24 certificate entries.
+and metadata. Preserve all 29 skill items, nine projects and 24 certificate entries.
 Keep generated diagnostic reports out of formatting checks through .prettierignore;
 do not remove user files as cleanup.
 
 Node 24.20.0 is pinned in mise.toml and both workflows. Astro 7 uses
-compressHTML: true to preserve inline whitespace. Import Zod from astro/zod;
+compressHTML: true, which collapses the generated HTML — whitespace between inline
+elements is significant, which is why the files sensitive to it sit outside Prettier
+(see .prettierignore). Import Zod from astro/zod;
 tsconfig paths use explicit ./ prefixes without the removed baseUrl option.
 
 npm run check runs astro check followed by TypeScript 7's tsc --noEmit.

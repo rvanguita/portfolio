@@ -4,7 +4,9 @@ import type { GetStaticPaths } from "astro";
 import Layout from "@components/layout/Layout.astro";
 import Readout from "@components/panels/Readout.astro";
 import Pipeline from "@components/viz/Pipeline.astro";
-import { url } from "@lib/url";
+import { url, absoluteUrl } from "@lib/url";
+import { METRIC_TAG } from "@lib/metric";
+import { profile } from "@data/profile";
 
 export const getStaticPaths = (async () => {
   const entries = (await getCollection("projetos")).sort(
@@ -19,6 +21,23 @@ export const getStaticPaths = (async () => {
 const { entry, prev, next } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
+
+// Schema da ficha. Vale a mesma regra do `knowsAbout` da abertura: só entra o
+// que a página mostra. Todo campo abaixo sai do frontmatter que já é renderizado
+// — nada é acrescentado para enfeitar a indexação.
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareSourceCode",
+  name: data.title,
+  description: data.summary,
+  url: absoluteUrl(url(`/projetos/${entry.id}/`), Astro.site),
+  programmingLanguage: data.stack.split(" · "),
+  about: data.category.split(" · "),
+  // O tipo de resultado, no mesmo vocabulário que o cartão e a legenda usam.
+  creativeWorkStatus: METRIC_TAG[data.metricKind],
+  author: { "@type": "Person", name: profile.name },
+  ...(data.repos.length > 0 && { codeRepository: data.repos[0].url }),
+};
 ---
 
 <Layout
@@ -27,11 +46,18 @@ const { Content } = await render(entry);
   ogType="article"
   current="projetos"
 >
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(schema)}
+  />
+
   <div class="page page--doc">
     <a class="backlink" href={url("/projetos/")}>← Todos os projetos</a>
     <article class="doc">
       <header class="doc-head">
-        <p class="doc-cat">{data.category}</p>
+        <p class="doc-cat">{data.category} · {data.periodo}</p>
         <h1>{data.title}</h1>
         {
           data.leadHtml ? (

@@ -86,7 +86,6 @@
   --font-display: "Archivo Variable", "Archivo", var(--font-sans);
   --font-sans: "IBM Plex Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
-  --wdth-display: 100%;
 
   --fs-xs: .8125rem;
   --fs-sm: .875rem;

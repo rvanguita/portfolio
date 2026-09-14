@@ -16,18 +16,26 @@ jobs:
     name: 🔍 Lint, Types, Testes & Build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
         with:
           node-version: 24.20.0
           cache: npm
-      # uv roda os scripts do dossiê sem venv. Sem tag major flutuante: versão fixa.
-      - uses: astral-sh/setup-uv@v10.1.0
+      # uv roda os scripts do dossiê sem venv.
+      - uses: astral-sh/setup-uv@bec219d24cd3e171d82865faccec33120bb574f4 # v10.1.0
       - run: npm ci
       - run: npm run format:check
       - run: npm run build
       - run: npm run check
+      # A suíte lê dist/, então roda depois do build.
+      - run: npm test
       # O dossiê é gerado à mão e commitado. Sem este passo, um PDF regenerado
       # fora do padrão — ou não regenerado depois de mexer no gerador — passa
       # despercebido até alguém abrir o arquivo.
       - run: npm run dossier:check
+      # O check acima é estrutural: não compara o PDF com o manifesto, então não
+      # vê copy alterada sem regenerar. Como o gerador é determinístico
+      # (invariant=1), regenerar e exigir árvore limpa fecha esse buraco.
+      - run: npm run dossier:generate
+      - name: Dossiê em dia com o manifesto
+        run: git diff --exit-code -- public/assets/dossie-rene-anguita.pdf
