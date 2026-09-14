@@ -5,8 +5,9 @@ Working guidance for coding agents. README.md is the human-facing version.
 ## Project
 
 Portuguese professional portfolio for Rene Verinaud Anguita Junior, presenting
-**Data Engineering** capabilities to recruiters. Static Astro site with 14 pages:
-home, project catalog, nine project details, trajectory, skills, and certificates.
+**Data Engineering** capabilities to recruiters. Static Astro site with 24 pages:
+home, project catalog, nine project details, ten technology pages, trajectory,
+skills, and certificates.
 Published at https://rvanguita.github.io/portfolio/.
 
 The visual direction is light and sophisticated: pale blue ground, white
@@ -40,7 +41,7 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   covering all of them.
 - `src/pages/404.astro`: Astro treats /404 as a status-code page and emits
   dist/404.html at the root, not a directory — that is the file GitHub Pages serves.
-  It is why the build reports 15 pages for 14 navigable routes.
+  It is why the build reports 25 pages for 24 navigable routes.
 - `src/components/layout/`: shared layout, metadata, header, theme and footer.
 - `src/components/panels/`: Channels renders project cards; Readout renders
   contextual results, including nonnumeric architecture or scope; MetricLegend

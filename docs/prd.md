@@ -50,17 +50,18 @@ andamento.
 
 ## Escopo atual
 
-O site tem **14 rotas navegáveis**, mais uma página de erro:
+O site tem **24 rotas navegáveis**, mais uma página de erro:
 
-| Rota                | Conteúdo                                                                 |
-| ------------------- | ------------------------------------------------------------------------ |
-| `/`                 | abertura, projeto em destaque, projetos, competências, formação, contato |
-| `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
-| `/projetos/<slug>/` | 9 fichas de projeto                                                      |
-| `/trajetoria/`      | formação e experiência, 9 entradas de trajetória                         |
-| `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
-| `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
-| `/404.html`         | endereço inexistente, com caminho de volta — não entra no sitemap        |
+| Rota                      | Conteúdo                                                                 |
+| ------------------------- | ------------------------------------------------------------------------ |
+| `/`                       | abertura, projeto em destaque, projetos, competências, formação, contato |
+| `/projetos/`              | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
+| `/projetos/<slug>/`       | 9 fichas de projeto                                                      |
+| `/projetos/stack/<tech>/` | 10 páginas de tecnologia, com os projetos que a usam                     |
+| `/trajetoria/`            | formação e experiência, 9 entradas de trajetória                         |
+| `/competencias/`          | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
+| `/certificacoes/`         | 24 certificados em 3 grupos, com PDF de cada um                          |
+| `/404.html`               | endereço inexistente, com caminho de volta — não entra no sitemap        |
 
 Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
 gerado a partir de manifesto versionado; `sitemap-index.xml`; `robots.txt`;
@@ -98,6 +99,13 @@ JSON-LD `Person` na abertura.
 9. O catálogo publica a legenda dos quatro tipos de resultado, para o leitor
    entender o código visual em vez de adivinhá-lo.
 10. O tema segue a preferência do sistema, com inversão manual disponível.
+11. Páginas a mais de um nível da abertura — fichas e páginas de tecnologia —
+    publicam trilha de navegação, com a página atual marcada e sem ser elo. O
+    dado estruturado correspondente espelha a trilha visível, item a item.
+12. Toda tecnologia usada por dois projetos ou mais tem página própria, listando
+    esses projetos. Com um só, não tem: a página repetiria a ficha. A etiqueta de
+    tecnologia vira elo onde a página existe, e o item de competência aponta para
+    ela em vez de para um único projeto.
 
 ## Requisitos não funcionais
 
@@ -220,7 +228,7 @@ no CLAUDE.md, e a guarda reprova a PR para cada documento que ficar para trás.
 
 ## Estado atual
 
-Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
+Entregue e publicado: as 24 rotas navegáveis mais a página de erro, os 9 projetos
 (todos com estudo de caso em Markdown), 29 itens de
 competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
 dossiê em PDF e o deploy automático em cada push para `main`.
@@ -235,69 +243,21 @@ Duas verificações agendadas ficam fora do caminho da PR, porque vigiam quebra 
 de commit: uma confere os links dos repositórios, outra confere se o `atualizadoEm` de
 cada ficha continua batendo com o último push do repositório.
 
+A evidência também é percorrível nos dois sentidos: 10 páginas de tecnologia reúnem os
+projetos que usam cada ferramenta, as etiquetas e os itens de competência apontam para
+elas, e a trilha de navegação diz ao leitor que caiu de busca numa ficha que existe um
+catálogo atrás dela. O rodapé aponta para o repositório deste site — a prática de
+engenharia que ele mostra é verificável, e o elo é o que a sustenta.
+
 ## Melhorias propostas
 
-**Nada nesta seção está implementado.** O que existe hoje é o que as seções anteriores
-descrevem; aqui ficam as melhorias que serviriam ao objetivo declarado — cada afirmação
-apontando para evidência — com o critério que diz quando cada uma está pronta. Os
-números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
-confiar neles.
+**Nada pendente aqui.** As três que esta seção guardava — página de tecnologia, trilha de
+navegação e o repositório como evidência — estão implementadas e descritas em "Escopo
+atual" e "Estado atual".
 
-### 1. O próprio repositório como evidência
-
-Diante de nove repositórios de uma pessoa só, a pergunta que sobra é se ela trabalha como
-quem já esteve em produção. O site não responde, e o repositório dele responde: CI que
-reprova a PR, suíte de invariantes, Actions fixadas por SHA com Dependabot para não
-congelar, PDF determinístico conferido contra árvore limpa, orçamento de acessibilidade
-escrito. Nada disso precisa afirmar escala — é verificável em dois cliques.
-
-Hoje essa evidência existe e fica invisível: quem não abre o repositório do site nunca
-sabe que ela está lá.
-
-**Forma recomendada:** uma linha com elo, no rodapé ou no bloco de contato, dizendo como o
-site é feito. Custo quase zero e nenhuma contagem se move.
-
-**Forma mais pesada:** um décimo projeto no catálogo. Evidência mais forte, leitura mais
-estranha — um projeto sobre o próprio site entre projetos de dados —, e ele teria de passar
-pelo critério de entrada acima como qualquer outro. Que é, de propósito, o teste de saber
-se ele merece entrar.
-
-**Pronto quando** a afirmação aponta para o que a sustenta — o workflow, a suíte — e não
-para um adjetivo sobre boas práticas.
-
-### 2. Índice reverso por tecnologia
-
-A competência aponta para o projeto, mas o caminho inverso não existe. Um item como
-Python aponta para 7 dos 9 projetos e o elo leva a um só — o de maior prioridade. Os
-outros seis ficam invisíveis: a evidência existe, o leitor não chega nela.
-
-E quem procura "Airflow" não tem onde cair. A tecnologia aparece em cartão e em ficha,
-sempre como etiqueta, nunca como página.
-
-Agrupar os projetos por tecnologia em rota própria resolve as duas coisas com o mesmo
-material — sem afirmar nada novo, só recortando a evidência publicada por outro eixo.
-
-**Custo honesto:** exige vocabulário canônico de tecnologia, que hoje não existe — a
-stack de cada projeto é texto livre e diverge do nome usado nas competências. E a
-contagem de 14 rotas muda nos quatro documentos, com a guarda cobrando cada um.
-
-**Pronto quando** nenhuma página de tecnologia tem menos de dois projetos (com um só, ela
-repete a ficha e não acrescenta caminho), o elo de competência passa a apontar para lá, e
-as contagens seguem batendo.
-
-### 3. Trilha de navegação nas fichas
-
-A ficha de projeto está a dois níveis da abertura e não diz isso em lugar nenhum. A
-navegação que ela oferece é anterior/próximo — útil para percorrer o catálogo, inútil
-para subir. O leitor que chega por busca direto numa ficha não tem como saber que existe
-um catálogo atrás dela.
-
-Uma trilha "Início › Projetos › ‹nome›" resolve, e o dado estruturado correspondente sai
-do mesmo lugar — espelhando a trilha visível, que é a regra que este documento já aplica
-a todo metadado.
-
-**Pronto quando** o dado estruturado descreve exatamente a trilha que a página mostra, a
-navegação é rotulada para leitor de tela, e os alvos respeitam os 44 px.
+A seção fica de pé, vazia, porque é onde a próxima entra. O critério que ela cobra de cada
+proposta continua valendo: problema observado, custo honesto e a frase que diz quando está
+pronta.
 
 ## Decisões fechadas
 
@@ -336,7 +296,7 @@ Medido e descartado, com os números no [SDD](./sdd.md#preload-da-fonte-crítica
 
 ## Onde este documento envelhece
 
-Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
+Os números — 24 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
 e desde a suíte de invariantes eles avisam sozinhos: a guarda cruza cada contagem escrita
 aqui, no [SDD](./sdd.md), no README e no CLAUDE.md com o dado que ela descreve, e reprova
 a PR quando uma fica para trás. Vale para número por extenso também.

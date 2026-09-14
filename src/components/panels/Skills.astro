@@ -2,12 +2,25 @@
 import { getCollection } from "astro:content";
 import { skills } from "@data/skills";
 import { url } from "@lib/url";
+import { paginasDeTecnologia } from "@lib/stack";
 
 interface Props {
   compact?: boolean;
 }
 const { compact = false } = Astro.props;
 const projects = await getCollection("projetos");
+
+// A página da tecnologia é o destino certo de um item que vários projetos
+// demonstram — e só existe com dois projetos ou mais atrás.
+//
+// O casamento é por nome exato, de propósito. "Python" e "Docker" casam; itens
+// que juntam duas ferramentas ("XGBoost / LightGBM") ou uma prática
+// ("Pytest / testes automatizados") não casam, e continuam apontando para o
+// projeto de maior prioridade. Aproximar a comparação faria o elo prometer uma
+// página que responde por outra coisa.
+const paginaPorTecnologia = new Map(
+  paginasDeTecnologia(projects).map((pagina) => [pagina.nome, pagina.slug]),
+);
 const find = (id: string) => {
   const project = projects.find((entry) => entry.id === id);
   if (!project)
@@ -18,13 +31,27 @@ const find = (id: string) => {
 const groups = skills.map((group) => ({
   ...group,
   projects: group.projectIds.map(find),
-  items: group.items.map((item) => ({
-    ...item,
-    // O elo aponta para o projeto de maior prioridade no catálogo que demonstra
-    // o item — `projectIds` já vem nessa ordem. Item sem projeto fica sem elo,
-    // em vez de apontar para algo que não o comprova.
-    evidence: item.projectIds.map(find)[0],
-  })),
+  items: group.items.map((item) => {
+    // Quando existe página da tecnologia, o elo vai para ela: o item deixa de
+    // apontar para um projeto e passa a apontar para todos os que o demonstram.
+    const pagina = paginaPorTecnologia.get(item.name);
+    if (pagina) {
+      return {
+        ...item,
+        href: url(`/projetos/stack/${pagina}/`),
+        titulo: `Projetos com ${item.name}`,
+      };
+    }
+    // Sem página, o elo aponta para o projeto de maior prioridade no catálogo
+    // que demonstra o item — `projectIds` já vem nessa ordem. Item sem projeto
+    // fica sem elo, em vez de apontar para algo que não o comprova.
+    const evidence = item.projectIds.map(find)[0];
+    return {
+      ...item,
+      href: evidence ? url(`/projetos/${evidence.id}/`) : undefined,
+      titulo: evidence ? `${item.name} em ${evidence.data.title}` : undefined,
+    };
+  }),
 }));
 ---
 
@@ -43,13 +70,9 @@ const groups = skills.map((group) => ({
               aria-label={`Tecnologias e métodos de ${group.title}`}
             >
               {group.items.map((item) =>
-                item.evidence ? (
+                item.href ? (
                   <li>
-                    <a
-                      class="tech-link"
-                      href={url(`/projetos/${item.evidence.id}/`)}
-                      title={`${item.name} em ${item.evidence.data.title}`}
-                    >
+                    <a class="tech-link" href={item.href} title={item.titulo}>
                       {item.name}
                     </a>
                   </li>

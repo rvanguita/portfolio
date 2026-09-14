@@ -66,9 +66,15 @@ const entradas = (read("src/data/timeline.ts").match(/years:\s*"/g) ?? [])
 const comArquitetura = projectFiles.filter(([, md]) =>
   /^architecture:/m.test(md),
 ).length;
+// Sai das rotas construídas, não do vocabulário: o que os documentos publicam é
+// quantas páginas existem, e é o build que decide isso ao aplicar o mínimo de
+// dois projetos.
+const paginasDeTecnologia = routes().filter(([rel]) =>
+  rel.startsWith("projetos/stack/"),
+).length;
 
 test("as contagens publicadas continuam de pé", () => {
-  assert.equal(routes().length, 14, "14 rotas");
+  assert.equal(routes().length, 24, "24 rotas");
   assert.equal(projectFiles.length, 9, "9 projetos");
 
   assert.equal(grupos, 4, "4 grupos de competência");
@@ -76,6 +82,7 @@ test("as contagens publicadas continuam de pé", () => {
   assert.equal(certificados, 24, "24 certificados");
   assert.equal(comArquitetura, 4, "4 projetos declaram arquitetura");
   assert.equal(entradas, 9, "9 entradas de trajetória");
+  assert.equal(paginasDeTecnologia, 10, "10 páginas de tecnologia");
   // A lista canônica vive em helpers.mjs; styles.test.mjs confere que cada cor
   // existe nos cinco lugares, e aqui só a contagem que os documentos publicam.
   assert.equal(TOKENS.length, 15, "15 cores semânticas");
@@ -235,6 +242,12 @@ test("as contagens que os documentos publicam batem com o código", () => {
       "gi",
       comArquitetura,
       "diagramas de arquitetura",
+    ],
+    [
+      `(${N}) (?:páginas de tecnologia|technology pages)`,
+      "gi",
+      paginasDeTecnologia,
+      "páginas de tecnologia",
     ],
   ].map(([fonte, flags, esperado, rotulo]) => [
     new RegExp(fonte, flags),

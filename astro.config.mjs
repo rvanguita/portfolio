@@ -32,7 +32,7 @@ export default defineConfig({
   image: { service: passthroughImageService() },
   integrations: [
     sitemap({
-      // `lastmod` por página, não do build. Uma data única para as 14 URLs diria
+      // `lastmod` por página, não do build. Uma data única para as 24 URLs diria
       // ao robô que tudo mudou quando só uma mudou, e sinal falso é pior que
       // sinal ausente. As fichas usam a data real do projeto; o resto fica sem
       // lastmod, porque não há fonte honesta para elas.

@@ -28,6 +28,22 @@ import { url } from "@lib/url";
         >
       </nav>
     </div>
+    {
+      /* A evidência de prática de engenharia é o repositório, não o adjetivo:
+        a frase diz o que dá para conferir e o elo leva a onde conferir. */
+    }
+    <div class="foot-colofon">
+      <p>
+        Site estático em Astro, sem JavaScript de cliente. Cada PR passa por uma
+        suíte de invariantes no CI.
+      </p>
+      <a
+        class="text-link"
+        href={profile.links.repo}
+        target="_blank"
+        rel="noopener noreferrer">Código deste site ↗</a
+      >
+    </div>
     <p class="foot-bottom">© {new Date().getFullYear()} {profile.name}</p>
   </div>
 </footer>

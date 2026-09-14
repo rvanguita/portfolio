@@ -44,14 +44,15 @@ src/
   config.ts              SITE e NAV — fonte única, compartilhada com astro.config.mjs
   content.config.ts      schema Zod da coleção `projetos`
   data/                  profile, skills, timeline, certificates
-  lib/                   url.ts, metric.ts
+  lib/                   url.ts, metric.ts, stack.ts
   content/projetos/      9 arquivos Markdown
   components/
-    layout/              BaseHead, Layout, ReadoutStrip, ThemeToggle, Footer
+    layout/              BaseHead, Layout, ReadoutStrip, ThemeToggle, Trilha, Footer
     panels/              Channels, Readout, MetricLegend, Skills
     viz/                 Pipeline, Timeline
-  pages/                 index, projetos/index, projetos/[slug], trajetoria,
-                         competencias, certificacoes, 404
+  pages/                 index, projetos/index, projetos/[slug],
+                         projetos/stack/[tech], trajetoria, competencias,
+                         certificacoes, 404
   styles/                tokens.css, global.css
 tests/                   suíte de invariantes (node:test), lida contra dist/;
                          helpers.mjs guarda a lista canônica de cores
@@ -132,19 +133,20 @@ Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 
 ### Componentes e contratos de props
 
-| Componente     | Props                                              | Papel                                            |
-| -------------- | -------------------------------------------------- | ------------------------------------------------ |
-| `Layout`       | `title`, `description?`, `ogType?`, `current?`     | casca das páginas, `slot="head"` para JSON-LD    |
-| `BaseHead`     | `title`, `description?`, `ogType?`                 | metadados, canonical, Open Graph, theme-color    |
-| `ReadoutStrip` | `current?`                                         | cabeçalho e navegação, marca a página ativa      |
-| `ThemeToggle`  | —                                                  | checkbox que inverte o tema do sistema           |
-| `Footer`       | —                                                  | identidade, contatos e link do dossiê            |
-| `Channels`     | `projects`, `level?`, `columns?`                   | cartões de projeto; `level` controla o heading   |
-| `Readout`      | `kind`, `label`, `value`, `sub?`, `class?`         | resultado tipado; decide cadeia vs. linha        |
-| `MetricLegend` | —                                                  | publica os quatro tipos ao fim do catálogo       |
-| `Skills`       | `compact?`                                         | capacidades; `compact` esconde os itens na home  |
-| `Pipeline`     | `architecture`, `variant?`, `headingId?`, `class?` | diagrama de camadas                              |
-| `Timeline`     | —                                                  | lista vertical da trajetória, `<h2>` por entrada |
+| Componente     | Props                                              | Papel                                               |
+| -------------- | -------------------------------------------------- | --------------------------------------------------- |
+| `Layout`       | `title`, `description?`, `ogType?`, `current?`     | casca das páginas, `slot="head"` para JSON-LD       |
+| `BaseHead`     | `title`, `description?`, `ogType?`                 | metadados, canonical, Open Graph, theme-color       |
+| `ReadoutStrip` | `current?`                                         | cabeçalho e navegação, marca a página ativa         |
+| `ThemeToggle`  | —                                                  | checkbox que inverte o tema do sistema              |
+| `Footer`       | —                                                  | identidade, contatos, dossiê e o elo do repositório |
+| `Trilha`       | `itens`                                            | trilha de navegação; o último item não é elo        |
+| `Channels`     | `projects`, `level?`, `columns?`                   | cartões de projeto; `level` controla o heading      |
+| `Readout`      | `kind`, `label`, `value`, `sub?`, `class?`         | resultado tipado; decide cadeia vs. linha           |
+| `MetricLegend` | —                                                  | publica os quatro tipos ao fim do catálogo          |
+| `Skills`       | `compact?`                                         | capacidades; `compact` esconde os itens na home     |
+| `Pipeline`     | `architecture`, `variant?`, `headingId?`, `class?` | diagrama de camadas                                 |
+| `Timeline`     | —                                                  | lista vertical da trajetória, `<h2>` por entrada    |
 
 `level` em `Channels` existe porque a home já gastou o `h2` no título da seção e
 precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
@@ -154,13 +156,18 @@ precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
 `trailingSlash: "always"` e `build.format: "directory"` — cada rota é um
 `index.html` em seu diretório. `projetos/[slug].astro` gera as nove fichas por
 `getStaticPaths`, ordenando por `order` e passando `prev`/`next` para a navegação
-entre projetos.
+entre projetos. `projetos/stack/[tech].astro` gera as 10 páginas de tecnologia pela
+mesma via, a partir de `paginasDeTecnologia()`.
+
+Não há índice em `/projetos/stack/`, e isso é escolha: as páginas de tecnologia são
+alcançadas pelas etiquetas das fichas e pelos itens de competência, que é de onde o leitor
+realmente parte. Um índice de tecnologias seria uma terceira lista do mesmo catálogo.
 
 **O 404 é a exceção, e de propósito.** Astro trata `/404` como página de código de
 status (`STATUS_CODE_PAGES`, em `core/build/common.js`) e emite `dist/404.html` na
 raiz, **não** `dist/404/index.html` — que é exatamente o arquivo que o GitHub Pages
-serve para endereço inexistente. Por isso o build informa 15 páginas enquanto o site
-tem 14 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
+serve para endereço inexistente. Por isso o build informa 25 páginas enquanto o site
+tem 24 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
 contagens que os documentos publicam.
 
 ## Aferição tipada
@@ -216,6 +223,36 @@ Regras que o componente e o CSS assumem:
 
 Os outros cinco projetos, sem fluxo em camadas, **não** têm diagrama, e isso é
 decisão de produto: inventar pipeline onde não há contraria a regra de fidelidade.
+
+## Vocabulário canônico da stack
+
+`stack` é uma linha só no frontmatter, fatiada por `" · "`. Enquanto ela servia para
+imprimir etiquetas, grafia não importava. No momento em que uma tecnologia virou rota,
+passou a importar: duas grafias da mesma ferramenta nascem como duas páginas.
+
+`src/lib/stack.ts` resolve isso com duas tabelas e uma regra:
+
+- `ALIAS` mapeia grafia para nome canônico;
+- `CANONICAS` é a lista fechada de nomes aceitos;
+- termo fora dela **lança e falha o build**. Acrescentar tecnologia a um projeto passa a
+  exigir acrescentá-la aqui, e esse atrito é o ponto.
+
+Não era hipótese. A stack já tinha `Python` e `Python 3.12` como termos distintos, e
+`Google Gemini (OCR)` escondia que o Gemini aparece em dois projetos — o suficiente para
+ele não atingir o mínimo e não ganhar página. Colapsar as grafias mudou a contagem de 9
+páginas para 10.
+
+`paginasDeTecnologia()` é a fonte única: `getStaticPaths` gera as rotas dela, e os elos das
+etiquetas e das competências consultam a mesma função. Rota gerada e elo não podem
+divergir porque são a mesma lista.
+
+**O mínimo de dois projetos** também é regra, não acaso: com um projeto só, a página
+repetiria a ficha e não acrescentaria caminho nenhum.
+
+O elo do item de competência casa por **nome exato**, de propósito. "Python" e "Docker"
+casam; "XGBoost / LightGBM" e "Pytest / testes automatizados" não, e continuam apontando
+para o projeto de maior prioridade. Aproximar a comparação faria o elo prometer uma página
+que responde por outra coisa.
 
 ## Sistema de estilos
 
@@ -371,7 +408,7 @@ Uma exceção está travada ali, com o motivo ao lado: o **major** do
 `<h1>{roleShort}<span>.</span></h1>` em três linhas e, como `compressHTML` preserva o
 espaço entre elementos inline, o título da abertura passa a renderizar
 "Engenheiro de Dados ." — com o ponto descolado. Medido comparando o texto visível
-das 15 páginas antes e depois: só uma muda, e é o `<h1>` mais visível do site.
+das 25 páginas antes e depois: só uma muda, e é o `<h1>` mais visível do site.
 
 É a mesma armadilha que o `.prettierignore` já contorna em `Channels.astro` e
 `certificacoes.astro`. Aqui a saída foi travar o major em vez de tirar as 250 linhas
@@ -392,7 +429,7 @@ Durante o trabalho, `npm run dev`. Antes de entregar:
 
 ```
 npm run format:check
-npm run build          # 15 páginas: 14 rotas navegáveis + dist/404.html
+npm run build          # 25 páginas: 24 rotas navegáveis + dist/404.html
 npm run check          # astro check + tsc --noEmit
 npm test               # invariantes, lidos contra dist/
 ```
@@ -475,6 +512,7 @@ sozinhos. Os demais continuam sendo disciplina.
 | Lista de cores divergente entre blocos de tema      | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
 | Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado     |
 | `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`                |
+| Duas grafias da mesma tecnologia virarem duas rotas | `CANONICAS` em `src/lib/stack.ts` **falha o build** em termo desconhecido       |
 | Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
 | Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                           |
 | Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
@@ -486,54 +524,17 @@ sozinhos. Os demais continuam sendo disciplina.
 
 ## Evolução técnica proposta
 
-As três propostas abaixo **não estão implementadas**. Cada uma existe porque o PRD
-aponta um buraco de produto; aqui fica a forma técnica que ela teria e o que custa.
+**Nada pendente aqui.** As três propostas que esta seção guardava foram implementadas: as
+rotas por tecnologia (descritas em "Vocabulário canônico da stack"), a trilha de navegação
+com o `BreadcrumbList` que a espelha, e o elo do repositório no rodapé.
 
-A verificação semanal de `atualizadoEm` saiu desta lista: está implementada, e a descrição
-dela vive em "CI/CD".
-
-### 1. O próprio repositório como evidência
-
-A prática de engenharia deste repositório é verificável e o site não a mostra. A forma
-recomendada é barata a ponto de não ter seção técnica própria — uma linha com elo no
-`Footer.astro`, apontando para o repositório.
-
-O que merece registro é o que **não** fazer. A afirmação tem de apontar para o artefato
-que a sustenta — o workflow, a suíte, o `.github/` —, nunca para um adjetivo sobre boas
-práticas. "Site com CI e testes" sem elo é exatamente a classe de alegação sem lastro que
-a suíte já reprova em `knowsAbout`, só que fora do alcance dela, porque é texto visível e
-não metadado.
-
-A forma pesada — um décimo projeto no catálogo — passa pelo critério de entrada do PRD como
-qualquer outro, e move as contagens em quatro documentos.
-
-### 2. Rotas por tecnologia (`/projetos/stack/<slug>/`)
-
-`getStaticPaths` agrupando os projetos por tecnologia, no mesmo molde de
-`projetos/[slug].astro`. O elo de `Skills.astro`, que hoje aponta para o primeiro
-`projectIds`, passa a apontar para a página da tecnologia.
-
-O trabalho real não é a rota, é o vocabulário. Hoje `stack` é `z.string()` — uma linha só,
-que três lugares fatiam por `" · "` (`Channels.astro`, a ficha e o `programmingLanguage`
-do JSON-LD). Nada valida os pedaços: o schema aceita qualquer grafia, e o nome diverge do
-usado em `skills.ts`, onde "Delta Lake / PySpark" é um item e nos projetos são duas
-entradas. Virar rota exige promover esses pedaços a vocabulário fechado, com o build
-falhando em termo desconhecido — senão `PySpark` e `pyspark` nascem como duas páginas.
-
-Consequência a não esquecer: a contagem de 14 rotas muda em quatro documentos, e a guarda
-de contagens reprova cada um que ficar para trás. Isso é a guarda funcionando, não
-obstáculo.
-
-### 3. `BreadcrumbList` nas fichas
-
-Trilha visível em `projetos/[slug].astro` mais o dado estruturado pelo mesmo
-`slot="head"` que já carrega o `SoftwareSourceCode`. Cabe porque o invariante de script é
-de **tipo** e não de contagem: um segundo `application/ld+json` por ficha passa, um
-script executável não.
-
-A regra de metadado com lastro vale igual aqui — o `BreadcrumbList` só pode descrever a
-trilha que a página mostra. Trilha estruturada sem trilha visível é exatamente a classe de
-afirmação que a suíte já reprova em `knowsAbout`.
+Sobre a última, o que merecia registro técnico era o que **não** fazer, e vale como regra
+para qualquer alegação futura sobre o próprio projeto: a afirmação tem de apontar para o
+artefato que a sustenta — o workflow, a suíte, o `.github/` —, nunca para um adjetivo sobre
+boas práticas. "Site com CI e testes" sem elo é a mesma classe de alegação sem lastro que a
+suíte reprova em `knowsAbout`, só que fora do alcance dela, porque é texto visível e não
+metadado. O rodapé afirma duas coisas conferíveis — estático, sem JavaScript de cliente; a
+suíte roda a cada PR — e entrega o repositório logo em seguida.
 
 ## Decisões fechadas
 
