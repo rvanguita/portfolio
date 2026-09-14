@@ -344,6 +344,18 @@ ponteiro móvel, e o `deploy.yml` roda com `pages: write` e `id-token: write`. P
 fixar não vire congelar, o `.github/dependabot.yml` acompanha `github-actions` e `npm`
 mensalmente, agrupando os cinco pacotes de fonte numa PR só.
 
+Uma exceção está travada ali, com o motivo ao lado: o **major** do
+`prettier-plugin-astro`. A versão 1.0.0 reformata
+`<h1>{roleShort}<span>.</span></h1>` em três linhas e, como `compressHTML` preserva o
+espaço entre elementos inline, o título da abertura passa a renderizar
+"Engenheiro de Dados ." — com o ponto descolado. Medido comparando o texto visível
+das 15 páginas antes e depois: só uma muda, e é o `<h1>` mais visível do site.
+
+É a mesma armadilha que o `.prettierignore` já contorna em `Channels.astro` e
+`certificacoes.astro`. Aqui a saída foi travar o major em vez de tirar as 250 linhas
+do `index.astro` do gate de formatação por causa de uma. Correção dentro do 0.x
+continua chegando normalmente.
+
 A proteção da `main` exige um status check com o **nome exato** do job
 (`🔍 Lint, Types, Testes & Build`). GitHub casa por `name:`, então renomear o job
 deixa a PR bloqueada para sempre mesmo com CI verde. Acrescentar passo ao job é
