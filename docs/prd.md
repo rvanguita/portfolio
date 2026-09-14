@@ -243,6 +243,48 @@ acrescenta script de cliente.
 _Aceite:_ vale a mesma regra do `knowsAbout` — o schema da ficha só declara o que a
 ficha mostra. E segue um só script por página: JSON-LD, nunca JavaScript de cliente.
 
+### 6. Não existe página 404
+
+Não há `src/pages/404.astro`, nem `public/404.html`, nem `dist/404.html`. Quem erra a
+URL, segue um link velho ou chega por um endereço que mudou cai no 404 genérico do
+GitHub — uma página que não é o portfólio, não tem a identidade e **não oferece caminho
+de volta**. Num produto cuja premissa é que o leitor decide em segundos, é o pior lugar
+possível para perdê-lo.
+
+_Aceite:_ uma rota 404 estática, no idioma e na identidade do site, com link para a
+abertura e para o catálogo. Sem JavaScript de cliente, como todo o resto.
+
+### 7. As nove fichas compartilham o mesmo cartão social
+
+Todas as fichas de projeto declaram o mesmo `og:image`, `assets/social-card.png`.
+Compartilhar a ficha do FastF1 mostra o cartão genérico do portfólio, não o projeto — e é
+justamente por link compartilhado que um recrutador costuma chegar a um projeto
+específico.
+
+Há uma restrição a respeitar: o build usa `passthroughImageService()` e não tem `sharp`,
+então gerar imagem por projeto durante o build não sai de graça. Os caminhos honestos são
+uma imagem por projeto versionada em `public/`, ou manter o `og:image` genérico e
+diferenciar `og:title` e `og:description` por ficha — que já existem e são o que mais
+pesa na prévia.
+
+_Aceite:_ a prévia de um link de projeto identifica o projeto, não o portfólio. Nenhuma
+dependência nova de processamento de imagem entra sem justificativa registrada.
+
+### 8. Teste não aparece nas competências
+
+Os 28 itens são **ferramentas** — Python, SQL, Apache Airflow, Delta Lake, Docker,
+Git/GitHub Actions. Prática de engenharia aparece só no resumo do grupo "Engenharia de
+Dados", que cita contratos de dados e CI a cada PR. **Teste não aparece em item nenhum.**
+
+E a evidência existe: dos nove repositórios, os quatro disponíveis para inspeção
+(`lake-fastf1`, `rotaperfume`, `personal-expenses`, `personal-shopping-list`) **todos têm
+testes**, e três têm workflow de CI. Para quem contrata engenheiro de dados, teste é
+sinal de triagem primeiro: é parte do que separa quem entrega pipeline de quem entrega
+notebook. O site tem a evidência e não a reivindica.
+
+_Aceite:_ a competência de teste entra na lista apontando para os projetos que a
+comprovam, pela mesma regra do item 4 — nada reivindicado sem repositório atrás.
+
 ## Onde este documento envelhece
 
 Os números — 14 rotas, 9 projetos, 28 itens, 24 certificados — mudam se o

@@ -418,6 +418,63 @@ não acrescenta script de cliente. O `sitemap-0.xml` também sai sem `lastmod`, 
 _Aceite:_ o teste do item 1.5 continua valendo — um script por página, sempre JSON-LD.
 O schema da ficha só declara o que a ficha mostra, pela mesma regra do `knowsAbout`.
 
+### 4. Os links externos não têm vigilância
+
+Os 11 links de projeto respondem 200 hoje — conferidos um a um em 14/09/2026. Mas nada os
+verifica de forma contínua: renomear um repositório, torná-lo privado ou arquivá-lo
+quebra em silêncio a promessa central do produto, "cada projeto aponta para o código".
+O `build` não enxerga link externo, e o teste de link do item 1.7 cobre apenas link
+interno.
+
+_Aceite:_ uma verificação agendada — fora do caminho da PR, que não deve depender da rede
+de terceiros para mergear — falhando ou avisando quando um dos 11 links deixa de
+responder.
+
+### 5. O PDF pode divergir do manifesto sem ninguém notar
+
+`check_dossier.py` lê **só o PDF**; nunca abre `scripts/dossier-content.json`. Por
+construção, então, não consegue detectar divergência entre os dois. Mudar a copy no
+manifesto sem rodar `dossier:generate` passa no CI, porque as asserções de texto conferem
+termos fixos (`ROC AUC 0,936`, `24 certificados`, `CLT ou PJ`) que não mudam.
+
+Vale dizer com todas as letras: **a guarda acrescentada ao `ci.yml` não fecha o buraco que
+motivou a sua criação.** Ela pega um PDF estruturalmente quebrado, não um PDF
+desatualizado — que foi exatamente o defeito corrigido à mão quando o gerador mudou e o
+arquivo publicado ficou para trás.
+
+_Aceite:_ o CI regenera o dossiê e falha se o resultado diferir do arquivo commitado,
+tornando impossível mergear manifesto e PDF fora de sincronia. Atenção à
+reprodutibilidade: se o ReportLab gravar data de criação, comparar o texto e a geometria
+extraídos, não o byte.
+
+### 6. As Actions estão fixadas por tag mutável
+
+As seis — `actions/checkout@v7`, `actions/setup-node@v7`, `actions/configure-pages@v6`,
+`actions/upload-pages-artifact@v5`, `actions/deploy-pages@v5` e
+`astral-sh/setup-uv@v10.1.0` — usam tag, não SHA. Tag é ponteiro móvel: quem controla o
+repositório da action pode reapontá-la, e o `deploy.yml` roda com `contents: read`,
+`pages: write` e `id-token: write`. Não há Dependabot nem Renovate configurado, então
+atualizar dependência é trabalho manual e invisível.
+
+_Aceite:_ Actions fixadas por SHA, com atualização automatizada configurada — fixar não
+pode virar congelar. O `name:` do job de CI continua intocável: é o status check exigido
+pela proteção da `main`.
+
+### 7. A fonte crítica não tem preload
+
+A abertura não emite nenhum `rel="preload"`. A Archivo do título — 87 KB no subset
+latino, o maior arquivo da página — só é descoberta depois que o CSS é baixado e
+parseado, o que adia o maior elemento de texto da primeira tela, justamente o `<h1>` que
+a métrica de primeira tela protege.
+
+Este é um item para medir antes de agir, não para aplicar por reputação da técnica. Com o
+`font-display` que o fontsource define, o texto já pinta na fonte de fallback: o ganho
+esperado é de LCP e de estabilidade, não de conteúdo visível. E se o item 2 entrar antes,
+o arquivo cai para 34 KB e a conta muda.
+
+_Aceite:_ a decisão é registrada com número medido antes e depois, nos três viewports da
+métrica de primeira tela.
+
 ## Onde esta documentação envelhece
 
 Primeiro nas contagens (14 rotas, 9 projetos, 28 itens, 24 certificados, 15
