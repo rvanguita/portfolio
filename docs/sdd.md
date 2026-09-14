@@ -112,7 +112,8 @@ ainda recebe `min-width`, senão ficaria em 43 px. `certTotal` é derivado, nunc
 Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 
 - `kind`: `full` (corpo Markdown com os quatro beats) ou `light` (objeto `spec`
-  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos coexistem, e
+  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos seguem suportados — hoje as nove fichas usam `full`, mas o `light`
+  continua válido para um projeto novo que ainda não tenha estudo de caso —, e
   um `superRefine` amarra os dois campos: `spec` continua opcional no objeto,
   porque `full` não a usa, mas falta dela num `light` é erro de schema. Sem isso
   um `light` sem ficha publicaria quatro `<dd>` vazios e passaria no build;
@@ -441,31 +442,35 @@ sozinhos. Os demais continuam sendo disciplina.
 
 ## Evolução técnica proposta
 
-**Nada nesta seção está implementado.** As seções anteriores descrevem o que existe;
-aqui ficam as mudanças técnicas propostas, com o critério que diz quando cada uma está
-pronta. Medições de 14/09/2026.
+Nada pendente aqui. O último item foi medido e recusado — o registro fica abaixo, porque
+"não fizemos" sem o número convida a refazer a discussão daqui a seis meses.
 
-Quatro itens saíram daqui por terem sido implementados — a suíte de invariantes, a
-vigilância dos links externos, o dossiê determinístico e as Actions fixadas por SHA. O
-que eles fazem hoje está descrito em "Validação" e em "CI/CD".
+### Preload da fonte crítica — medido e descartado
 
-### 1. Preload da fonte crítica — não feito, e por quê
+A hipótese era que a Archivo do título, descoberta só depois do CSS ser baixado e
+parseado, atrasasse o maior elemento de texto da primeira tela.
 
-A abertura não emite `rel="preload"`, então a Archivo do título só é descoberta depois
-que o CSS baixa e é parseado.
+O mecanismo existe: medindo o carregamento, o CSS termina em ~44 ms e a fonte só começa
+em ~71 ms — esses ~27 ms são a descoberta tardia que um `preload` eliminaria.
 
-Este item ficou parado de propósito. O critério dele exige número medido antes e depois,
-e a troca do eixo mudou a conta: o arquivo caiu de 87 para 34 KB, então o atraso que o
-preload evitaria é bem menor do que era quando o item foi escrito. Somando a isso que o
-`font-display` do fontsource já pinta o texto na fonte de recurso, o ganho restante é de
-LCP e estabilidade, não de conteúdo visível.
+Mas o efeito não aparece no resultado. Comparando a página como está com uma variante
+idêntica mais o `<link rel="preload">`, oito carregamentos de cada:
 
-Medir isso exige ferramenta de performance de verdade — Lighthouse ou o protocolo de
-devtools —, não captura de tela. Aplicar sem medir seria seguir a reputação da técnica,
-que é exatamente o que o critério proíbe.
+| Variante    | LCP mediana | mínimo | máximo |
+| ----------- | ----------- | ------ | ------ |
+| sem preload | 734 ms      | 636 ms | 824 ms |
+| com preload | 748 ms      | 524 ms | 828 ms |
 
-_Aceite:_ entra com número de LCP antes e depois, nos três viewports da métrica de
-primeira tela. Sem esse número, não entra.
+As faixas se sobrepõem por inteiro e a mediana com preload é pior. Não há ganho a
+extrair — e a troca do eixo da fonte já havia derrubado o arquivo de 87 para 34 KB, que
+era metade da premissa original.
+
+**Limite honesto desta medição:** ela roda em localhost, onde a latência é quase zero —
+justamente a condição em que o `preload` menos ajuda, porque o custo que ele evita é uma
+ida e volta de rede. Num enlace real o ganho seria maior que zero. O que o número
+sustenta é que, com o site nesta forma, a otimização não se paga. Se a medição for
+refeita sob latência real e o quadro mudar, o caminho é um `<link rel="preload">` na
+`BaseHead` apontando para o arquivo que o bundle emite.
 
 ## Onde esta documentação envelhece
 
