@@ -56,7 +56,7 @@ src/
 tests/                   suíte de invariantes (node:test), lida contra dist/;
                          helpers.mjs guarda a lista canônica de cores
 scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
-                         dossier-content.json
+                         check_dates.mjs, dossier-content.json
                          (as dependências vêm de requirements-pdf.txt, na raiz)
 public/                  assets, certificates (24 PDFs), icon.svg, icon.png,
                          robots.txt, .nojekyll
@@ -320,11 +320,12 @@ usa uma posição independente que possa sobrepor o texto.
 
 ## CI/CD
 
-| Workflow     | Gatilho                  | Papel                                  |
-| ------------ | ------------------------ | -------------------------------------- |
-| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`   |
-| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages            |
-| `links.yml`  | semanal, manual          | confere os links externos dos projetos |
+| Workflow     | Gatilho                  | Papel                                       |
+| ------------ | ------------------------ | ------------------------------------------- |
+| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`        |
+| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages                 |
+| `links.yml`  | semanal, manual          | confere os links externos dos projetos      |
+| `datas.yml`  | semanal, manual          | confere `atualizadoEm` contra o repositório |
 
 O `ci.yml` roda, nesta ordem: `format:check`, `build`, `check`, `test`,
 `dossier:check` e `dossier:generate` seguido de `git diff --exit-code`. A suíte vem
@@ -336,9 +337,29 @@ quebrado, mas **não compara o PDF com o manifesto** — ele nunca abre o JSON. 
 copy alterada sem regenerar é o `git diff` depois do `dossier:generate`, possível porque
 o gerador é determinístico.
 
-O `links.yml` fica **fora do caminho da PR** de propósito: mergear não pode depender da
-rede de terceiros. A quebra que ele vigia não vem de commit — vem de alguém renomear,
-arquivar ou tornar privado um repositório.
+O `links.yml` e o `datas.yml` ficam **fora do caminho da PR** de propósito: mergear não
+pode depender da rede de terceiros. Nenhuma das duas quebras que eles vigiam vem de
+commit.
+
+A divisão entre os dois é o tipo de falha. O `links.yml` pega **ruptura**: alguém renomeia,
+arquiva ou torna privado um repositório, e o link morre. O `datas.yml` pega **deriva
+silenciosa**: tudo responde 200, e só o `atualizadoEm` da ficha é que ficou para trás do
+último push — campo que o sitemap republica como `lastmod`, então a data velha vira sinal
+errado para o robô, não só imprecisão de leitura.
+
+`scripts/check_dates.mjs` reduz cada `repos[].url` a `owner/repo` pelos dois primeiros
+segmentos, o que cobre as duas formas presentes no frontmatter — a raiz e o link para um
+arquivo dentro do repositório. Projeto com vários repositórios usa o `pushed_at` mais
+recente, a mesma regra que o `periodo` segue. A comparação é de mão única: repositório
+parado não acusa nada, ficha atrasada acusa.
+
+Duas decisões que o script carrega no comentário. Repositório ilegível vira aviso e **não**
+falha, porque renomeado ou privado já é o alarme do `links.yml` e duplicá-lo faria os dois
+gritarem pela mesma causa. E `pushed_at` sobe com qualquer push, inclusive um que só mexa
+no README — o resultado é uma issue para uma pessoa decidir, nunca um build quebrado, e por
+isso ele pode ser levemente barulhento sem causar dano. O passo da issue reaproveita a que
+já estiver aberta, comentando nela: sem isso, um projeto esquecido geraria uma issue nova
+por semana.
 
 Todas as Actions são fixadas por **SHA**, com a versão em comentário ao lado. Tag é
 ponteiro móvel, e o `deploy.yml` roda com `pages: write` e `id-token: write`. Para que
@@ -453,7 +474,7 @@ sozinhos. Os demais continuam sendo disciplina.
 | Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
 | Lista de cores divergente entre blocos de tema      | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
 | Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado     |
-| `atualizadoEm` envelhecido sem ninguém notar        | hoje: disciplina. Proposta em "Evolução técnica" — nada relê o repositório      |
+| `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`                |
 | Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
 | Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                           |
 | Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
@@ -468,18 +489,23 @@ sozinhos. Os demais continuam sendo disciplina.
 As três propostas abaixo **não estão implementadas**. Cada uma existe porque o PRD
 aponta um buraco de produto; aqui fica a forma técnica que ela teria e o que custa.
 
-### 1. Verificação semanal de `atualizadoEm`
+A verificação semanal de `atualizadoEm` saiu desta lista: está implementada, e a descrição
+dela vive em "CI/CD".
 
-O campo vem da API do GitHub na hora de escrever a ficha e nunca mais é conferido.
-Proposta: um `datas.yml` no molde do `links.yml` — semanal e manual, **fora** do caminho
-da PR, porque mergear não pode depender de rede de terceiros. Ele lê `pushed_at` de cada
-repositório declarado em `repos`, compara com o frontmatter e abre **uma** issue com as
-divergências; projeto com mais de um repositório usa o `pushed_at` mais recente entre
-eles, que é a mesma regra que o `periodo` já segue.
+### 1. O próprio repositório como evidência
 
-A diferença para o `links.yml` é o que cada um vigia. Aquele pega repositório renomeado,
-arquivado ou privado — ruptura. Este pega deriva silenciosa: tudo responde 200, e a data
-é que está velha.
+A prática de engenharia deste repositório é verificável e o site não a mostra. A forma
+recomendada é barata a ponto de não ter seção técnica própria — uma linha com elo no
+`Footer.astro`, apontando para o repositório.
+
+O que merece registro é o que **não** fazer. A afirmação tem de apontar para o artefato
+que a sustenta — o workflow, a suíte, o `.github/` —, nunca para um adjetivo sobre boas
+práticas. "Site com CI e testes" sem elo é exatamente a classe de alegação sem lastro que
+a suíte já reprova em `knowsAbout`, só que fora do alcance dela, porque é texto visível e
+não metadado.
+
+A forma pesada — um décimo projeto no catálogo — passa pelo critério de entrada do PRD como
+qualquer outro, e move as contagens em quatro documentos.
 
 ### 2. Rotas por tecnologia (`/projetos/stack/<slug>/`)
 

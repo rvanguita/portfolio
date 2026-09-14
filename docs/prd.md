@@ -154,7 +154,11 @@ o site não faz é simular evidência: o elo só aparece onde há projeto que o 
 **Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
 do projeto não descreve.
 
-## Métricas de sucesso
+## Critérios de aceitação
+
+Esta lista já se chamou "métricas de sucesso", e o nome estava errado: toda linha dela é
+verificável **antes** de publicar. São critérios de aceitação, e a seção seguinte trata do
+que eles não alcançam.
 
 - especialidade e evidência identificáveis sem rolagem;
 - os dois filtros mais duros — idioma e modelo de contratação — na abertura;
@@ -164,10 +168,55 @@ do projeto não descreve.
   768×800 e 1440×800 px, com texto no tamanho padrão. Com texto ampliado, a
   leitura pode exigir rolagem vertical, preservando acesso e sem overflow
   horizontal;
-- `npm run format:check`, `npm run build` e `npm run check` sem erro;
+- `npm run format:check`, `npm run build`, `npm run check` e `npm test` sem erro —
+  a suíte de invariantes é o que guarda, no CI, as regras que este documento define;
 - nenhuma rota, âncora ou asset público quebrado;
 - revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
 - termos que um headhunter pesquisa presentes nos metadados, em pt e en.
+
+## Como o sucesso é observado
+
+Não é — e isso é decisão, não descuido.
+
+Medir leitura exigiria analítica, e analítica exigiria JavaScript de cliente e requisição
+a terceiros. Os dois estão proibidos nos requisitos não funcionais, duas seções acima, e
+nenhum ganho de medição paga tirar a proibição: o produto conversa com poucas dezenas de
+leitores por mês, faixa em que qualquer número seria ruído, e o custo seria carregar
+rastreamento para cada pessoa que abre a página.
+
+O único sinal real é **contato recebido** — e-mail ou LinkedIn. O produto não consegue
+atribuí-lo a uma página nem a uma origem, e não vai tentar.
+
+O que fica, então, é a honestidade sobre o que os critérios acima são: proxy de qualidade.
+Eles garantem que o site não está quebrado, não mente e não perde o leitor na primeira
+tela. Nenhum deles prova que alguém foi contratado.
+
+## Critério de entrada de projeto
+
+O catálogo tem 9 projetos porque nove passaram na barra abaixo, não porque nove é um
+número bom. Ela estava só na cabeça de quem escreveu as fichas; fica aqui para o décimo.
+
+Um projeto entra quando:
+
+1. **o repositório é público e acessível** — a promessa central é que cada projeto aponta
+   para o código, e um link morto a desmente sozinho;
+2. **existe estudo de caso com os quatro beats** — problema, dados, método, resultado — ou,
+   se ainda não existe, o projeto entra como `light` com a `spec` estruturada preenchida;
+3. **`metricKind` é declarado à mão.** Não há valor padrão, de propósito: um padrão
+   silencioso faria escopo e arquitetura passarem por resultado medido;
+4. **`periodo` e `atualizadoEm` vêm da data real do repositório**, pela API do GitHub e
+   nunca de estimativa. Projeto com vários repositórios usa o intervalo que cobre todos;
+5. **`architecture` só é declarada se o texto descrever camadas.** Diagrama genérico
+   inventaria um pipeline que o estudo de caso não tem;
+6. **as ressalvas do próprio projeto vêm junto** — experimental, submetido, em
+   desenvolvimento, viés de dataset —, literais e não suavizadas na passagem.
+
+O que **não** é critério: ter dado grande, ter métrica boa ou ter terminado. Três dos nove
+não têm métrica aferida e um está em desenvolvimento. O tipo de resultado existe justamente
+para que esses entrem sem precisar fingir o que não são.
+
+Consequência mecânica de acrescentar um: as contagens se movem no PRD, no SDD, no README e
+no CLAUDE.md, e a guarda reprova a PR para cada documento que ficar para trás.
 
 ## Estado atual
 
@@ -182,6 +231,10 @@ dado estruturado, e o sitemap leva `lastmod` por ficha. Uma suíte de invariante
 guarda no CI as regras que este documento define — contagens, ressalvas literais,
 schema com lastro e ausência de JavaScript de cliente.
 
+Duas verificações agendadas ficam fora do caminho da PR, porque vigiam quebra que não vem
+de commit: uma confere os links dos repositórios, outra confere se o `atualizadoEm` de
+cada ficha continua batendo com o último push do repositório.
+
 ## Melhorias propostas
 
 **Nada nesta seção está implementado.** O que existe hoje é o que as seções anteriores
@@ -190,20 +243,27 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Datas que não envelhecem
+### 1. O próprio repositório como evidência
 
-Cada projeto publica `periodo` e `atualizadoEm`, e a regra é que ambos venham da data
-real do repositório pela API do GitHub, nunca de estimativa. A regra vale na hora de
-escrever e nunca mais: nada relê o repositório depois. Um projeto que recebeu commit no
-mês passado continua anunciando a data do dia em que a ficha foi escrita — e a ficha fica
-mentindo devagar, sem que ninguém perceba.
+Diante de nove repositórios de uma pessoa só, a pergunta que sobra é se ela trabalha como
+quem já esteve em produção. O site não responde, e o repositório dele responde: CI que
+reprova a PR, suíte de invariantes, Actions fixadas por SHA com Dependabot para não
+congelar, PDF determinístico conferido contra árvore limpa, orçamento de acessibilidade
+escrito. Nada disso precisa afirmar escala — é verificável em dois cliques.
 
-O sitemap carrega esse mesmo campo como `lastmod`. Data velha ali não é só imprecisão de
-leitura: é sinal errado para o robô.
+Hoje essa evidência existe e fica invisível: quem não abre o repositório do site nunca
+sabe que ela está lá.
 
-**Pronto quando** uma divergência plantada à mão vira issue aberta, uma árvore em dia não
-abre nada, e a verificação fica fora do caminho da PR — mergear não pode depender de rede
-de terceiros, pelo mesmo motivo que já tira `links.yml` de lá.
+**Forma recomendada:** uma linha com elo, no rodapé ou no bloco de contato, dizendo como o
+site é feito. Custo quase zero e nenhuma contagem se move.
+
+**Forma mais pesada:** um décimo projeto no catálogo. Evidência mais forte, leitura mais
+estranha — um projeto sobre o próprio site entre projetos de dados —, e ele teria de passar
+pelo critério de entrada acima como qualquer outro. Que é, de propósito, o teste de saber
+se ele merece entrar.
+
+**Pronto quando** a afirmação aponta para o que a sustenta — o workflow, a suíte — e não
+para um adjetivo sobre boas práticas.
 
 ### 2. Índice reverso por tecnologia
 
