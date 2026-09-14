@@ -154,11 +154,7 @@ o site não faz é simular evidência: o elo só aparece onde há projeto que o 
 **Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
 do projeto não descreve.
 
-## Critérios de aceitação
-
-Esta lista já se chamou "métricas de sucesso", e o nome estava errado: toda linha dela é
-verificável **antes** de publicar. São critérios de aceitação, e a seção seguinte trata do
-que eles não alcançam.
+## Métricas de sucesso
 
 - especialidade e evidência identificáveis sem rolagem;
 - os dois filtros mais duros — idioma e modelo de contratação — na abertura;
@@ -168,11 +164,25 @@ que eles não alcançam.
   768×800 e 1440×800 px, com texto no tamanho padrão. Com texto ampliado, a
   leitura pode exigir rolagem vertical, preservando acesso e sem overflow
   horizontal;
-- `npm run format:check`, `npm run build`, `npm run check` e `npm test` sem erro —
-  a suíte de invariantes é o que guarda, no CI, as regras que este documento define;
+- `npm run format:check`, `npm run build` e `npm run check` sem erro;
 - nenhuma rota, âncora ou asset público quebrado;
 - revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
 - termos que um headhunter pesquisa presentes nos metadados, em pt e en.
+
+## Pendências conhecidas
+
+Duas coisas desta seção anterior foram identificadas, discutidas e **deliberadamente não
+corrigidas nesta rodada**. Ficam escritas porque defeito conhecido e não registrado volta
+como descoberta daqui a seis meses.
+
+1. **"Métricas de sucesso" não são métricas.** Toda linha da lista é verificável _antes_
+   de publicar — contraste, primeira tela, build sem erro. São critérios de aceitação, e
+   o título atual sugere que o produto mede resultado. A seção seguinte, que diz que ele
+   não mede, fica em tensão com esse título de propósito, até a decisão ser tomada.
+2. **A lista de gate omite `npm test`.** Ela cita `format:check`, `build` e `check`. A
+   suíte de invariantes é justamente o que guarda no CI as regras que este documento
+   define; o `ci.yml` a roda e a "Definição de pronto" do SDD a exige. Só este documento
+   não a menciona.
 
 ## Como o sucesso é observado
 
