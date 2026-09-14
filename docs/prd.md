@@ -172,7 +172,7 @@ do projeto não descreve.
 ## Estado atual
 
 Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
-(4 com estudo de caso em Markdown e 5 com ficha estruturada), 29 itens de
+(6 com estudo de caso em Markdown e 3 com ficha estruturada), 29 itens de
 competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
 dossiê em PDF e o deploy automático em cada push para `main`.
 
@@ -190,20 +190,21 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Terminar as cinco fichas que param na metade
+### 1. Terminar as três fichas que ainda param na metade
 
-Quatro projetos têm estudo de caso (200–280 palavras, com problema, dados, método e
-resultado); cinco têm só a ficha estruturada. E a matéria-prima é desigual:
-personal-expenses (138 palavras) e shopping-list (128) já estão perto da densidade de um
-estudo de caso e têm diagrama; fraud-detection (68), otimizacao-eletrica (70) e
-sentiment-nlp (79) são finas.
+Duas das cinco foram promovidas a estudo de caso — `personal-expenses` e
+`shopping-list` —, escritas a partir do README e do código dos próprios repositórios,
+que estão clonados nesta máquina. Cada uma ganhou os quatro beats e ~420 palavras, na
+mesma densidade das que já existiam.
 
-A ordem importa: promover primeiro as duas que têm material, e para as outras três
-buscar o material no repositório de origem. Alongar prosa sem fato novo é como se
-inventa escala e impacto — exatamente o que a seção de honestidade proíbe.
+Sobraram `fraud-detection`, `otimizacao-eletrica` e `sentiment-nlp`. São as três de
+matéria-prima mais fina (68 a 79 palavras de ficha) **e** as três cujos repositórios
+não estão disponíveis localmente. Escrevê-las a partir do que o site já diz seria
+alongar prosa sem fato novo, que é como se inventa escala e impacto.
 
-_Aceite:_ nenhuma ficha nova afirma o que o repositório não sustenta; as ressalvas
-existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literais.
+_Aceite:_ cada ficha nova sai do material do repositório de origem — README, código,
+notebook. Nenhuma afirma o que o repositório não sustenta, e as ressalvas existentes
+(`em desenvolvimento`, `submetido`) continuam literais.
 
 ### 2. Cartão social das fichas: decidido, não pendente
 
