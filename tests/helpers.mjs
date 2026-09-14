@@ -16,11 +16,23 @@ export function read(relative) {
   return readFileSync(join(ROOT, relative), "utf8");
 }
 
-/** Todas as páginas construídas, como [caminho relativo, html]. */
+/**
+ * Todo HTML construído, como [caminho relativo, html] — inclui o 404.html, que
+ * é uma página de verdade e precisa obedecer aos mesmos invariantes.
+ */
 export function pages() {
-  return globSync("**/index.html", { cwd: DIST })
+  return globSync("**/*.html", { cwd: DIST })
     .sort()
     .map((rel) => [rel, readFileSync(join(DIST, rel), "utf8")]);
+}
+
+/**
+ * Só as rotas do site: um index.html por diretório. O 404 fica de fora porque
+ * não é rota navegável — não entra no sitemap nem na contagem que os docs
+ * publicam.
+ */
+export function routes() {
+  return pages().filter(([rel]) => rel.endsWith("index.html"));
 }
 
 /** O bundle de CSS emitido pelo Astro. */

@@ -6,7 +6,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { globSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { ROOT, DIST, read, pages, visibleText } from "./helpers.mjs";
+import { ROOT, DIST, read, pages, routes, visibleText } from "./helpers.mjs";
 
 const projectFiles = globSync("src/content/projetos/*.md", { cwd: ROOT }).map(
   (rel) => [rel, readFileSync(join(ROOT, rel), "utf8")],
@@ -16,7 +16,7 @@ const projectFiles = globSync("src/content/projetos/*.md", { cwd: ROOT }).map(
 const SEARCH_SYNONYMS = new Set(["Data Engineering", "Apache Spark"]);
 
 test("as contagens publicadas continuam de pé", () => {
-  assert.equal(pages().length, 14, "14 páginas");
+  assert.equal(routes().length, 14, "14 rotas");
   assert.equal(projectFiles.length, 9, "9 projetos");
 
   const skills = read("src/data/skills.ts");

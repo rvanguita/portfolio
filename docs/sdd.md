@@ -251,7 +251,13 @@ por preferência de tema.
 
 A abertura injeta um JSON-LD `Person` — `jobTitle` em pt e en, `knowsLanguage`,
 `seeks`, `knowsAbout`, `alumniOf`, `address`. **É o único script no HTML de
-produção**, e é estático. A regra do `knowsAbout`: só entra capacidade que o
+produção da abertura**, e é estático. Cada ficha de projeto injeta o seu próprio
+`SoftwareSourceCode` pelo mesmo `slot="head"`, montado do frontmatter que a página já
+renderiza — nome, resumo, stack, categoria, tipo de resultado e repositório. O invariante
+que vale para todo o build é de **tipo**, não de contagem: todo `<script>` é
+`application/ld+json`, e a suíte reprova qualquer script executável.
+
+A regra do `knowsAbout`: só entra capacidade que o
 site evidencia. O sinônimo em inglês do que já aparece em português é aceito —
 `Data Engineering` ao lado de "Engenharia de Dados", `Apache Spark` ao lado de
 `PySpark` —, porque é assim que o leitor procura. Capacidade sem lastro no texto
@@ -433,15 +439,22 @@ _Aceite:_ a troca vem acompanhada da remoção do `font-stretch` e do token
 `--wdth-display`, que deixam de ter função — e a revisão visual confirma que nenhum
 título mudou de largura. Mexer em `src/styles/` continua exigindo a skill de design.
 
-### 2. JSON-LD por ficha e `lastmod` no sitemap
+### 2. `lastmod` no sitemap — depende da data por projeto
 
-As nove fichas de projeto não publicam dado estruturado nenhum; só a abertura publica.
-Um `SoftwareSourceCode` por ficha sai inteiro do frontmatter que já existe, é estático e
-não acrescenta script de cliente. O `sitemap-0.xml` também sai sem `lastmod`, que
-`@astrojs/sitemap` sabe emitir.
+O JSON-LD por ficha saiu daqui: está implementado, e "Metadados e SEO" descreve o que
+ele declara.
 
-_Aceite:_ o teste do item 1.5 continua valendo — um script por página, sempre JSON-LD.
-O schema da ficha só declara o que a ficha mostra, pela mesma regra do `knowsAbout`.
+O `lastmod` ficou, e não por esquecimento. `@astrojs/sitemap` aceita `lastmod?: Date`,
+mas isso aplica **uma data a todas as 14 URLs** — dizer ao robô que tudo mudou quando só
+uma página mudou é sinal falso, e sinal falso é pior que sinal ausente. Por página daria
+via `serialize`, mas precisa de uma fonte de data: a via git exigiria `fetch-depth: 0` no
+`checkout` (hoje é raso) e ainda entregaria data de commit, não do trabalho.
+
+O item 1 do PRD traz a data real de cada projeto para dentro do frontmatter. Com ela lá,
+o `serialize` monta `lastmod` por página sem tocar no CI.
+
+_Aceite:_ entra junto com a data por projeto, nunca antes — e cada `lastmod` reflete a
+data daquela página, não a do build.
 
 ### 3. A fonte crítica não tem preload
 

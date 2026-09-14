@@ -48,26 +48,32 @@ test("toda referência interna resolve para um arquivo real", () => {
   }
 });
 
-test("o único script de produção é o JSON-LD, e só na abertura", () => {
+test("todo script do build é JSON-LD estático, nenhum é executável", () => {
+  // A regra do PRD é sobre TIPO, não sobre contagem por página: "nenhum
+  // JavaScript de cliente; o único script no HTML de produção é o JSON-LD".
+  // A primeira versão deste teste fixou o fato incidental de que só a abertura
+  // tinha script, e passou a reprovar quando as fichas ganharam o schema delas.
   for (const [rel, html] of pages()) {
-    const scripts = [...html.matchAll(/<script\b([^>]*)>/g)].map((m) => m[1]);
-    if (rel === "index.html") {
-      assert.equal(
-        scripts.length,
-        1,
-        "a abertura deve ter exatamente um script",
-      );
+    for (const [, attrs] of html.matchAll(/<script\b([^>]*)>/g)) {
       assert.match(
-        scripts[0],
+        attrs,
         /type="application\/ld\+json"/,
-        "o único script da abertura tem de ser o JSON-LD estático",
+        `${rel}: script que não é JSON-LD — o site não leva JavaScript de cliente`,
       );
-    } else {
-      assert.equal(
-        scripts.length,
-        0,
-        `${rel}: nenhuma página além da abertura leva script`,
-      );
+    }
+  }
+});
+
+test("todo JSON-LD do build é JSON válido", () => {
+  for (const [rel, html] of pages()) {
+    for (const [, body] of html.matchAll(
+      /<script type="application\/ld\+json">([\s\S]*?)<\/script>/g,
+    )) {
+      let parsed;
+      assert.doesNotThrow(() => {
+        parsed = JSON.parse(body);
+      }, `${rel}: JSON-LD não parseia`);
+      assert.ok(parsed["@type"], `${rel}: JSON-LD sem @type`);
     }
   }
 });

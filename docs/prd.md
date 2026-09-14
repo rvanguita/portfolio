@@ -233,44 +233,23 @@ rejeita.
 _Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
 lista. Referência inválida continua quebrando o build.
 
-### 5. Dados estruturados nas fichas de projeto
+### 5. Cartão social das fichas: decidido, não pendente
 
-Só a abertura publica JSON-LD. As nove fichas — as páginas que descrevem trabalho
-concreto — não publicam nenhum. Um `SoftwareSourceCode` por ficha, montado do frontmatter
-que já existe (título, resumo, stack, repositório, tipo de resultado), é estático e não
-acrescenta script de cliente.
+Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
+problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso
+— a prévia de um link de projeto identifica o projeto pelo texto, que é o que mais pesa
+na leitura de quem recebe.
 
-_Aceite:_ vale a mesma regra do `knowsAbout` — o schema da ficha só declara o que a
-ficha mostra. E segue um só script por página: JSON-LD, nunca JavaScript de cliente.
+Gerar imagem por projeto no build não é opção barata: o site usa
+`passthroughImageService()` e não tem `sharp`. Nove peças versionadas seriam trabalho de
+design, não de código.
 
-### 6. Não existe página 404
+**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige.
+Fica registrado aqui para não ser reaberto como esquecimento — se um dia houver
+direção de design para cartões por projeto, o caminho é `public/` mais uma prop de
+imagem no `BaseHead`.
 
-Não há `src/pages/404.astro`, nem `public/404.html`, nem `dist/404.html`. Quem erra a
-URL, segue um link velho ou chega por um endereço que mudou cai no 404 genérico do
-GitHub — uma página que não é o portfólio, não tem a identidade e **não oferece caminho
-de volta**. Num produto cuja premissa é que o leitor decide em segundos, é o pior lugar
-possível para perdê-lo.
-
-_Aceite:_ uma rota 404 estática, no idioma e na identidade do site, com link para a
-abertura e para o catálogo. Sem JavaScript de cliente, como todo o resto.
-
-### 7. As nove fichas compartilham o mesmo cartão social
-
-Todas as fichas de projeto declaram o mesmo `og:image`, `assets/social-card.png`.
-Compartilhar a ficha do FastF1 mostra o cartão genérico do portfólio, não o projeto — e é
-justamente por link compartilhado que um recrutador costuma chegar a um projeto
-específico.
-
-Há uma restrição a respeitar: o build usa `passthroughImageService()` e não tem `sharp`,
-então gerar imagem por projeto durante o build não sai de graça. Os caminhos honestos são
-uma imagem por projeto versionada em `public/`, ou manter o `og:image` genérico e
-diferenciar `og:title` e `og:description` por ficha — que já existem e são o que mais
-pesa na prévia.
-
-_Aceite:_ a prévia de um link de projeto identifica o projeto, não o portfólio. Nenhuma
-dependência nova de processamento de imagem entra sem justificativa registrada.
-
-### 8. Teste não aparece nas competências
+### 6. Teste não aparece nas competências
 
 Os 28 itens são **ferramentas** — Python, SQL, Apache Airflow, Delta Lake, Docker,
 Git/GitHub Actions. Prática de engenharia aparece só no resumo do grupo "Engenharia de
