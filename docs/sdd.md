@@ -51,7 +51,7 @@ src/
     panels/              Channels, Readout, MetricLegend, Skills
     viz/                 Pipeline, Timeline
   pages/                 index, projetos/index, projetos/[slug], trajetoria,
-                         competencias, certificacoes
+                         competencias, certificacoes, 404
   styles/                tokens.css, global.css
 tests/                   suíte de invariantes (node:test), lida contra dist/
 scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
@@ -114,7 +114,12 @@ Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
   passarem por resultado medido;
 - `architecture`: opcional. Só os 4 projetos com fluxo em camadas real o
   declaram;
-- `order`: controla o catálogo; as três primeiras entradas aparecem na home.
+- `order`: controla o catálogo; as três primeiras entradas aparecem na home;
+- `periodo` e `atualizadoEm`: o intervalo de trabalho para exibição e a data em ISO
+  para máquina. São dois campos porque servem a coisas diferentes — `periodo` é um
+  intervalo ("2024–25") e o `lastmod` do sitemap precisa de timestamp. Ambos vêm da
+  data real dos repositórios do projeto, pela API do GitHub, e nunca de estimativa;
+  projetos com mais de um repositório usam o intervalo que cobre todos.
 
 ### Componentes e contratos de props
 
@@ -141,6 +146,13 @@ precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
 `index.html` em seu diretório. `projetos/[slug].astro` gera as nove fichas por
 `getStaticPaths`, ordenando por `order` e passando `prev`/`next` para a navegação
 entre projetos.
+
+**O 404 é a exceção, e de propósito.** Astro trata `/404` como página de código de
+status (`STATUS_CODE_PAGES`, em `core/build/common.js`) e emite `dist/404.html` na
+raiz, **não** `dist/404/index.html` — que é exatamente o arquivo que o GitHub Pages
+serve para endereço inexistente. Por isso o build informa 15 páginas enquanto o site
+tem 14 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
+contagens que os documentos publicam.
 
 ## Aferição tipada
 
@@ -461,7 +473,7 @@ aqui e as contagens no [PRD](./prd.md).
 
 ## Definição de pronto
 
-Uma mudança está pronta quando `format:check`, `build` e `check` passam; quando a
+Uma mudança está pronta quando `format:check`, `build`, `check` e `test` passam; quando a
 revisão em `dist/` servido na base não mostra link quebrado nem overflow em 360,
 768 e 1440 px nos dois temas; quando as contagens seguem intactas; quando as
 ressalvas de conteúdo continuam literais; e quando nenhuma dependência, rota ou

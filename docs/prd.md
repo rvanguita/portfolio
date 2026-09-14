@@ -50,7 +50,7 @@ andamento.
 
 ## Escopo atual
 
-O site tem **14 rotas estáticas**:
+O site tem **14 rotas navegáveis**, mais uma página de erro:
 
 | Rota                | Conteúdo                                                                 |
 | ------------------- | ------------------------------------------------------------------------ |
@@ -60,6 +60,7 @@ O site tem **14 rotas estáticas**:
 | `/trajetoria/`      | formação e experiência, 9 entradas                                       |
 | `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
 | `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
+| `/404.html`         | endereço inexistente, com caminho de volta — não entra no sitemap        |
 
 Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
 gerado a partir de manifesto versionado; `sitemap-index.xml`; `robots.txt`;
@@ -162,10 +163,16 @@ do projeto não descreve.
 
 ## Estado atual
 
-Entregue e publicado: as 14 rotas, os 9 projetos (4 com estudo de caso em
-Markdown e 5 com ficha estruturada), 29 itens de competência, 24 certificados, 4
-diagramas de arquitetura, a ficha de triagem, o dossiê em PDF e o deploy
-automático em cada push para `main`.
+Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
+(4 com estudo de caso em Markdown e 5 com ficha estruturada), 29 itens de
+competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
+dossiê em PDF e o deploy automático em cada push para `main`.
+
+Cada projeto publica o período em que foi trabalhado e, quando o resultado é
+medido, o link para o arquivo que produz a métrica. Cada ficha injeta o próprio
+dado estruturado, e o sitemap leva `lastmod` por ficha. Uma suíte de invariantes
+guarda no CI as regras que este documento define — contagens, ressalvas literais,
+schema com lastro e ausência de JavaScript de cliente.
 
 ## Melhorias propostas
 
@@ -192,11 +199,19 @@ existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literai
 
 ### 2. Ligar cada competência a um projeto que a comprove
 
-As competências apontam para projetos por grupo, não por item: os 28 itens são cobertos
+As competências apontam para projetos por grupo, não por item: os 29 itens são cobertos
 por 4 referências, e cinco dos nove projetos — wind-farm, fraud-detection,
 personal-expenses, shopping-list e sentiment-nlp — não comprovam competência nenhuma.
 Um item sem projeto atrás é exatamente o tipo de afirmação que o objetivo deste produto
 rejeita.
+
+**Este item precisa de uma decisão antes de ser implementado.** Medindo, **12 dos 29
+itens não são mencionados por nenhum projeto** — Power BI, Tableau, Excel Avançado,
+Seaborn, NumPy, Statsmodels, Linux/Shell, Feature Engineering e três de otimização.
+Aplicar o critério ao pé da letra apagaria 41% da lista, o que muda o que o portfólio
+afirma profissionalmente. As saídas são três: afrouxar o critério para evidência por
+grupo, que é como está hoje; manter os itens aceitando que alguns não têm projeto atrás;
+ou enxugar a lista de verdade. Nenhuma delas é chamada de implementação.
 
 _Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
 lista. Referência inválida continua quebrando o build.

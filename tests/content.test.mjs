@@ -125,3 +125,56 @@ test('"pleno" aparece só como cargo procurado', () => {
     }
   }
 });
+
+test("as contagens que os documentos publicam batem com o código", () => {
+  // Esta classe de erro já reapareceu três vezes: alguém muda o conteúdo e os
+  // números no PRD, no SDD e no README ficam para trás.
+  //
+  // Duas armadilhas, ambas já vividas. O Markdown quebra linha no meio das
+  // frases, então "29 itens de\ncompetência" escapa de um padrão ingênuo — daí a
+  // normalização do espaço antes de casar. E um padrão que não casa com nada
+  // passa em silêncio, dando falsa segurança: por isso cada checagem exige pelo
+  // menos uma ocorrência.
+  //
+  // Os padrões são específicos porque "N projetos" e "N itens" também aparecem
+  // como recorte legítimo — "só os 4 projetos que declaram arquitetura", ou
+  // "3 grupos, 24 itens" falando de certificados.
+  const itens = [
+    ...read("src/data/skills.ts").matchAll(/items:\s*\[([\s\S]*?)\]/g),
+  ].reduce((n, g) => n + (g[1].match(/"[^"]+"/g) ?? []).length, 0);
+  const certificados = (
+    read("src/data/certificates.ts").match(/file:\s*"/g) ?? []
+  ).length;
+
+  const checagens = [
+    [/(\d+) rotas/g, routes().length, "rotas"],
+    // Todo "N itens" conta competência, menos a linha dos certificados, que usa
+    // a mesma palavra para outra coisa ("3 grupos, 24 itens").
+    [/(?<!3 grupos, )(?<!\d)(\d+) itens/g, itens, "itens de competência"],
+    [/(\d+) certificados/g, certificados, "certificados"],
+    [/(?<!só os )(?<!dos )(\d+) projetos/gi, projectFiles.length, "projetos"],
+  ];
+
+  const vistos = new Map(checagens.map(([, , rotulo]) => [rotulo, 0]));
+  for (const arquivo of ["docs/prd.md", "docs/sdd.md", "README.md"]) {
+    // Normalizar o espaço: o número e o substantivo podem estar em linhas diferentes.
+    const texto = read(arquivo).replace(/\s+/g, " ");
+    for (const [padrao, esperado, rotulo] of checagens) {
+      for (const [trecho, numero] of texto.matchAll(padrao)) {
+        vistos.set(rotulo, vistos.get(rotulo) + 1);
+        assert.equal(
+          Number(numero),
+          esperado,
+          `${arquivo}: "${trecho.trim()}" não bate com o código (${esperado} ${rotulo})`,
+        );
+      }
+    }
+  }
+
+  for (const [rotulo, n] of vistos) {
+    assert.ok(
+      n > 0,
+      `nenhum documento menciona "${rotulo}" — o padrão virou letra morta`,
+    );
+  }
+});
