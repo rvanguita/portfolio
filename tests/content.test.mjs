@@ -144,8 +144,13 @@ test("as contagens que os documentos publicam batem com o código", () => {
     read("src/data/certificates.ts").match(/file:\s*"/g) ?? []
   ).length;
 
+  // O CLAUDE.md publica as mesmas contagens em inglês, e ficou de fora na primeira
+  // versão deste teste — que é como a drift voltaria justamente pelo arquivo que
+  // orienta quem trabalha aqui.
   const checagens = [
     [/(\d+) rotas/g, routes().length, "rotas"],
+    [/(\d+) skill items/g, itens, "skill items"],
+    [/(\d+) certificate entries/g, certificados, "certificate entries"],
     // Todo "N itens" conta competência, menos a linha dos certificados, que usa
     // a mesma palavra para outra coisa ("3 grupos, 24 itens").
     [/(?<!3 grupos, )(?<!\d)(\d+) itens/g, itens, "itens de competência"],
@@ -154,7 +159,12 @@ test("as contagens que os documentos publicam batem com o código", () => {
   ];
 
   const vistos = new Map(checagens.map(([, , rotulo]) => [rotulo, 0]));
-  for (const arquivo of ["docs/prd.md", "docs/sdd.md", "README.md"]) {
+  for (const arquivo of [
+    "docs/prd.md",
+    "docs/sdd.md",
+    "README.md",
+    "CLAUDE.md",
+  ]) {
     // Normalizar o espaço: o número e o substantivo podem estar em linhas diferentes.
     const texto = read(arquivo).replace(/\s+/g, " ");
     for (const [padrao, esperado, rotulo] of checagens) {

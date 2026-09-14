@@ -76,8 +76,12 @@ Imports entre diretórios usam aliases como `@components/`, `@data/` e `@lib/`.
 
 - O perfil e as tecnologias em destaque ficam em `src/data/profile.ts`.
 - Competências e experiências ficam em `src/data/skills.ts` e `timeline.ts`.
-  Cada `SkillGroup` inclui `summary`, `projectIds` e a lista integral `items`.
-  Referências a projetos inexistentes fazem o build falhar.
+  Cada `SkillGroup` tem `summary`, `projectIds` e a lista integral `items`, e cada
+  item é um `SkillItem` com os próprios `projectIds` — os projetos que o comprovam,
+  em ordem de catálogo. O item vira link para o primeiro deles; item sem projeto
+  público fica sem link e continua na lista, porque a ausência de evidência
+  publicada não é motivo para apagar uma competência real. Referências a projetos
+  inexistentes fazem o build falhar, nos dois níveis.
 - Os 24 certificados ficam em `src/data/certificates.ts`, com os PDFs em
   `public/certificates/`. Os caminhos são codificados por segmento.
 - Projetos `kind: full` usam o corpo Markdown; `kind: light` usam a ficha

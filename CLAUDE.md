@@ -25,7 +25,10 @@ Do not imply that a submitted article has already been accepted or peer reviewed
 - `src/data/`: profile, timeline, skills, certificates. Preserve documented facts,
   contacts, qualifications, dates and the existing PDFs.
 - `src/content/projetos/*.md`: validated content collection. Full entries have a
-  Markdown case study; light entries use the structured spec. Keep both formats.
+  Markdown case study with the four beats; light entries use the structured spec.
+  Keep both formats in the schema — but all nine entries are `full` today, so
+  `light` exists for a new project with no case study written yet, not for an
+  existing one to preserve.
 - `order` controls the catalog; the first three entries appear on the home page.
   Current priorities: FastF1, Bank Churn, Rota do Perfume, Personal Expenses,
   Shopping List Intelligence, then the remaining projects. FastF1 appears in
@@ -43,7 +46,12 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   contextual results, including nonnumeric architecture or scope; MetricLegend
   publishes the four result types at the end of the catalog; Skills renders
   capability descriptions and links to evidence, with all items on its full page.
-  SkillGroup requires summary and projectIds; invalid references fail the build.
+  SkillGroup requires summary and projectIds, and every item is a SkillItem with its
+  own projectIds; invalid references fail the build at both levels. The link is
+  evidence, not a condition of existence: an item whose projectIds are empty still
+  belongs on the list, unlinked. Knowing a tool without a public project that uses
+  it is not invention — the rule here is never to inflate scale, seniority or
+  impact, and never to simulate evidence that is not there.
 - `src/lib/metric.ts`: the measurement vocabulary (terms and glosses). Readout and
   MetricLegend both read it so the card and the legend cannot drift apart.
 - `src/components/viz/Pipeline.astro`: semantic HTML layer diagram, driven by
