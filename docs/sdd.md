@@ -411,15 +411,7 @@ humana, nunca pelo pipeline. Cobre hoje:
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard                                                                      |
 | `content.test.mjs` | as contagens publicadas e as que a prosa dos documentos repete, inclusive por extenso; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
-| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; um único `<script>`, e só na abertura; um `<h1>` por página sem pular nível; canonical e título próprio por página                                                                         |
-
-**Pendência conhecida nesta tabela.** A linha do `html.test.mjs` descreve "um único
-`<script>`, e só na abertura". Esse invariante mudou: o teste real (`tests/html.test.mjs`)
-é de **tipo** — todo script é `application/ld+json`, e nenhum é executável —, e foi assim
-que ele passou a aceitar o `SoftwareSourceCode` que cada ficha injeta. O corpo deste
-documento, em "Metadados e SEO", já descreve o invariante certo. A descrição da tabela foi
-mantida como está por decisão, não por descuido, e fica registrada aqui para não ser
-"descoberta" de novo.
+| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; todo `<script>` é `application/ld+json`, nenhum executável; um `<h1>` por página sem pular nível; canonical e título próprio por página                                                    |
 
 Quatro detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são
 varridos **contando chaves**, porque dois deles ficam aninhados no `@media` escuro e
@@ -591,9 +583,8 @@ O que envelhece sem ninguém ser avisado é o resto. **A tabela de versões da s
 primeira — ela já derivou uma vez, publicando Astro `^7.3.1` enquanto o `package.json`
 estava em `^7.3.2`, porque o Dependabot mexe no manifesto e não no documento. Depois o
 inventário de componentes, se algum for criado ou removido, e as descrições de invariante
-na tabela da suíte — a linha do `html.test.mjs` ainda descreve "um único script, e só na
-abertura" depois de o teste já ter virado uma checagem de tipo, e está registrada como
-pendência ali mesmo.
+na tabela da suíte — a linha do `html.test.mjs` descreveu por um tempo "um único script,
+e só na abertura" depois de o teste já ter virado uma checagem de tipo.
 
 **O código é a fonte da verdade.** Este documento registra decisão, contrato e
 invariante — o que não se lê olhando um arquivo isolado. Ao mexer em schema,
