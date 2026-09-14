@@ -21,3 +21,18 @@ updates:
       fontsource:
         patterns:
           - "@fontsource*"
+    ignore:
+      # prettier-plugin-astro 1.0.0 quebra a abertura. Ele reformata
+      # `<h1>{roleShort}<span>.</span></h1>` em três linhas, e com compressHTML
+      # o Astro preserva o espaço entre elementos inline — o título passa a
+      # renderizar "Engenheiro de Dados ." com o ponto descolado da palavra.
+      # Medido comparando o HTML das 15 páginas antes e depois: uma muda, e é o
+      # <h1> mais visível do site.
+      #
+      # O 0.14.1 formata igual sem esse comportamento, e o 1.0.0 não traz ganho
+      # aqui. A alternativa seria pôr index.astro no .prettierignore, tirando
+      # 250 linhas do gate por causa de uma linha.
+      #
+      # Trava só o major: correção dentro do 0.x continua chegando.
+      - dependency-name: prettier-plugin-astro
+        update-types: ["version-update:semver-major"]
