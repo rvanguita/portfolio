@@ -167,6 +167,82 @@ Markdown e 5 com ficha estruturada), 28 itens de competência, 24 certificados, 
 diagramas de arquitetura, a ficha de triagem, o dossiê em PDF e o deploy
 automático em cada push para `main`.
 
+## Melhorias propostas
+
+**Nada nesta seção está implementado.** O que existe hoje é o que as seções anteriores
+descrevem; aqui ficam as melhorias que serviriam ao objetivo declarado — cada afirmação
+apontando para evidência — com o critério que diz quando cada uma está pronta. Os
+números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
+confiar neles.
+
+### 1. Fechar a corrente entre a métrica e o código
+
+Hoje a corrente para uma casa antes do fim. Os 11 links de projeto apontam todos para a
+raiz do repositório, e nada mais fundo: quem lê "ROC AUC 0,936" não tem como conferir o
+número sem garimpar o repositório inteiro. Os três projetos com métrica aferida —
+bank-churn, wind-farm e sentiment-nlp — têm um `main.ipynb` na raiz, que é exatamente o
+arquivo onde o número nasce.
+
+_Aceite:_ todo projeto cujo resultado é do tipo `medida` publica, além do link do
+repositório, um link para o arquivo que produz a métrica. Nenhum número aferido fica a
+mais de um clique da sua origem.
+
+### 2. Publicar a data de cada projeto
+
+Nenhum dos 9 projetos declara data, e o schema não tem o campo. Um recrutador não
+distingue trabalho deste mês de trabalho de dois anos atrás — e a diferença é material
+para quem contrata.
+
+A data não precisa ser inventada: a API do GitHub devolve a dos nove. Medido, por
+criação: rotaperfume, personal-expenses e shopping-list em 09/2026; fastf1 em 07/2026;
+otimizacao-eletrica em 08/2025; fraud-detection e sentiment-nlp em 04/2025; bank-churn
+em 08/2024; wind-farm em 05/2024.
+
+O dado expõe uma tensão que vale decidir com ele à vista: **os quatro projetos de
+engenharia em Python são os mais recentes**, e os de notebook são de 2024–25 — mas a
+abertura promove Bank Churn (notebook, 2024) ao segundo lugar, à frente de três projetos
+de 2026. Publicar a data e revisar a ordem do catálogo são decisões separadas; a ordem
+atual está fixada de propósito. A primeira torna a segunda discutível com fato.
+
+_Aceite:_ cada ficha e cada cartão mostram o período do projeto, com a data vindo de
+fonte verificável — nunca estimada.
+
+### 3. Terminar as cinco fichas que param na metade
+
+Quatro projetos têm estudo de caso (200–280 palavras, com problema, dados, método e
+resultado); cinco têm só a ficha estruturada. E a matéria-prima é desigual:
+personal-expenses (138 palavras) e shopping-list (128) já estão perto da densidade de um
+estudo de caso e têm diagrama; fraud-detection (68), otimizacao-eletrica (70) e
+sentiment-nlp (79) são finas.
+
+A ordem importa: promover primeiro as duas que têm material, e para as outras três
+buscar o material no repositório de origem. Alongar prosa sem fato novo é como se
+inventa escala e impacto — exatamente o que a seção de honestidade proíbe.
+
+_Aceite:_ nenhuma ficha nova afirma o que o repositório não sustenta; as ressalvas
+existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literais.
+
+### 4. Ligar cada competência a um projeto que a comprove
+
+As competências apontam para projetos por grupo, não por item: os 28 itens são cobertos
+por 4 referências, e cinco dos nove projetos — wind-farm, fraud-detection,
+personal-expenses, shopping-list e sentiment-nlp — não comprovam competência nenhuma.
+Um item sem projeto atrás é exatamente o tipo de afirmação que o objetivo deste produto
+rejeita.
+
+_Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
+lista. Referência inválida continua quebrando o build.
+
+### 5. Dados estruturados nas fichas de projeto
+
+Só a abertura publica JSON-LD. As nove fichas — as páginas que descrevem trabalho
+concreto — não publicam nenhum. Um `SoftwareSourceCode` por ficha, montado do frontmatter
+que já existe (título, resumo, stack, repositório, tipo de resultado), é estático e não
+acrescenta script de cliente.
+
+_Aceite:_ vale a mesma regra do `knowsAbout` — o schema da ficha só declara o que a
+ficha mostra. E segue um só script por página: JSON-LD, nunca JavaScript de cliente.
+
 ## Onde este documento envelhece
 
 Os números — 14 rotas, 9 projetos, 28 itens, 24 certificados — mudam se o
