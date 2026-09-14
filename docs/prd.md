@@ -172,7 +172,7 @@ do projeto não descreve.
 ## Estado atual
 
 Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
-(6 com estudo de caso em Markdown e 3 com ficha estruturada), 29 itens de
+(todos com estudo de caso em Markdown), 29 itens de
 competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
 dossiê em PDF e o deploy automático em cada push para `main`.
 
@@ -190,23 +190,7 @@ apontando para evidência — com o critério que diz quando cada uma está pron
 números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
 confiar neles.
 
-### 1. Terminar as três fichas que ainda param na metade
-
-Duas das cinco foram promovidas a estudo de caso — `personal-expenses` e
-`shopping-list` —, escritas a partir do README e do código dos próprios repositórios,
-que estão clonados nesta máquina. Cada uma ganhou os quatro beats e ~420 palavras, na
-mesma densidade das que já existiam.
-
-Sobraram `fraud-detection`, `otimizacao-eletrica` e `sentiment-nlp`. São as três de
-matéria-prima mais fina (68 a 79 palavras de ficha) **e** as três cujos repositórios
-não estão disponíveis localmente. Escrevê-las a partir do que o site já diz seria
-alongar prosa sem fato novo, que é como se inventa escala e impacto.
-
-_Aceite:_ cada ficha nova sai do material do repositório de origem — README, código,
-notebook. Nenhuma afirma o que o repositório não sustenta, e as ressalvas existentes
-(`em desenvolvimento`, `submetido`) continuam literais.
-
-### 2. Cartão social das fichas: decidido, não pendente
+### 1. Cartão social das fichas: decidido, não pendente
 
 Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
 problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso

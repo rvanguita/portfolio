@@ -112,7 +112,8 @@ ainda recebe `min-width`, senão ficaria em 43 px. `certTotal` é derivado, nunc
 Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 
 - `kind`: `full` (corpo Markdown com os quatro beats) ou `light` (objeto `spec`
-  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos coexistem, e
+  com `problema`, `dados`, `metodo`, `resultado`). Os dois formatos seguem suportados — hoje as nove fichas usam `full`, mas o `light`
+  continua válido para um projeto novo que ainda não tenha estudo de caso —, e
   um `superRefine` amarra os dois campos: `spec` continua opcional no objeto,
   porque `full` não a usa, mas falta dela num `light` é erro de schema. Sem isso
   um `light` sem ficha publicaria quatro `<dd>` vazios e passaria no build;
