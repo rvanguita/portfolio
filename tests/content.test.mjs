@@ -20,11 +20,10 @@ test("as contagens publicadas continuam de pé", () => {
   assert.equal(projectFiles.length, 9, "9 projetos");
 
   const skills = read("src/data/skills.ts");
-  const groups = [...skills.matchAll(/items:\s*\[([\s\S]*?)\]/g)];
-  const items = groups.reduce(
-    (n, g) => n + (g[1].match(/"[^"]+"/g) ?? []).length,
-    0,
-  );
+  const groups = [...skills.matchAll(/items:\s*\[/g)];
+  // Cada item é um objeto `{ name, projectIds }`: contar `name:` é imune tanto à
+  // lista de evidências aninhada quanto a um regex não-guloso parar no `]` errado.
+  const items = (skills.match(/name:\s*"/g) ?? []).length;
   assert.equal(groups.length, 4, "4 grupos de competência");
   assert.equal(items, 29, "29 itens de competência");
 
@@ -139,9 +138,8 @@ test("as contagens que os documentos publicam batem com o código", () => {
   // Os padrões são específicos porque "N projetos" e "N itens" também aparecem
   // como recorte legítimo — "só os 4 projetos que declaram arquitetura", ou
   // "3 grupos, 24 itens" falando de certificados.
-  const itens = [
-    ...read("src/data/skills.ts").matchAll(/items:\s*\[([\s\S]*?)\]/g),
-  ].reduce((n, g) => n + (g[1].match(/"[^"]+"/g) ?? []).length, 0);
+  // Mesmo motivo do teste de contagens: cada item é `{ name, projectIds }`.
+  const itens = (read("src/data/skills.ts").match(/name:\s*"/g) ?? []).length;
   const certificados = (
     read("src/data/certificates.ts").match(/file:\s*"/g) ?? []
   ).length;
