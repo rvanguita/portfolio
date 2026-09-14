@@ -2,9 +2,11 @@
 import { getCollection, render } from "astro:content";
 import type { GetStaticPaths } from "astro";
 import Layout from "@components/layout/Layout.astro";
+import Trilha from "@components/layout/Trilha.astro";
 import Readout from "@components/panels/Readout.astro";
 import Pipeline from "@components/viz/Pipeline.astro";
 import { url, absoluteUrl } from "@lib/url";
+import { tecnologiasDe, paginasDeTecnologia } from "@lib/stack";
 import { METRIC_TAG } from "@lib/metric";
 import { profile } from "@data/profile";
 
@@ -12,15 +14,26 @@ export const getStaticPaths = (async () => {
   const entries = (await getCollection("projetos")).sort(
     (a, b) => a.data.order - b.data.order,
   );
+  // Qual tecnologia tem página, para a etiqueta virar elo só quando há destino.
+  // Vem da mesma função que gera as rotas, então as duas não podem divergir.
+  const comPagina = Object.fromEntries(
+    paginasDeTecnologia(entries).map((pagina) => [pagina.nome, pagina.slug]),
+  );
   return entries.map((entry, i) => ({
     params: { slug: entry.id },
-    props: { entry, prev: entries[i - 1], next: entries[i + 1] },
+    props: { entry, prev: entries[i - 1], next: entries[i + 1], comPagina },
   }));
 }) satisfies GetStaticPaths;
 
-const { entry, prev, next } = Astro.props;
+const { entry, prev, next, comPagina } = Astro.props;
 const { data } = entry;
 const { Content } = await render(entry);
+
+const trilha = [
+  { rotulo: "Início", href: url("/") },
+  { rotulo: "Projetos", href: url("/projetos/") },
+  { rotulo: data.title },
+];
 
 // Schema da ficha. Vale a mesma regra do `knowsAbout` da abertura: só entra o
 // que a página mostra. Todo campo abaixo sai do frontmatter que já é renderizado
@@ -38,6 +51,20 @@ const schema = {
   author: { "@type": "Person", name: profile.name },
   ...(data.repos.length > 0 && { codeRepository: data.repos[0].url }),
 };
+
+// Espelha a trilha visível, item a item. A regra do metadado com lastro vale
+// aqui igual: trilha estruturada sem trilha na página seria afirmar navegação
+// que o leitor não tem.
+const breadcrumb = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: trilha.map((item, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: item.rotulo,
+    ...(item.href && { item: absoluteUrl(item.href, Astro.site) }),
+  })),
+};
 ---
 
 <Layout
@@ -52,9 +79,15 @@ const schema = {
     type="application/ld+json"
     set:html={JSON.stringify(schema)}
   />
+  <script
+    is:inline
+    slot="head"
+    type="application/ld+json"
+    set:html={JSON.stringify(breadcrumb)}
+  />
 
   <div class="page page--doc">
-    <a class="backlink" href={url("/projetos/")}>← Todos os projetos</a>
+    <Trilha itens={trilha} />
     <article class="doc">
       <header class="doc-head">
         <p class="doc-cat">{data.category} · {data.periodo}</p>
@@ -126,7 +159,22 @@ const schema = {
         <div class="doc-rail-block">
           <h2>Tecnologias</h2>
           <ul class="tech-tags">
-            {data.stack.split(" · ").map((tech) => <li>{tech}</li>)}
+            {
+              tecnologiasDe(data.stack).map((tech) =>
+                comPagina[tech] ? (
+                  <li>
+                    <a
+                      class="tech-link"
+                      href={url(`/projetos/stack/${comPagina[tech]}/`)}
+                    >
+                      {tech}
+                    </a>
+                  </li>
+                ) : (
+                  <li>{tech}</li>
+                ),
+              )
+            }
           </ul>
         </div>
       </aside>

@@ -41,6 +41,10 @@ export const profile = {
     github: "https://github.com/rvanguita",
     linkedin: "https://linkedin.com/in/rvanguita",
     dossie: "/assets/dossie-rene-anguita.pdf",
+    /** O repositório deste site. A evidência de prática de engenharia é ele
+     *  próprio — CI, suíte de invariantes, deploy automático —, e o rodapé
+     *  aponta para lá em vez de adjetivar. */
+    repo: "https://github.com/rvanguita/portfolio",
   },
   description:
     "Rene Anguita — Engenheiro de Dados (Data Engineer), Ph.D. pela UNICAMP. " +

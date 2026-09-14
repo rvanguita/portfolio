@@ -1,0 +1,52 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Layout from "@components/layout/Layout.astro";
+import Channels from "@components/panels/Channels.astro";
+import Trilha from "@components/layout/Trilha.astro";
+import { url } from "@lib/url";
+import { paginasDeTecnologia } from "@lib/stack";
+
+// A rota existe para dar destino ao elo de competência: um item como Python é
+// demonstrado por vários projetos, e até aqui o elo levava a um só. A página não
+// afirma nada novo — recorta a evidência já publicada por outro eixo.
+export const getStaticPaths = (async () => {
+  const projetos = await getCollection("projetos");
+  return paginasDeTecnologia(projetos).map((pagina) => ({
+    params: { tech: pagina.slug },
+    props: pagina,
+  }));
+}) satisfies GetStaticPaths;
+
+const { nome, projetos } = Astro.props;
+---
+
+<Layout
+  title={`Projetos com ${nome} · Rene Anguita`}
+  description={`${projetos.length} projetos de Engenharia de Dados que usam ${nome}, com problema, decisão técnica, resultado e código aberto.`}
+  current="projetos"
+>
+  <div class="page">
+    <Trilha
+      itens={[
+        { rotulo: "Início", href: url("/") },
+        { rotulo: "Projetos", href: url("/projetos/") },
+        { rotulo: nome },
+      ]}
+    />
+    <div class="mod-head">
+      <h1>{nome}</h1>
+      <span class="count">{projetos.length} projetos</span>
+    </div>
+    <p class="module-intro">
+      Os projetos do catálogo que usam {nome}. Cada um abre a ficha com o
+      problema, a decisão técnica e o resultado — e aponta para o código.
+    </p>
+    <Channels projects={projetos} level={2} />
+    <p class="stack-back">
+      <a class="text-link" href={url("/projetos/")}
+        >Ver o catálogo completo <span aria-hidden="true">→</span></a
+      >
+    </p>
+  </div>
+</Layout>

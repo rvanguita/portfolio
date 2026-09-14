@@ -1,0 +1,66 @@
+# O `atualizadoEm` de cada projeto vem da API do GitHub na hora de escrever a
+# ficha e, sozinho, nunca mais é conferido. Um projeto que recebe commit depois
+# disso segue anunciando a data antiga — e o sitemap a publica como `lastmod`.
+#
+# A divisão de trabalho com o links.yml: aquele pega ruptura, quando o
+# repositório é renomeado, arquivado ou vira privado e nada mais responde. Este
+# pega deriva silenciosa, em que tudo responde 200 e só a data envelheceu.
+#
+# Agendado e fora do CI de PR, pelo mesmo motivo: mergear não deve depender da
+# rede de terceiros.
+name: 📅 Datas dos projetos
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check:
+    name: Conferir atualizadoEm contra o repositório
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7
+        with:
+          node-version: 24.20.0
+
+      - name: Conferir as datas
+        shell: bash
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        # pipefail porque, sem ele, o código de saída seria o do `tee` e a
+        # divergência passaria como sucesso.
+        run: |
+          set -o pipefail
+          node scripts/check_dates.mjs | tee relatorio.txt
+
+      # Uma issue só, reaberta por comentário nas semanas seguintes: sem isso, um
+      # projeto esquecido geraria uma issue nova por semana até alguém agir.
+      - name: Abrir ou atualizar a issue
+        if: failure()
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh label create datas-desatualizadas --force \
+            --color D93F0B --description "atualizadoEm divergente do repositório"
+
+          corpo=$(printf '%s\n\n```\n%s\n```\n\n%s\n' \
+            "O \`atualizadoEm\` de uma ou mais fichas ficou para trás do último push do repositório. A data também alimenta o \`lastmod\` do sitemap." \
+            "$(cat relatorio.txt)" \
+            "Rodada de $(date -u +%Y-%m-%d) — [execução](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).")
+
+          existente=$(gh issue list --state open --label datas-desatualizadas \
+            --limit 1 --json number --jq '.[0].number // empty')
+
+          if [ -n "$existente" ]; then
+            gh issue comment "$existente" --body "$corpo"
+          else
+            gh issue create --title "Datas de projeto atrasadas" \
+              --label datas-desatualizadas --body "$corpo"
+          fi

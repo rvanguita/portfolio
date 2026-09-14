@@ -20,7 +20,7 @@ competência e projeto **falha o build** em vez de renderizar vazio.
 
 | Item       | Versão / decisão                                                                                                                             |
 | ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
-| Astro      | `^7.3.1`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                                               |
+| Astro      | `^7.3.2`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                                               |
 | Node       | `24.20.0`, fixado em `mise.toml` e nos dois workflows                                                                                        |
 | TypeScript | `astro check` seguido de `tsc --noEmit`                                                                                                      |
 | Imagens    | `passthroughImageService()` — assets servidos direto de `public/`, sem `sharp`                                                               |
@@ -44,18 +44,20 @@ src/
   config.ts              SITE e NAV — fonte única, compartilhada com astro.config.mjs
   content.config.ts      schema Zod da coleção `projetos`
   data/                  profile, skills, timeline, certificates
-  lib/                   url.ts, metric.ts
+  lib/                   url.ts, metric.ts, stack.ts
   content/projetos/      9 arquivos Markdown
   components/
-    layout/              BaseHead, Layout, ReadoutStrip, ThemeToggle, Footer
+    layout/              BaseHead, Layout, ReadoutStrip, ThemeToggle, Trilha, Footer
     panels/              Channels, Readout, MetricLegend, Skills
     viz/                 Pipeline, Timeline
-  pages/                 index, projetos/index, projetos/[slug], trajetoria,
-                         competencias, certificacoes, 404
+  pages/                 index, projetos/index, projetos/[slug],
+                         projetos/stack/[tech], trajetoria, competencias,
+                         certificacoes, 404
   styles/                tokens.css, global.css
-tests/                   suíte de invariantes (node:test), lida contra dist/
+tests/                   suíte de invariantes (node:test), lida contra dist/;
+                         helpers.mjs guarda a lista canônica de cores
 scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
-                         dossier-content.json
+                         check_dates.mjs, dossier-content.json
                          (as dependências vêm de requirements-pdf.txt, na raiz)
 public/                  assets, certificates (24 PDFs), icon.svg, icon.png,
                          robots.txt, .nojekyll
@@ -92,8 +94,8 @@ possam divergir.
 | Arquivo           | Exporta                     | Contrato                                                                                   |
 | ----------------- | --------------------------- | ------------------------------------------------------------------------------------------ |
 | `profile.ts`      | `profile`                   | identidade, contatos, `screening` (ficha de triagem), `leadHtml`, `description`, `ogImage` |
-| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items: SkillItem[]` — 4 grupos, 29 itens                |
-| `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas                                |
+| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items: SkillItem[]` — 4 grupos de competência, 29 itens |
+| `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas de trajetória                  |
 | `certificates.ts` | `certGroups`, `certTotal`   | 3 grupos, 24 itens; `file` é o caminho sob `public/certificates/`                          |
 
 `SkillGroup.projectIds` e `SkillItem.projectIds` são validados em `Skills.astro`: id
@@ -131,19 +133,20 @@ Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 
 ### Componentes e contratos de props
 
-| Componente     | Props                                              | Papel                                            |
-| -------------- | -------------------------------------------------- | ------------------------------------------------ |
-| `Layout`       | `title`, `description?`, `ogType?`, `current?`     | casca das páginas, `slot="head"` para JSON-LD    |
-| `BaseHead`     | `title`, `description?`, `ogType?`                 | metadados, canonical, Open Graph, theme-color    |
-| `ReadoutStrip` | `current?`                                         | cabeçalho e navegação, marca a página ativa      |
-| `ThemeToggle`  | —                                                  | checkbox que inverte o tema do sistema           |
-| `Footer`       | —                                                  | identidade, contatos e link do dossiê            |
-| `Channels`     | `projects`, `level?`, `columns?`                   | cartões de projeto; `level` controla o heading   |
-| `Readout`      | `kind`, `label`, `value`, `sub?`, `class?`         | resultado tipado; decide cadeia vs. linha        |
-| `MetricLegend` | —                                                  | publica os quatro tipos ao fim do catálogo       |
-| `Skills`       | `compact?`                                         | capacidades; `compact` esconde os itens na home  |
-| `Pipeline`     | `architecture`, `variant?`, `headingId?`, `class?` | diagrama de camadas                              |
-| `Timeline`     | —                                                  | lista vertical da trajetória, `<h2>` por entrada |
+| Componente     | Props                                              | Papel                                               |
+| -------------- | -------------------------------------------------- | --------------------------------------------------- |
+| `Layout`       | `title`, `description?`, `ogType?`, `current?`     | casca das páginas, `slot="head"` para JSON-LD       |
+| `BaseHead`     | `title`, `description?`, `ogType?`                 | metadados, canonical, Open Graph, theme-color       |
+| `ReadoutStrip` | `current?`                                         | cabeçalho e navegação, marca a página ativa         |
+| `ThemeToggle`  | —                                                  | checkbox que inverte o tema do sistema              |
+| `Footer`       | —                                                  | identidade, contatos, dossiê e o elo do repositório |
+| `Trilha`       | `itens`                                            | trilha de navegação; o último item não é elo        |
+| `Channels`     | `projects`, `level?`, `columns?`                   | cartões de projeto; `level` controla o heading      |
+| `Readout`      | `kind`, `label`, `value`, `sub?`, `class?`         | resultado tipado; decide cadeia vs. linha           |
+| `MetricLegend` | —                                                  | publica os quatro tipos ao fim do catálogo          |
+| `Skills`       | `compact?`                                         | capacidades; `compact` esconde os itens na home     |
+| `Pipeline`     | `architecture`, `variant?`, `headingId?`, `class?` | diagrama de camadas                                 |
+| `Timeline`     | —                                                  | lista vertical da trajetória, `<h2>` por entrada    |
 
 `level` em `Channels` existe porque a home já gastou o `h2` no título da seção e
 precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
@@ -153,13 +156,18 @@ precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
 `trailingSlash: "always"` e `build.format: "directory"` — cada rota é um
 `index.html` em seu diretório. `projetos/[slug].astro` gera as nove fichas por
 `getStaticPaths`, ordenando por `order` e passando `prev`/`next` para a navegação
-entre projetos.
+entre projetos. `projetos/stack/[tech].astro` gera as 10 páginas de tecnologia pela
+mesma via, a partir de `paginasDeTecnologia()`.
+
+Não há índice em `/projetos/stack/`, e isso é escolha: as páginas de tecnologia são
+alcançadas pelas etiquetas das fichas e pelos itens de competência, que é de onde o leitor
+realmente parte. Um índice de tecnologias seria uma terceira lista do mesmo catálogo.
 
 **O 404 é a exceção, e de propósito.** Astro trata `/404` como página de código de
 status (`STATUS_CODE_PAGES`, em `core/build/common.js`) e emite `dist/404.html` na
 raiz, **não** `dist/404/index.html` — que é exatamente o arquivo que o GitHub Pages
-serve para endereço inexistente. Por isso o build informa 15 páginas enquanto o site
-tem 14 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
+serve para endereço inexistente. Por isso o build informa 25 páginas enquanto o site
+tem 24 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
 contagens que os documentos publicam.
 
 ## Aferição tipada
@@ -213,8 +221,38 @@ Regras que o componente e o CSS assumem:
   caírem na mesma linha dos estágios, tenha o projeto orquestrador ou não;
 - `outputs` vazio não renderiza a lista, para não deixar conector solto.
 
-Os cinco projetos sem fluxo em camadas **não** têm diagrama, e isso é decisão de
-produto: inventar pipeline onde não há contraria a regra de fidelidade.
+Os outros cinco projetos, sem fluxo em camadas, **não** têm diagrama, e isso é
+decisão de produto: inventar pipeline onde não há contraria a regra de fidelidade.
+
+## Vocabulário canônico da stack
+
+`stack` é uma linha só no frontmatter, fatiada por `" · "`. Enquanto ela servia para
+imprimir etiquetas, grafia não importava. No momento em que uma tecnologia virou rota,
+passou a importar: duas grafias da mesma ferramenta nascem como duas páginas.
+
+`src/lib/stack.ts` resolve isso com duas tabelas e uma regra:
+
+- `ALIAS` mapeia grafia para nome canônico;
+- `CANONICAS` é a lista fechada de nomes aceitos;
+- termo fora dela **lança e falha o build**. Acrescentar tecnologia a um projeto passa a
+  exigir acrescentá-la aqui, e esse atrito é o ponto.
+
+Não era hipótese. A stack já tinha `Python` e `Python 3.12` como termos distintos, e
+`Google Gemini (OCR)` escondia que o Gemini aparece em dois projetos — o suficiente para
+ele não atingir o mínimo e não ganhar página. Colapsar as grafias mudou a contagem de 9
+páginas para 10.
+
+`paginasDeTecnologia()` é a fonte única: `getStaticPaths` gera as rotas dela, e os elos das
+etiquetas e das competências consultam a mesma função. Rota gerada e elo não podem
+divergir porque são a mesma lista.
+
+**O mínimo de dois projetos** também é regra, não acaso: com um projeto só, a página
+repetiria a ficha e não acrescentaria caminho nenhum.
+
+O elo do item de competência casa por **nome exato**, de propósito. "Python" e "Docker"
+casam; "XGBoost / LightGBM" e "Pytest / testes automatizados" não, e continuam apontando
+para o projeto de maior prioridade. Aproximar a comparação faria o elo prometer uma página
+que responde por outra coisa.
 
 ## Sistema de estilos
 
@@ -319,11 +357,12 @@ usa uma posição independente que possa sobrepor o texto.
 
 ## CI/CD
 
-| Workflow     | Gatilho                  | Papel                                  |
-| ------------ | ------------------------ | -------------------------------------- |
-| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`   |
-| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages            |
-| `links.yml`  | semanal, manual          | confere os links externos dos projetos |
+| Workflow     | Gatilho                  | Papel                                       |
+| ------------ | ------------------------ | ------------------------------------------- |
+| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`        |
+| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages                 |
+| `links.yml`  | semanal, manual          | confere os links externos dos projetos      |
+| `datas.yml`  | semanal, manual          | confere `atualizadoEm` contra o repositório |
 
 O `ci.yml` roda, nesta ordem: `format:check`, `build`, `check`, `test`,
 `dossier:check` e `dossier:generate` seguido de `git diff --exit-code`. A suíte vem
@@ -335,9 +374,29 @@ quebrado, mas **não compara o PDF com o manifesto** — ele nunca abre o JSON. 
 copy alterada sem regenerar é o `git diff` depois do `dossier:generate`, possível porque
 o gerador é determinístico.
 
-O `links.yml` fica **fora do caminho da PR** de propósito: mergear não pode depender da
-rede de terceiros. A quebra que ele vigia não vem de commit — vem de alguém renomear,
-arquivar ou tornar privado um repositório.
+O `links.yml` e o `datas.yml` ficam **fora do caminho da PR** de propósito: mergear não
+pode depender da rede de terceiros. Nenhuma das duas quebras que eles vigiam vem de
+commit.
+
+A divisão entre os dois é o tipo de falha. O `links.yml` pega **ruptura**: alguém renomeia,
+arquiva ou torna privado um repositório, e o link morre. O `datas.yml` pega **deriva
+silenciosa**: tudo responde 200, e só o `atualizadoEm` da ficha é que ficou para trás do
+último push — campo que o sitemap republica como `lastmod`, então a data velha vira sinal
+errado para o robô, não só imprecisão de leitura.
+
+`scripts/check_dates.mjs` reduz cada `repos[].url` a `owner/repo` pelos dois primeiros
+segmentos, o que cobre as duas formas presentes no frontmatter — a raiz e o link para um
+arquivo dentro do repositório. Projeto com vários repositórios usa o `pushed_at` mais
+recente, a mesma regra que o `periodo` segue. A comparação é de mão única: repositório
+parado não acusa nada, ficha atrasada acusa.
+
+Duas decisões que o script carrega no comentário. Repositório ilegível vira aviso e **não**
+falha, porque renomeado ou privado já é o alarme do `links.yml` e duplicá-lo faria os dois
+gritarem pela mesma causa. E `pushed_at` sobe com qualquer push, inclusive um que só mexa
+no README — o resultado é uma issue para uma pessoa decidir, nunca um build quebrado, e por
+isso ele pode ser levemente barulhento sem causar dano. O passo da issue reaproveita a que
+já estiver aberta, comentando nela: sem isso, um projeto esquecido geraria uma issue nova
+por semana.
 
 Todas as Actions são fixadas por **SHA**, com a versão em comentário ao lado. Tag é
 ponteiro móvel, e o `deploy.yml` roda com `pages: write` e `id-token: write`. Para que
@@ -349,7 +408,7 @@ Uma exceção está travada ali, com o motivo ao lado: o **major** do
 `<h1>{roleShort}<span>.</span></h1>` em três linhas e, como `compressHTML` preserva o
 espaço entre elementos inline, o título da abertura passa a renderizar
 "Engenheiro de Dados ." — com o ponto descolado. Medido comparando o texto visível
-das 15 páginas antes e depois: só uma muda, e é o `<h1>` mais visível do site.
+das 25 páginas antes e depois: só uma muda, e é o `<h1>` mais visível do site.
 
 É a mesma armadilha que o `.prettierignore` já contorna em `Channels.astro` e
 `certificacoes.astro`. Aqui a saída foi travar o major em vez de tirar as 250 linhas
@@ -370,7 +429,7 @@ Durante o trabalho, `npm run dev`. Antes de entregar:
 
 ```
 npm run format:check
-npm run build          # deve gerar 14 páginas
+npm run build          # 25 páginas: 24 rotas navegáveis + dist/404.html
 npm run check          # astro check + tsc --noEmit
 npm test               # invariantes, lidos contra dist/
 ```
@@ -385,17 +444,25 @@ JSON-LD é serializado e os links já carregam o prefixo da base. Por isso roda 
 Ela existe porque todo invariante deste documento que já quebrou foi pego por auditoria
 humana, nunca pelo pipeline. Cobre hoje:
 
-| Arquivo            | O que guarda                                                                                                                                                                                                |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard        |
-| `content.test.mjs` | as contagens publicadas; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
-| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; um único `<script>`, e só na abertura; um `<h1>` por página sem pular nível; canonical e título próprio por página           |
+| Arquivo            | O que guarda                                                                                                                                                                                                                                                              |
+| ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard                                                                      |
+| `content.test.mjs` | as contagens publicadas e as que a prosa dos documentos repete, inclusive por extenso; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
+| `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; todo `<script>` é `application/ld+json`, nenhum executável; um `<h1>` por página sem pular nível; canonical e título próprio por página                                                    |
 
-Três detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são varridos
-**contando chaves**, porque dois deles ficam aninhados no `@media` escuro e expressão
-regular não alcança; o Markdown quebra linha no meio das frases, então as ressalvas são
-casadas com o espaço normalizado; e os links passam por `decodeURIComponent` antes do
-teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos.
+Quatro detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são
+varridos **contando chaves**, porque dois deles ficam aninhados no `@media` escuro e
+expressão regular não alcança; o Markdown quebra linha no meio das frases, então as
+ressalvas são casadas com o espaço normalizado; os links passam por `decodeURIComponent`
+antes do teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos; e
+a guarda de contagens lê número por extenso, porque a prosa escreve "Quinze cores
+semânticas" e "nove projetos" — dobrar o texto ao regex seria a troca errada.
+
+A contrapartida do número por extenso é que um recorte legítimo passa a casar. "Só os 4
+projetos que declaram arquitetura" e "as outras cinco rotas" são subconjuntos, não a
+contagem total, e a guarda os distingue por uma lista de marcadores — "só os", "dos",
+"outros", "outras". Um recorte novo escrito sem marcador reprova a PR, e a correção é
+escrever o marcador, não afrouxar o padrão.
 
 Quando um invariante novo entrar aqui, **quebre-o de propósito uma vez** e confirme que o
 teste reprova. Um teste que nunca viu vermelho não é uma guarda.
@@ -437,25 +504,42 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 Os riscos com **teste** ao lado deixaram de depender de alguém lembrar: reprovam a PR
 sozinhos. Os demais continuam sendo disciplina.
 
-| Risco                                           | Controle                                                                        |
-| ----------------------------------------------- | ------------------------------------------------------------------------------- |
-| Link ou asset sem `url()`                       | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
-| Divergência entre cartão e legenda de resultado | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
-| Termo em `LAYERS` sem regra `.chain--*`         | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
-| Lista de cores divergente entre blocos de tema  | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
-| Diagrama afirmar camada inexistente             | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
-| Metadado afirmando o que a página não mostra    | **teste** confere `knowsAbout` contra o texto visível                           |
-| Ressalva de honestidade removida sem querer     | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
-| PDF desalinhado do manifesto                    | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
-| Repositório de projeto renomeado ou privado     | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
-| Action com tag reapontada                       | fixadas por SHA; Dependabot reabre para não congelar                            |
-| Renomear o job de CI                            | o nome é o contexto exigido pela proteção da `main`                             |
-| PR empilhada sobre PR aberta                    | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
+| Risco                                               | Controle                                                                        |
+| --------------------------------------------------- | ------------------------------------------------------------------------------- |
+| Link ou asset sem `url()`                           | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
+| Divergência entre cartão e legenda de resultado     | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
+| Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
+| Lista de cores divergente entre blocos de tema      | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
+| Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado     |
+| `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`                |
+| Duas grafias da mesma tecnologia virarem duas rotas | `CANONICAS` em `src/lib/stack.ts` **falha o build** em termo desconhecido       |
+| Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
+| Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                           |
+| Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
+| PDF desalinhado do manifesto                        | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
+| Repositório de projeto renomeado ou privado         | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
+| Action com tag reapontada                           | fixadas por SHA; Dependabot reabre para não congelar                            |
+| Renomear o job de CI                                | o nome é o contexto exigido pela proteção da `main`                             |
+| PR empilhada sobre PR aberta                        | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
 
 ## Evolução técnica proposta
 
-Nada pendente aqui. O último item foi medido e recusado — o registro fica abaixo, porque
-"não fizemos" sem o número convida a refazer a discussão daqui a seis meses.
+**Nada pendente aqui.** As três propostas que esta seção guardava foram implementadas: as
+rotas por tecnologia (descritas em "Vocabulário canônico da stack"), a trilha de navegação
+com o `BreadcrumbList` que a espelha, e o elo do repositório no rodapé.
+
+Sobre a última, o que merecia registro técnico era o que **não** fazer, e vale como regra
+para qualquer alegação futura sobre o próprio projeto: a afirmação tem de apontar para o
+artefato que a sustenta — o workflow, a suíte, o `.github/` —, nunca para um adjetivo sobre
+boas práticas. "Site com CI e testes" sem elo é a mesma classe de alegação sem lastro que a
+suíte reprova em `knowsAbout`, só que fora do alcance dela, porque é texto visível e não
+metadado. O rodapé afirma duas coisas conferíveis — estático, sem JavaScript de cliente; a
+suíte roda a cada PR — e entrega o repositório logo em seguida.
+
+## Decisões fechadas
+
+Medido e recusado. O registro fica porque "não fizemos" sem o número convida a refazer a
+discussão daqui a seis meses.
 
 ### Preload da fonte crítica — medido e descartado
 
@@ -484,11 +568,24 @@ sustenta é que, com o site nesta forma, a otimização não se paga. Se a medi�
 refeita sob latência real e o quadro mudar, o caminho é um `<link rel="preload">` na
 `BaseHead` apontando para o arquivo que o bundle emite.
 
+### Imagem social por ficha e versão em inglês
+
+Decisões de produto, com o motivo no [PRD](./prd.md#decisões-fechadas). Ambas têm
+consequência técnica registrada ali: a primeira exigiria `sharp` ou peças versionadas em
+`public/`; a segunda, uma segunda árvore de rotas.
+
 ## Onde esta documentação envelhece
 
-Primeiro nas contagens (14 rotas, 9 projetos, 29 itens, 24 certificados, 15
-cores) e nas versões da tabela de stack. Depois no inventário de componentes, se
-algum for criado ou removido.
+As contagens deixaram de ser o ponto frágil: a suíte cruza cada número deste documento,
+do PRD, do README e do CLAUDE.md com o dado que ele descreve, e reprova a PR quando um
+fica para trás.
+
+O que envelhece sem ninguém ser avisado é o resto. **A tabela de versões da stack** é a
+primeira — ela já derivou uma vez, publicando Astro `^7.3.1` enquanto o `package.json`
+estava em `^7.3.2`, porque o Dependabot mexe no manifesto e não no documento. Depois o
+inventário de componentes, se algum for criado ou removido, e as descrições de invariante
+na tabela da suíte — a linha do `html.test.mjs` descreveu por um tempo "um único script,
+e só na abertura" depois de o teste já ter virado uma checagem de tipo.
 
 **O código é a fonte da verdade.** Este documento registra decisão, contrato e
 invariante — o que não se lê olhando um arquivo isolado. Ao mexer em schema,

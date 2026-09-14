@@ -91,6 +91,22 @@ pre { overflow-x: auto; }
 .text-link:hover { text-decoration: underline; }
 .backlink { color: var(--ink-soft); }
 .backlink:hover { color: var(--accent); }
+
+/* Trilha de navegação. Substitui o .backlink onde há mais de um nível para
+   subir — ficha de projeto e página de tecnologia. Onde há só um, o .backlink
+   continua: uma trilha de dois itens não diz nada que a seta já não diga.
+   O separador leva alt vazio (`/ ""`), para o leitor de tela ouvir a lista e
+   não o sinal. */
+.trilha ol { display: flex; flex-wrap: wrap; align-items: center; column-gap: .55rem; font-family: var(--font-mono); font-size: var(--fs-sm); }
+.trilha li { display: flex; align-items: center; min-width: 0; max-width: 100%; }
+.trilha li + li::before { content: "\203A"; margin-right: .55rem; color: var(--rule-strong); }
+/* Alt vazio, para o leitor de tela ouvir a lista e não o sinal. Vem em regra
+   própria de propósito: onde `content: x / ""` não é suportado a declaração
+   inteira cai, e a regra acima mantém o separador visível. */
+.trilha li + li::before { content: "\203A" / ""; }
+.trilha a { display: inline-flex; align-items: center; min-height: 44px; min-width: 0; color: var(--ink-soft); text-decoration: none; }
+.trilha a:hover { color: var(--accent); text-decoration: underline; }
+.trilha [aria-current="page"] { min-width: 0; color: var(--ink); }
 .tech-tags { display: flex; flex-wrap: wrap; gap: .5rem; }
 .tech-tags li { max-width: 100%; font-family: var(--font-mono); font-size: var(--fs-sm); line-height: 1.5; padding: .25rem .55rem; border-radius: .3rem; background: color-mix(in srgb, var(--accent) 6%, var(--well)); color: var(--ink-soft); }
 .hero-tech li { padding: 0; background: none; color: var(--ink); }
@@ -218,6 +234,7 @@ pre { overflow-x: auto; }
 .mod-head h1 { font-size: clamp(2.25rem, 4vw, 3.5rem); }
 .count { color: var(--ink-soft); font-size: var(--fs-sm); }
 .module-intro { margin-top: var(--s-4); margin-bottom: var(--s-7); max-width: var(--measure); font-size: var(--fs-md); color: var(--ink-soft); }
+.stack-back { margin-top: var(--s-6); }
 .doc { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 17rem); gap: var(--s-7); margin-top: var(--s-4); }
 .doc > * { min-width: 0; grid-column: 1; }
 .doc-head { grid-column: 1 / -1; padding-bottom: var(--s-6); border-bottom: 1px solid var(--rule); }
@@ -266,6 +283,9 @@ pre { overflow-x: auto; }
 .foot-links { display: flex; flex-wrap: wrap; gap: 0 var(--s-5); }
 .foot-links a { display: inline-flex; align-items: center; min-height: 44px; font-size: var(--fs-sm); text-decoration: none; }
 .foot-links a:hover { text-decoration: underline; }
+.foot-colofon { margin-top: var(--s-5); padding-top: var(--s-5); border-top: 1px solid var(--rule); max-width: var(--measure); }
+.foot-colofon p { font-size: var(--fs-sm); color: var(--ink-soft); }
+.foot-colofon .text-link { color: var(--accent); }
 .foot-bottom { margin-top: var(--s-5); font-size: var(--fs-xs); color: var(--ink-soft); }
 
 /* A versão completa só fica horizontal quando há espaço para todas as camadas. */

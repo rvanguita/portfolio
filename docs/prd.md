@@ -50,17 +50,18 @@ andamento.
 
 ## Escopo atual
 
-O site tem **14 rotas navegáveis**, mais uma página de erro:
+O site tem **24 rotas navegáveis**, mais uma página de erro:
 
-| Rota                | Conteúdo                                                                 |
-| ------------------- | ------------------------------------------------------------------------ |
-| `/`                 | abertura, projeto em destaque, projetos, competências, formação, contato |
-| `/projetos/`        | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
-| `/projetos/<slug>/` | 9 fichas de projeto                                                      |
-| `/trajetoria/`      | formação e experiência, 9 entradas                                       |
-| `/competencias/`    | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
-| `/certificacoes/`   | 24 certificados em 3 grupos, com PDF de cada um                          |
-| `/404.html`         | endereço inexistente, com caminho de volta — não entra no sitemap        |
+| Rota                      | Conteúdo                                                                 |
+| ------------------------- | ------------------------------------------------------------------------ |
+| `/`                       | abertura, projeto em destaque, projetos, competências, formação, contato |
+| `/projetos/`              | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
+| `/projetos/<slug>/`       | 9 fichas de projeto                                                      |
+| `/projetos/stack/<tech>/` | 10 páginas de tecnologia, com os projetos que a usam                     |
+| `/trajetoria/`            | formação e experiência, 9 entradas de trajetória                         |
+| `/competencias/`          | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
+| `/certificacoes/`         | 24 certificados em 3 grupos, com PDF de cada um                          |
+| `/404.html`               | endereço inexistente, com caminho de volta — não entra no sitemap        |
 
 Complementos: currículo em PDF de 3 páginas (`/assets/dossie-rene-anguita.pdf`),
 gerado a partir de manifesto versionado; `sitemap-index.xml`; `robots.txt`;
@@ -98,6 +99,13 @@ JSON-LD `Person` na abertura.
 9. O catálogo publica a legenda dos quatro tipos de resultado, para o leitor
    entender o código visual em vez de adivinhá-lo.
 10. O tema segue a preferência do sistema, com inversão manual disponível.
+11. Páginas a mais de um nível da abertura — fichas e páginas de tecnologia —
+    publicam trilha de navegação, com a página atual marcada e sem ser elo. O
+    dado estruturado correspondente espelha a trilha visível, item a item.
+12. Toda tecnologia usada por dois projetos ou mais tem página própria, listando
+    esses projetos. Com um só, não tem: a página repetiria a ficha. A etiqueta de
+    tecnologia vira elo onde a página existe, e o item de competência aponta para
+    ela em vez de para um único projeto.
 
 ## Requisitos não funcionais
 
@@ -154,7 +162,11 @@ o site não faz é simular evidência: o elo só aparece onde há projeto que o 
 **Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
 do projeto não descreve.
 
-## Métricas de sucesso
+## Critérios de aceitação
+
+Esta lista já se chamou "métricas de sucesso", e o nome estava errado: toda linha dela é
+verificável **antes** de publicar. São critérios de aceitação, e a seção seguinte trata do
+que eles não alcançam.
 
 - especialidade e evidência identificáveis sem rolagem;
 - os dois filtros mais duros — idioma e modelo de contratação — na abertura;
@@ -164,14 +176,59 @@ do projeto não descreve.
   768×800 e 1440×800 px, com texto no tamanho padrão. Com texto ampliado, a
   leitura pode exigir rolagem vertical, preservando acesso e sem overflow
   horizontal;
-- `npm run format:check`, `npm run build` e `npm run check` sem erro;
+- `npm run format:check`, `npm run build`, `npm run check` e `npm test` sem erro —
+  a suíte de invariantes é o que guarda, no CI, as regras que este documento define;
 - nenhuma rota, âncora ou asset público quebrado;
 - revisão visual sem overflow em 360, 768 e 1440 px, nos dois temas;
 - termos que um headhunter pesquisa presentes nos metadados, em pt e en.
 
+## Como o sucesso é observado
+
+Não é — e isso é decisão, não descuido.
+
+Medir leitura exigiria analítica, e analítica exigiria JavaScript de cliente e requisição
+a terceiros. Os dois estão proibidos nos requisitos não funcionais, duas seções acima, e
+nenhum ganho de medição paga tirar a proibição: o produto conversa com poucas dezenas de
+leitores por mês, faixa em que qualquer número seria ruído, e o custo seria carregar
+rastreamento para cada pessoa que abre a página.
+
+O único sinal real é **contato recebido** — e-mail ou LinkedIn. O produto não consegue
+atribuí-lo a uma página nem a uma origem, e não vai tentar.
+
+O que fica, então, é a honestidade sobre o que os critérios acima são: proxy de qualidade.
+Eles garantem que o site não está quebrado, não mente e não perde o leitor na primeira
+tela. Nenhum deles prova que alguém foi contratado.
+
+## Critério de entrada de projeto
+
+O catálogo tem 9 projetos porque nove passaram na barra abaixo, não porque nove é um
+número bom. Ela estava só na cabeça de quem escreveu as fichas; fica aqui para o décimo.
+
+Um projeto entra quando:
+
+1. **o repositório é público e acessível** — a promessa central é que cada projeto aponta
+   para o código, e um link morto a desmente sozinho;
+2. **existe estudo de caso com os quatro beats** — problema, dados, método, resultado — ou,
+   se ainda não existe, o projeto entra como `light` com a `spec` estruturada preenchida;
+3. **`metricKind` é declarado à mão.** Não há valor padrão, de propósito: um padrão
+   silencioso faria escopo e arquitetura passarem por resultado medido;
+4. **`periodo` e `atualizadoEm` vêm da data real do repositório**, pela API do GitHub e
+   nunca de estimativa. Projeto com vários repositórios usa o intervalo que cobre todos;
+5. **`architecture` só é declarada se o texto descrever camadas.** Diagrama genérico
+   inventaria um pipeline que o estudo de caso não tem;
+6. **as ressalvas do próprio projeto vêm junto** — experimental, submetido, em
+   desenvolvimento, viés de dataset —, literais e não suavizadas na passagem.
+
+O que **não** é critério: ter dado grande, ter métrica boa ou ter terminado. Três dos nove
+não têm métrica aferida e um está em desenvolvimento. O tipo de resultado existe justamente
+para que esses entrem sem precisar fingir o que não são.
+
+Consequência mecânica de acrescentar um: as contagens se movem no PRD, no SDD, no README e
+no CLAUDE.md, e a guarda reprova a PR para cada documento que ficar para trás.
+
 ## Estado atual
 
-Entregue e publicado: as 14 rotas navegáveis mais a página de erro, os 9 projetos
+Entregue e publicado: as 24 rotas navegáveis mais a página de erro, os 9 projetos
 (todos com estudo de caso em Markdown), 29 itens de
 competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
 dossiê em PDF e o deploy automático em cada push para `main`.
@@ -182,15 +239,33 @@ dado estruturado, e o sitemap leva `lastmod` por ficha. Uma suíte de invariante
 guarda no CI as regras que este documento define — contagens, ressalvas literais,
 schema com lastro e ausência de JavaScript de cliente.
 
+Duas verificações agendadas ficam fora do caminho da PR, porque vigiam quebra que não vem
+de commit: uma confere os links dos repositórios, outra confere se o `atualizadoEm` de
+cada ficha continua batendo com o último push do repositório.
+
+A evidência também é percorrível nos dois sentidos: 10 páginas de tecnologia reúnem os
+projetos que usam cada ferramenta, as etiquetas e os itens de competência apontam para
+elas, e a trilha de navegação diz ao leitor que caiu de busca numa ficha que existe um
+catálogo atrás dela. O rodapé aponta para o repositório deste site — a prática de
+engenharia que ele mostra é verificável, e o elo é o que a sustenta.
+
 ## Melhorias propostas
 
-**Nada nesta seção está implementado.** O que existe hoje é o que as seções anteriores
-descrevem; aqui ficam as melhorias que serviriam ao objetivo declarado — cada afirmação
-apontando para evidência — com o critério que diz quando cada uma está pronta. Os
-números citados foram medidos no repositório em 14/09/2026; refaça a medição antes de
-confiar neles.
+**Nada pendente aqui.** As três que esta seção guardava — página de tecnologia, trilha de
+navegação e o repositório como evidência — estão implementadas e descritas em "Escopo
+atual" e "Estado atual".
 
-### 1. Cartão social das fichas: decidido, não pendente
+A seção fica de pé, vazia, porque é onde a próxima entra. O critério que ela cobra de cada
+proposta continua valendo: problema observado, custo honesto e a frase que diz quando está
+pronta.
+
+## Decisões fechadas
+
+O que foi avaliado e recusado, com o motivo ao lado. Fica registrado porque "não fizemos"
+sem a razão convida a refazer a discussão daqui a seis meses — e porque as três abaixo
+parecem, de fora, esquecimento.
+
+### Cartão social por ficha
 
 Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
 problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso
@@ -201,14 +276,31 @@ Gerar imagem por projeto no build não é opção barata: o site usa
 `passthroughImageService()` e não tem `sharp`. Nove peças versionadas seriam trabalho de
 design, não de código.
 
-**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige.
-Fica registrado aqui para não ser reaberto como esquecimento — se um dia houver
-direção de design para cartões por projeto, o caminho é `public/` mais uma prop de
-imagem no `BaseHead`.
+**Decisão: aceitar o texto.** O critério anterior pedia mais do que o problema exige. Se
+um dia houver direção de design para cartões por projeto, o caminho é `public/` mais uma
+prop de imagem no `BaseHead`.
+
+### Versão em inglês
+
+O leitor estrangeiro já é alcançado: `title`, `description` e o `knowsAbout` do JSON-LD
+levam os termos em inglês, e é assim que a busca chega ao site. Uma árvore `/en/`
+duplicaria toda a copy — nove estudos de caso, 29 itens de competência, as ressalvas de
+honestidade literais — e cada correção passaria a ter dois lugares para envelhecer.
+
+**Decisão: manter a interface só em português.** O alcance que a tradução traria já vem
+pelos metadados; o custo dela é permanente.
+
+### Preload da fonte crítica
+
+Medido e descartado, com os números no [SDD](./sdd.md#preload-da-fonte-crítica--medido-e-descartado).
 
 ## Onde este documento envelhece
 
-Os números — 14 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o
-conteúdo mudar. O código é a fonte da verdade; este PRD registra a intenção e as
-regras. Ao acrescentar projeto, rota ou grupo de competência, reconfira as
-contagens aqui e no [SDD](./sdd.md).
+Os números — 24 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
+e desde a suíte de invariantes eles avisam sozinhos: a guarda cruza cada contagem escrita
+aqui, no [SDD](./sdd.md), no README e no CLAUDE.md com o dado que ela descreve, e reprova
+a PR quando uma fica para trás. Vale para número por extenso também.
+
+O que continua sendo disciplina são as regras. O código é a fonte da verdade sobre o que
+o site tem; este PRD registra a intenção e o critério de honestidade — e nenhum teste
+percebe quando a intenção muda e o texto não acompanha.

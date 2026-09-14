@@ -4,27 +4,9 @@
 
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { read, bundledCss, cssBlock } from "./helpers.mjs";
+import { read, bundledCss, cssBlock, TOKENS } from "./helpers.mjs";
 
-const TOKENS = [
-  "paper",
-  "well",
-  "ink",
-  "ink-soft",
-  "rule",
-  "rule-strong",
-  "accent",
-  "accent-bright",
-  "on-accent",
-  "signal",
-  "signal-open",
-  "layer-raw",
-  "layer-bronze",
-  "layer-silver",
-  "layer-gold",
-];
-
-test("as 15 cores existem nos cinco lugares (4 temas + impressão)", () => {
+test(`as ${TOKENS.length} cores existem nos cinco lugares (4 temas + impressão)`, () => {
   const tokens = read("src/styles/tokens.css");
   const global = read("src/styles/global.css");
 

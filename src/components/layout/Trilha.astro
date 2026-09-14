@@ -1,0 +1,33 @@
+---
+// Trilha de navegação. Substitui o `.backlink`, que subia um nível sem dizer de
+// onde: quem chega por busca direto numa ficha não tinha como saber que existe
+// um catálogo atrás dela.
+//
+// O último item é a página atual e não é elo — `aria-current="page"` o marca sem
+// depender de cor. A ordem é informação, então a lista é `<ol>`.
+interface Item {
+  rotulo: string;
+  /** Ausente no último item: a página atual não aponta para si mesma. */
+  href?: string;
+}
+interface Props {
+  itens: Item[];
+}
+const { itens } = Astro.props;
+---
+
+<nav class="trilha" aria-label="Trilha de navegação">
+  <ol>
+    {
+      itens.map((item) => (
+        <li>
+          {item.href ? (
+            <a href={item.href}>{item.rotulo}</a>
+          ) : (
+            <span aria-current="page">{item.rotulo}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
