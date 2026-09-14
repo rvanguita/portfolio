@@ -18,15 +18,15 @@ competência e projeto **falha o build** em vez de renderizar vazio.
 
 ## Stack e versões
 
-| Item       | Versão / decisão                                                                                                         |
-| ---------- | ------------------------------------------------------------------------------------------------------------------------ |
-| Astro      | `^7.3.1`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                           |
-| Node       | `24.20.0`, fixado em `mise.toml` e nos dois workflows                                                                    |
-| TypeScript | `astro check` seguido de `tsc --noEmit`                                                                                  |
-| Imagens    | `passthroughImageService()` — assets servidos direto de `public/`, sem `sharp`                                           |
-| Fontes     | Archivo Variable (display), IBM Plex Sans 400/500 (corpo), IBM Plex Mono 400/500 (tecnologia e metadado), via fontsource |
-| Sitemap    | `@astrojs/sitemap`                                                                                                       |
-| Zod        | importado de `astro/zod`, não como dependência própria                                                                   |
+| Item       | Versão / decisão                                                                                                                             |
+| ---------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Astro      | `^7.3.1`, `compressHTML: true`. `output` não é declarado — estático é o padrão                                                               |
+| Node       | `24.20.0`, fixado em `mise.toml` e nos dois workflows                                                                                        |
+| TypeScript | `astro check` seguido de `tsc --noEmit`                                                                                                      |
+| Imagens    | `passthroughImageService()` — assets servidos direto de `public/`, sem `sharp`                                                               |
+| Fontes     | Archivo Variable no eixo de **peso** (display), IBM Plex Sans 400/500 (corpo), IBM Plex Mono 400/500 (tecnologia e metadado), via fontsource |
+| Sitemap    | `@astrojs/sitemap`                                                                                                                           |
+| Zod        | importado de `astro/zod`, não como dependência própria                                                                                       |
 
 `compressHTML: true` preserva os espaços entre elementos inline — por isso alguns
 arquivos ficam fora do Prettier (ver "Formatação").
@@ -430,35 +430,23 @@ Quatro itens saíram daqui por terem sido implementados — a suíte de invarian
 vigilância dos links externos, o dossiê determinístico e as Actions fixadas por SHA. O
 que eles fazem hoje está descrito em "Validação" e em "CI/CD".
 
-### 1. Pagar só pelo eixo de fonte que o desenho usa
+### 1. Preload da fonte crítica — não feito, e por quê
 
-`Layout.astro` importa `@fontsource-variable/archivo/wdth.css` — o eixo de largura. O
-subset latino dessa variante tem **87 KB**, mais da metade dos ~162 KB de fonte que a
-abertura transfere. Mas o eixo nunca varia: `font-stretch: var(--wdth-display)` usa
-`--wdth-display: 100%`, definido uma vez em `tokens.css` e **nunca sobrescrito** — 100%
-é o valor neutro.
+A abertura não emite `rel="preload"`, então a Archivo do título só é descoberta depois
+que o CSS baixa e é parseado.
 
-O mesmo subset no eixo de peso (`wght.css`) tem **34 KB**. São 53 KB a menos, sem
-mudança visual.
+Este item ficou parado de propósito. O critério dele exige número medido antes e depois,
+e a troca do eixo mudou a conta: o arquivo caiu de 87 para 34 KB, então o atraso que o
+preload evitaria é bem menor do que era quando o item foi escrito. Somando a isso que o
+`font-display` do fontsource já pinta o texto na fonte de recurso, o ganho restante é de
+LCP e estabilidade, não de conteúdo visível.
 
-_Aceite:_ a troca vem acompanhada da remoção do `font-stretch` e do token
-`--wdth-display`, que deixam de ter função — e a revisão visual confirma que nenhum
-título mudou de largura. Mexer em `src/styles/` continua exigindo a skill de design.
+Medir isso exige ferramenta de performance de verdade — Lighthouse ou o protocolo de
+devtools —, não captura de tela. Aplicar sem medir seria seguir a reputação da técnica,
+que é exatamente o que o critério proíbe.
 
-### 2. A fonte crítica não tem preload
-
-A abertura não emite nenhum `rel="preload"`. A Archivo do título — 87 KB no subset
-latino, o maior arquivo da página — só é descoberta depois que o CSS é baixado e
-parseado, o que adia o maior elemento de texto da primeira tela, justamente o `<h1>` que
-a métrica de primeira tela protege.
-
-Este é um item para medir antes de agir, não para aplicar por reputação da técnica. Com o
-`font-display` que o fontsource define, o texto já pinta na fonte de fallback: o ganho
-esperado é de LCP e de estabilidade, não de conteúdo visível. E se o item 2 entrar antes,
-o arquivo cai para 34 KB e a conta muda.
-
-_Aceite:_ a decisão é registrada com número medido antes e depois, nos três viewports da
-métrica de primeira tela.
+_Aceite:_ entra com número de LCP antes e depois, nos três viewports da métrica de
+primeira tela. Sem esse número, não entra.
 
 ## Onde esta documentação envelhece
 

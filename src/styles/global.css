@@ -9,7 +9,7 @@ img, svg { display: block; max-width: 100%; }
 ul, ol { list-style: none; padding: 0; }
 button, input { font: inherit; }
 main { min-height: 60vh; }
-h1, h2, h3, h4 { font-family: var(--font-display); font-stretch: var(--wdth-display); font-weight: 600; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; overflow-wrap: anywhere; }
+h1, h2, h3, h4 { font-family: var(--font-display); font-weight: 600; line-height: 1.15; letter-spacing: -.035em; text-wrap: balance; overflow-wrap: anywhere; }
 p, li, dd, a { overflow-wrap: anywhere; }
 a { color: var(--accent); text-underline-offset: .25em; text-decoration-thickness: 1px; }
 a:hover { text-decoration-thickness: 2px; }
