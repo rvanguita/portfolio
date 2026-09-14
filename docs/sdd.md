@@ -92,12 +92,19 @@ possam divergir.
 | Arquivo           | Exporta                     | Contrato                                                                                   |
 | ----------------- | --------------------------- | ------------------------------------------------------------------------------------------ |
 | `profile.ts`      | `profile`                   | identidade, contatos, `screening` (ficha de triagem), `leadHtml`, `description`, `ogImage` |
-| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items` — 4 grupos, 29 itens                             |
+| `skills.ts`       | `skills: SkillGroup[]`      | `title`, `summary`, `projectIds`, `items: SkillItem[]` — 4 grupos, 29 itens                |
 | `timeline.ts`     | `timeline: TimelineEntry[]` | `years`, `from`, `to`, `title`, `org`, `note?` — 9 entradas                                |
 | `certificates.ts` | `certGroups`, `certTotal`   | 3 grupos, 24 itens; `file` é o caminho sob `public/certificates/`                          |
 
-`SkillGroup.projectIds` é validado em `Skills.astro`: id inexistente lança e
-falha o build. `certTotal` é derivado, nunca escrito à mão. `timeline` guarda
+`SkillGroup.projectIds` e `SkillItem.projectIds` são validados em `Skills.astro`: id
+inexistente lança e falha o build. Cada item lista os projetos que o demonstram, em
+ordem de catálogo, e o elo aponta para o primeiro — o de maior prioridade. Item com
+`projectIds` vazio renderiza sem elo, de propósito: é a diferença entre não ter
+evidência publicada e ter evidência forjada.
+
+O elo estende a área de toque na vertical com padding e margem negativa, chegando aos
+44 px que a seção de acessibilidade exige sem engordar a etiqueta — a menor delas
+ainda recebe `min-width`, senão ficaria em 43 px. `certTotal` é derivado, nunca escrito à mão. `timeline` guarda
 `from`/`to` numéricos para a página calcular o intervalo exibido.
 
 ### `src/content.config.ts`

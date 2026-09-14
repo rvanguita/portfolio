@@ -145,6 +145,12 @@ termo que o leitor procura. O que a regra proíbe é outra coisa: escrever a
 interface em inglês, ou plantar na copy visível termo de busca que só existe para
 ser indexado. Esses ficam nos metadados — `title`, `description` e JSON-LD.
 
+**Evidência é elo, não requisito de existência.** Cada item de competência aponta para
+o projeto que o demonstra, quando existe um. Os que não têm projeto público atrás ficam
+sem elo — e continuam na lista. Saber uma ferramenta sem ter publicado projeto com ela
+não é invenção; a regra deste produto é não inflar escala, senioridade ou impacto. O que
+o site não faz é simular evidência: o elo só aparece onde há projeto que o sustente.
+
 **Fidelidade dos diagramas.** Nenhum diagrama pode mostrar uma camada que o texto
 do projeto não descreve.
 
@@ -199,26 +205,7 @@ inventa escala e impacto — exatamente o que a seção de honestidade proíbe.
 _Aceite:_ nenhuma ficha nova afirma o que o repositório não sustenta; as ressalvas
 existentes (`experimental`, `submetido`, `em desenvolvimento`) continuam literais.
 
-### 2. Ligar cada competência a um projeto que a comprove
-
-As competências apontam para projetos por grupo, não por item: os 29 itens são cobertos
-por 4 referências, e cinco dos nove projetos — wind-farm, fraud-detection,
-personal-expenses, shopping-list e sentiment-nlp — não comprovam competência nenhuma.
-Um item sem projeto atrás é exatamente o tipo de afirmação que o objetivo deste produto
-rejeita.
-
-**Este item precisa de uma decisão antes de ser implementado.** Medindo, **12 dos 29
-itens não são mencionados por nenhum projeto** — Power BI, Tableau, Excel Avançado,
-Seaborn, NumPy, Statsmodels, Linux/Shell, Feature Engineering e três de otimização.
-Aplicar o critério ao pé da letra apagaria 41% da lista, o que muda o que o portfólio
-afirma profissionalmente. As saídas são três: afrouxar o critério para evidência por
-grupo, que é como está hoje; manter os itens aceitando que alguns não têm projeto atrás;
-ou enxugar a lista de verdade. Nenhuma delas é chamada de implementação.
-
-_Aceite:_ todo item de competência ou aponta para um projeto que o demonstre, ou sai da
-lista. Referência inválida continua quebrando o build.
-
-### 3. Cartão social das fichas: decidido, não pendente
+### 2. Cartão social das fichas: decidido, não pendente
 
 Todas as fichas de projeto declaram o mesmo `og:image`. Mas a medição desfez metade do
 problema: `og:title` e `og:description` **já são distintos nas nove** e descrevem o caso

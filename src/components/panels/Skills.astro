@@ -8,14 +8,23 @@ interface Props {
 }
 const { compact = false } = Astro.props;
 const projects = await getCollection("projetos");
+const find = (id: string) => {
+  const project = projects.find((entry) => entry.id === id);
+  if (!project)
+    throw new Error(`Projeto não encontrado nas competências: ${id}`);
+  return project;
+};
+
 const groups = skills.map((group) => ({
   ...group,
-  projects: group.projectIds.map((id) => {
-    const project = projects.find((entry) => entry.id === id);
-    if (!project)
-      throw new Error(`Projeto não encontrado nas competências: ${id}`);
-    return project;
-  }),
+  projects: group.projectIds.map(find),
+  items: group.items.map((item) => ({
+    ...item,
+    // O elo aponta para o projeto de maior prioridade no catálogo que demonstra
+    // o item — `projectIds` já vem nessa ordem. Item sem projeto fica sem elo,
+    // em vez de apontar para algo que não o comprova.
+    evidence: item.projectIds.map(find)[0],
+  })),
 }));
 ---
 
@@ -33,9 +42,21 @@ const groups = skills.map((group) => ({
               class="tech-tags"
               aria-label={`Tecnologias e métodos de ${group.title}`}
             >
-              {group.items.map((item) => (
-                <li>{item}</li>
-              ))}
+              {group.items.map((item) =>
+                item.evidence ? (
+                  <li>
+                    <a
+                      class="tech-link"
+                      href={url(`/projetos/${item.evidence.id}/`)}
+                      title={`${item.name} em ${item.evidence.data.title}`}
+                    >
+                      {item.name}
+                    </a>
+                  </li>
+                ) : (
+                  <li>{item.name}</li>
+                ),
+              )}
             </ul>
           )}
           <ul class="skill-evidence" aria-label={`Projetos de ${group.title}`}>
