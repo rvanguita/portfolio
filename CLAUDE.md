@@ -94,8 +94,8 @@ Styles live in tokens.css and global.css:
 
 - Fifteen semantic colors: paper, well, ink, ink-soft, rule, rule-strong,
   accent, accent-bright, on-accent, signal, signal-open, layer-raw, layer-bronze,
-  layer-silver and layer-gold. All four theme blocks need the identical list or
-  the manual inversion breaks. The four layer colors name storage layers. The
+  layer-silver and layer-gold. Both theme blocks need the identical list or the
+  dark mode breaks. The four layer colors name storage layers. The
   diagram nodes use all four; Readout's medallion ramp covers raw/bronze/silver
   only, because no project's `metric.sub` has a gold link — so `LAYERS` in
   Readout and the `.chain--*` rules in global.css must stay in step, or a link
@@ -106,8 +106,8 @@ Styles live in tokens.css and global.css:
   Define colors in tokens.css; derive component variations with color-mix.
   Exceptions: the `@media print` block in global.css redefines the whole palette
   for paper, and BaseHead's theme-color metadata is a literal copy of --paper.
-  So a color token has **five** places, not four: the four theme blocks plus the
-  print block. Adding or moving one means updating all five — a token missing
+  So a color token has **three** places: the two theme blocks plus the print
+  block. Adding or moving one means updating all three — a token missing
   from print silently keeps its screen value on paper (this is how --layer-gold
   was left out when it was introduced). theme-color must track --paper too.
 - Archivo Variable for display, IBM Plex Sans 400/500 for body and UI, IBM Plex
@@ -116,8 +116,11 @@ Styles live in tokens.css and global.css:
   luminance and borders; retain visible keyboard focus in both themes.
 - Body text is at least 16 px, regular controls at least 14 px. Reserve 12–13 px
   for secondary metadata. Controls have a minimum 44 px target.
-- Theme follows the OS; a checkbox and :has() invert it without JavaScript.
-  The override is intentionally page-local. Test both OS preferences and inversions.
+- Light is the default, regardless of the OS preference; a checkbox and :has()
+  switch to dark without JavaScript. Do not reintroduce a
+  prefers-color-scheme block that redefines colour — a test guards against it.
+  The override is intentionally page-local. Test both checkbox states under light
+  and dark OS preferences.
 - Shared styles must account for 360/768/1440 px widths, enlarged text, keyboard
   focus, skip navigation, print and reduced motion. Never hide page overflow to
   conceal a layout problem.
@@ -136,7 +139,7 @@ layout issue.
 
 npm test is the invariant suite (tests/, Node's own runner, no new dependency). It
 reads dist/, so it runs after the build. It guards what this file and the SDD claim:
-the colour tokens in all five places, LAYERS against the .chain--* rules, each
+the colour tokens in all three places, LAYERS against the .chain--* rules, each
 metricKind against its rule, knowsAbout against the visible text, the honesty
 caveats, every internal link, one h1 per page, and the counts published in the docs.
 When you add an invariant, break it once on purpose and confirm the suite fails — a

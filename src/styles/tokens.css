@@ -1,5 +1,6 @@
 /* Azul-marinho e azul de ação sobre superfícies claras.
-   Cada preferência do sistema e sua inversão definem os mesmos tokens.
+   O padrão é claro, independentemente da preferência do sistema; o checkbox
+   do cabeçalho ativa o escuro. Os dois blocos definem os mesmos tokens.
    As cores das camadas identificam armazenamento, nunca nível de domínio. */
 
 :root {
@@ -21,27 +22,6 @@
   color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-  --paper: #101B2B;
-  --well: #1B2B42;
-  --ink: #EAF0F8;
-  --ink-soft: #B0BED1;
-  --rule: #364A64;
-  --rule-strong: #8295B0;
-  --accent: #9ABEFF;
-  --accent-bright: #C2D7FF;
-  --on-accent: #101B2B;
-  --signal: #97D4B1;
-  --signal-open: #C2BDD4;
-  --layer-raw: #9BAAC0;
-  --layer-bronze: #D7A06D;
-  --layer-silver: #85B5E6;
-  --layer-gold: #F0CE7A;
-  color-scheme: dark;
-}
-}
-
 :root:has(#theme-toggle:checked) {
   --paper: #101B2B;
   --well: #1B2B42;
@@ -59,27 +39,6 @@
   --layer-silver: #85B5E6;
   --layer-gold: #F0CE7A;
   color-scheme: dark;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:has(#theme-toggle:checked) {
-  --paper: #F5F7FB;
-  --well: #FFFFFF;
-  --ink: #14263D;
-  --ink-soft: #526277;
-  --rule: #D5DFEC;
-  --rule-strong: #7A899E;
-  --accent: #1F4DCD;
-  --accent-bright: #153BA6;
-  --on-accent: #FFFFFF;
-  --signal: #286443;
-  --signal-open: #626074;
-  --layer-raw: #7A899E;
-  --layer-bronze: #A46A38;
-  --layer-silver: #527CAC;
-  --layer-gold: #7E6410;
-  color-scheme: light;
-}
 }
 
 :root {

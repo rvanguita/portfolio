@@ -98,7 +98,8 @@ JSON-LD `Person` na abertura.
    o comprovam. Referência inválida quebra o build.
 9. O catálogo publica a legenda dos quatro tipos de resultado, para o leitor
    entender o código visual em vez de adivinhá-lo.
-10. O tema segue a preferência do sistema, com inversão manual disponível.
+10. O padrão do site é o modo claro, independentemente da preferência do sistema.
+    Um controle no cabeçalho liga o escuro, sem JavaScript de cliente.
 11. Páginas a mais de um nível da abertura — fichas e páginas de tecnologia —
     publicam trilha de navegação, com a página atual marcada e sem ser elo. O
     dado estruturado correspondente espelha a trilha visível, item a item.
@@ -113,7 +114,7 @@ JSON-LD `Person` na abertura.
 - nenhum JavaScript de cliente: **todo** `<script>` do HTML de produção é JSON-LD
   estático — um na abertura e um em cada ficha de projeto;
 - responsividade sem overflow horizontal em 360, 768 e 1440 px;
-- texto a 4,5:1 e bordas de controle a 3:1, nos dois temas e nas duas inversões;
+- texto a 4,5:1 e bordas de controle a 3:1, nos dois temas;
 - foco de teclado visível, navegação por atalho de conteúdo, alvos de 44 px;
 - cor nunca é o único portador de significado;
 - movimento restrito a transições de borda e sombra (0,16 s) em links, botão de
