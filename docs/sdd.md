@@ -138,7 +138,7 @@ Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
 | `Layout`       | `title`, `description?`, `ogType?`, `current?`     | casca das páginas, `slot="head"` para JSON-LD       |
 | `BaseHead`     | `title`, `description?`, `ogType?`                 | metadados, canonical, Open Graph, theme-color       |
 | `ReadoutStrip` | `current?`                                         | cabeçalho e navegação, marca a página ativa         |
-| `ThemeToggle`  | —                                                  | checkbox que inverte o tema do sistema              |
+| `ThemeToggle`  | —                                                  | checkbox que ativa o modo escuro                    |
 | `Footer`       | —                                                  | identidade, contatos, dossiê e o elo do repositório |
 | `Trilha`       | `itens`                                            | trilha de navegação; o último item não é elo        |
 | `Channels`     | `projects`, `level?`, `columns?`                   | cartões de projeto; `level` controla o heading      |
@@ -263,20 +263,22 @@ só em tokens; variação de componente sai de `color-mix()`.
 `rule-strong`, `accent`, `accent-bright`, `on-accent`, `signal`, `signal-open`,
 `layer-raw`, `layer-bronze`, `layer-silver`, `layer-gold`.
 
-**Quatro blocos de tema**, e todos precisam da lista idêntica:
+**Dois blocos de tema**, e os dois precisam da lista idêntica:
 
-1. `:root` — claro;
-2. `@media (prefers-color-scheme: dark) :root` — escuro;
-3. `:root:has(#theme-toggle:checked)` — inversão sobre sistema claro;
-4. o mesmo dentro do media query escuro — inversão sobre sistema escuro.
+1. `:root` — claro, e é o **padrão do site**;
+2. `:root:has(#theme-toggle:checked)` — escuro.
 
-Divergir a lista entre blocos quebra a inversão manual. O tema é CSS puro:
-checkbox mais `:has()`, sem JavaScript, e o override é local à página de
-propósito.
+Divergir a lista entre os dois blocos quebra o modo escuro. O tema usa CSS puro:
+checkbox mais `:has()`, sem JavaScript, e a escolha manual vale para a página atual.
+
+O site abre claro mesmo quando o sistema prefere o escuro. O controle no cabeçalho
+permite mudar de tema. Um teste impede que `tokens.css` reintroduza um
+`@media (prefers-color-scheme: …)` que substitua esse padrão.
 
 **Duas exceções documentadas** ao "cor só em tokens": os estilos de impressão e o
 `theme-color` do `BaseHead` são cópias literais de `--paper` e precisam ser
-atualizados quando aquele token mudar.
+atualizados quando aquele token mudar. O `theme-color` é único e corresponde ao
+bloco claro; o checkbox CSS não altera essa meta sem JavaScript.
 
 ### A armadilha de especificidade
 
@@ -290,8 +292,7 @@ regras de variação por especificidade.
 
 ## Acessibilidade
 
-- texto a 4,5:1, bordas de controle e marcadores semânticos a 3:1, nos dois temas
-  e nas duas inversões;
+- texto a 4,5:1, bordas de controle e marcadores semânticos a 3:1, nos dois temas;
 - corpo a partir de 16 px, controles a partir de 14 px; 12–13 px reservado a
   metadado secundário; alvo mínimo de 44 px;
 - `:focus-visible` com contorno de 3 px e `outline-offset`;
@@ -311,7 +312,7 @@ frontmatter direto do disco, porque o sitemap é montado fora da camada de conte
 
 `BaseHead` monta canonical com `new URL(Astro.url.pathname, Astro.site)`, Open
 Graph com imagem absoluta e dimensões declaradas, Twitter card e `theme-color`
-por preferência de tema.
+fixo no tema claro padrão.
 
 A abertura injeta um JSON-LD `Person` — `jobTitle` em pt e en, `knowsLanguage`,
 `seeks`, `knowsAbout`, `alumniOf`, `address`. **É o único script no HTML de
@@ -446,13 +447,13 @@ humana, nunca pelo pipeline. Cobre hoje:
 
 | Arquivo            | O que guarda                                                                                                                                                                                                                                                              |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styles.test.mjs`  | as 15 cores nos cinco lugares; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard                                                                      |
+| `styles.test.mjs`  | as 15 cores nos três lugares; nenhum `@media prefers-color-scheme` redefinindo cor; `theme-color` ≡ `--paper`; `LAYERS` ≡ `.chain--*`; a regra base da cadeia sem o atalho `border-left`; cada `metricKind` com a sua regra; movimento só dentro do guard                 |
 | `content.test.mjs` | as contagens publicadas e as que a prosa dos documentos repete, inclusive por extenso; certificado referenciado existindo em `public/`; fidelidade dos diagramas; `knowsAbout` com lastro no texto visível; as quatro ressalvas literais; "pleno" só como cargo procurado |
 | `html.test.mjs`    | base em toda referência interna; toda referência resolvendo para arquivo real; todo `<script>` é `application/ld+json`, nenhum executável; um `<h1>` por página sem pular nível; canonical e título próprio por página                                                    |
 
 Quatro detalhes que custaram tempo e não devem ser refeitos: os blocos de tema são
-varridos **contando chaves**, porque dois deles ficam aninhados no `@media` escuro e
-expressão regular não alcança; o Markdown quebra linha no meio das frases, então as
+varridos **contando chaves**, para reconhecer também regras aninhadas; o Markdown
+quebra linha no meio das frases, então as
 ressalvas são casadas com o espaço normalizado; os links passam por `decodeURIComponent`
 antes do teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos; e
 a guarda de contagens lê número por extenso, porque a prosa escreve "Quinze cores
@@ -504,23 +505,23 @@ sensível a espaço, onde o Prettier injetaria whitespace que muda o render) e
 Os riscos com **teste** ao lado deixaram de depender de alguém lembrar: reprovam a PR
 sozinhos. Os demais continuam sendo disciplina.
 
-| Risco                                               | Controle                                                                        |
-| --------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Link ou asset sem `url()`                           | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                   |
-| Divergência entre cartão e legenda de resultado     | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                  |
-| Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                 |
-| Lista de cores divergente entre blocos de tema      | **teste** cobre os cinco lugares; revisão visual segue valendo para a aparência |
-| Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado     |
-| `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`                |
-| Duas grafias da mesma tecnologia virarem duas rotas | `CANONICAS` em `src/lib/stack.ts` **falha o build** em termo desconhecido       |
-| Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso        |
-| Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                           |
-| Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado            |
-| PDF desalinhado do manifesto                        | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual       |
-| Repositório de projeto renomeado ou privado         | `links.yml`, semanal — fora do caminho da PR, de propósito                      |
-| Action com tag reapontada                           | fixadas por SHA; Dependabot reabre para não congelar                            |
-| Renomear o job de CI                                | o nome é o contexto exigido pela proteção da `main`                             |
-| PR empilhada sobre PR aberta                        | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`           |
+| Risco                                               | Controle                                                                       |
+| --------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Link ou asset sem `url()`                           | **teste** (`html.test.mjs`) — `astro check` e `tsc` não pegam                  |
+| Divergência entre cartão e legenda de resultado     | ambos leem `src/lib/metric.ts`; **teste** confere kind ↔ regra                 |
+| Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                |
+| Lista de cores divergente entre blocos de tema      | **teste** cobre os três lugares; revisão visual segue valendo para a aparência |
+| Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado    |
+| `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`               |
+| Duas grafias da mesma tecnologia virarem duas rotas | `CANONICAS` em `src/lib/stack.ts` **falha o build** em termo desconhecido      |
+| Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso       |
+| Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                          |
+| Ressalva de honestidade removida sem querer         | **teste** exige as quatro literais e "pleno" só como cargo procurado           |
+| PDF desalinhado do manifesto                        | **CI** regenera e exige árvore limpa; sobreposição ainda é revisão visual      |
+| Repositório de projeto renomeado ou privado         | `links.yml`, semanal — fora do caminho da PR, de propósito                     |
+| Action com tag reapontada                           | fixadas por SHA; Dependabot reabre para não congelar                           |
+| Renomear o job de CI                                | o nome é o contexto exigido pela proteção da `main`                            |
+| PR empilhada sobre PR aberta                        | uma PR por vez contra `main`; conferir com `merge-base --is-ancestor`          |
 
 ## Evolução técnica proposta
 

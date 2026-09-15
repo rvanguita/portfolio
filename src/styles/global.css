@@ -49,15 +49,10 @@ pre { overflow-x: auto; }
 .theme-toggle-btn:hover { color: var(--accent); border-color: var(--accent); }
 .theme-toggle-btn svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .theme-toggle:focus-visible + .theme-toggle-btn { outline: 3px solid var(--accent); outline-offset: 4px; }
+/* O ícone mostra o tema que será ativado: lua no claro, sol no escuro. */
 .theme-icon--sun { display: none !important; }
 :root:has(#theme-toggle:checked) .theme-icon--sun { display: block !important; }
 :root:has(#theme-toggle:checked) .theme-icon--moon { display: none !important; }
-@media (prefers-color-scheme: dark) {
-  .theme-icon--sun { display: block !important; }
-  .theme-icon--moon { display: none !important; }
-  :root:has(#theme-toggle:checked) .theme-icon--sun { display: none !important; }
-  :root:has(#theme-toggle:checked) .theme-icon--moon { display: block !important; }
-}
 
 /* Abertura: identidade e contato primeiro, uma entrega concreta ao lado. */
 .hero { display: grid; grid-template-columns: minmax(0, 1.14fr) minmax(0, 1fr); align-items: start; gap: clamp(2rem, 5vw, 5rem); max-width: var(--page); margin-inline: auto; padding: clamp(2.5rem, 5vw, 4.5rem) var(--gutter) var(--s-8); }

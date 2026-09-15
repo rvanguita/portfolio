@@ -37,7 +37,7 @@ concretos. A página de competências conserva todos os 29 itens. Formação e
 certificações têm um resumo conjunto na home; trajetória completa e os 24
 certificados continuam em suas páginas próprias.
 
-O tema acompanha a preferência do sistema e pode ser invertido por um controle
+O site é claro por padrão e pode ser trocado para escuro por um controle
 CSS-only. Não há JavaScript de interação no cliente. A preferência manual vale
 para a página atual; não é persistida entre navegações.
 O layout inclui foco visível, link para pular a navegação, controles de pelo menos
@@ -105,7 +105,7 @@ npm run preview
 
 `npm test` é a suíte de invariantes, com o runner do próprio Node e sem dependência
 nova. Ela lê `dist/`, então roda depois do build, e guarda as regras que o PRD e o SDD
-definem: as cores nos cinco lugares, a rampa medalhão, os tipos de resultado, o schema
+definem: as cores nos três lugares, a rampa medalhão, os tipos de resultado, o schema
 com lastro no texto visível, as ressalvas de honestidade, os links internos, a
 hierarquia de heading e as contagens que os documentos publicam.
 

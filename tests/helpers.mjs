@@ -16,8 +16,8 @@ export const DIST = join(ROOT, "dist");
  * As cores semânticas do sistema, na ordem em que `tokens.css` as declara.
  *
  * Mora aqui, e não no teste de estilos, porque dois invariantes dependem dela e
- * não podem divergir: `styles.test.mjs` confere que cada uma existe nos cinco
- * lugares (os 4 blocos de tema mais o bloco de impressão), e `content.test.mjs`
+ * não podem divergir: `styles.test.mjs` confere que cada uma existe nos três
+ * lugares (os 2 blocos de tema mais o bloco de impressão), e `content.test.mjs`
  * usa `TOKENS.length` como a contagem que os documentos publicam.
  */
 export const TOKENS = [

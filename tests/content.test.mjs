@@ -84,7 +84,7 @@ test("as contagens publicadas continuam de pé", () => {
   assert.equal(entradas, 9, "9 entradas de trajetória");
   assert.equal(paginasDeTecnologia, 10, "10 páginas de tecnologia");
   // A lista canônica vive em helpers.mjs; styles.test.mjs confere que cada cor
-  // existe nos cinco lugares, e aqui só a contagem que os documentos publicam.
+  // existe nos três lugares, e aqui só a contagem que os documentos publicam.
   assert.equal(TOKENS.length, 15, "15 cores semânticas");
 });
 

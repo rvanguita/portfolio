@@ -6,13 +6,12 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { read, bundledCss, cssBlock, TOKENS } from "./helpers.mjs";
 
-test(`as ${TOKENS.length} cores existem nos cinco lugares (4 temas + impressão)`, () => {
+test(`as ${TOKENS.length} cores existem nos três lugares (2 temas + impressão)`, () => {
   const tokens = read("src/styles/tokens.css");
   const global = read("src/styles/global.css");
 
-  // Os quatro blocos de tema: :root, o escuro por preferência, e as duas
-  // inversões — duas delas aninhadas dentro do @media escuro, então a varredura
-  // conta chaves em vez de tentar casar com uma expressão regular.
+  // :root define o claro; o checkbox marcado ativa o escuro. Contar chaves
+  // mantém a extração correta mesmo se um seletor ganhar regras aninhadas.
   const themeBlocks = [];
   for (const match of tokens.matchAll(/([^{}]*:root[^{}]*)\{/g)) {
     const open = match.index + match[0].length - 1;
@@ -30,8 +29,14 @@ test(`as ${TOKENS.length} cores existem nos cinco lugares (4 temas + impressão)
 
   assert.equal(
     themeBlocks.length,
-    4,
-    `esperava 4 blocos de tema, achei ${themeBlocks.length}`,
+    2,
+    `esperava 2 blocos de tema, achei ${themeBlocks.length}`,
+  );
+
+  // A preferência do sistema não pode substituir o tema claro padrão.
+  assert.ok(
+    !/@media[^{]*prefers-color-scheme/.test(tokens),
+    "tokens.css voltou a definir cor por preferência de sistema",
   );
 
   for (const [selector, body] of themeBlocks) {
@@ -55,7 +60,7 @@ test(`as ${TOKENS.length} cores existem nos cinco lugares (4 temas + impressão)
   }
 });
 
-test("theme-color do BaseHead acompanha --paper nos dois temas", () => {
+test("theme-color do BaseHead acompanha o --paper do tema claro", () => {
   const head = read("src/components/layout/BaseHead.astro");
   const tokens = read("src/styles/tokens.css");
   const declared = [...head.matchAll(/content="(#[0-9A-Fa-f]{3,8})"/g)].map(
@@ -65,13 +70,17 @@ test("theme-color do BaseHead acompanha --paper nos dois temas", () => {
     (m) => m[1].toUpperCase(),
   );
 
-  assert.equal(declared.length, 2, "esperava dois theme-color, claro e escuro");
-  for (const color of declared) {
-    assert.ok(
-      papers.includes(color),
-      `theme-color ${color} não corresponde a nenhum --paper`,
-    );
-  }
+  // O tema padrão é claro. O checkbox CSS não altera a meta do navegador.
+  assert.equal(
+    declared.length,
+    1,
+    `esperava um theme-color, achei ${declared.length}`,
+  );
+  assert.equal(
+    declared[0],
+    papers[0],
+    "theme-color não acompanha o --paper do bloco claro",
+  );
 });
 
 test("LAYERS do Readout cobre exatamente as regras .chain--*", () => {
