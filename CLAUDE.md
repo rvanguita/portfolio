@@ -5,8 +5,8 @@ Working guidance for coding agents. README.md is the human-facing version.
 ## Project
 
 Portuguese professional portfolio for Rene Verinaud Anguita Junior, presenting
-**Data Engineering** capabilities to recruiters. Static Astro site with 24 pages:
-home, project catalog, nine project details, ten technology pages, trajectory,
+**Data Engineering** capabilities to recruiters. Static Astro site with 28 pages:
+home, project catalog, ten project details, thirteen technology pages, trajectory,
 skills, and certificates.
 Published at https://rvanguita.github.io/portfolio/.
 
@@ -41,7 +41,7 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   covering all of them.
 - `src/pages/404.astro`: Astro treats /404 as a status-code page and emits
   dist/404.html at the root, not a directory — that is the file GitHub Pages serves.
-  It is why the build reports 25 pages for 24 navigable routes.
+  It is why the build reports 29 pages for 28 navigable routes.
 - `src/components/layout/`: shared layout, metadata, header, theme and footer.
 - `src/components/panels/`: Channels renders project cards; Readout renders
   contextual results, including nonnumeric architecture or scope; MetricLegend
@@ -57,7 +57,7 @@ Do not imply that a submitted article has already been accepted or peer reviewed
   MetricLegend both read it so the card and the legend cannot drift apart.
 - `src/components/viz/Pipeline.astro`: semantic HTML layer diagram, driven by
   the optional `architecture` field in a project's frontmatter — never by
-  constants in the component. Four of the nine projects have a real layered
+  constants in the component. Five of the ten projects have a real layered
   flow and declare it; the other five must not, because a generic diagram
   would invent a pipeline their case study never describes. The grid follows
   the declared stage and output counts through --stage-count/--output-count.
@@ -146,7 +146,7 @@ When you add an invariant, break it once on purpose and confirm the suite fails 
 test that has never gone red is not a guard.
 
 Check all generated pages, internal links, certificate/dossier URLs, project order
-and metadata. Preserve all 29 skill items, nine projects and 24 certificate entries.
+and metadata. Preserve all 29 skill items, ten projects and 24 certificate entries.
 Keep generated diagnostic reports out of formatting checks through .prettierignore;
 do not remove user files as cleanup.
 

@@ -74,15 +74,15 @@ const paginasDeTecnologia = routes().filter(([rel]) =>
 ).length;
 
 test("as contagens publicadas continuam de pé", () => {
-  assert.equal(routes().length, 24, "24 rotas");
-  assert.equal(projectFiles.length, 9, "9 projetos");
+  assert.equal(routes().length, 28, "28 rotas");
+  assert.equal(projectFiles.length, 10, "10 projetos");
 
   assert.equal(grupos, 4, "4 grupos de competência");
   assert.equal(itens, 29, "29 itens de competência");
   assert.equal(certificados, 24, "24 certificados");
-  assert.equal(comArquitetura, 4, "4 projetos declaram arquitetura");
+  assert.equal(comArquitetura, 5, "5 projetos declaram arquitetura");
   assert.equal(entradas, 9, "9 entradas de trajetória");
-  assert.equal(paginasDeTecnologia, 10, "10 páginas de tecnologia");
+  assert.equal(paginasDeTecnologia, 13, "13 páginas de tecnologia");
   // A lista canônica vive em helpers.mjs; styles.test.mjs confere que cada cor
   // existe nos três lugares, e aqui só a contagem que os documentos publicam.
   assert.equal(TOKENS.length, 15, "15 cores semânticas");

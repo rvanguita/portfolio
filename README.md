@@ -24,7 +24,7 @@ numa página de erro própria, em português e com caminho de volta.
 
 Os três primeiros projetos da coleção aparecem na página inicial: FastF1 na
 abertura, Bank Churn e Rota do Perfume nos cartões seguintes. O catálogo mantém
-os nove projetos e sua ordem. Cartões apresentam até cinco tecnologias principais;
+os dez projetos e sua ordem. Cartões apresentam até cinco tecnologias principais;
 a ficha mantém a lista completa.
 
 Os resultados continuam contextualizados: **Resultado em teste**, **Arquitetura
@@ -47,11 +47,11 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
 ## Estrutura
 
 - `src/config.ts`: endereço, prefixo, idioma e navegação.
-- `src/pages/`: início, projetos, nove detalhes, trajetória, competências,
+- `src/pages/`: início, projetos, dez detalhes, trajetória, competências,
   certificações e a página de erro.
 - `tests/`: a suíte de invariantes, lida contra `dist/`.
 - `src/content.config.ts`: schema da coleção de projetos.
-- `src/content/projetos/*.md`: conteúdo e ordenação dos nove projetos.
+- `src/content/projetos/*.md`: conteúdo e ordenação dos dez projetos.
 - `src/data/`: perfil, contatos, trajetória, competências e certificações.
 - `src/components/layout/`: layout, metadados, navegação, tema e rodapé.
 - `src/components/panels/`: cartões, resultados contextualizados, legenda e
@@ -59,7 +59,7 @@ No celular, o cabeçalho acompanha a rolagem para não ocupar a área de leitura
 - `src/lib/metric.ts`: o vocabulário da aferição, compartilhado pelo cartão e pela
   legenda.
 - `src/components/viz/`: diagrama de camadas e linha do tempo. O diagrama lê a
-  arquitetura do frontmatter do projeto; quatro dos nove a declaram.
+  arquitetura do frontmatter do projeto; cinco dos dez a declaram.
 - `src/styles/`: tokens semânticos e estilos compartilhados.
 - `src/lib/url.ts`: links internos e URLs absolutas.
 - `public/`: ícones, imagem social, dossiê e certificados em PDF.
