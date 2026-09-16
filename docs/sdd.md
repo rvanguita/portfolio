@@ -119,10 +119,10 @@ Schema Zod da coleção `projetos`. Campos que carregam regra, não só dado:
   um `superRefine` amarra os dois campos: `spec` continua opcional no objeto,
   porque `full` não a usa, mas falta dela num `light` é erro de schema. Sem isso
   um `light` sem ficha publicaria quatro `<dd>` vazios e passaria no build;
-- `metricKind`: **obrigatório e sem valor padrão**, de propósito. Só 3 dos 9
+- `metricKind`: **obrigatório e sem valor padrão**, de propósito. Só 3 dos dez
   projetos têm métrica aferida, e um padrão silencioso faria escopo e arquitetura
   passarem por resultado medido;
-- `architecture`: opcional. Só os 4 projetos com fluxo em camadas real o
+- `architecture`: opcional. Só os 5 projetos com fluxo em camadas real o
   declaram;
 - `order`: controla o catálogo; as três primeiras entradas aparecem na home;
 - `periodo` e `atualizadoEm`: o intervalo de trabalho para exibição e a data em ISO
@@ -154,9 +154,9 @@ precisa de `h3`; o catálogo usa `h2`. É hierarquia de heading, não tamanho.
 ## Rotas e geração
 
 `trailingSlash: "always"` e `build.format: "directory"` — cada rota é um
-`index.html` em seu diretório. `projetos/[slug].astro` gera as nove fichas por
+`index.html` em seu diretório. `projetos/[slug].astro` gera as dez fichas por
 `getStaticPaths`, ordenando por `order` e passando `prev`/`next` para a navegação
-entre projetos. `projetos/stack/[tech].astro` gera as 10 páginas de tecnologia pela
+entre projetos. `projetos/stack/[tech].astro` gera as 13 páginas de tecnologia pela
 mesma via, a partir de `paginasDeTecnologia()`.
 
 Não há índice em `/projetos/stack/`, e isso é escolha: as páginas de tecnologia são
@@ -166,8 +166,8 @@ realmente parte. Um índice de tecnologias seria uma terceira lista do mesmo cat
 **O 404 é a exceção, e de propósito.** Astro trata `/404` como página de código de
 status (`STATUS_CODE_PAGES`, em `core/build/common.js`) e emite `dist/404.html` na
 raiz, **não** `dist/404/index.html` — que é exatamente o arquivo que o GitHub Pages
-serve para endereço inexistente. Por isso o build informa 25 páginas enquanto o site
-tem 24 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
+serve para endereço inexistente. Por isso o build informa 29 páginas enquanto o site
+tem 28 rotas navegáveis: o 404 não é rota, não entra no sitemap e não conta nas
 contagens que os documentos publicam.
 
 ## Aferição tipada
@@ -430,7 +430,7 @@ Durante o trabalho, `npm run dev`. Antes de entregar:
 
 ```
 npm run format:check
-npm run build          # 25 páginas: 24 rotas navegáveis + dist/404.html
+npm run build          # 29 páginas: 28 rotas navegáveis + dist/404.html
 npm run check          # astro check + tsc --noEmit
 npm test               # invariantes, lidos contra dist/
 ```
@@ -457,9 +457,9 @@ quebra linha no meio das frases, então as
 ressalvas são casadas com o espaço normalizado; os links passam por `decodeURIComponent`
 antes do teste de existência, senão os 24 PDFs de certificado dão 24 falsos positivos; e
 a guarda de contagens lê número por extenso, porque a prosa escreve "Quinze cores
-semânticas" e "nove projetos" — dobrar o texto ao regex seria a troca errada.
+semânticas" e "dez projetos" — dobrar o texto ao regex seria a troca errada.
 
-A contrapartida do número por extenso é que um recorte legítimo passa a casar. "Só os 4
+A contrapartida do número por extenso é que um recorte legítimo passa a casar. "Só os 5
 projetos que declaram arquitetura" e "as outras cinco rotas" são subconjuntos, não a
 contagem total, e a guarda os distingue por uma lista de marcadores — "só os", "dos",
 "outros", "outras". Um recorte novo escrito sem marcador reprova a PR, e a correção é

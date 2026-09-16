@@ -19,7 +19,7 @@ narrativo e não tenta ser um site institucional.
 A trajetória documentada é acadêmica e de engenharia elétrica — **não há emprego
 formal em dados**. A abertura não declara essa ausência em palavras; ela enquadra
 o Ph.D. como método aplicado a pipelines e lakehouses e lidera pela evidência dos
-nove projetos públicos, todos com repositório aberto. O posicionamento escolhido
+dez projetos públicos, todos com repositório aberto. O posicionamento escolhido
 foi assumir a transição de carreira em vez de silenciar sobre ela, e o texto a
 sustenta por enquadramento, não por declaração.
 
@@ -50,14 +50,14 @@ andamento.
 
 ## Escopo atual
 
-O site tem **24 rotas navegáveis**, mais uma página de erro:
+O site tem **28 rotas navegáveis**, mais uma página de erro:
 
 | Rota                      | Conteúdo                                                                 |
 | ------------------------- | ------------------------------------------------------------------------ |
 | `/`                       | abertura, projeto em destaque, projetos, competências, formação, contato |
-| `/projetos/`              | catálogo dos 9 projetos e a legenda dos tipos de resultado               |
-| `/projetos/<slug>/`       | 9 fichas de projeto                                                      |
-| `/projetos/stack/<tech>/` | 10 páginas de tecnologia, com os projetos que a usam                     |
+| `/projetos/`              | catálogo com 10 projetos e a legenda dos tipos de resultado              |
+| `/projetos/<slug>/`       | 10 fichas de projeto                                                     |
+| `/projetos/stack/<tech>/` | 13 páginas de tecnologia, com os projetos que a usam                     |
 | `/trajetoria/`            | formação e experiência, 9 entradas de trajetória                         |
 | `/competencias/`          | 4 grupos de capacidade, 29 itens, ligados a projetos                     |
 | `/certificacoes/`         | 24 certificados em 3 grupos, com PDF de cada um                          |
@@ -87,7 +87,7 @@ JSON-LD `Person` na abertura.
    bloco de formação com acesso às certificações.
 4. O bloco de contato publica a **ficha de triagem** — cargos-alvo, modelo de
    contratação, alcance geográfico e idiomas — além do e-mail e do LinkedIn.
-5. O catálogo lista os 9 projetos com categoria, período, resumo, resultado
+5. O catálogo lista os 10 projetos com categoria, período, resumo, resultado
    tipado, até cinco tecnologias e links para ficha e repositório. Quando o
    resultado é medido, um dos links aponta para o arquivo que produz a métrica.
 6. Cada ficha de projeto traz problema, dados, método e resultado; o trilho
@@ -202,8 +202,9 @@ tela. Nenhum deles prova que alguém foi contratado.
 
 ## Critério de entrada de projeto
 
-O catálogo tem 9 projetos porque nove passaram na barra abaixo, não porque nove é um
-número bom. Ela estava só na cabeça de quem escreveu as fichas; fica aqui para o décimo.
+O catálogo tem 10 projetos porque dez passaram na barra abaixo, não porque dez é um
+número bom. A barra existia desde o nono; o décimo, lake-literature, foi o primeiro
+a precisar dela por escrito.
 
 Um projeto entra quando:
 
@@ -220,7 +221,7 @@ Um projeto entra quando:
 6. **as ressalvas do próprio projeto vêm junto** — experimental, submetido, em
    desenvolvimento, viés de dataset —, literais e não suavizadas na passagem.
 
-O que **não** é critério: ter dado grande, ter métrica boa ou ter terminado. Três dos nove
+O que **não** é critério: ter dado grande, ter métrica boa ou ter terminado. Três dos dez
 não têm métrica aferida e um está em desenvolvimento. O tipo de resultado existe justamente
 para que esses entrem sem precisar fingir o que não são.
 
@@ -229,9 +230,9 @@ no CLAUDE.md, e a guarda reprova a PR para cada documento que ficar para trás.
 
 ## Estado atual
 
-Entregue e publicado: as 24 rotas navegáveis mais a página de erro, os 9 projetos
-(todos com estudo de caso em Markdown), 29 itens de
-competência, 24 certificados, 4 diagramas de arquitetura, a ficha de triagem, o
+Entregue e publicado: as 28 rotas navegáveis mais a página de erro, os 10 projetos
+(nove com estudo de caso em Markdown, um com ficha `light`), 29 itens de
+competência, 24 certificados, 5 diagramas de arquitetura, a ficha de triagem, o
 dossiê em PDF e o deploy automático em cada push para `main`.
 
 Cada projeto publica o período em que foi trabalhado e, quando o resultado é
@@ -244,7 +245,7 @@ Duas verificações agendadas ficam fora do caminho da PR, porque vigiam quebra 
 de commit: uma confere os links dos repositórios, outra confere se o `atualizadoEm` de
 cada ficha continua batendo com o último push do repositório.
 
-A evidência também é percorrível nos dois sentidos: 10 páginas de tecnologia reúnem os
+A evidência também é percorrível nos dois sentidos: 13 páginas de tecnologia reúnem os
 projetos que usam cada ferramenta, as etiquetas e os itens de competência apontam para
 elas, e a trilha de navegação diz ao leitor que caiu de busca numa ficha que existe um
 catálogo atrás dela. O rodapé aponta para o repositório deste site — a prática de
@@ -297,7 +298,7 @@ Medido e descartado, com os números no [SDD](./sdd.md#preload-da-fonte-crítica
 
 ## Onde este documento envelhece
 
-Os números — 24 rotas, 9 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
+Os números — 28 rotas, 10 projetos, 29 itens, 24 certificados — mudam se o conteúdo mudar,
 e desde a suíte de invariantes eles avisam sozinhos: a guarda cruza cada contagem escrita
 aqui, no [SDD](./sdd.md), no README e no CLAUDE.md com o dado que ela descreve, e reprova
 a PR quando uma fica para trás. Vale para número por extenso também.

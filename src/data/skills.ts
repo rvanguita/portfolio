@@ -26,7 +26,7 @@ export const skills: SkillGroup[] = [
     title: "Engenharia de Dados",
     summary:
       "Ingestão, modelagem em camadas e disponibilização: arquitetura medalhão em Delta Lake e DuckDB, orquestração no Airflow, contratos de dados que barram carga suja e CI que roda o pipeline inteiro a cada PR.",
-    projectIds: ["fastf1", "rotaperfume"],
+    projectIds: ["fastf1", "rotaperfume", "lake-literature"],
     items: [
       {
         name: "Python",
@@ -39,10 +39,11 @@ export const skills: SkillGroup[] = [
           "otimizacao-eletrica",
           "fraud-detection",
           "sentiment-nlp",
+          "lake-literature",
         ],
       },
       { name: "SQL", projectIds: ["personal-expenses", "shopping-list"] },
-      { name: "Apache Airflow", projectIds: ["fastf1"] },
+      { name: "Apache Airflow", projectIds: ["fastf1", "lake-literature"] },
       { name: "Delta Lake / PySpark", projectIds: ["fastf1"] },
       { name: "FastAPI", projectIds: ["fastf1"] },
       {
@@ -53,12 +54,13 @@ export const skills: SkillGroup[] = [
           "rotaperfume",
           "personal-expenses",
           "shopping-list",
+          "lake-literature",
         ],
       },
       { name: "Git / GitHub Actions", projectIds: ["rotaperfume"] },
       {
         name: "Pytest / testes automatizados",
-        projectIds: ["rotaperfume", "personal-expenses"],
+        projectIds: ["rotaperfume", "personal-expenses", "lake-literature"],
       },
       { name: "Linux / Shell", projectIds: ["rotaperfume"] },
     ],
@@ -71,7 +73,7 @@ export const skills: SkillGroup[] = [
     items: [
       { name: "Pandas", projectIds: ["wind-farm"] },
       { name: "NumPy", projectIds: [] },
-      { name: "Scikit-Learn", projectIds: ["fastf1"] },
+      { name: "Scikit-Learn", projectIds: ["fastf1", "lake-literature"] },
       { name: "Statsmodels", projectIds: [] },
       {
         name: "XGBoost / LightGBM",
@@ -98,7 +100,7 @@ export const skills: SkillGroup[] = [
     title: "Visualização e Analytics",
     summary:
       "A camada em que o dado vira decisão: APIs de baixa latência, painéis e relatórios ligados direto às tabelas curadas de cada projeto.",
-    projectIds: ["fastf1", "rotaperfume"],
+    projectIds: ["fastf1", "rotaperfume", "lake-literature"],
     items: [
       { name: "Power BI", projectIds: [] },
       { name: "Tableau", projectIds: [] },
@@ -116,6 +118,7 @@ export const skills: SkillGroup[] = [
           "rotaperfume",
           "personal-expenses",
           "shopping-list",
+          "lake-literature",
         ],
       },
     ],
