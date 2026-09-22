@@ -203,7 +203,7 @@ tela. Nenhum deles prova que alguém foi contratado.
 ## Critério de entrada de projeto
 
 O catálogo tem 10 projetos porque dez passaram na barra abaixo, não porque dez é um
-número bom. A barra existia desde o nono; o décimo, Lake Research Map, foi o primeiro
+número bom. A barra existia desde o nono; o décimo, lake-literature, foi o primeiro
 a precisar dela por escrito.
 
 Um projeto entra quando:

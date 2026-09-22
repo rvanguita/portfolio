@@ -51,7 +51,7 @@ architecture:
       tech: Streamlit
 repos:
   - label: GitHub
-    url: https://github.com/rvanguita/lake-research-map
+    url: https://github.com/rvanguita/lake-literature
 spec:
   problema: >-
     Escrever um artigo novo sobre planejamento de sistemas de distribuição
@@ -87,7 +87,15 @@ spec:
     deliberadamente parcial (ver Dados) e não há benchmark de recuperação
     publicado — a suíte pytest cobre a lógica pura de transformação e o fluxo
     de deduplicação/ligação de PDF contra SQLite em memória, sem cobrir ainda
-    os DAGs do Airflow nem a interface Streamlit.
+    os DAGs do Airflow nem a interface Streamlit. O trabalho atual está
+    concentrado em ampliar e validar o corpus, medir a qualidade da recuperação
+    e fechar essas lacunas de cobertura. Como próximas etapas, a busca semântica
+    servirá de base para um fluxo de RAG, com respostas fundamentadas no contexto
+    recuperado dos próprios artigos, e para uma frente exploratória que
+    acompanhará a evolução temporal dos tópicos para tentar estimar quais temas
+    podem se tornar dominantes nos próximos anos. Essa previsão será tratada como
+    hipótese, não como resultado: ela depende de mais dados, de uma janela
+    histórica suficiente e de validação retrospectiva.
 description: >-
   Estudo de caso do Lake Research Map: pipeline medalhão que consolida exports
   da IEEE Xplore e Elsevier/ScienceDirect num corpus bibliográfico
