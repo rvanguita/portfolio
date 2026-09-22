@@ -1,9 +1,9 @@
 ---
-title: Lake Literature
+title: Lake Research Map
 order: 10
 category: Lakehouse · RAG
 periodo: "2026"
-atualizadoEm: "2026-09-16"
+atualizadoEm: "2026-09-22"
 kind: light
 summary: >-
   Pipeline medalhão que consolida exports bibliográficos da IEEE Xplore e da
@@ -87,9 +87,17 @@ spec:
     deliberadamente parcial (ver Dados) e não há benchmark de recuperação
     publicado — a suíte pytest cobre a lógica pura de transformação e o fluxo
     de deduplicação/ligação de PDF contra SQLite em memória, sem cobrir ainda
-    os DAGs do Airflow nem a interface Streamlit.
+    os DAGs do Airflow nem a interface Streamlit. O trabalho atual está
+    concentrado em ampliar e validar o corpus, medir a qualidade da recuperação
+    e fechar essas lacunas de cobertura. Como próximas etapas, a busca semântica
+    servirá de base para um fluxo de RAG, com respostas fundamentadas no contexto
+    recuperado dos próprios artigos, e para uma frente exploratória que
+    acompanhará a evolução temporal dos tópicos para tentar estimar quais temas
+    podem se tornar dominantes nos próximos anos. Essa previsão será tratada como
+    hipótese, não como resultado: ela depende de mais dados, de uma janela
+    histórica suficiente e de validação retrospectiva.
 description: >-
-  Estudo de caso do Lake Literature: pipeline medalhão que consolida exports
+  Estudo de caso do Lake Research Map: pipeline medalhão que consolida exports
   da IEEE Xplore e Elsevier/ScienceDirect num corpus bibliográfico
   deduplicado, com Airflow, painel Streamlit e embeddings locais para RAG.
 ---
