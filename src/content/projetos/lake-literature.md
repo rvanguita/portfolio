@@ -1,9 +1,9 @@
 ---
-title: Lake Literature
+title: Lake Research Map
 order: 10
 category: Lakehouse · RAG
 periodo: "2026"
-atualizadoEm: "2026-09-16"
+atualizadoEm: "2026-09-22"
 kind: light
 summary: >-
   Pipeline medalhão que consolida exports bibliográficos da IEEE Xplore e da
@@ -51,7 +51,7 @@ architecture:
       tech: Streamlit
 repos:
   - label: GitHub
-    url: https://github.com/rvanguita/lake-literature
+    url: https://github.com/rvanguita/lake-research-map
 spec:
   problema: >-
     Escrever um artigo novo sobre planejamento de sistemas de distribuição
@@ -89,7 +89,7 @@ spec:
     de deduplicação/ligação de PDF contra SQLite em memória, sem cobrir ainda
     os DAGs do Airflow nem a interface Streamlit.
 description: >-
-  Estudo de caso do Lake Literature: pipeline medalhão que consolida exports
+  Estudo de caso do Lake Research Map: pipeline medalhão que consolida exports
   da IEEE Xplore e Elsevier/ScienceDirect num corpus bibliográfico
   deduplicado, com Airflow, painel Streamlit e embeddings locais para RAG.
 ---
