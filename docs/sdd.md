@@ -57,7 +57,7 @@ src/
 tests/                   suíte de invariantes (node:test), lida contra dist/;
                          helpers.mjs guarda a lista canônica de cores
 scripts/                 generate_dossier.py, check_dossier.py, check_links.mjs,
-                         check_dates.mjs, dossier-content.json
+                         dossier-content.json
                          (as dependências vêm de requirements-pdf.txt, na raiz)
 public/                  assets, certificates (24 PDFs), icon.svg, icon.png,
                          robots.txt, .nojekyll
@@ -358,12 +358,11 @@ usa uma posição independente que possa sobrepor o texto.
 
 ## CI/CD
 
-| Workflow     | Gatilho                  | Papel                                       |
-| ------------ | ------------------------ | ------------------------------------------- |
-| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`        |
-| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages                 |
-| `links.yml`  | semanal, manual          | confere os links externos dos projetos      |
-| `datas.yml`  | semanal, manual          | confere `atualizadoEm` contra o repositório |
+| Workflow     | Gatilho                  | Papel                                  |
+| ------------ | ------------------------ | -------------------------------------- |
+| `ci.yml`     | `pull_request`, manual   | job `🔍 Lint, Types, Testes & Build`   |
+| `deploy.yml` | `push` em `main`, manual | build e publicação em Pages            |
+| `links.yml`  | semanal, manual          | confere os links externos dos projetos |
 
 O `ci.yml` roda, nesta ordem: `format:check`, `build`, `check`, `test`,
 `dossier:check` e `dossier:generate` seguido de `git diff --exit-code`. A suíte vem
@@ -375,29 +374,13 @@ quebrado, mas **não compara o PDF com o manifesto** — ele nunca abre o JSON. 
 copy alterada sem regenerar é o `git diff` depois do `dossier:generate`, possível porque
 o gerador é determinístico.
 
-O `links.yml` e o `datas.yml` ficam **fora do caminho da PR** de propósito: mergear não
-pode depender da rede de terceiros. Nenhuma das duas quebras que eles vigiam vem de
-commit.
+O `links.yml` fica **fora do caminho da PR** de propósito: mergear não pode depender da
+rede de terceiros, e a quebra que ele vigia — alguém renomeia, arquiva ou torna privado
+um repositório, e o link morre — não vem de commit.
 
-A divisão entre os dois é o tipo de falha. O `links.yml` pega **ruptura**: alguém renomeia,
-arquiva ou torna privado um repositório, e o link morre. O `datas.yml` pega **deriva
-silenciosa**: tudo responde 200, e só o `atualizadoEm` da ficha é que ficou para trás do
-último push — campo que o sitemap republica como `lastmod`, então a data velha vira sinal
-errado para o robô, não só imprecisão de leitura.
-
-`scripts/check_dates.mjs` reduz cada `repos[].url` a `owner/repo` pelos dois primeiros
-segmentos, o que cobre as duas formas presentes no frontmatter — a raiz e o link para um
-arquivo dentro do repositório. Projeto com vários repositórios usa o `pushed_at` mais
-recente, a mesma regra que o `periodo` segue. A comparação é de mão única: repositório
-parado não acusa nada, ficha atrasada acusa.
-
-Duas decisões que o script carrega no comentário. Repositório ilegível vira aviso e **não**
-falha, porque renomeado ou privado já é o alarme do `links.yml` e duplicá-lo faria os dois
-gritarem pela mesma causa. E `pushed_at` sobe com qualquer push, inclusive um que só mexa
-no README — o resultado é uma issue para uma pessoa decidir, nunca um build quebrado, e por
-isso ele pode ser levemente barulhento sem causar dano. O passo da issue reaproveita a que
-já estiver aberta, comentando nela: sem isso, um projeto esquecido geraria uma issue nova
-por semana.
+O `atualizadoEm` não tem checagem automática. Vem da data real do repositório na hora de
+escrever a ficha e, se o projeto receber push depois, a ficha precisa ser atualizada à mão
+— o campo alimenta o `lastmod` do sitemap.
 
 Todas as Actions são fixadas por **SHA**, com a versão em comentário ao lado. Tag é
 ponteiro móvel, e o `deploy.yml` roda com `pages: write` e `id-token: write`. Para que
@@ -512,7 +495,6 @@ sozinhos. Os demais continuam sendo disciplina.
 | Termo em `LAYERS` sem regra `.chain--*`             | **teste** (`styles.test.mjs`), incluindo o atalho `border-left`                |
 | Lista de cores divergente entre blocos de tema      | **teste** cobre os três lugares; revisão visual segue valendo para a aparência |
 | Contagem do documento atrasada em relação ao código | **teste** cruza a prosa do PRD, do SDD, do README e do CLAUDE.md com o dado    |
-| `atualizadoEm` envelhecido sem ninguém notar        | `datas.yml`, semanal — fora do caminho da PR, como o `links.yml`               |
 | Duas grafias da mesma tecnologia virarem duas rotas | `CANONICAS` em `src/lib/stack.ts` **falha o build** em termo desconhecido      |
 | Diagrama afirmar camada inexistente                 | **teste** (`content.test.mjs`) confronta cada camada com o texto do caso       |
 | Metadado afirmando o que a página não mostra        | **teste** confere `knowsAbout` contra o texto visível                          |
