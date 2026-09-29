@@ -3,7 +3,7 @@ title: Lake Research Map
 order: 10
 category: Lakehouse · RAG
 periodo: "2026"
-atualizadoEm: "2026-09-22"
+atualizadoEm: "2026-09-23"
 kind: light
 summary: >-
   Pipeline medalhão que consolida exports bibliográficos da IEEE Xplore e da
