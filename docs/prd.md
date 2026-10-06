@@ -241,9 +241,8 @@ dado estruturado, e o sitemap leva `lastmod` por ficha. Uma suíte de invariante
 guarda no CI as regras que este documento define — contagens, ressalvas literais,
 schema com lastro e ausência de JavaScript de cliente.
 
-Duas verificações agendadas ficam fora do caminho da PR, porque vigiam quebra que não vem
-de commit: uma confere os links dos repositórios, outra confere se o `atualizadoEm` de
-cada ficha continua batendo com o último push do repositório.
+Uma verificação agendada fica fora do caminho da PR, porque vigia quebra que não vem
+de commit: a que confere os links dos repositórios.
 
 A evidência também é percorrível nos dois sentidos: 13 páginas de tecnologia reúnem os
 projetos que usam cada ferramenta, as etiquetas e os itens de competência apontam para
